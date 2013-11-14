@@ -6,6 +6,7 @@ public class Node
     private int[]		_coord;
     private int			_triggerDate;
     private ArrayList<Urgency>	_urgencyList;
+    private AttachPoint		_attachPoint;
 
     public Node(int x, int y)
     {
