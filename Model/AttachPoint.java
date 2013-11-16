@@ -1,77 +1,77 @@
 
 public class AttachPoint {
 
-	private boolean _isActiv;
-	private Vehicule _vehicule;
+    private boolean	isActiv;
+    private Vehicule	vehicule;
 	
-	//******************
-	//	Constructor
-	//******************	
+    //******************
+    //	Constructor
+    //******************	
 	
-	public AttachPoint() {
-		_isActiv = false;
-		_vehicule = null;
-	}
+    public AttachPoint() {
+	this.isActiv = false;
+	this.this.vehicule = null;
+    }
 	
-	public AttachPoint(boolean isActiv, Vehicule vehicule) {
-		_isActiv = isActiv;
-		_vehicule = vehicule;
-	}
+    public AttachPoint(boolean isActiv, Vehicule vehicule) {
+	this.isActiv = this.isActiv;
+	this.vehicule = this.vehicule;
+    }
 	
-	public AttachPoint(AttachPoint attachPoint) {
-		_isActiv = attachPoint._isActiv;
-		_vehicule = attachPoint._vehicule;
-	}
+    public AttachPoint(AttachPoint attachPoint) {
+	this.isActiv = attachPoint.this.isActiv;
+	this.vehicule = attachPoint.this.vehicule;
+    }
 
-	//***************
-	//	Destructor
-	//***************
-
-	
-	public void finalize() {
-		_vehicule = null;
-	}
-	
-	//*****************
-	//	Get Functions
-	//*****************
+    //***************
+    //	Destructor
+    //***************
 
 	
-	//return null if no vehicule
-	public Vehicule getVehicule() {
-		return _vehicule;
-	}
+    public void finalize() {
+	this.vehicule = null;
+    }
 	
-	//return null if no vehicule
-	public boolean getIsActiv() {
-		return _isActiv;
-	}
+    //*****************
+    //	Get Functions
+    //*****************
 
-	//****************
-	//	Set Functions
-	//****************
 	
-	public void setIsActiv(boolean isActiv) {
-		_isActiv = isActiv;
-	}
+    //return null if no this.vehicule
+    public Vehicule getVehicule() {
+	return this.vehicule;
+    }
 	
-	public void setVehicule(Vehicule newVehicule) {
-		_vehicule = newVehicule;
-	}
+    //return null if no this.vehicule
+    public boolean getIsActiv() {
+	return this.isActiv;
+    }
+
+    //****************
+    //	Set Functions
+    //****************
 	
-	//************
-	//	Others
-	//************
+    public void setIsActiv(boolean isActiv) {
+	this.isActiv = this.isActiv;
+    }
 	
-	public void changeStatus() {
-		if (_isActiv)
-			_isActiv = false;
-		else
-			_isActiv = true;
-	}
+    public void setVehicule(Vehicule newVehicule) {
+	this.vehicule = new.Vehicule;
+    }
 	
-	public boolean isActiv() {
-		return _isActiv;
-	}
+    //************
+    //	Others
+    //************
+	
+    public void changeStatus() {
+	if (this.isActiv)
+	    this.isActiv = false;
+	else
+	    this.isActiv = true;
+    }
+	
+    public boolean isActiv() {
+	return this.isActiv;
+    }
 
 }

@@ -3,97 +3,91 @@ import java.util.ArrayList;
 
 public class Map {
 	
-	//Container 
-	Graphe _graphe;
+    //Container 
+    Graphe	graphe;
+    float	scale = 1;
+    //Class of vehicule
+    Vehicule	vehicule;
+    //Background Image
+    Image	image;
+    int		zoom;
 	
-	//
-	float _scale = 1;
+    //******************
+    //	Constructor
+    //******************
 	
-	//Class of vehicule
-	Vehicule _vehicule;
-	
-	//Background Image
-	Image _image;
-	
-	//
-	int _zoom;
-	
-	//******************
-	//	Constructor
-	//******************
-	
-	public Map() {
+    public Map() {
 		
-	}
+    }
 	
-	//***************
-	//	Destructor
-	//***************
+    //***************
+    //	Destructor
+    //***************
 	
-	public void finalize() {
+    public void finalize() {
 		
-	}
+    }
 	
-	boolean addNode(ArrayList<Integer> coord, ArrayList<Urgency> urgencyList) {
-		return false;
-	}
+    boolean addNode(ArrayList<Integer> coord, ArrayList<Urgency> urgencyList) {
+	return false;
+    }
 		
-	boolean editNodeCoord(ArrayList<Integer> oldCoord, ArrayList<Integer> newCoord) {
-		return false;
-	}
+    boolean editNodeCoord(ArrayList<Integer> oldCoord, ArrayList<Integer> newCoord) {
+	return false;
+    }
 	
-	//Ca le colle enormement a une classe qui est a 10000 kilometres ATTENTION!!!!
-	boolean editNodeUrgency(ArrayList<Integer> coord, Urgency.EUrgencyState Estate , long triggerDate) {
-		return false;
-	}
+    //Ca le colle enormement a une classe qui est a 10000 kilometres ATTENTION!!!!
+    boolean editNodeUrgency(ArrayList<Integer> coord, Urgency.EUrgencyState Estate , long triggerDate) {
+	return false;
+    }
 	
-	boolean editTreatmentTime(ArrayList<Integer> coord, long time) {
-		return false;
-	}
+    boolean editTreatmentTime(ArrayList<Integer> coord, long time) {
+	return false;
+    }
 	
-	boolean editAttachPoint(ArrayList<Integer> coord, boolean state) {
-		return false;
-	}
+    boolean editAttachPoint(ArrayList<Integer> coord, boolean state) {
+	return false;
+    }
 	
-	boolean addRoad(ArrayList<Integer> coordNode1, ArrayList<Integer> coordNode2) {
-		return false;
-	}
+    boolean addRoad(ArrayList<Integer> coordNode1, ArrayList<Integer> coordNode2) {
+	return false;
+    }
 	
-	boolean creatVehicule(ArrayList<Integer> coord) {
-		return false;
-	}
+    boolean creatVehicule(ArrayList<Integer> coord) {
+	return false;
+    }
 	
-	boolean deleteNode(ArrayList<Integer> coord) {
-		return false;
-	}
+    boolean deleteNode(ArrayList<Integer> coord) {
+	return false;
+    }
 	
-	boolean deleteRoad(ArrayList<Integer> coordNode1, ArrayList<Integer> coordNode2) {
-		return false;
-	}
+    boolean deleteRoad(ArrayList<Integer> coordNode1, ArrayList<Integer> coordNode2) {
+	return false;
+    }
 	
-	boolean deleteVehicule() {
-		return false;
-	}
+    boolean deleteVehicule() {
+	return false;
+    }
 
-	int getNbNode() {
-		return 0;	
-	}
+    int getNbNode() {
+	return 0;	
+    }
 	
-	int getNbRoad() {
-		return 0;	
-	}
+    int getNbRoad() {
+	return 0;	
+    }
 	
-	String getFormatMap() {
-		return "";
-	}
+    String getFormatMap() {
+	return "";
+    }
 	
-	 ArrayList<Node> getNodeUrgency() {
-		return null;
-	}
+    ArrayList<Node> getNodeUrgency() {
+	return null;
+    }
 	
-	boolean setZoom()
-	{
-		return false;
-	}
+    boolean setZoom()
+    {
+	return false;
+    }
 	
 }

@@ -3,67 +3,67 @@ import java.util.ArrayList;
 
 public class Graphe {
 	
-	private ArrayList<GraphNode> _graphNode;
+    private ArrayList<GraphNode>	graphNode;
 
-	//******************
-	//	Constructor
-	//******************
+    //******************
+    //	Constructor
+    //******************
 	
-	public Graphe() {
-		_graphNode = null;
-	}
+    public Graphe() {
+	this.graphNode = null;
+    }
 	
-	public Graphe(ArrayList<GraphNode> newGraphNode) {
-		_graphNode = newGraphNode;
-	}
+    public Graphe(ArrayList<GraphNode> newGraphNode) {
+	this.graphNode = newGraphNode;
+    }
 	
-	public Graphe(Graphe graphe) {
-		_graphNode = graphe._graphNode;
-	}
+    public Graphe(Graphe graphe) {
+	this.graphNode = graphe.this.graphNode;
+    }
 	
-	//***************
-	//	Destructor
-	//***************
+    //***************
+    //	Destructor
+    //***************
 
 	
-	public void finalize() {
+    public void finalize() {
 		
-	}
+    }
 	
-	//*****************
-	//	Get Functions
-	//*****************
+    //*****************
+    //	Get Functions
+    //*****************
 	
-	public ArrayList<GraphNode> getGraphNode() {
-		return _graphNode;
-	}
+    public ArrayList<GraphNode> getGraphNode() {
+	return this.graphNode;
+    }
 	
-	//****************
-	//	Set Functions
-	//****************
+    //****************
+    //	Set Functions
+    //****************
 	
-	public void setGraphNode(ArrayList<GraphNode> graphNode) {
-		_graphNode = graphNode;
-	}
+    public void setGraphNode(ArrayList<GraphNode> graphNode) {
+	this.graphNode = graphNode;
+    }
 	
-	//************
-	//	Others
-	//************
+    //************
+    //	Others
+    //************
 	
-	public boolean init() {
-		return false;
-	}
+    public boolean init() {
+	return false;
+    }
 	
-	public boolean creatNode(int x, int y) {
-		return false;
-	}
+    public boolean creatNode(int x, int y) {
+	return false;
+    }
 	
-	public boolean creatRoad(ArrayList<Integer> node1, ArrayList<Integer> node2) {
-		return false;
-	}
+    public boolean creatRoad(ArrayList<Integer> node1, ArrayList<Integer> node2) {
+	return false;
+    }
 	
-	public ArrayList<Node> getNodeUrgency()
-	{
-		return null;
-	}
+    public ArrayList<Node> getNodeUrgency()
+    {
+	return null;
+    }
 }

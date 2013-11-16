@@ -1,87 +1,84 @@
 
 public class Urgency {
 
-	public enum EUrgencyState {
-		SLEEPING, WAITING, IN_PROGRESS, DONE
-	}
+    public enum EUrgencyState {
+	SLEEPING, WAITING, IN_PROGRESS, DONE;
+    }
 	
-	private EUrgencyState _state = EUrgencyState.SLEEPING;
+    private EUrgencyState	state = EUrgencyState.SLEEPING;
+    private float		treatmentTime = 5;
+    private float		triggerDate;
+    private float		endUrgencyDate;
 	
-	private float _treatmentTime = 5;
+    //******************
+    //	Constructor
+    //******************
 	
-	private float _triggerDate;
+    public Urgency() {
+	this.treatmentTime = 5;
+	this.triggerDate = 0;
+	this.endUrgencyDate = 0;
+    }
 	
-	private float _endUrgencyDate;
+    public Urgency(EUrgencyState state, float treatmentTime, float triggerDate, float endUrgencyDate) {
+	this.state = state;
+	this.treatmentTime = treatmentTime;
+	this.triggerDate = triggerDate;
+	this.endUrgencyDate = endUrgencyDate;
+    }
 	
-	//******************
-	//	Constructor
-	//******************
+    public Urgency(Urgency urgency) {
+	this.state = urgency.this.state;
+	this.treatmentTime = urgency.this.treatmentTime;
+	this.triggerDate = urgency.this.triggerDate;
+	this.endUrgencyDate = urgency.this.endUrgencyDate;
+    }
 	
-	public Urgency() {
-		_treatmentTime = 5;
-		_triggerDate = 0;
-		_endUrgencyDate = 0;
-	}
+    //***************
+    //	Destructor
+    //***************
 	
-	public Urgency(EUrgencyState state, float treatmentTime, float triggerDate, float endUrgencyDate) {
-		_state = state;
-		_treatmentTime = treatmentTime;
-		_triggerDate = triggerDate;
-		_endUrgencyDate = endUrgencyDate;
-	}
-	
-	public Urgency(Urgency urgency) {
-		_state = urgency._state;
-		_treatmentTime = urgency._treatmentTime;
-		_triggerDate = urgency._triggerDate;
-		_endUrgencyDate = urgency._endUrgencyDate;
-	}
-	
-	//***************
-	//	Destructor
-	//***************
-	
-	public void finalize() {
+    public void finalize() {
 		
-	}
+    }
 	
-	//*****************
-	//	Get Functions
-	//*****************
+    //*****************
+    //	Get Functions
+    //*****************
 	
-	public EUrgencyState getState() {
-		return _state;
-	}
+    public EUrgencyState getState() {
+	return this.state;
+    }
 	
-	public float getTreatmentTime() {
-		return  _treatmentTime;
-	}
+    public float getTreatmentTime() {
+	return  this.treatmentTime;
+    }
 	
-	public float getEndUrgencyDate() {
-		return _endUrgencyDate;
-	}
+    public float getEndUrgencyDate() {
+	return this.endUrgencyDate;
+    }
 	
-	public float getTriggerDate() {
-		return _triggerDate;
-	}
+    public float getTriggerDate() {
+	return this.triggerDate;
+    }
 	
-	//****************
-	//	Set Functions
-	//****************
+    //****************
+    //	Set Functions
+    //****************
 	
-	public void setState(EUrgencyState newState) {
-		_state = newState;
-	}
+    public void setState(EUrgencyState newState) {
+	this.state = newState;
+    }
 	
-	public void setTreatmentTime(float newTreatmentTime) {
-		_treatmentTime = newTreatmentTime;
-	}
+    public void setTreatmentTime(float newTreatmentTime) {
+	this.treatmentTime = newTreatmentTime;
+    }
 	
-	public void setEndUrgencyDate(float newEndUrgencyDate) {
-		_endUrgencyDate = newEndUrgencyDate;
-	}
+    public void setEndUrgencyDate(float newEndUrgencyDate) {
+	this.endUrgencyDate = newEndUrgencyDate;
+    }
 	
-	public void setTriggerDate(float newTriggerDate) {
-		_triggerDate = newTriggerDate;
-	}
+    public void setTriggerDate(float newTriggerDate) {
+	this.triggerDate = newTriggerDate;
+    }
 }

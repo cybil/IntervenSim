@@ -1,70 +1,65 @@
 
 public class Road {
-	//ATTENTION NE PLUS METTRE DE LENTGH A MODIFER
-	int _length;
-	
-	boolean _hasVehicule;
+    
+    private Node	node1;
+    private Node	node2;
+    private boolean	hasVehicule;
 
-	//******************
-	//	Constructor
-	//******************
+    //******************
+    //	Constructor
+    //******************
 	
-	public Road() {
-		_length = 0;
-		_hasVehicule = false;
-	}
+    public Road() {
+	this.hasVehicule = false;
+    }
 	
-	public Road(int length, boolean hasVehicule) {
-		_length = length;
-		_hasVehicule = hasVehicule;
-	}
+    public Road(Node n1, Node n2, boolean hasVehicule) {
+	this.node1 = n1;
+	this.node2 = n2;
+	this.hasVehicule = hasVehicule;
+    }
 	
-	public Road(Road road) {
-		_length = road.getLength();
-		_hasVehicule = road.getHasVehicule();
-	}
+    public Road(Road road) {
+	this.hasVehicule = road.getHasVehicule();
+    }
 	
-	//***************
-	//	Destructor
-	//***************
+    //***************
+    //	Destructor
+    //***************
 	
-	public void finalize() {
+    public void finalize() {
 		
-	}
+    }
 	
-	//****************
-	//	Get Functions
-	//****************
+    //****************
+    //	Get Functions
+    //****************
 	
-	public int getLength() {
-		return _length;
-	}
+    public int getLength() {
+	return 0;
+    }
 	
-	public boolean getHasVehicule() {
-		return _hasVehicule;
-	}
+    public boolean getHasVehicule() {
+	return this.hasVehicule;
+    }
 	
-	//****************
-	//	Set Functions
-	//****************
+    //****************
+    //	Set Functions
+    //****************
 	
-	public void setLength(int newLength) {
-		_length = newLength;
-	}
+    public void setHasVehicule(boolean newHasVehicule) {
+	this.hasVehicule = newHasVehicule;
+    }
 	
-	public void setHasVehicule(boolean newHasVehicule) {
-		_hasVehicule = newHasVehicule;
-	}
+    //***************
+    // Other
+    //***************
 	
-	//***************
-	// Other
-	//***************
+    public void changeStatus() {
+	this.hasVehicule = !this.hasVehicule;
+    }
 	
-	public void changeStatus() {
-		_hasVehicule = !_hasVehicule;
-	}
-	
-	public boolean hasVehicule() {
-		return _hasVehicule;
-	}
+    public boolean hasVehicule() {
+	return this.hasVehicule;
+    }
 }

@@ -3,97 +3,93 @@ import java.util.ArrayList;
 
 public class Vehicule {
 	
-	float _km;
+    private float		km;
+    private ArrayList<int>	coord;
+    private Node		attachPoint;
+    private ArrayList<Node>	path;
+    private int			speed;
 	
-	ArrayList<Integer> _coord;
+    //******************
+    //	Constructor
+    //******************
 	
-	Node _attachPoint;
-	
-	ArrayList<Node> _path;
-	
-	int	_speed;
-	
-	//******************
-	//	Constructor
-	//******************
-	
-	public Vehicule() {
-		_km = 0;
-		_coord = null;
-		_attachPoint = null;
-		_path = null;
-		_speed = 1;
-	}
+    public Vehicule() {
+	this.km = 0;
+	this.coord = null;
+	this.attachPoint = null;
+	this.path = null;
+	this.speed = 1;
+    }
 
-	public Vehicule(float km, ArrayList<Integer> coord, 
-			Node attachPoint, ArrayList<Node> path, int speed) {
-		_km = km;
-		_coord = coord;
-		_attachPoint = attachPoint;
-		_path = path;
-		_speed = speed;
-	}
+    public Vehicule(float km, ArrayList<int> coord, 
+		    Node attachPoint, ArrayList<Node> path, int speed) {
+	this.km = km;
+	this.coord = coord;
+	this.attachPoint = attachPoint;
+	this.path = path;
+	this.speed = speed;
+    }
 	
-	public Vehicule(Vehicule vehicule) {
-		_km = vehicule._km;
-		_coord = vehicule._coord;
-		_attachPoint = vehicule._attachPoint;
-		_path = vehicule._path;
-		_speed = vehicule._speed;
-	}
+    public Vehicule(Vehicule vehicule) {
+	this.km = vehicule.this.km;
+	this.coord = vehicule.this.coord;
+	this.attachPoint = vehicule.this.attachPoint;
+	this.path = vehicule.this.path;
+	this.speed = vehicule.this.speed;
+    }
 	
-	//***************
-	//	Destructor
-	//***************
+    //***************
+    //	Destructor
+    //***************
 	
-	public void finalize() {
+    public void finalize() {
 		
-	}
+    }
 
-	//*****************
-	//	Get Functions
-	//*****************
+    //*****************
+    //	Get Functions
+    //*****************
 	
-	float getKm() {
-		return _km;
-	}
+    float getKm() {
+	return this.km;
+    }
 	
-	int getSpeed() {
-		return _speed;
-	}
+    int getSpeed() {
+	return this.speed;
+    }
 	
-	ArrayList<Integer> getCoord() {
-		return _coord;
-	}
+    ArrayList<int> getCoord() {
+	return this.coord;
+    }
 	
-	//****************
-	//	Set Functions
-	//****************
+    //****************
+    //	Set Functions
+    //****************
 	
-	//If an Path exist, add new path after or not?
-	void setPath(ArrayList<Node> newPath) {
-		if (_path.isEmpty())
-			_path = newPath;
-		else
-			_path.addAll(newPath);
-	}
+    //If an Path exist, add new path after or not?
+    void setPath(ArrayList<Node> newPath) {
+	if (this.path.isEmpty())
+	    this.path = newPath;
+	else
+	    this.path.addAll(newPath);
+    }
 	
-	void setSpeed(int newSpeed) {
-		_speed = newSpeed;
-	}
+    void setSpeed(int newSpeed) {
+	this.speed = newSpeed;
+    }
 
-	//***************
-	// Other
-	//***************	
+    //***************
+    // Other
+    //***************	
 	
-		int treatUrgency() {
-			return 0;
-		}
+    int treatUrgency() {
+	return 0;
+    }
 		
-		boolean isFree() {
-			if (_path.isEmpty())
-				return false;
-			return true;
-		}
+    boolean isFree() {
+	if (this.path.isEmpty())
+	    return false;
+	return true;
+    }
 		
 }

@@ -3,82 +3,79 @@ import java.util.ArrayList;
 
 public class Node {
 
-	private ArrayList<Integer> _coord;
+    private ArrayList<int>	coord;
+    private ArrayList<Urgency>	urgencyList;
+    private AttachPoint		attachPoint;
 	
-	private ArrayList<Urgency> _urgencyList;
+    //******************
+    //	Constructor
+    //******************
 	
-	private AttachPoint	_attachPoint;
+    public Node() {
+	this.coord = null;
+	this.urgencyList = null;
+	this.attachPoint = null;
+    }
 	
+    public Node(ArrayList<int> newCoord,
+		ArrayList<Urgency> newUrgencyList,
+		AttachPoint newAttachPoint) {
+	this.coord = newCoord;
+	this.urgencyList = newUrgencyList;
+	this.attachPoint = newAttachPoint;
+    }
 	
-	//******************
-	//	Constructor
-	//******************
+    public Node(Node node) {
+	this.coord = node.getCoord();
+	this.urgencyList = node.getUrgency();
+	this.attachPoint = node.getAttachPoint();
+    }
 	
-	public Node() {
-		_coord = null;
-		_urgencyList = null;
-		_attachPoint = null;
-	}
+    //***************
+    //	Destructor
+    //***************
 	
-	public Node(ArrayList<Integer> newCoord,
-				ArrayList<Urgency> newUrgencyList,
-				AttachPoint newAttachPoint) {
-		_coord = newCoord;
-		_urgencyList = newUrgencyList;
-		_attachPoint = newAttachPoint;
-	}
-	
-	public Node(Node node) {
-		_coord = node.getCoord();
-		_urgencyList = node.getUrgency();
-		_attachPoint = node.getAttachPoint();
-	}
-	
-	//***************
-	//	Destructor
-	//***************
-	
-	public void finalize() {
+    public void finalize() {
 		
-	}
+    }
 	 
-	//*****************
-	//	Get Functions
-	//*****************
+    //*****************
+    //	Get Functions
+    //*****************
 	
-	public AttachPoint getAttachPoint() {
-		return _attachPoint;
-	}
+    public AttachPoint getAttachPoint() {
+	return this.attachPoint;
+    }
 	
-	public ArrayList<Integer> getCoord() {
-		return _coord;
-	}
+    public ArrayList<int> getCoord() {
+	return this.coord;
+    }
 	
-	public ArrayList<Urgency> getUrgency() {
-		return _urgencyList;
-	}
+    public ArrayList<Urgency> getUrgency() {
+	return this.urgencyList;
+    }
 	
-	//****************
-	//	Set Functions
-	//****************
+    //****************
+    //	Set Functions
+    //****************
 	
-	public void setAttachPoint(AttachPoint newAttachPoint) {
-		_attachPoint = newAttachPoint;
-	}
+    public void setAttachPoint(AttachPoint newAttachPoint) {
+	this.attachPoint = newAttachPoint;
+    }
 	
-	public void setCoord(ArrayList<Integer> newCoord) {
-		_coord = newCoord;
-	}
+    public void setCoord(ArrayList<int> newCoord) {
+	this.coord = newCoord;
+    }
 	
-	public void setUrgency(ArrayList<Urgency> newUrgencyList) {
-		_urgencyList = newUrgencyList;
-	}
+    public void setUrgency(ArrayList<Urgency> newUrgencyList) {
+	this.urgencyList = newUrgencyList;
+    }
 	
-	//************
-	//	Others
-	//************
+    //************
+    //	Others
+    //************
 	
-	public float getTriggerDate() {
-		return _urgencyList.get(0).getTriggerDate();
-	}
+    public float getTriggerDate() {
+	return this.urgencyList.get(0).getTriggerDate();
+    }
 }
