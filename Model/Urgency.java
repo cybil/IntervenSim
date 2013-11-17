@@ -28,10 +28,10 @@ public class Urgency {
     }
 	
     public Urgency(Urgency urgency) {
-	this.state = urgency.this.state;
-	this.treatmentTime = urgency.this.treatmentTime;
-	this.triggerDate = urgency.this.triggerDate;
-	this.endUrgencyDate = urgency.this.endUrgencyDate;
+	this.state = urgency.state;
+	this.treatmentTime = urgency.treatmentTime;
+	this.triggerDate = urgency.triggerDate;
+	this.endUrgencyDate = urgency.endUrgencyDate;
     }
 	
     //***************

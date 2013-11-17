@@ -2,7 +2,11 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 public class Map {
-	
+
+    public static void main(String[] args)
+    {
+
+    }
     //Container 
     Graphe	graphe;
     float	scale = 1;

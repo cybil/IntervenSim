@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Node {
 
-    private ArrayList<int>	coord;
+    private ArrayList<Integer>	coord;
     private ArrayList<Urgency>	urgencyList;
     private AttachPoint		attachPoint;
 	
@@ -17,7 +17,7 @@ public class Node {
 	this.attachPoint = null;
     }
 	
-    public Node(ArrayList<int> newCoord,
+    public Node(ArrayList<Integer> newCoord,
 		ArrayList<Urgency> newUrgencyList,
 		AttachPoint newAttachPoint) {
 	this.coord = newCoord;
@@ -47,7 +47,7 @@ public class Node {
 	return this.attachPoint;
     }
 	
-    public ArrayList<int> getCoord() {
+    public ArrayList<Integer> getCoord() {
 	return this.coord;
     }
 	
@@ -63,7 +63,7 @@ public class Node {
 	this.attachPoint = newAttachPoint;
     }
 	
-    public void setCoord(ArrayList<int> newCoord) {
+    public void setCoord(ArrayList<Integer> newCoord) {
 	this.coord = newCoord;
     }
 	

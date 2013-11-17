@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Vehicule {
 	
     private float		km;
-    private ArrayList<int>	coord;
+    private ArrayList<Integer>	coord;
     private Node		attachPoint;
     private ArrayList<Node>	path;
     private int			speed;
@@ -21,7 +21,7 @@ public class Vehicule {
 	this.speed = 1;
     }
 
-    public Vehicule(float km, ArrayList<int> coord, 
+    public Vehicule(float km, ArrayList<Integer> coord, 
 		    Node attachPoint, ArrayList<Node> path, int speed) {
 	this.km = km;
 	this.coord = coord;
@@ -31,11 +31,11 @@ public class Vehicule {
     }
 	
     public Vehicule(Vehicule vehicule) {
-	this.km = vehicule.this.km;
-	this.coord = vehicule.this.coord;
-	this.attachPoint = vehicule.this.attachPoint;
-	this.path = vehicule.this.path;
-	this.speed = vehicule.this.speed;
+	this.km = vehicule.km;
+	this.coord = vehicule.coord;
+	this.attachPoint = vehicule.attachPoint;
+	this.path = vehicule.path;
+	this.speed = vehicule.speed;
     }
 	
     //***************
@@ -58,7 +58,7 @@ public class Vehicule {
 	return this.speed;
     }
 	
-    ArrayList<int> getCoord() {
+    ArrayList<Integer> getCoord() {
 	return this.coord;
     }
 	

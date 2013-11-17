@@ -18,7 +18,7 @@ public class Graphe {
     }
 	
     public Graphe(Graphe graphe) {
-	this.graphNode = graphe.this.graphNode;
+	this.graphNode = graphe.graphNode;
     }
 	
     //***************

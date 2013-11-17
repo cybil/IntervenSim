@@ -10,7 +10,7 @@ public class AttachPoint {
 	
     public AttachPoint() {
 	this.isActiv = false;
-	this.this.vehicule = null;
+	this.vehicule = null;
     }
 	
     public AttachPoint(boolean isActiv, Vehicule vehicule) {
@@ -19,8 +19,8 @@ public class AttachPoint {
     }
 	
     public AttachPoint(AttachPoint attachPoint) {
-	this.isActiv = attachPoint.this.isActiv;
-	this.vehicule = attachPoint.this.vehicule;
+	this.isActiv = attachPoint.isActiv;
+	this.vehicule = attachPoint.vehicule;
     }
 
     //***************
@@ -56,7 +56,7 @@ public class AttachPoint {
     }
 	
     public void setVehicule(Vehicule newVehicule) {
-	this.vehicule = new.Vehicule;
+	this.vehicule = newVehicule;
     }
 	
     //************

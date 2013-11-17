@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class GraphNode {
 
-    private ArrayList<Node> this.data;
-    private ArrayList<GraphNode> this.neighbors;
+    private ArrayList<Node>		data;
+    private ArrayList<GraphNode>	neighbors;
 	
     //******************
     //	Constructor
@@ -21,8 +21,8 @@ public class GraphNode {
     }
 	
     public GraphNode(GraphNode graphNode) {
-	this.data = graphNode.this.data;
-	this.neighbors = graphNode.this.neighbors;
+	this.data = graphNode.data;
+	this.neighbors = graphNode.neighbors;
     }
 	
     //***************

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-javac *.java && java Graph
+javac *.java && java Map
