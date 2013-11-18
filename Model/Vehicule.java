@@ -2,12 +2,17 @@ import java.util.ArrayList;
 
 
 public class Vehicule {
-	
+
+    public enum EVehiculeState {
+	WAITING, ON_THE_ROAD, WORKING;
+    }
+
     private float		km;
-    private ArrayList<Integer>	coord;
+    private int[]		coord;
     private Node		attachPoint;
-    private ArrayList<Node>	path;
+    private ArrayList<Node>	path = new ArrayList<Node>();
     private int			speed;
+    private EVehiculeState	state = EVehiculeState.WAITING;
 	
     //******************
     //	Constructor
@@ -15,13 +20,11 @@ public class Vehicule {
 	
     public Vehicule() {
 	this.km = 0;
-	this.coord = null;
 	this.attachPoint = null;
-	this.path = null;
 	this.speed = 1;
     }
 
-    public Vehicule(float km, ArrayList<Integer> coord, 
+    public Vehicule(float km, int[] coord, 
 		    Node attachPoint, ArrayList<Node> path, int speed) {
 	this.km = km;
 	this.coord = coord;
@@ -36,6 +39,7 @@ public class Vehicule {
 	this.attachPoint = vehicule.attachPoint;
 	this.path = vehicule.path;
 	this.speed = vehicule.speed;
+	this.state = vehicule.state;
     }
 	
     //***************
@@ -50,31 +54,35 @@ public class Vehicule {
     //	Get Functions
     //*****************
 	
-    float getKm() {
+    float		getKm() {
 	return this.km;
     }
 	
-    int getSpeed() {
+    int			getSpeed() {
 	return this.speed;
     }
 	
-    ArrayList<Integer> getCoord() {
+    int[]		 getCoord() {
 	return this.coord;
     }
 	
+    EVehiculeState	getState() {
+	return this.state;
+    }
+
     //****************
     //	Set Functions
     //****************
-	
-    //If an Path exist, add new path after or not?
-    void setPath(ArrayList<Node> newPath) {
+
+    void		setPath(ArrayList<Node> newPath) {
+	this.state = EVehiculeState.ON_THE_ROAD;
 	if (this.path.isEmpty())
 	    this.path = newPath;
 	else
 	    this.path.addAll(newPath);
     }
 	
-    void setSpeed(int newSpeed) {
+    void		setSpeed(int newSpeed) {
 	this.speed = newSpeed;
     }
 
@@ -82,11 +90,12 @@ public class Vehicule {
     // Other
     //***************	
 	
-    int treatUrgency() {
+    int			treatUrgency() {
+	this.state = EVehiculeState.WORKING;
 	return 0;
     }
 		
-    boolean isFree() {
+    boolean		isFree() {
 	if (this.path.isEmpty())
 	    return false;
 	return true;

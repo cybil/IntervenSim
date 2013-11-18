@@ -35,19 +35,19 @@ public class Road {
     //	Get Functions
     //****************
 	
-    public int getLength() {
-	return 0;
+    public int		getLength() {
+	return 1;
     }
 	
-    public boolean getHasVehicule() {
+    public boolean	getHasVehicule() {
 	return this.hasVehicule;
     }
-	
+
     //****************
     //	Set Functions
     //****************
 	
-    public void setHasVehicule(boolean newHasVehicule) {
+    public void		setHasVehicule(boolean newHasVehicule) {
 	this.hasVehicule = newHasVehicule;
     }
 	
@@ -55,11 +55,11 @@ public class Road {
     // Other
     //***************
 	
-    public void changeStatus() {
+    public void		changeStatus() {
 	this.hasVehicule = !this.hasVehicule;
     }
 	
-    public boolean hasVehicule() {
+    public boolean	hasVehicule() {
 	return this.hasVehicule;
     }
 }

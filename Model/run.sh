@@ -1,3 +1,3 @@
 #!/bin/bash
 
-javac *.java && java Map
+javac *.java && java Main ; rm *.class

@@ -3,18 +3,14 @@ import java.util.ArrayList;
 
 public class Map {
 
-    public static void main(String[] args)
-    {
-
-    }
     //Container 
-    Graphe	graphe;
-    float	scale = 1;
+    private Graph	graph = new Graph();
+    private float	scale = 1;
     //Class of vehicule
-    Vehicule	vehicule;
+    private Vehicule	vehicule = new Vehicule();
     //Background Image
-    Image	image;
-    int		zoom;
+    private Image	image;
+    private int		zoom;
 	
     //******************
     //	Constructor
@@ -25,73 +21,93 @@ public class Map {
     }
 	
     //***************
-    //	Destructor
+    //	Other
     //***************
 	
-    public void finalize() {
-		
-    }
-	
-    boolean addNode(ArrayList<Integer> coord, ArrayList<Urgency> urgencyList) {
-	return false;
+    boolean		addNode(int x, int y, ArrayList<Urgency> urgencyList) {
+	this.graph.creatNode(x, y, urgencyList);
+	return true;
     }
 		
-    boolean editNodeCoord(ArrayList<Integer> oldCoord, ArrayList<Integer> newCoord) {
+    boolean		editNodeCoord(int[] oldCoord, int[] newCoord) {
+	if (this.graph.getNode(oldCoord) != null) {
+	    this.graph.getNode(oldCoord).setCoord(newCoord);
+	    return true;
+	}
 	return false;
     }
 	
-    //Ca le colle enormement a une classe qui est a 10000 kilometres ATTENTION!!!!
-    boolean editNodeUrgency(ArrayList<Integer> coord, Urgency.EUrgencyState Estate , long triggerDate) {
+    boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state, float triggDate) {
+	if (this.graph.getNode(coord) != null) {
+	    Urgency	urg = new Urgency(state, triggDate, 0, 5);
+	    this.graph.getNode(coord).addUrgency(urg);
+	}
 	return false;
     }
 	
-    boolean editTreatmentTime(ArrayList<Integer> coord, long time) {
+    boolean		editTreatmentTime(int[] coord, float time, int id) {
+	if (this.graph.getNode(coord) != null) {
+	    this.graph.getNode(coord).setUrgencyTime(id, time);
+	    return true;
+	}
 	return false;
     }
 	
-    boolean editAttachPoint(ArrayList<Integer> coord, boolean state) {
+    boolean		editAttachPoint(int[] coord, boolean state) {
+	if (this.graph.getNode(coord) != null) {
+	    this.graph.getNode(coord).setAttachPoint(new AttachPoint(state, this.vehicule));
+	    return true;
+	}
 	return false;
     }
 	
-    boolean addRoad(ArrayList<Integer> coordNode1, ArrayList<Integer> coordNode2) {
+    boolean		addRoad(int[] coordNode1, int[] coordNode2) {
 	return false;
     }
 	
-    boolean creatVehicule(ArrayList<Integer> coord) {
+    boolean		creatVehicule(int[] coord) {
 	return false;
     }
 	
-    boolean deleteNode(ArrayList<Integer> coord) {
+    boolean		deleteNode(int[] coord) {
 	return false;
     }
 	
-    boolean deleteRoad(ArrayList<Integer> coordNode1, ArrayList<Integer> coordNode2) {
+    boolean		deleteRoad(int[] coordNode1, int[] coordNode2) {
 	return false;
     }
 	
-    boolean deleteVehicule() {
+    boolean		deleteVehicule() {
 	return false;
     }
 
-    int getNbNode() {
-	return 0;	
+    //**
+    // * Getters
+    //**
+
+    int			getNbNode() {
+	return graph.getNbNode();
     }
 	
-    int getNbRoad() {
-	return 0;	
+    int			getNbRoad() {
+	return graph.getNbRoad();
     }
-	
-    String getFormatMap() {
+
+    String		getFormatMap() {
 	return "";
     }
-	
-    ArrayList<Node> getNodeUrgency() {
-	return null;
+
+    ArrayList<Node>	getNodeUrgency() {
+	return graph.getNodeUrgency();
     }
+
+    //**
+    // * Setters
+    //**
 	
-    boolean setZoom()
-    {
-	return false;
+    boolean		setZoom(int newZoom) {
+	this.zoom = newZoom;
+	return true;
     }
 	
 }

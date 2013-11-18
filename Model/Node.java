@@ -1,10 +1,10 @@
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class Node {
 
-    private ArrayList<Integer>	coord;
-    private ArrayList<Urgency>	urgencyList;
+    private int[]		coord;
+    private ArrayList<Urgency>	urgencyList = new ArrayList<Urgency>();
     private AttachPoint		attachPoint;
 	
     //******************
@@ -12,14 +12,10 @@ public class Node {
     //******************
 	
     public Node() {
-	this.coord = null;
-	this.urgencyList = null;
 	this.attachPoint = null;
     }
 	
-    public Node(ArrayList<Integer> newCoord,
-		ArrayList<Urgency> newUrgencyList,
-		AttachPoint newAttachPoint) {
+    public Node(int[] newCoord, ArrayList<Urgency> newUrgencyList, AttachPoint newAttachPoint) {
 	this.coord = newCoord;
 	this.urgencyList = newUrgencyList;
 	this.attachPoint = newAttachPoint;
@@ -35,7 +31,7 @@ public class Node {
     //	Destructor
     //***************
 	
-    public void finalize() {
+    public void			finalize() {
 		
     }
 	 
@@ -43,39 +39,56 @@ public class Node {
     //	Get Functions
     //*****************
 	
-    public AttachPoint getAttachPoint() {
+    public AttachPoint		getAttachPoint() {
 	return this.attachPoint;
     }
 	
-    public ArrayList<Integer> getCoord() {
+    public int[]		getCoord() {
 	return this.coord;
     }
 	
-    public ArrayList<Urgency> getUrgency() {
+    public ArrayList<Urgency>	getUrgency() {
 	return this.urgencyList;
     }
 	
+    public float		getTriggerDate() {
+	if (!this.urgencyList.isEmpty())
+	    return (this.urgencyList.get(0).getTriggerDate());
+	return -1;
+    }
+
+    public boolean		hasUrgency() {
+	return !(this.urgencyList.isEmpty());
+    }
+
     //****************
     //	Set Functions
     //****************
 	
-    public void setAttachPoint(AttachPoint newAttachPoint) {
+    public void			setAttachPoint(AttachPoint newAttachPoint) {
 	this.attachPoint = newAttachPoint;
     }
 	
-    public void setCoord(ArrayList<Integer> newCoord) {
+    public void			setCoord(int[] newCoord) {
 	this.coord = newCoord;
     }
 	
-    public void setUrgency(ArrayList<Urgency> newUrgencyList) {
-	this.urgencyList = newUrgencyList;
+    public void			setUrgencyTime(int id, float time) {
+	for (Urgency u : this.urgencyList) {
+	    if (u.getId() == id)
+		u.setTreatmentTime(time);
+	}
     }
+
+    //**
+    // * Other
+    // *
+
+    public void			addUrgency(Urgency newUrgency) {
+	this.urgencyList.add(newUrgency);
+    }
+
+    public void			removeUrgency(Urgency urgency) {
 	
-    //************
-    //	Others
-    //************
-	
-    public float getTriggerDate() {
-	return this.urgencyList.get(0).getTriggerDate();
     }
 }

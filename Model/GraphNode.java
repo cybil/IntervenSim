@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class GraphNode {
 
-    private ArrayList<Node>		data;
-    private ArrayList<GraphNode>	neighbors;
+    private Node			data;
+    private ArrayList<Road>		roads;
 	
     //******************
     //	Constructor
@@ -12,17 +12,15 @@ public class GraphNode {
 	
     public GraphNode() {
 	this.data = null;
-	this.neighbors = null;
     }
 	
-    public GraphNode(ArrayList<Node> newData, ArrayList<GraphNode> newNeighbors) {
+    public GraphNode(Node newData) {
 	this.data = newData;
-	this.neighbors = newNeighbors;
     }
 	
     public GraphNode(GraphNode graphNode) {
 	this.data = graphNode.data;
-	this.neighbors = graphNode.neighbors;
+	this.roads = graphNode.roads;
     }
 	
     //***************
@@ -38,23 +36,23 @@ public class GraphNode {
     //	Get Functions
     //*****************
 	
-    public ArrayList<Node> getData() {
+    public Node			getData() {
 	return this.data;
     }
 	
-    public ArrayList<GraphNode> getNeighbors() {
-	return this.neighbors;
+    public ArrayList<Road>	getRoads() {
+	return this.roads;
     }
 	
     //****************
     //	Set Functions
     //****************
 	
-    public void setData(ArrayList<Node> newData) {
+    public void			setData(Node newData) {
 	this.data = newData;
     }
 	
-    public void setNeighbors(ArrayList<GraphNode> newNeighbors) {
-	this.neighbors = newNeighbors;
+    public void			addRoad(Road newRoad) {
+	this.roads.add(newRoad);
     }
 }

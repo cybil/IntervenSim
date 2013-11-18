@@ -51,8 +51,8 @@ public class AttachPoint {
     //	Set Functions
     //****************
 	
-    public void setIsActiv(boolean isActiv) {
-	this.isActiv = this.isActiv;
+    public void setIsActiv(boolean newActivity) {
+	this.isActiv = newActivity;
     }
 	
     public void setVehicule(Vehicule newVehicule) {
