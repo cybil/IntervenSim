@@ -1,3 +1,3 @@
 #!/bin/bash
 
-javac *.java && java Main ; rm *.class
+javac -Xlint:unchecked *.java && java Main ; rm *.class

@@ -42,13 +42,6 @@ public class Vehicule {
 	this.state = vehicule.state;
     }
 	
-    //***************
-    //	Destructor
-    //***************
-	
-    public void finalize() {
-		
-    }
 
     //*****************
     //	Get Functions
@@ -84,6 +77,10 @@ public class Vehicule {
 	
     void		setSpeed(int newSpeed) {
 	this.speed = newSpeed;
+    }
+
+    void		setCoord(int[] newCoord) {
+	this.coord = newCoord;
     }
 
     //***************

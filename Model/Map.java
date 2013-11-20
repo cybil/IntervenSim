@@ -9,8 +9,8 @@ public class Map {
     //Class of vehicule
     private Vehicule	vehicule = new Vehicule();
     //Background Image
-    private Image	image;
-    private int		zoom;
+    private Image	image = null;
+    private int		zoom = 100;
 	
     //******************
     //	Constructor
@@ -62,23 +62,23 @@ public class Map {
     }
 	
     boolean		addRoad(int[] coordNode1, int[] coordNode2) {
-	return false;
+	this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2));
+	return true;
     }
 	
     boolean		creatVehicule(int[] coord) {
-	return false;
+	this.vehicule.setCoord(coord);
+	return true;
     }
 	
     boolean		deleteNode(int[] coord) {
-	return false;
+	this.graph.deleteNode(coord);
+	return true;
     }
 	
-    boolean		deleteRoad(int[] coordNode1, int[] coordNode2) {
-	return false;
-    }
-	
-    boolean		deleteVehicule() {
-	return false;
+    boolean		deleteRoad(int[] coord1, int[] coord2) {
+	this.graph.deleteRoad(this.graph.getNode(coord1), this.graph.getNode(coord2));
+	return true;
     }
 
     //**
@@ -94,7 +94,9 @@ public class Map {
     }
 
     String		getFormatMap() {
-	return "";
+	String		str = "";
+
+	return str;
     }
 
     ArrayList<Node>	getNodeUrgency() {
@@ -105,9 +107,37 @@ public class Map {
     // * Setters
     //**
 	
-    boolean		setZoom(int newZoom) {
+    public boolean	setZoom(int newZoom) {
 	this.zoom = newZoom;
 	return true;
+    }
+
+    public void		setVehiculePath(ArrayList<Node> path) {
+	this.vehicule.setPath(path);
+    }
+
+    public void		display()
+    {
+	System.out.println("Nombre noeud : " + this.graph.getNbNode());
+	System.out.println("Nombre de route : " + this.graph.getNbRoad());
+	System.out.println("Noeuds :");
+	ArrayList<GraphNode>	nodes = this.graph.getAllNodes();
+
+	for (GraphNode g : nodes)
+	    {
+		System.out.print("Coord: " + g.getData().getCoord()[0]
+				   + " - " + g.getData().getCoord()[1]);
+		System.out.println("  " + (g.getData().hasUrgency() == true
+					   ? "URGENCY (" + g.getData().getNbUrgency() + ") => " + g.getData().getNextUrgency().getTriggerDate()
+					   : "Normal"));
+		System.out.println("  Voisins:");
+		for (GraphNode n : g.getNeighbors())
+		    {
+			System.out.println("    Coord: " + n.getData().getCoord()[0]
+					   + " - " + n.getData().getCoord()[1]);
+		    }
+		System.out.println("");
+	    }
     }
 	
 }

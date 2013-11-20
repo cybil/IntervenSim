@@ -17,7 +17,8 @@ public class Node {
 	
     public Node(int[] newCoord, ArrayList<Urgency> newUrgencyList, AttachPoint newAttachPoint) {
 	this.coord = newCoord;
-	this.urgencyList = newUrgencyList;
+	if (newUrgencyList != null)
+	    this.urgencyList = newUrgencyList;
 	this.attachPoint = newAttachPoint;
     }
 	
@@ -59,6 +60,19 @@ public class Node {
 
     public boolean		hasUrgency() {
 	return !(this.urgencyList.isEmpty());
+    }
+
+    public int			getNbUrgency() {
+	return this.urgencyList.size();
+    }
+
+    public Urgency			getNextUrgency() {
+	Urgency			next = this.urgencyList.get(0);
+	for (Urgency u : this.urgencyList) {
+	    if (u.getTriggerDate() < next.getTriggerDate())
+		next = u;
+	}
+	return next;
     }
 
     //****************
