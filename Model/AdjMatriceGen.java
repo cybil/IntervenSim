@@ -22,6 +22,34 @@ public class AdjMatriceGen {
 	return (true);
     return (false);
   }
+
+  // Find if we have already a path to this node, add it or replace it with a shorter one
+  private void			_addOrReplacePath(ArrayList<ArrayList<int[]>> pathList,
+						  ArrayList<int[]> path)
+  {
+    int				i;
+    ArrayList<int[]>		known_path;
+
+    i = pathList.size();
+    if (i > 0)
+    {
+      while (--i >= 0)
+      {
+	known_path = pathList.get(i);
+	if (known_path.size() > 0 && known_path.get(known_path.size() - 1)
+	    == path.get(path.size() - 1))
+	{
+	  // pathList.remove(i);
+	  pathList.set(i, new ArrayList<int[]>(path));
+	  break;
+	}
+      }
+      if (i < 0)
+	pathList.add(new ArrayList<int[]>(path));
+    }
+    else
+      pathList.add(new ArrayList<int[]>(path));
+  }
   // Recursive
   // Each node add him self to the path, the final one add the full path to the list of path
   // Const, does not change any node
@@ -29,18 +57,18 @@ public class AdjMatriceGen {
 						   ArrayList<int[]> path,
 						   GraphNode node, int depth)
   {
-    System.out.println("Loop(" + depth + ")(path len:" + path.size() + "): "
-		       + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1]);
+    // System.out.println("Loop(" + depth + ")(path len:" + path.size() + "): "
+    // 		       + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1]);
     path.add(node.getData().getCoord());
     if (depth > 0)
     {
       // node.setFlag();
-      this.prettyPrintList(path);
-      System.out.println("Total Neighbors(" +  node.getNeighbors().size() + ")");
+      // this.prettyPrintList(path);
+      // System.out.println("Total Neighbors(" +  node.getNeighbors().size() + ")");
       for (GraphNode neigh_node : node.getNeighbors())
       {
 	// System.out.println("Total Neigh/Neighbors(" +  neigh_node.getNeighbors().size() + ")");
-	System.out.println("is in path ? (" + this._isInPath(path, neigh_node) + ")");
+	// System.out.println("is in path ? (" + this._isInPath(path, neigh_node) + ")");
 	if (/*neigh_node.getFlag() == false && */this._isInPath(path, neigh_node) == false)
 	{
 	  for (GraphNode clean_node : _graphNode) // To get a neighbors list which is working
@@ -56,11 +84,12 @@ public class AdjMatriceGen {
     }
     else
     {
-      System.out.println("end: " + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1]);
-      pathList.add(new ArrayList<int[]>(path));
+      // System.out.println("end: " + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1]);
+      this._addOrReplacePath(pathList, path);
+      //pathList.add(new ArrayList<int[]>(path));
     }
     path.remove(node.getData().getCoord());
-    System.out.println("Return");
+    // System.out.println("Return");
   }
   // Generate a list from a point to all the other
   // Return List2 (list of path of tuple)
@@ -105,6 +134,8 @@ public class AdjMatriceGen {
       // System.out.println("Root List size before: " + list.size());
       list = this._GetAllPathForOneNode(_graphNode.get(0));
       System.out.println("Root List size after: " + list.size());
+      for (ArrayList<int[]> path:list)
+	prettyPrintList(path);
       // this.prettyPrintList(list.get(0));
       AdjMatrice.add(list);
     }
