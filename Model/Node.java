@@ -15,10 +15,8 @@ public class Node {
 	this.attachPoint = null;
     }
 	
-    public Node(int[] newCoord, ArrayList<Urgency> newUrgencyList, AttachPoint newAttachPoint) {
+    public Node(int[] newCoord, AttachPoint newAttachPoint) {
 	this.coord = newCoord;
-	if (newUrgencyList != null)
-	    this.urgencyList = newUrgencyList;
 	this.attachPoint = newAttachPoint;
     }
 	
@@ -27,15 +25,7 @@ public class Node {
 	this.urgencyList = node.getUrgency();
 	this.attachPoint = node.getAttachPoint();
     }
-	
-    //***************
-    //	Destructor
-    //***************
-	
-    public void			finalize() {
-		
-    }
-	 
+
     //*****************
     //	Get Functions
     //*****************
@@ -48,6 +38,10 @@ public class Node {
 	return this.coord;
     }
 	
+    public boolean		hasUrgency() {
+	return !(this.urgencyList.isEmpty());
+    }
+
     public ArrayList<Urgency>	getUrgency() {
 	return this.urgencyList;
     }
@@ -58,15 +52,11 @@ public class Node {
 	return -1;
     }
 
-    public boolean		hasUrgency() {
-	return !(this.urgencyList.isEmpty());
-    }
-
     public int			getNbUrgency() {
 	return this.urgencyList.size();
     }
 
-    public Urgency			getNextUrgency() {
+    public Urgency		getNextUrgency() {
 	Urgency			next = this.urgencyList.get(0);
 	for (Urgency u : this.urgencyList) {
 	    if (u.getTriggerDate() < next.getTriggerDate())
@@ -103,6 +93,6 @@ public class Node {
     }
 
     public void			removeUrgency(Urgency urgency) {
-	
+	this.urgencyList.remove(urgency);
     }
 }

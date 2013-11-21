@@ -3,15 +3,15 @@ public class Main {
   {
     Map		map = new Map();
 
-    map.addNode(0, 0, null);
-    map.addNode(1, 3, null);
-    map.addNode(6, 4, null);
-    map.addNode(52, 0, null);
-    map.addNode(8, 4, null);
-    map.addNode(52, 3, null);
-    map.addNode(5, 0, null);
-    map.addNode(2, 1, null);
-    map.addNode(6, 7, null);
+    map.addNode(0, 0);
+    map.addNode(1, 3);
+    map.addNode(6, 4);
+    map.addNode(52, 0);
+    map.addNode(8, 4);
+    map.addNode(52, 3);
+    map.addNode(5, 0);
+    map.addNode(2, 1);
+    map.addNode(6, 7);
 
     int[]		c1 = {0, 0};
     int[]		c2 = {1, 3};
@@ -40,8 +40,9 @@ public class Main {
     // map.deleteNode(c5);
 
     // map.deleteRoad(c6, c2);
+
     map.display();
-    AdjMatriceGen	obj = new AdjMatriceGen(map.graph.getAllNodes());
-    obj.GetAdjMatrice();
+    // AdjMatriceGen	obj = new AdjMatriceGen(map.graph.getAllNodes());
+    // obj.GetAdjMatrice();
   }
 }

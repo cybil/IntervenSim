@@ -37,14 +37,6 @@ public class Urgency {
 	this.endUrgencyDate = urgency.endUrgencyDate;
     	this.id++;
     }
-	
-    //***************
-    //	Destructor
-    //***************
-	
-    public void finalize() {
-		
-    }
 
     //*****************
     //	Get Functions

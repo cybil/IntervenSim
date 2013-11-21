@@ -22,27 +22,15 @@ public class AttachPoint {
 	this.isActiv = attachPoint.isActiv;
 	this.vehicule = attachPoint.vehicule;
     }
-
-    //***************
-    //	Destructor
-    //***************
-
-	
-    public void finalize() {
-	this.vehicule = null;
-    }
 	
     //*****************
     //	Get Functions
     //*****************
 
-	
-    //return null if no this.vehicule
     public Vehicule getVehicule() {
 	return this.vehicule;
     }
-	
-    //return null if no this.vehicule
+
     public boolean getIsActiv() {
 	return this.isActiv;
     }
