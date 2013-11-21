@@ -11,25 +11,48 @@ public class AdjMatriceGen {
   private void	_SpreadDeducedPath()
   {
   }
+  private boolean		_isInPath(ArrayList<int[]> path, GraphNode neigh_node)
+  {
+    boolean			ret;
+
+    ret = false;
+    for (int[] coord : path)
+      if (coord[0] == neigh_node.getData().getCoord()[0]
+	  && coord[1] == neigh_node.getData().getCoord()[1])
+	return (true);
+    return (false);
+  }
   // Recursive
   // Each node add him self to the path, the final one add the full path to the list of path
+  // Const, does not change any node
   private void			_recursive(ArrayList<ArrayList<int[]>> pathList,
 						   ArrayList<int[]> path,
 						   GraphNode node, int depth)
   {
-    System.out.println("Loop(" + depth + "): " + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1]);
+    System.out.println("Loop(" + depth + ")(path len:" + path.size() + "): "
+		       + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1]);
     path.add(node.getData().getCoord());
     if (depth > 0)
     {
-      node.setFlag();
+      // node.setFlag();
+      this.prettyPrintList(path);
       System.out.println("Total Neighbors(" +  node.getNeighbors().size() + ")");
       for (GraphNode neigh_node : node.getNeighbors())
       {
-	System.out.println("Total Neigh/Neighbors(" +  neigh_node.getNeighbors().size() + ")");
-	if (neigh_node.getFlag() == false)
+	// System.out.println("Total Neigh/Neighbors(" +  neigh_node.getNeighbors().size() + ")");
+	System.out.println("is in path ? (" + this._isInPath(path, neigh_node) + ")");
+	if (/*neigh_node.getFlag() == false && */this._isInPath(path, neigh_node) == false)
+	{
+	  for (GraphNode clean_node : _graphNode) // To get a neighbors list which is working
+	    if (clean_node.equals(neigh_node))
+	    {
+	      neigh_node = clean_node;
+	      break;
+	    }
 	  this._recursive(pathList, path, neigh_node, depth - 1);
+	}
       }
-      node.clearFlag();
+      // node.clearFlag();
     }
     else
     {
@@ -43,6 +66,7 @@ public class AdjMatriceGen {
   // Return List2 (list of path of tuple)
   private ArrayList<ArrayList<int[]>>	_GetAllPathForOneNode(GraphNode node)
   {
+    int					i;
     int					max_recur;
     ArrayList<ArrayList<int[]>>		pathList = new ArrayList<ArrayList<int[]>>();
     ArrayList<ArrayList<int[]>>		tmp = new ArrayList<ArrayList<int[]>>();
@@ -51,7 +75,9 @@ public class AdjMatriceGen {
     // while (tmp.size() < _graphNode.size()) // Preallocate
     //   tmp.add(new ArrayList<int[]>());
     // System.out.println("List size before: " + pathList.size());
-    this._recursive(pathList, new ArrayList<int[]>(), node, 2);
+    i = _graphNode.size();
+    while (--i > 0)
+      this._recursive(pathList, new ArrayList<int[]>(), node, i);
     // System.out.println("List size after: " + pathList.size());
     return (pathList);
   }
