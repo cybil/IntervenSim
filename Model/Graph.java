@@ -73,25 +73,28 @@ public class Graph {
 	return true;
     }
 	
-    public boolean		creatRoad(Node node1, Node node2) {
-	for (GraphNode n : this.graphNode) {
-	    if (n.getData() == node1) {
-		n.addNeighbor(new GraphNode(node2), 10); // 10 valeur par defaut d'une taille de route (a caluculer)
-	
-		break ;
-	    }
-	}
+  public boolean		creatRoad(Node node1, Node node2) {
+    int			status;
+    int			roadLength;
 
-	for (GraphNode n : this.graphNode) {
-	    if (n.getData() == node2) {
-		n.addNeighbor(new GraphNode(node1), 10);
-	
-		return true;
-	    }
-	}
-
-	return false;
+    status = 0;
+    roadLength = 10;  // 10 valeur par defaut d'une taille de route (a caluculer)
+    // System.out.println("Adding road from " + node1.getCoord()[0] + ":" + node1.getCoord()[1]
+    // 		       + " to"  + node2.getCoord()[0] + ":" + node2.getCoord()[1] + "");
+    for (GraphNode n : this.graphNode) {
+      if (n.getData() == node1) {
+	n.addNeighbor(new GraphNode(node2), roadLength);
+	status++;
+      }
+      if (n.getData() == node2) {
+	n.addNeighbor(new GraphNode(node1), roadLength);
+	status++;
+      }
+      if (status == 2)
+	return (true);
     }
+    return false;
+  }
 
     public boolean		deleteNode(int[] coord) {
 	for (GraphNode n : this.graphNode) {

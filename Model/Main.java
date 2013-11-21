@@ -32,12 +32,14 @@ public class Main {
     map.addRoad(c9, c2);
     map.addRoad(c9, c5);
 
+    map.addRoad(c1, c5);
+
     map.addNodeUrgency(c1, Urgency.EUrgencyState.SLEEPING, 105);
     map.addNodeUrgency(c1, Urgency.EUrgencyState.SLEEPING, 50);
 
-    map.deleteNode(c5);
+    // map.deleteNode(c5);
 
-    map.deleteRoad(c6, c2);
+    // map.deleteRoad(c6, c2);
     map.display();
     AdjMatriceGen	obj = new AdjMatriceGen(map.graph.getAllNodes());
     obj.GetAdjMatrice();
