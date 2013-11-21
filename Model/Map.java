@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Map {
 
     //Container 
-    private Graph	graph = new Graph();
+    public  Graph	graph = new Graph();
     private float	scale = 1;
     //Class of vehicule
     private Vehicule	vehicule = new Vehicule();
@@ -133,6 +133,7 @@ public class Map {
 		System.out.println("  Voisins:");
 		for (GraphNode n : g.getNeighbors())
 		    {
+		      System.out.println("Total Neigh/Neighbors(" +  n.getNeighbors().size() + ")");
 			System.out.println("    Coord: " + n.getData().getCoord()[0]
 					   + " - " + n.getData().getCoord()[1]);
 		    }

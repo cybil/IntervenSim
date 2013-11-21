@@ -3,6 +3,7 @@ import java.util.*;
 
 public class GraphNode {
 
+  private boolean				flag;
     private Node				data;
     private ArrayList<Road>			roads;
     private Hashtable<GraphNode, Integer>	neighbors = new Hashtable<GraphNode, Integer>();
@@ -12,14 +13,17 @@ public class GraphNode {
     //******************
 	
     public GraphNode() {
+      flag = false;
 	this.data = null;
     }
 	
     public GraphNode(Node newData) {
+      flag = false;
 	this.data = newData;
     }
 	
     public GraphNode(GraphNode graphNode) {
+      flag = false;
 	this.data = graphNode.data;
 	this.roads = graphNode.roads;
     }
@@ -37,6 +41,25 @@ public class GraphNode {
     //	Get Functions
     //*****************
 	
+  public void			setFlag()
+  {
+    if (this.flag == false)
+      this.flag = true;
+    else
+      System.out.println("setFlag: Error: Flag already set");
+  }
+  public void			clearFlag()
+  {
+    if (this.flag == true)
+      this.flag = false;
+    else
+      System.out.println("clearFlag: Error: Flag already clear");
+
+  }
+  public boolean		getFlag()
+  {
+    return (this.flag);
+  }
     public Node			getData() {
 	return this.data;
     }
