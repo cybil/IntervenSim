@@ -109,7 +109,7 @@ public class Graph {
     }
 	
     public boolean		deleteRoad(Node node1, Node node2) {
-	
+	return true;
     }
 
     public ArrayList<Node>	getNodeUrgency() {
