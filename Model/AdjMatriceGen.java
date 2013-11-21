@@ -125,19 +125,30 @@ public class AdjMatriceGen {
   // Return List3 (list of list of path of tuple)
   public ArrayList<ArrayList<ArrayList<int[]>>>	GetAdjMatrice()
   {
-    ArrayList<ArrayList<ArrayList<int[]>>> AdjMatrice = new ArrayList<ArrayList<ArrayList<int[]>>>();
+    int						i;
+    ArrayList<ArrayList<ArrayList<int[]>>>	AdjMatrice = new ArrayList<ArrayList<ArrayList<int[]>>>();
 
     if (this._graphNode.size() > 0)
     {
       ArrayList<ArrayList<int[]>>	list = new ArrayList<ArrayList<int[]>>();
 
       // System.out.println("Root List size before: " + list.size());
-      list = this._GetAllPathForOneNode(_graphNode.get(0));
-      System.out.println("Root List size after: " + list.size());
-      for (ArrayList<int[]> path:list)
-	prettyPrintList(path);
+      i = _graphNode.size();
+      while (--i >= 0)
+      {
+	list = this._GetAllPathForOneNode(_graphNode.get(i));
+	System.out.println("Root List size after " + i + ": " + list.size());
+	// for (ArrayList<int[]> path:list)
+	//   prettyPrintList(path);
       // this.prettyPrintList(list.get(0));
-      AdjMatrice.add(list);
+	AdjMatrice.add(list);
+      }
+      for (ArrayList<ArrayList<int[]>> listOpath:AdjMatrice)
+      {
+	System.out.println("=============================================");
+	for (ArrayList<int[]> path:listOpath)
+	  prettyPrintList(path);
+      }
     }
     return (AdjMatrice);
   }
