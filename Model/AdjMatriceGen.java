@@ -2,12 +2,14 @@ import java.util.ArrayList;
 
 public class AdjMatriceGen {
   // We only need the list of node to work on (not the complete graph)
-  private ArrayList<GraphNode>	_graphNode;
-  private int		debug;
+  private ArrayList<ArrayList<ArrayList<int[]>>>	matrice;
+  private ArrayList<GraphNode>				_graphNode;
+  private int						debug;
 
   public AdjMatriceGen(ArrayList<GraphNode> graphNode) {
     _graphNode = graphNode;
     debug = 0; // Level of verbosity (0-5)
+    matrice = null;
   }
 
   // Check if a node is already added to the path (flag like way, in order to user a constant graph)
@@ -116,9 +118,8 @@ public class AdjMatriceGen {
     System.out.println("");
   }
 
-  // Return a matrice with the shortest path from all to all node
-  // Return List3 (list of list of path of tuple)
-  public ArrayList<ArrayList<ArrayList<int[]>>>	GetAdjMatrice()
+  // Force to remake the matrice
+  public ArrayList<ArrayList<ArrayList<int[]>>>	RegenGetAdjMatrice()
   {
     int						i;
     GraphNode					node;
@@ -148,6 +149,16 @@ public class AdjMatriceGen {
 	  }
 	}
     }
+    this.matrice = AdjMatrice;
     return (AdjMatrice);
+  }
+
+  // Return a matrice with the shortest path from all to all node
+  // Return List3 (list of list of path of tuple)
+  public ArrayList<ArrayList<ArrayList<int[]>>>	GetAdjMatrice()
+  {
+    if (matrice == null)
+      return (this.RegenGetAdjMatrice());
+    return (matrice);
   }
 }
