@@ -1,6 +1,4 @@
-import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JMenu;
 
 public class MenuBar extends JMenuBar {
 	private FileMenu 	fileMenu = new FileMenu("File");
