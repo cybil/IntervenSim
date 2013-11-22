@@ -11,4 +11,7 @@
 ##
 
 all:
-	javac *.java && java Main ; rm *.class
+	javac *.java && java Main
+
+clean:
+	rm *.class

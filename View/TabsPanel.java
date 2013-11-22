@@ -6,14 +6,10 @@ import javax.swing.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
+
 
 import javax.swing.JTabbedPane;
-import javax.swing.JScrollPane;
 
-import java.awt.*;
-import java.awt.event.*;
 
 public class TabsPanel extends JPanel {
 	TabsPanel() {

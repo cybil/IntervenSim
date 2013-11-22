@@ -63,12 +63,12 @@ public class SimulationManager {
 	if (this.state == ESimulationState.RUNNING)
 	    {
 		this.state = ESimulationState.PAUSED;
-		this.timer.wait();
+		// this.timer.wait();
 	    }
 	else
 	    {
 		this.state = ESimulationState.RUNNING;
-		this.timer.notify();
+		// this.timer.notify();
 	    }
     }
 
