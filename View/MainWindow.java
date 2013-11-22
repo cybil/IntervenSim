@@ -21,7 +21,7 @@ public class MainWindow extends JFrame {
 	private static MenuBar		menuBar = new MenuBar();
 	private static ButtonBar	buttonBar = new ButtonBar();
 	private static TabsPanel	tabsPanel = new TabsPanel();
-	private static JPanel	parent = new JPanel();
+	private static ToolsBar		toolsBar = new ToolsBar();
 	
 	private static MapPanel		mapPanel = new MapPanel();
 	GridBagConstraints gbc = new GridBagConstraints();
@@ -45,8 +45,8 @@ public class MainWindow extends JFrame {
 		
 		gbc.gridx = 0;
 	    gbc.gridy = 0;
-	    gbc.gridwidth = GridBagConstraints.REMAINDER;
-	    gbc.gridheight = GridBagConstraints.RELATIVE;
+	    gbc.gridwidth = GridBagConstraints.REMAINDER; //Dernier de la ligne
+	    gbc.gridheight = 1;
 	    gbc.weightx = 1;
 	    gbc.weighty = 1;
 	    gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -56,25 +56,33 @@ public class MainWindow extends JFrame {
 	    
 	    gbc.gridx = 0;
 	    gbc.gridy = GridBagConstraints.RELATIVE;
-	    gbc.weightx = 0;
+	    gbc.weightx = 1;
 	    gbc.weighty = 100;
-//	    gbc.fill = GridBagConstraints.NONE;
-	    gbc.gridheight = GridBagConstraints.REMAINDER;
-	    gbc.gridwidth = GridBagConstraints.RELATIVE;
-	    gbc.fill = GridBagConstraints.VERTICAL;
+	    gbc.gridheight = GridBagConstraints.RELATIVE; //Avant dernier colonne
+	    gbc.gridwidth = GridBagConstraints.RELATIVE; //Avant dernier ligne
+	    gbc.fill = GridBagConstraints.NONE;
 	    gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-	    content.add(tabsPanel, gbc);
-	    
+	    content.add(toolsBar, gbc);
 	    
 	    gbc.gridx = 1;
 	    gbc.gridy = 1;
-	    gbc.weightx = 0;
-	    gbc.weighty = 0;
-		gbc.gridheight = GridBagConstraints.REMAINDER;
-		gbc.gridwidth = GridBagConstraints.RELATIVE;
+	    gbc.weightx = 3.4;
+	    gbc.weighty = 1;
+		gbc.gridheight = GridBagConstraints.REMAINDER; // Dernier de la colonne
+		gbc.gridwidth = GridBagConstraints.REMAINDER; // et de la ligne
 		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
 	    gbc.fill = GridBagConstraints.BOTH;
 	    content.add(mapPanel, gbc);
+	   
+	    gbc.gridx = 0;
+	    gbc.gridy = 3;
+	    gbc.weightx = 1;
+	    gbc.weighty = 100;
+	    gbc.gridheight = GridBagConstraints.REMAINDER; // dernier de la colonne
+	    gbc.gridwidth = GridBagConstraints.REMAINDER; // et de la ligne
+	    gbc.fill = GridBagConstraints.VERTICAL;
+	    gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+	    content.add(tabsPanel, gbc);
 	    
 	    this.setContentPane(content);
 	    this.setVisible(true);
