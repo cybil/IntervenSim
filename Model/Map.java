@@ -3,12 +3,11 @@ import java.util.ArrayList;
 
 public class Map {
 
-  private Graph	graph = new Graph();
-  private float	scale = 1;
-  private Vehicule	vehicule = new Vehicule();
-  //Background Image
-  private Image	image = null;
-  private int		zoom = 100;
+  private Graph			graph = new Graph();
+  private float			scale = 1;
+  private Vehicule		vehicule = new Vehicule();
+  private Image			image = null;
+  private int			zoom = 100;
 
   //******************
   //	Constructor
@@ -29,7 +28,7 @@ public class Map {
 
   public boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state, float triggDate) {
     if (this.graph.getNode(coord) != null) {
-      Urgency	urg = new Urgency(state, triggDate, 0, 5);
+      Urgency			urg = new Urgency(state, triggDate, 0, 5);
       this.graph.getNode(coord).addUrgency(urg);
     }
     return false;

@@ -1,6 +1,6 @@
 
 all:
-	javac Model/*.java View/*.java
+	javac Main.java Model/*.java View/*.java && mv Model/*.class View/*.class .
 
 clean:
-	rm Model/*.class View/*.class
+	rm *.class
