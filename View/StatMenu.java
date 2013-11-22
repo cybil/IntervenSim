@@ -39,15 +39,15 @@ public class StatMenu extends JMenu {
 		this.add(historyItem);
 	}
 
-public class ExportItemAction implements ActionListener {
+	public class ExportItemAction implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 			System.out.print("ExportItem\n");
-			}
 		}
+	}
 
-		public class HistoryItemAction implements ActionListener {
+	public class HistoryItemAction implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 			System.out.print("HistoryItem\n");
-			}
 		}
+	}
 }

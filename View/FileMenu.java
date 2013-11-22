@@ -1,27 +1,9 @@
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.ButtonGroup;
 import javax.swing.KeyStroke;
 
 public class FileMenu extends JMenu {
@@ -34,7 +16,6 @@ public class FileMenu extends JMenu {
 	
 	FileMenu(String str) {
 		setText(str);
-
 		this.setMnemonic(KeyEvent.VK_F);
 		
 		newItem.addActionListener(new NewItemAction());
@@ -66,39 +47,39 @@ public class FileMenu extends JMenu {
 		add(exitItem);
 	}
 
-public class NewItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("newItem\n");
+	public class NewItemAction implements ActionListener {
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("newItem\n");
+			}
 		}
-	}
-
-public class OpenItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("openItem\n");
-		}
-	}
-
-public class SaveItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("saveItem\n");
-		}
-	}
-
-public class SaveAsItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("saveAsItem\n");
-		}
-	}
-
-public class ExportStatItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("exportStatItem\n");
-		}
-	}
 	
-public class ExitItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("exitItem\n");
+	public class OpenItemAction implements ActionListener {
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("openItem\n");
+			}
 		}
-	}
+	
+	public class SaveItemAction implements ActionListener {
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("saveItem\n");
+			}
+		}
+	
+	public class SaveAsItemAction implements ActionListener {
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("saveAsItem\n");
+			}
+		}
+	
+	public class ExportStatItemAction implements ActionListener {
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("exportStatItem\n");
+			}
+		}
+		
+	public class ExitItemAction implements ActionListener {
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("exitItem\n");
+			}
+		}
 }

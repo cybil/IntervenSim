@@ -1,27 +1,9 @@
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.ButtonGroup;
 import javax.swing.KeyStroke;
 
 public class EditMenu extends JMenu {
@@ -45,9 +27,7 @@ public class EditMenu extends JMenu {
 		redoItem.addActionListener(new RedoItemAction());
 		redoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK));
 		this.add(redoItem);
-
 		this.addSeparator();
-
 
 		cutItem.addActionListener(new CutItemAction());
 		cutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
@@ -63,7 +43,6 @@ public class EditMenu extends JMenu {
 
 		this.addSeparator();
 
-
 		selectAllItem.addActionListener(new SelectAllItemAction());
 		selectAllItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
 		this.add(selectAllItem);
@@ -76,13 +55,6 @@ public class EditMenu extends JMenu {
 
 		preferencesItem.addActionListener(new PreferencesItemAction());
 		this.add(preferencesItem);
-
-
-// .setMnemonic(KeyEvent.VK_R);
-// .addActionListener(this);
-// .setAccelerator(KeyStroke.getKeyStroke
-// 					(KeyEvent.VK_J, InputEvent.CTRL_DOWN_MASK));
-// addSeparator();
 	}
 
 public class UndoItemAction implements ActionListener {

@@ -61,41 +61,40 @@ public class ToolsMenu extends JMenu {
 // addSeparator();
 	}
 
-public class NodeItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("NodeItem\n");
+	public class NodeItemAction implements ActionListener {
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("NodeItem\n");
 		}
 	}
 
 	public class RoadItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("RoadItem\n");
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("RoadItem\n");
 		}
 	}
 
 	public class VehiculeItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("vehiculeItem\n");
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("vehiculeItem\n");
 		}
 	}
 
 	public class MapItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("MapItem\n");
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("MapItem\n");
 		}
 	}
 
 	public class ScaleItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("scaleItem\n");
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("scaleItem\n");
 		}
 	}
 	
 	public class SimulationItemAction implements ActionListener {
-	public void actionPerformed(ActionEvent evt) {
-		System.out.print("simulationItem\n");
+		public void actionPerformed(ActionEvent evt) {
+			System.out.print("simulationItem\n");
 		}
-
 	}
 }
 
