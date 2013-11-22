@@ -45,43 +45,43 @@ public class Controller {
 	}
 	
 	public boolean eventPutNode(int x, int y) {
-		return _model.putNode(x, y);
+		return _model.getMap().addNode(x, y);
 	}
 	
 	public void eventGetDisplay() {
-		_model.getDisplay();
+		_model.getMap().display();
 	}
 
 	public boolean	eventEditTreatmentTime(int[] coord, float time, int id) {
-		return _model.editTreatmentTime(coord, time, id);
+		return _model.getMap().editTreatmentTime(coord, time, id);
 	}
 	
 	public boolean		eventEditAttachPoint(int[] coord, boolean state) {
-		return _model.editAttachPoint(coord, state);
+		return _model.getMap().editAttachPoint(coord, state);
 	}
 	
 	public boolean		eventAddRoad(int[] coordNode1, int[] coordNode2) {
-		return _model.addRoad(coordNode1, coordNode2);
+		return _model.getMap().addRoad(coordNode1, coordNode2);
 	}
 	
 	public boolean		eventCreatVehicule(int[] coord) {
-		return _model.creatVehicule(coord);
+		return _model.getMap().creatVehicule(coord);
 	}
 	
 	public boolean		eventDeleteNode(int[] coord) {
-		return _model.deleteNode(coord);
+		return _model.getMap().deleteNode(coord);
 	}
 	
 	public boolean		eventDeleteRoad(int[] coord1, int[] coord2) {
-		return _model.deleteRoad(coord1, coord2);
+		return _model.getMap().deleteRoad(coord1, coord2);
 	}
 	
 	public boolean		eventEditNodeCoord(int[] oldCoord, int[] newCoord) {
-		return _model.editNodeCoord(oldCoord, newCoord);
+		return _model.getMap().editNodeCoord(oldCoord, newCoord);
 	}
 	
 	public boolean		eventAddNodeUrgency(int[] coord, Urgency.EUrgencyState state, float triggDate) {
-		return _model.addNodeUrgency(coord, state, triggDate);
+		return _model.getMap().addNodeUrgency(coord, state, triggDate);
 	}
 	
 	//Fonction for SimulationManager
