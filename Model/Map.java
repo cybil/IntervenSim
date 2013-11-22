@@ -106,7 +106,7 @@ public class Map {
 
 	return str;
     }
-
+    
     ArrayList<Node>	getNodeUrgency() {
 	return graph.getNodeUrgency();
     }
