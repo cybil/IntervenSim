@@ -6,11 +6,12 @@ public class SimulationManager {
 	BEGIN, RUNNING, PAUSED, END;
     }
 
-    // private Map			map;
+    private Map			map;
     // private Strategy		strategy = new Strategy();
     // private Statistic		statistic = new Statistic();
     private int			speed = 1000;
     private ESimulationState	state = ESimulationState.BEGIN;
+    private Timer		timer = new Timer();
 
     //***************
     // * Constructor
@@ -49,21 +50,26 @@ public class SimulationManager {
 	TimerTask		task = new TimerTask()
 	    {
 		public void run() {
-		    System.out.println(display);
 		    System.out.println("Coucou les gens !");
 		}
 	    };
 
-	Timer		time = new Timer();
-	time.scheduleAtFixedRate(task, 0, this.speed);
+	this.timer.scheduleAtFixedRate(task, 0, this.speed);
 
     }
 
     public void			pause() {
+	System.out.println("PAUUUSED");
 	if (this.state == ESimulationState.RUNNING)
-	    this.state = ESimulationState.PAUSED;
+	    {
+		this.state = ESimulationState.PAUSED;
+		this.timer.wait();
+	    }
 	else
-	    this.state = ESimulationState.RUNNING;
+	    {
+		this.state = ESimulationState.RUNNING;
+		this.timer.notify();
+	    }
     }
 
     public void			stop() {

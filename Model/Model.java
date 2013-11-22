@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class Model {
 
 	
-    private Map	_map;
-    //private SimulationManager	_sim;
+    private Map			_map = new Map();
+    private SimulationManager	_sim = new SimulationManager(_map);
     //private FileManager	_file;
 	
 	
@@ -14,36 +14,27 @@ public class Model {
     //******************
 	
     public Model() {
-	_map = new Map();
-	/*_sim = null;
-	  _file = null;*/
+
     }
 	
     public Model(Map map) {
 	_map = map;
-	/*_sim = null;
-	  _file = null;*/
     }
 		
     public Model(Model model) {
 	_map = model._map;
-	/*_sim = model._sim;
-	  _file = model._file;*/
+	_sim = model._sim;
+	// _file = model._file;
     }
-	
-    //***************
-    //	Destructor
-    //***************
-	
-    public void			finalize() {
-		
-    }
-	
-    //getters
-    public Map	getMap() {
+
+    //******************
+    //	Getters
+    //******************
+
+    public Map			getMap() {
 	return _map;
     }
-	
+
     /*public SimulationManager getSimulationManager() {
       return _sim;
       }
@@ -52,7 +43,6 @@ public class Model {
       return _file;
       }*/
 	
-    //setters
 	
     public void setMap(Map map) {
 	_map = map;
@@ -76,6 +66,10 @@ public class Model {
 	_map.display();
     }
 	
+    //******************
+    //	Setters
+    //******************
+
     public void setReturn(boolean ret) {
 	
     }
@@ -118,8 +112,8 @@ public class Model {
     }
 	
     //Fonction for SimulationManager
-    /*public void play() {
-      _sim.play();
+    public void play() {
+      _sim.play(true);
       }
 	
       public void pause() {
@@ -140,31 +134,31 @@ public class Model {
 	
       //Fonction for FileManager
 	
-      public boolean saveMap() {
-      return _file.saveMap();
-      }
+      // public boolean saveMap() {
+      // return _file.saveMap();
+      // }
 	
-      public boolean loadMap() {
-      return _file.loadMap();
-      }
+      // public boolean loadMap() {
+      // return _file.loadMap();
+      // }
 	
-      public boolean importImage() {
-      return _file.importImage();
-      }
+      // public boolean importImage() {
+      // return _file.importImage();
+      // }
 	
-      public boolean saveSim() {
-      return _file.saveSim();
-      }
+      // public boolean saveSim() {
+      // return _file.saveSim();
+      // }
 	
-      public boolean loadSim() {
-      return _file.loadSim();
-      }
+      // public boolean loadSim() {
+      // return _file.loadSim();
+      // }
 	
-      public boolean saveStat() {
-      return _file.saveStat;
-      }
+      // public boolean saveStat() {
+      // return _file.saveStat;
+      // }
 	
-      public boolean loadStat() {
-      return _file.loadStat;
-      }*/
+      // public boolean loadStat() {
+      // return _file.loadStat;
+      // }
 }
