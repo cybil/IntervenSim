@@ -2,11 +2,16 @@ import java.util.ArrayList;
 
 abstract class Strategy
 {
-  protected int	_currentStrategy;
-  protected Map	_map;
+  protected ArrayList<ArrayList<ArrayList<int[]>>>	_matrice;
+  protected int						_currentStrategy;
+  protected Map						_map;
+
   public Strategy(Map map)
   {
+    AdjMatriceGen	genMatrice = new AdjMatriceGen(map.getAllGraphNodes());
+
     this._map = map;
+    this._matrice = genMatrice.GetAdjMatrice();
   }
 
   /*!
