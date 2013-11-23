@@ -25,6 +25,11 @@ public class Controller {
     //********************
     //	Another functions
     //********************
+
+    public void	displayMap()
+    {
+	this._model.getDisplay();
+    }
 	
     public void	setReturn() {
 
@@ -75,12 +80,16 @@ public class Controller {
     }
 	
     //Fonction for SimulationManager
-    /*public void eventPlay() {
+    public void eventPlay() {
       _model.play();
       }
-		
+
       public void eventPause() {
-      _model.pause();
+	  _model.pause();
+      }
+
+      public void eventStop() {
+	  _model.stop();
       }
 		
       public void eventGoToStat() {
@@ -97,31 +106,31 @@ public class Controller {
 		
       //Fonction for FileManager
 		
-      public boolean eventSaveMap() {
-      return _model.saveMap();
-      }
+      // public boolean eventSaveMap() {
+      // return _model.saveMap();
+      // }
 		
-      public boolean eventLoadMap() {
-      return _model.loadMap();
-      }
+      // public boolean eventLoadMap() {
+      // return _model.loadMap();
+      // }
 		
-      public boolean eventImportImage() {
-      return _model.importImage();
-      }
+      // public boolean eventImportImage() {
+      // return _model.importImage();
+      // }
 		
-      public boolean eventSaveSim() {
-      return _model.saveSim();
-      }
+      // public boolean eventSaveSim() {
+      // return _model.saveSim();
+      // }
 		
-      public boolean eventLoadSim() {
-      return _model.loadSim();
-      }
+      // public boolean eventLoadSim() {
+      // return _model.loadSim();
+      // }
 		
-      public boolean eventSaveStat() {
-      return _model.saveStat;
-      }
+      // public boolean eventSaveStat() {
+      // return _model.saveStat;
+      // }
 		
-      public boolean eventLoadStat() {
-      return _model.loadStat;
-      }*/
+      // public boolean eventLoadStat() {
+      // return _model.loadStat;
+      // }
 }

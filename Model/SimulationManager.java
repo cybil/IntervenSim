@@ -1,6 +1,8 @@
 import java.util.*;
+import javax.swing.Timer;
+import java.awt.event.*;
 
-public class SimulationManager {
+public class SimulationManager implements ActionListener {
 
     public enum ESimulationState {
 	BEGIN, RUNNING, PAUSED, END;
@@ -11,7 +13,7 @@ public class SimulationManager {
     // private Statistic		statistic = new Statistic();
     private int			speed = 1000;
     private ESimulationState	state = ESimulationState.BEGIN;
-    private Timer		timer = new Timer();
+    private Timer		timer = new Timer(speed, this);
 
     //***************
     // * Constructor
@@ -45,35 +47,40 @@ public class SimulationManager {
     // * Others
     //***************
 
+    // Methode surchargee de ActionListener (action a chaque tick du timer)
+    public void actionPerformed(ActionEvent event){
+	System.out.println("*TICK*");
+	for (Node n : this.map.getNodeUrgency()) {
+	    for (Urgency u : n.getUrgency()) {
+		u.setTriggerDate(u.getTriggerDate() - 1); // 1 selon gestion du temps
+		if (u.getTriggerDate() <= 0)
+		    u.setState(Urgency.EUrgencyState.WAITING);
+	    }
+	}
+
+	this.map.actualizeVehicule();
+    }
+
     public void			play(boolean display) {
 	this.state = ESimulationState.RUNNING;
-	TimerTask		task = new TimerTask()
-	    {
-		public void run() {
-		    System.out.println("Coucou les gens !");
-		}
-	    };
-
-	this.timer.scheduleAtFixedRate(task, 0, this.speed);
-
+	this.timer.start();;
     }
 
     public void			pause() {
-	System.out.println("PAUUUSED");
-	if (this.state == ESimulationState.RUNNING)
-	    {
-		this.state = ESimulationState.PAUSED;
-		// this.timer.wait();
-	    }
-	else
-	    {
-		this.state = ESimulationState.RUNNING;
-		// this.timer.notify();
-	    }
+	if (this.state == ESimulationState.RUNNING) {
+	    this.state = ESimulationState.PAUSED;
+	    this.timer.stop();
+	}
+	else if (this.state == ESimulationState.PAUSED) {
+	    this.state = ESimulationState.RUNNING;
+	    this.timer.start();
+	}
     }
 
     public void			stop() {
+	System.out.println("STOP !");
 	this.state = ESimulationState.BEGIN;
+	this.timer.stop();
     }
 
     public void			goToStat() {

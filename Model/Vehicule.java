@@ -86,7 +86,12 @@ public class Vehicule {
     //***************
     // Other
     //***************	
-	
+    
+    public void		moveOn() {
+	++this.coord[0];
+	++this.coord[1];
+    }
+
     int			treatUrgency() {
 	this.state = EVehiculeState.WORKING;
 	return 0;

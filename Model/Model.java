@@ -63,7 +63,9 @@ public class Model {
     }
 	
     public void getDisplay() {
-	_map.display();
+	// _map.display();
+	for (String s : _map.getFormatMap())
+	    System.out.println(s);
     }
 	
     //******************
@@ -113,52 +115,55 @@ public class Model {
 	
     //Fonction for SimulationManager
     public void play() {
-      _sim.play(true);
-      }
+	_sim.play(true);
+    }
 	
-      public void pause() {
-      _sim.pause();
-      }
+    public void pause() {
+	_sim.pause();
+    }
+    public void stop() {
+	_sim.stop();
+    }
 	
-      public void goToStat() {
-      _sim.goToStat();
-      }
+    public void goToStat() {
+	_sim.goToStat();
+    }
 	
-      public void setSpeed(int speed) {
-      _sim.setSpeed(speed);
-      }
+    public void setSpeed(int speed) {
+	_sim.setSpeed(speed);
+    }
 	
-      public int getSpeed() {
-      return _sim.getSpeed();
-      }
+    public int getSpeed() {
+	return _sim.getSpeed();
+    }
 	
-      //Fonction for FileManager
+    //Fonction for FileManager
 	
-      // public boolean saveMap() {
-      // return _file.saveMap();
-      // }
+    // public boolean saveMap() {
+    // return _file.saveMap();
+    // }
 	
-      // public boolean loadMap() {
-      // return _file.loadMap();
-      // }
+    // public boolean loadMap() {
+    // return _file.loadMap();
+    // }
 	
-      // public boolean importImage() {
-      // return _file.importImage();
-      // }
+    // public boolean importImage() {
+    // return _file.importImage();
+    // }
 	
-      // public boolean saveSim() {
-      // return _file.saveSim();
-      // }
+    // public boolean saveSim() {
+    // return _file.saveSim();
+    // }
 	
-      // public boolean loadSim() {
-      // return _file.loadSim();
-      // }
+    // public boolean loadSim() {
+    // return _file.loadSim();
+    // }
 	
-      // public boolean saveStat() {
-      // return _file.saveStat;
-      // }
+    // public boolean saveStat() {
+    // return _file.saveStat;
+    // }
 	
-      // public boolean loadStat() {
-      // return _file.loadStat;
-      // }
+    // public boolean loadStat() {
+    // return _file.loadStat;
+    // }
 }

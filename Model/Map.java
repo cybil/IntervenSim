@@ -3,161 +3,222 @@ import java.util.ArrayList;
 
 public class Map {
 
-  private Graph			graph = new Graph();
-  private float			scale = 1;
-  private Vehicule		vehicule = new Vehicule();
-  private Image			image = null;
-  private int			zoom = 100;
+    private Graph		graph = new Graph();
+    private float		scale = 1;
+    private Vehicule		vehicule = new Vehicule();
+    private Image		image = null;
+    private int			zoom = 100;
 
-  //******************
-  //	Constructor
-  //******************
+    //******************
+    //	Constructor
+    //******************
 
-  public Map() {
+    public Map() {
+	int[] coord = {0, 0};
+	this.vehicule.setCoord(coord);
 
-  }
-
-  //***************
-  //	Add
-  //***************
-
-  public boolean		addNode(int x, int y) {
-    this.graph.creatNode(x, y);
-    return true;
-  }
-
-  public boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state, float triggDate) {
-    if (this.graph.getNode(coord) != null) {
-      Urgency			urg = new Urgency(state, triggDate, 0, 5);
-      this.graph.getNode(coord).addUrgency(urg);
     }
-    return false;
-  }
 
-  public boolean		addRoad(int[] coordNode1, int[] coordNode2) {
-    this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2));
-    return true;
-  }
+    //***************
+    //	Add
+    //***************
 
-  public boolean		creatVehicule(int[] coord) {
-    this.vehicule.setCoord(coord);
-    return true;
-  }
-
-  //***************
-  //	Delete
-  //***************
-
-  public boolean		deleteNode(int[] coord) {
-    this.graph.deleteNode(coord);
-    return true;
-  }
-
-  public boolean		deleteRoad(int[] coord1, int[] coord2) {
-    this.graph.deleteRoad(this.graph.getNode(coord1), this.graph.getNode(coord2));
-    return true;
-  }
-
-  //***************
-  //	Other
-  //***************
-
-  /*!
-  ** Return all the GraphNode of the graph
-  */
-  public ArrayList<GraphNode>	getAllGraphNodes()
-  {
-    return (graph.getAllNodes());
-  }
-
-  public boolean		editNodeCoord(int[] oldCoord, int[] newCoord) {
-    if (this.graph.getNode(oldCoord) != null) {
-      this.graph.getNode(oldCoord).setCoord(newCoord);
-      return true;
+    public boolean		addNode(int x, int y) {
+	this.graph.creatNode(x, y);
+	return true;
     }
-    return false;
-  }
 
-  public boolean		editTreatmentTime(int[] coord, float time, int id) {
-    if (this.graph.getNode(coord) != null) {
-      this.graph.getNode(coord).setUrgencyTime(id, time);
-      return true;
+    public boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state, float triggDate) {
+	if (this.graph.getNode(coord) != null) {
+	    Urgency			urg = new Urgency(state, triggDate, 0, 5);
+	    this.graph.getNode(coord).addUrgency(urg);
+	}
+	return false;
     }
-    return false;
-  }
 
-  public boolean		editAttachPoint(int[] coord, boolean state) {
-    if (this.graph.getNode(coord) != null) {
-      this.graph.getNode(coord).setAttachPoint(new AttachPoint(state, this.vehicule));
-      return true;
+    public boolean		addRoad(int[] coordNode1, int[] coordNode2) {
+	this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2));
+	return true;
     }
-    return false;
-  }
 
-  //**
-  // * Getters
-  //**
+    public boolean		creatVehicule(int[] coord) {
+	this.vehicule.setCoord(coord);
+	return true;
+    }
 
-  public int			getNbNode() {
-    return graph.getNbNode();
-  }
+    //***************
+    //	Delete
+    //***************
 
-  public int			getNbRoad() {
-    return graph.getNbRoad();
-  }
+    public boolean		deleteNode(int[] coord) {
+	this.graph.deleteNode(coord);
+	return true;
+    }
 
-  public String		getFormatMap() {
-    String		str = "";
+    public boolean		deleteRoad(int[] coord1, int[] coord2) {
+	this.graph.deleteRoad(this.graph.getNode(coord1), this.graph.getNode(coord2));
+	return true;
+    }
 
-    // ** A DEFINIR AVEC MISTY !!!!
-
-    return str;
-  }
-
-  public ArrayList<Node>	getNodeUrgency() {
-    return graph.getNodeUrgency();
-  }
-
-  //**
-  // * Setters
-  //**
-
-  public boolean	setZoom(int newZoom) {
-    this.zoom = newZoom;
-    return true;
-  }
-
-  public void		setVehiculePath(ArrayList<Node> path) {
-    this.vehicule.setPath(path);
-  }
+    //***************
+    //	Other
+    //***************
 
 
-  //**
-  // * DISPLAY
-  //**
-  public void		display()
-  {
-    System.out.println("Nombre noeud : " + this.graph.getNbNode());
-    System.out.println("Nombre de route : " + this.graph.getNbRoad());
-    System.out.println("Noeuds :");
-    ArrayList<GraphNode>	nodes = this.graph.getAllNodes();
+    public boolean		editNodeCoord(int[] oldCoord, int[] newCoord) {
+	if (this.graph.getNode(oldCoord) != null) {
+	    this.graph.getNode(oldCoord).setCoord(newCoord);
+	    return true;
+	}
+	return false;
+    }
 
-    for (GraphNode g : nodes)
+    public boolean		editTreatmentTime(int[] coord, float time, int id) {
+	if (this.graph.getNode(coord) != null) {
+	    this.graph.getNode(coord).setUrgencyTime(id, time);
+	    return true;
+	}
+	return false;
+    }
+
+    public boolean		editAttachPoint(int[] coord, boolean state) {
+	if (this.graph.getNode(coord) != null) {
+	    this.graph.getNode(coord).setAttachPoint(new AttachPoint(state, this.vehicule));
+	    return true;
+	}
+	return false;
+    }
+
+    //**
+    // * Getters
+    //**
+    
+    public ArrayList<GraphNode>	getAllGraphNodes() {
+	return graph.getAllNodes();
+    }
+
+    public int[]		getVehiculeCoord() {
+	return this.vehicule.getCoord();
+    }
+
+    public int			getNbNode() {
+	return graph.getNbNode();
+    }
+
+    public int			getNbRoad() {
+	return graph.getNbRoad();
+    }
+
+    public ArrayList<String>	getFormatMap() {
+
+	ArrayList<String>	format = new ArrayList<String>();
+	// Urgence:	U:x,y:S(sleeping) or W(waiting) or P(in progress) or D(done)
+	// AttachPoint: A:x,y
+	// Both:	B:x,y:S(sleeping) or W(waiting) or P(in progress) or D(done)
+	// Normal:	N:x,y
+	// Vehicule:	V:x,y
+	// Road:	R:x1,y1:x2,y2
+
+	// Ajout du vehicule
+	String			formatVehicule = "V:";
+	formatVehicule += this.vehicule.getCoord()[0] + "," + this.vehicule.getCoord()[1];
+	format.add(formatVehicule);
+
+	// Ajout des noeuds
+	ArrayList<GraphNode>	nodes = this.graph.getGraphNode();
+	for (GraphNode n : nodes) {
+	    String		str;
+	    if (n.getData().hasUrgency() == true
+		&& n.getData().getAttachPoint() != null)
+		str = "B:";
+	    else if (n.getData().getAttachPoint() != null)
+		str = "A:";
+	    else if (n.getData().hasUrgency() == true)
+		str = "U:";
+	    else
+		str = "N:";
+	    str += n.getData().getCoord()[0] + "," + n.getData().getCoord()[1];
+		
+	    if (str.charAt(0) == 'U' || str.charAt(0) == 'B') {
+		if (n.getData().getNextUrgency().getState()
+		    == Urgency.EUrgencyState.SLEEPING)
+		    str += ":S";
+		if (n.getData().getNextUrgency().getState()
+		    == Urgency.EUrgencyState.WAITING)
+		    str += ":W";
+		if (n.getData().getNextUrgency().getState()
+		    == Urgency.EUrgencyState.IN_PROGRESS)
+		    str += ":P";
+		if (n.getData().getNextUrgency().getState()
+		    == Urgency.EUrgencyState.DONE)
+		    str += ":D";
+	    }
+	    format.add(str);
+
+	    // Ajout des routes
+	    for (GraphNode ne : n.getNeighbors()) {
+		String		road;
+		road = "R:" + n.getData().getCoord()[0] + "," + n.getData().getCoord()[1]
+		    + ":" + ne.getData().getCoord()[0] + "," + ne.getData().getCoord()[1];
+		format.add(road);
+	    }
+	}
+
+	return format;
+    }
+
+    public ArrayList<Node>	getNodeUrgency() {
+	return graph.getNodeUrgency();
+    }
+
+    //**
+    // * Setters
+    //**
+
+    public void		actualizeVehicule() {
+	this.vehicule.moveOn();
+    }
+
+    public boolean	setZoom(int newZoom) {
+	this.zoom = newZoom;
+	return true;
+    }
+
+    public void		setVehiculePath(ArrayList<Node> path) {
+	this.vehicule.setPath(path);
+    }
+
+    public void		setVehiculeCoord(int x, int y) {
+	int[]		newCoord = {x, y};
+	this.vehicule.setCoord(newCoord);
+    }
+
+    //**
+    // * DISPLAY
+    //**
+    public void		display()
     {
-      System.out.print("Coord: " + g.getData().getCoord()[0]
-		       + " - " + g.getData().getCoord()[1]);
-      System.out.println("  " + (g.getData().hasUrgency() == true
-				 ? "URGENCY (" + g.getData().getNbUrgency() + ") => " + g.getData().getNextUrgency().getTriggerDate()
-				 : "Normal"));
-      System.out.println("  Voisins:");
-      for (GraphNode n : g.getNeighbors())
-      {
-	System.out.println("Total Neigh/Neighbors(" +  n.getNeighbors().size() + ")");
-	System.out.println("    Coord: " + n.getData().getCoord()[0]
-			   + " - " + n.getData().getCoord()[1]);
-      }
-      System.out.println("");
+    	System.out.println("Nombre noeud : " + this.graph.getNbNode());
+    	System.out.println("Nombre de route : " + this.graph.getNbRoad());
+    	System.out.println("Noeuds :");
+    	ArrayList<GraphNode>	nodes = this.graph.getAllNodes();
+
+    	for (GraphNode g : nodes)
+    	    {
+    		System.out.print("Coord: " + g.getData().getCoord()[0]
+    				 + " - " + g.getData().getCoord()[1]);
+    		System.out.println("  " + (g.getData().hasUrgency() == true
+    					   ? "URGENCY (" + g.getData().getNbUrgency() + ") => " + g.getData().getNextUrgency().getTriggerDate()
+    					   : "Normal"));
+    		System.out.println("  Voisins:");
+    		for (GraphNode n : g.getNeighbors())
+    		    {
+    			System.out.println("Total Neigh/Neighbors(" +  n.getNeighbors().size() + ")");
+    			System.out.println("    Coord: " + n.getData().getCoord()[0]
+    					   + " - " + n.getData().getCoord()[1]);
+    		    }
+    		System.out.println("");
+    	    }
     }
-  }
 
 }
