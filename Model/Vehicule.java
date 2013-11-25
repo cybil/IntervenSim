@@ -13,18 +13,18 @@ public class Vehicule implements java.io.Serializable {
     private ArrayList<Node>	path = new ArrayList<Node>();
     private int			speed;
     private EVehiculeState	state = EVehiculeState.WAITING;
-	
+
     //******************
     //	Constructor
     //******************
-	
+
     public Vehicule() {
 	this.km = 0;
 	this.attachPoint = null;
 	this.speed = 1;
     }
 
-    public Vehicule(float km, int[] coord, 
+    public Vehicule(float km, int[] coord,
 		    Node attachPoint, ArrayList<Node> path, int speed) {
 	this.km = km;
 	this.coord = coord;
@@ -32,7 +32,7 @@ public class Vehicule implements java.io.Serializable {
 	this.path = path;
 	this.speed = speed;
     }
-	
+
     public Vehicule(Vehicule vehicule) {
 	this.km = vehicule.km;
 	this.coord = vehicule.coord;
@@ -41,24 +41,24 @@ public class Vehicule implements java.io.Serializable {
 	this.speed = vehicule.speed;
 	this.state = vehicule.state;
     }
-	
+
 
     //*****************
     //	Get Functions
     //*****************
-	
+
     float		getKm() {
 	return this.km;
     }
-	
+
     int			getSpeed() {
 	return this.speed;
     }
-	
+
     int[]		 getCoord() {
 	return this.coord;
     }
-	
+
     EVehiculeState	getState() {
 	return this.state;
     }
@@ -74,7 +74,7 @@ public class Vehicule implements java.io.Serializable {
 	else
 	    this.path.addAll(newPath);
     }
-	
+
     void		setSpeed(int newSpeed) {
 	this.speed = newSpeed;
     }
@@ -85,8 +85,8 @@ public class Vehicule implements java.io.Serializable {
 
     //***************
     // Other
-    //***************	
-    
+    //***************
+
     public void		moveOn() {
 	++this.coord[0];
 	++this.coord[1];
@@ -96,11 +96,11 @@ public class Vehicule implements java.io.Serializable {
 	this.state = EVehiculeState.WORKING;
 	return 0;
     }
-		
+
     boolean		isFree() {
 	if (this.path.isEmpty())
 	    return false;
 	return true;
     }
-		
+
 }

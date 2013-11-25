@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class AdjMatriceGen {
   // We only need the list of node to work on (not the complete graph)
-  private ArrayList<ArrayList<ArrayList<int[]>>>	matrice;
+  private ArrayList<ArrayList<ArrayList<Node>>>	matrice;
   private ArrayList<GraphNode>				_graphNode;
   private int						debug;
 
@@ -13,24 +13,28 @@ public class AdjMatriceGen {
   }
 
   // Check if a node is already added to the path (flag like way, in order to user a constant graph)
-  private boolean		_isInPath(ArrayList<int[]> path, GraphNode neigh_node)
+  private boolean		_isInPath(ArrayList<Node> path, GraphNode neigh_node)
   {
+    int[]			coord;
     boolean			ret;
 
     ret = false;
-    for (int[] coord : path)
+    for (Node node: path)
+    {
+      coord = node.getCoord();
       if (coord[0] == neigh_node.getData().getCoord()[0]
 	  && coord[1] == neigh_node.getData().getCoord()[1])
 	return (true);
+    }
     return (false);
   }
 
   // Find if we have already a path to this node, add it or replace it with a shorter one
-  private void			_addOrReplacePath(ArrayList<ArrayList<int[]>> pathList,
-						  ArrayList<int[]> path)
+  private void			_addOrReplacePath(ArrayList<ArrayList<Node>> pathList,
+						  ArrayList<Node> path)
   {
     int				i;
-    ArrayList<int[]>		known_path;
+    ArrayList<Node>		known_path;
 
     i = pathList.size();
     if (i > 0)
@@ -41,26 +45,26 @@ public class AdjMatriceGen {
 	    == path.get(path.size() - 1))
 	{
 	  if (debug >= 5) System.out.println("_addOrReplacePath(): Replacing existing path");
-	  pathList.set(i, new ArrayList<int[]>(path));
+	  pathList.set(i, new ArrayList<Node>(path));
 	  return;
 	}
       }
     if (debug >= 5) System.out.println("_addOrReplacePath(): Adding new path");
-    pathList.add(new ArrayList<int[]>(path));
+    pathList.add(new ArrayList<Node>(path));
   }
 
   // Recursive
   // Each node add him self to the path, the final one add the full path to the list of path
   // Const, does not change any node
-  private void			_recursive(ArrayList<ArrayList<int[]>> pathList,
-						   ArrayList<int[]> path,
+  private void			_recursive(ArrayList<ArrayList<Node>> pathList,
+						   ArrayList<Node> path,
 						   GraphNode node, int depth)
   {
     if (debug >= 3) System.out.println("_recursive("
 				       + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1]
 				       + ", depth=" + depth
 				       + ")");
-    path.add(node.getData().getCoord());
+    path.add(node.getData());
     if (depth > 0)
     {
       for (GraphNode neigh_node : node.getNeighbors())
@@ -85,12 +89,12 @@ public class AdjMatriceGen {
 
   // Generate a list from a point to all the other
   // Return List2 (list of path of tuple)
-  private ArrayList<ArrayList<int[]>>	_GetAllPathForOneNode(GraphNode node)
+  private ArrayList<ArrayList<Node>>	_GetAllPathForOneNode(GraphNode node)
   {
     int					i;
     int					max_recur;
-    ArrayList<ArrayList<int[]>>		pathList = new ArrayList<ArrayList<int[]>>();
-    ArrayList<ArrayList<int[]>>		tmp = new ArrayList<ArrayList<int[]>>();
+    ArrayList<ArrayList<Node>>		pathList = new ArrayList<ArrayList<Node>>();
+    ArrayList<ArrayList<Node>>		tmp = new ArrayList<ArrayList<Node>>();
 
     if (debug >= 2) System.out.println("_GetAllPathForOneNode(" + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1] + ")");
     max_recur = _graphNode.size();
@@ -98,13 +102,13 @@ public class AdjMatriceGen {
     while (--i > 0)
     {
       if (debug >= 3) System.out.println("_GetAllPathForOneNode(): Starting depth " + i);
-      this._recursive(pathList, new ArrayList<int[]>(), node, i);
+      this._recursive(pathList, new ArrayList<Node>(), node, i);
     }
     return (pathList);
   }
 
   // Pretty print the content of a path
-  private void					prettyPrintPath(ArrayList<int[]> path)
+  private void					prettyPrintPath(ArrayList<Node> path)
   {
     int						i;
 
@@ -113,22 +117,22 @@ public class AdjMatriceGen {
     while (++i < path.size())
     {
       if (i > 0) System.out.print(", ");
-      System.out.print(path.get(i)[0] + ":" + path.get(i)[1]);
+      System.out.print(path.get(i).getCoord()[0] + ":" + path.get(i).getCoord()[1]);
     }
     System.out.println("");
   }
 
   // Force to remake the matrice
-  public ArrayList<ArrayList<ArrayList<int[]>>>	RegenGetAdjMatrice()
+  public ArrayList<ArrayList<ArrayList<Node>>>	RegenGetAdjMatrice()
   {
     int						i;
     GraphNode					node;
-    ArrayList<ArrayList<ArrayList<int[]>>>	AdjMatrice = new ArrayList<ArrayList<ArrayList<int[]>>>();
+    ArrayList<ArrayList<ArrayList<Node>>>	AdjMatrice = new ArrayList<ArrayList<ArrayList<Node>>>();
 
     if (debug >= 1) System.out.println("GetAdjMatrice()");
     if (this._graphNode.size() > 0)
     {
-      ArrayList<ArrayList<int[]>>	list = new ArrayList<ArrayList<int[]>>();
+      ArrayList<ArrayList<Node>>	list = new ArrayList<ArrayList<Node>>();
 
       i = _graphNode.size();
       while (--i >= 0)
@@ -140,10 +144,10 @@ public class AdjMatriceGen {
 	AdjMatrice.add(list);
       }
       if (debug >= 1)
-	for (ArrayList<ArrayList<int[]>> listOpath:AdjMatrice)
+	for (ArrayList<ArrayList<Node>> listOpath:AdjMatrice)
 	{
 	  System.out.println("");
-	  for (ArrayList<int[]> path:listOpath)
+	  for (ArrayList<Node> path:listOpath)
 	  {
 	    prettyPrintPath(path);
 	  }
@@ -155,7 +159,7 @@ public class AdjMatriceGen {
 
   // Return a matrice with the shortest path from all to all node
   // Return List3 (list of list of path of tuple)
-  public ArrayList<ArrayList<ArrayList<int[]>>>	GetAdjMatrice()
+  public ArrayList<ArrayList<ArrayList<Node>>>	GetAdjMatrice()
   {
     if (matrice == null)
       return (this.RegenGetAdjMatrice());
