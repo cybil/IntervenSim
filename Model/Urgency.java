@@ -1,5 +1,5 @@
 
-public class Urgency {
+public class Urgency implements java.io.Serializable {
 
     public enum EUrgencyState {
 	SLEEPING, WAITING, IN_PROGRESS, DONE;

@@ -2,7 +2,7 @@ import java.util.*;
 import javax.swing.Timer;
 import java.awt.event.*;
 
-public class SimulationManager implements ActionListener {
+public class SimulationManager implements ActionListener, java.io.Serializable {
 
     public enum ESimulationState {
 	BEGIN, RUNNING, PAUSED, END;

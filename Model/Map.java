@@ -1,7 +1,7 @@
 import java.awt.Image;
 import java.util.ArrayList;
 
-public class Map {
+public class Map implements java.io.Serializable {
 
     private Graph		graph = new Graph();
     private float		scale = 1;

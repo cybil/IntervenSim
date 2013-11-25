@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 
-public class Graph {
+public class Graph implements java.io.Serializable{
 	
     private ArrayList<GraphNode>	graphNode = new ArrayList<GraphNode>();
 

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 
-public class Vehicule {
+public class Vehicule implements java.io.Serializable {
 
     public enum EVehiculeState {
 	WAITING, ON_THE_ROAD, WORKING;

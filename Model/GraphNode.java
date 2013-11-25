@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class GraphNode {
+public class GraphNode implements java.io.Serializable {
 
     private boolean				flag;
     private Node				data;

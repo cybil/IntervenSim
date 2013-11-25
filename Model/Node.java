@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class Node {
+public class Node implements java.io.Serializable {
 
     private int[]		coord;
     private ArrayList<Urgency>	urgencyList = new ArrayList<Urgency>();
