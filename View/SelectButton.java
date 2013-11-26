@@ -1,0 +1,95 @@
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException; 
+
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+
+public class SelectButton extends JButton implements MouseListener {
+	private String name;
+	private Image img;
+	private boolean getCliked = false;
+	
+	
+	SelectButton() {
+//		super(title);
+//	    this.name = title;
+	    System.out.print("Misty");
+	    try {
+	      img = ImageIO.read(new File("cursor48x48WoB.png"));
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
+	    //Grâce à cette instruction, notre objet va s'écouter
+	    //Dès qu'un événement de la souris sera intercepté, il en sera averti
+	    this.addMouseListener(this);
+	}
+	
+	public void paintComponent(Graphics g){
+	    Graphics2D g2d = (Graphics2D)g;
+	    g2d.drawImage(this.img, 0, 0, this.getWidth(), this.getHeight(), this);
+	  }
+	
+	//Méthode appelée lors du clic de souris
+	  public void mouseClicked(MouseEvent event) {
+//		 if (getCliked == false)
+			try {
+		      this.img = ImageIO.read(new File("img/cursor48x48WoLG.png"));
+		    } catch (IOException e) {
+		      e.printStackTrace();
+		    }
+//		 else
+//			 try {
+//			      this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
+//			    } catch (IOException e) {
+//			      e.printStackTrace();
+//			    }
+	  }
+
+	  //Méthode appelée lors du survol de la souris
+	  public void mouseEntered(MouseEvent event) { 
+		  if (getCliked == false)
+			  try {
+				  this.img = ImageIO.read(new File("img/cursor48x48WoG.png"));
+				  } catch (IOException e) {
+					  e.printStackTrace();
+					  }
+	  }
+
+	  //Méthode appelée lorsque la souris sort de la zone du bouton
+	  public void mouseExited(MouseEvent event) {
+		  if (getCliked == false)
+		  try {
+		      this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
+		    } catch (IOException e) {
+		      e.printStackTrace();
+		    }
+		  else
+			  try {
+			      this.img = ImageIO.read(new File("img/cursor48x48WoLG.png"));
+			    } catch (IOException e) {
+			      e.printStackTrace();
+			    } 
+	  }
+
+	  //Méthode appelée lorsque l'on presse le bouton gauche de la souris
+	  public void mousePressed(MouseEvent event) { }
+
+	  //Méthode appelée lorsque l'on relâche le clic de souris
+	  public void mouseReleased(MouseEvent event) {
+		  getCliked = !(getCliked);
+		  
+	  }
+}
