@@ -1,9 +1,12 @@
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
+import javax.swing.Timer;
+import java.awt.event.*;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements ActionListener {
     private static boolean		inst = false;
     private static JPanel		content = new JPanel();
     private static MenuBar		menuBar = new MenuBar();
@@ -12,8 +15,11 @@ public class MainWindow extends JFrame {
     private static ToolsBar		toolsBar = new ToolsBar();
     private static MapPanel		mapPanel = new MapPanel();
     private static GridBagConstraints	gbc = new GridBagConstraints();
+    private Map				map;
 
-    public MainWindow() throws NombreInstanceGUIException{
+    private Timer			timer = new Timer(500, this);
+
+    public MainWindow(Map map) throws NombreInstanceGUIException{
 	if (inst == true)
 	    throw new NombreInstanceGUIException("Il existe deja une instance de la classe mainWindow.");
 	inst = true;
@@ -23,6 +29,7 @@ public class MainWindow extends JFrame {
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.setVisible(true);
 	this.setJMenuBar(menuBar);
+	this.map = map;
 		
 	content.setLayout(new GridBagLayout());
 
@@ -68,5 +75,11 @@ public class MainWindow extends JFrame {
 	    
 	this.setContentPane(content);
 	this.setVisible(true);
+
+	this.timer.start();
+    }
+
+    public void actionPerformed(ActionEvent event) {
+	this.mapPanel.displayMap(this.map.getFormatMap());
     }
 }
