@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 abstract class Strategy
 {
-  protected ArrayList<ArrayList<ArrayList<int[]>>>	_matrice;
+  protected ArrayList<ArrayList<ArrayList<Node>>>	_matrice;
   protected int						_currentStrategy;
   protected Map						_map;
 
@@ -35,7 +35,7 @@ abstract class Strategy
   ** Return the path to a node define by the strategy
   ** Ex:Return the path to go to the oldest urgency
   */
-  abstract ArrayList<int []>	getPath();
+  abstract ArrayList<Node>	getPath();
 
   /*!
   ** Return the oldest urgency on the map
