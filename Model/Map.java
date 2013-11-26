@@ -14,8 +14,9 @@ public class Map implements java.io.Serializable {
     //******************
 
     public Map() {
-      // Jb: Pourquoi 10/10 en coordonnee ?
-	int[] coord = {10, 10};
+	// Jb: Pourquoi 10/10 en coordonnee ?
+	// Cybil: Pour le mettre a un endroit pour test de l'afficher :)
+	int[] coord = {50, 50};
 	this.vehicule.setCoord(coord);
 
     }
@@ -37,9 +38,17 @@ public class Map implements java.io.Serializable {
 	return false;
     }
 
+    public static boolean		findNode(int[] c1, int[] c2)
+    {
+	return false;
+    }
+
     public boolean		addRoad(int[] coordNode1, int[] coordNode2) {
-	this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2));
-	return true;
+	if (this.findNode(coordNode1, coordNode2) == true) {
+	    this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2));
+	    return true;
+	}
+	return false;
     }
 
     public boolean		creatVehicule(int[] coord) {

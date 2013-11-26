@@ -8,9 +8,10 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 
-public class MapPanel extends JPanel implements MouseListener {
+public class MapPanel extends JPanel implements MouseListener, MouseMotionListener {
 
     private class NodeGraphic {
 	public Image		img;
@@ -38,6 +39,12 @@ public class MapPanel extends JPanel implements MouseListener {
 	}
     }
 
+    private int		x1;
+    private int		y1;
+    private int		x2;
+    private int		y2;
+    private boolean	isPressed = false;
+
     private Image		background;
     private Image		nodeUrgency;
     private Image		nodeAttachPoint;
@@ -61,11 +68,13 @@ public class MapPanel extends JPanel implements MouseListener {
 	this.controller = controller;
 	this.setPreferredSize(new Dimension(300, 600));
 	this.addMouseListener(this);
+	this.addMouseMotionListener(this);
     }
 
     public void		paintComponent(Graphics g) {
 	Image		bck;
 
+	super.paintComponent(g);
 	if ((bck = this.controller._model.getMap().getBackground()) != null)
 	    g.drawImage(bck, 0, 0, this);
 	for (RoadGraphic r : this.roads) {
@@ -74,6 +83,10 @@ public class MapPanel extends JPanel implements MouseListener {
 	for (NodeGraphic n : this.nodes) {
 	    g.drawImage(n.img, n.x - (n.img.getWidth(null) / 2), n.y - (n.img.getHeight(null) / 2), this);
 	}
+	if (this.isPressed == true) {
+	    g.drawLine(this.x1, this.y1, this.x2, this.y2);
+	}
+
     }
 
     public void		displayMap(ArrayList<String> formatMap)
@@ -82,25 +95,25 @@ public class MapPanel extends JPanel implements MouseListener {
 	    if (s.charAt(0) == 'V') {
 		int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-		NodeGraphic		newNode =new NodeGraphic(this.vehicule, x, y);
+		NodeGraphic		newNode = new NodeGraphic(this.vehicule, x, y);
 		this.nodes.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'N') {
 		int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-		NodeGraphic		newNode =new NodeGraphic(this.nodeNormal, x, y);
+		NodeGraphic		newNode = new NodeGraphic(this.nodeNormal, x, y);
 		this.nodes.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'A') {
 		int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-		NodeGraphic		newNode =new NodeGraphic(this.nodeAttachPoint, x, y);
+		NodeGraphic		newNode = new NodeGraphic(this.nodeAttachPoint, x, y);
 		this.nodes.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'U') {
 		int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
-		NodeGraphic		newNode =new NodeGraphic(this.nodeUrgency, x, y);
+		NodeGraphic		newNode = new NodeGraphic(this.nodeUrgency, x, y);
 		this.nodes.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'R') {
@@ -109,22 +122,18 @@ public class MapPanel extends JPanel implements MouseListener {
 		String	s2 = s.substring(s.lastIndexOf(":"));
 		int	x2 = Integer.parseInt(s2.substring(s2.indexOf(":") + 1, s2.indexOf(",")));
 		int	y2 = Integer.parseInt(s2.substring(s2.indexOf(",") + 1));
-		RoadGraphic		newRoad =new RoadGraphic(x1, y1, x2, y2);
+		RoadGraphic		newRoad = new RoadGraphic(x1, y1, x2, y2);
 		this.roads.add(newRoad);
-	    }
-	    
+	    }	    
 	    this.repaint();
 	}
     }
 
     public void mouseClicked(MouseEvent e) {
+	System.out.println("Clicked ! X: " + e.getX() + " // Y: " + e.getY());
 	if (e.getButton() == MouseEvent.BUTTON1) {
-	    System.out.println("Clicked ! X: " + e.getX() + " // Y: " + e.getY());
 	    // Verifier quel est l'item selectionne pour placer un element
 	    this.controller.eventPutNode(e.getX(), e.getY());
-	}
-	else if (e.getButton() == MouseEvent.BUTTON2) {
-	    int[]	coord1 = {e.getX(), e.getY()};
 	}
     }
 
@@ -138,13 +147,39 @@ public class MapPanel extends JPanel implements MouseListener {
 
     }
 
+    // Pour les Noeuds/Roads, voir pour faire une class NodeGraphic/RoadGraphic qui herite de JPanel et MouseListener, pour pouvoir detecter les events souris dessus et les dessiner plus facilement
+    // Plus simple pour deplacer les composants sur la map, les selectionner, faire des effets dessus etc.
+
     public void mouseReleased(MouseEvent e) {
 	System.out.println("Released !");
-
+	if (e.getButton() == MouseEvent.BUTTON3) {
+	    this.isPressed = false;
+	    int[]	coord1 = {this.x1, this.y1};
+	    int[]	coord2 = {e.getX(), e.getY()};
+	    this.controller.eventAddRoad(coord1, coord2);
+	}
     }
 
     public void mousePressed(MouseEvent e) {
-	System.out.println("Clicked !");
+	System.out.println("Pressed !");
+	if (e.getButton() == MouseEvent.BUTTON3) {
+	    this.isPressed = true;
+	    this.x1 = e.getX();
+	    this.y1 = e.getY();
+	    this.x2 = e.getX();
+	    this.y2 = e.getY();
+	}
+    }
 
+    public void	mouseMoved(MouseEvent e) {
+	System.out.println("Move !");
+    }
+
+    public void	mouseDragged(MouseEvent e) {
+	System.out.println("Drag !");
+	if (this.isPressed == true) {
+	    this.x2 = e.getX();
+	    this.y2 = e.getY();
+	}
     }
 }
