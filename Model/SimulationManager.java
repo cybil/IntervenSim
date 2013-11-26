@@ -48,17 +48,17 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     //***************
 
     // Methode surchargee de ActionListener (action a chaque tick du timer)
-    public void actionPerformed(ActionEvent event){
-	System.out.println("*TICK*");
-	for (Node n : this.map.getNodeUrgency()) {
-	    for (Urgency u : n.getUrgency()) {
-		u.setTriggerDate(u.getTriggerDate() - 1); // 1 selon gestion du temps
-		if (u.getTriggerDate() <= 0)
-		    u.setState(Urgency.EUrgencyState.WAITING);
-	    }
-	}
+    public void actionPerformed(ActionEvent event) {
+    	System.out.println("*TICK*");
+    	for (Node n : this.map.getNodeUrgency()) {
+    	    for (Urgency u : n.getUrgency()) {
+    		u.setTriggerDate(u.getTriggerDate() - 1); // 1 selon gestion du temps
+    		if (u.getTriggerDate() <= 0)
+    		    u.setState(Urgency.EUrgencyState.WAITING);
+    	    }
+    	}
 
-	this.map.actualizeVehicule();
+    	this.map.actualizeVehicule();
     }
 
     public void			play(boolean display) {

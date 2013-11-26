@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Controller {
 
-    GUI				_gui = new GUI();
     Model			_model = new Model();
+    GUI				_gui = new GUI(_model.getMap());
 
     //******************
     //	Constructor
