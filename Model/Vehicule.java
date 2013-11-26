@@ -7,15 +7,16 @@ public class Vehicule implements java.io.Serializable {
   }
 
   private boolean	debug = false;
-  private float		km;
-  private int[]		coord;
+  private float		km; // number of km done
+  private int[]		coord; // Coord of the vehicule
   private int[]		incomingCoord = {0, 0}; // The point from where the vehicule is comming
-  private Node		attachPoint;
-  private ArrayList<Node>	path = new ArrayList<Node>();
-  private int			speed;
+  private Node		attachPoint; // Attach point of the vehicule
+  private ArrayList<Node>	path = new ArrayList<Node>(); // path to follow
+  private int			speed; // km/h
   private EVehiculeState	state = EVehiculeState.WAITING;
 
   // For the moveOn() methode
+  private int		speed_adjust = 0; // Management of the mouvement with the number of tick
   private int		tick_ref = 60;
   private int		tick_synch = tick_ref;
   private boolean	initMoveOn = false;
@@ -176,12 +177,23 @@ public class Vehicule implements java.io.Serializable {
   */
   public void		moveOn()
   {
+    int			move_rate;
+
+    move_rate = this.tick_ref / this.speed;
     this.tick_synch -= 1;
     if (this.tick_synch <= 0)
-    {
       this.tick_synch = this.tick_ref;
+
+    speed_adjust += (3600 / this.speed);
+    while (speed_adjust < 60)
+    {
       this._moveOn();
+      speed_adjust -= 60;
     }
+    speed_adjust = speed_adjust % 60;
+
+    // if ((this.tick_sync % move_rate) == 0)
+    //   this._moveOn();
   }
   // TODO: gerer la vitesse (multiplier le nombre de boucle pour le kilometrage)
   private void		_moveOn()
