@@ -8,18 +8,19 @@ import java.awt.event.*;
 
 public class MainWindow extends JFrame implements ActionListener {
     private static boolean		inst = false;
+    private Controller			controller;
     private static JPanel		content = new JPanel();
     private static MenuBar		menuBar = new MenuBar();
     private static ButtonBar		buttonBar = new ButtonBar();
     private static TabsPanel		tabsPanel = new TabsPanel();
     private static ToolsBar		toolsBar = new ToolsBar();
-    private static MapPanel		mapPanel = new MapPanel();
+    private static MapPanel		mapPanel;
     private static GridBagConstraints	gbc = new GridBagConstraints();
     private Map				map;
 
-    private Timer			timer = new Timer(500, this);
+    private Timer			timer = new Timer(10, this);
 
-    public MainWindow(Map map) throws NombreInstanceGUIException{
+    public MainWindow(Controller controller) throws NombreInstanceGUIException{
 	if (inst == true)
 	    throw new NombreInstanceGUIException("Il existe deja une instance de la classe mainWindow.");
 	inst = true;
@@ -29,7 +30,9 @@ public class MainWindow extends JFrame implements ActionListener {
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.setVisible(true);
 	this.setJMenuBar(menuBar);
-	this.map = map;
+	this.controller = controller;
+	this.mapPanel = new MapPanel(this.controller);
+	this.map = this.controller._model.getMap();
 		
 	content.setLayout(new GridBagLayout());
 

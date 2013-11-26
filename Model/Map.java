@@ -14,7 +14,7 @@ public class Map implements java.io.Serializable {
     //******************
 
     public Map() {
-	int[] coord = {0, 0};
+	int[] coord = {10, 10};
 	this.vehicule.setCoord(coord);
 
     }
@@ -93,6 +93,10 @@ public class Map implements java.io.Serializable {
     // * Getters
     //**
     
+    public Image		getBackground() {
+	return this.image;
+    }
+
     public ArrayList<GraphNode>	getAllGraphNodes() {
 	return graph.getAllNodes();
     }
@@ -191,6 +195,10 @@ public class Map implements java.io.Serializable {
     public void		setVehiculeCoord(int x, int y) {
 	int[]		newCoord = {x, y};
 	this.vehicule.setCoord(newCoord);
+    }
+
+    public void		setBackground(Image bck) {
+	this.image = bck;
     }
 
     //**

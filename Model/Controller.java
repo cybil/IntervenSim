@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Controller {
 
     Model			_model = new Model();
-    GUI				_gui = new GUI(_model.getMap());
+    GUI				_gui = new GUI(this);
 
     //******************
     //	Constructor
@@ -19,7 +19,7 @@ public class Controller {
 	
     public Controller(Controller controller) {
 	_model = controller._model;
-	//_gui = controller._gui;
+	_gui = controller._gui;
     }
 
     //********************

@@ -2,15 +2,13 @@ import javax.swing.JFrame;
 
 public class GUI {
     private static boolean	m_inst = false;
-    MainWindow 				m_mainWindow;
-    private Map				map;
+    MainWindow			m_mainWindow;
 
-    public GUI(Map map) {
+    public GUI(Controller controller) {
 	System.out.print("Une nouvelle instance de la classe GUI a ete creee.\n");
 	m_inst = true;
-	this.map = map;
 	try {
-	    m_mainWindow = new MainWindow(map);
+	    m_mainWindow = new MainWindow(controller);
 	}
 	catch (NombreInstanceGUIException e) {}
     }
