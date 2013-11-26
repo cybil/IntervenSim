@@ -32,8 +32,8 @@ public class SelectButton extends JButton implements MouseListener {
 	    } catch (IOException e) {
 	      e.printStackTrace();
 	    }
-	    //Grâce à cette instruction, notre objet va s'écouter
-	    //Dès qu'un événement de la souris sera intercepté, il en sera averti
+	    //Grace a cette instruction, notre objet va s'ecouter
+	    //Des qu'un evenement de la souris sera intercepte, il en sera averti
 	    this.addMouseListener(this);
 	}
 	
@@ -42,7 +42,7 @@ public class SelectButton extends JButton implements MouseListener {
 	    g2d.drawImage(this.img, 0, 0, this.getWidth(), this.getHeight(), this);
 	  }
 	
-	//Méthode appelée lors du clic de souris
+	//Methode appelee lors du clic de souris
 	  public void mouseClicked(MouseEvent event) {
 //		 if (getCliked == false)
 			try {
@@ -58,7 +58,7 @@ public class SelectButton extends JButton implements MouseListener {
 //			    }
 	  }
 
-	  //Méthode appelée lors du survol de la souris
+	  //Methode appelee lors du survol de la souris
 	  public void mouseEntered(MouseEvent event) { 
 		  if (getCliked == false)
 			  try {
@@ -68,7 +68,7 @@ public class SelectButton extends JButton implements MouseListener {
 					  }
 	  }
 
-	  //Méthode appelée lorsque la souris sort de la zone du bouton
+	  //Methode appelee lorsque la souris sort de la zone du bouton
 	  public void mouseExited(MouseEvent event) {
 		  if (getCliked == false)
 		  try {
@@ -84,10 +84,10 @@ public class SelectButton extends JButton implements MouseListener {
 			    } 
 	  }
 
-	  //Méthode appelée lorsque l'on presse le bouton gauche de la souris
+	  //Methode appelee lorsque l'on presse le bouton gauche de la souris
 	  public void mousePressed(MouseEvent event) { }
 
-	  //Méthode appelée lorsque l'on relâche le clic de souris
+	  //Methode appelee lorsque l'on relache le clic de souris
 	  public void mouseReleased(MouseEvent event) {
 		  getCliked = !(getCliked);
 		  
