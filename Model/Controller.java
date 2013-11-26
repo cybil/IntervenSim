@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller {
@@ -130,7 +131,7 @@ public class Controller {
        return _model.getFileManager().saveStat();
        }
 		
-       public boolean eventLoadStat(String path) {
+       public boolean eventLoadStat(String path) throws ClassNotFoundException, IOException {
        return _model.getFileManager().loadStat(path);
        }
 }
