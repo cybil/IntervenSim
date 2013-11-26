@@ -13,18 +13,6 @@ import java.awt.event.MouseEvent;
 
 public class MapPanel extends JPanel implements MouseListener, MouseMotionListener {
 
-    private class NodeGraphic {
-	public Image		img;
-	public int		x;
-	public int		y;
-	
-	public NodeGraphic(Image img, int x, int y) {
-	    this.img = img;
-	    this.x = x;
-	    this.y = y;
-	}
-    } 
-
     private class RoadGraphic {
 	public int		x1;
 	public int		x2;
@@ -39,6 +27,11 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	}
     }
 
+    public enum EObjectTools {
+	VEHICULE, NODE, CURSOR;
+    }
+
+    private EObjectTools selectedObject = EObjectTools.CURSOR;
     private int		x1;
     private int		y1;
     private int		x2;
@@ -71,6 +64,10 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	this.addMouseMotionListener(this);
     }
 
+    public void		setSelectedObject(EObjectTools obj) {
+	this.selectedObject = obj;
+    }
+
     public void		paintComponent(Graphics g) {
 	Image		bck;
 
@@ -81,7 +78,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	    g.drawLine(r.x1, r.y1, r.x2, r.y2);
 	}
 	for (NodeGraphic n : this.nodes) {
-	    g.drawImage(n.img, n.x - (n.img.getWidth(null) / 2), n.y - (n.img.getHeight(null) / 2), this);
+	    g.drawImage(n.imgNormal, n.x - (n.imgNormal.getWidth(null) / 2), n.y - (n.imgNormal.getHeight(null) / 2), this);
 	}
 	if (this.isPressed == true) {
 	    g.drawLine(this.x1, this.y1, this.x2, this.y2);
@@ -95,25 +92,33 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	    if (s.charAt(0) == 'V') {
 		int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-		NodeGraphic		newNode = new NodeGraphic(this.vehicule, x, y);
+		NodeGraphic		newNode = new NodeGraphic(this.vehicule,
+								  this.vehicule,
+								  this.vehicule, x, y);
 		this.nodes.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'N') {
 		int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-		NodeGraphic		newNode = new NodeGraphic(this.nodeNormal, x, y);
+		NodeGraphic		newNode = new NodeGraphic(this.nodeNormal,
+								  this.nodeNormal,
+								  this.nodeNormal, x, y);
 		this.nodes.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'A') {
 		int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-		NodeGraphic		newNode = new NodeGraphic(this.nodeAttachPoint, x, y);
+		NodeGraphic		newNode = new NodeGraphic(this.nodeAttachPoint,
+								  this.nodeAttachPoint,
+								  this.nodeAttachPoint, x, y);
 		this.nodes.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'U') {
 		int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
-		NodeGraphic		newNode = new NodeGraphic(this.nodeUrgency, x, y);
+		NodeGraphic		newNode = new NodeGraphic(this.nodeUrgency,
+								  this.nodeUrgency,
+								  this.nodeUrgency, x, y);
 		this.nodes.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'R') {
