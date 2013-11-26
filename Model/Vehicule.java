@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
-
 public class Vehicule implements java.io.Serializable {
 
   public enum EVehiculeState {
     WAITING, ON_THE_ROAD, WORKING;
   }
 
-  private boolean	debug = false;
+  private boolean	debug = true;
   private float		km;
   private int[]		coord;
+  private int[]		incomingCoord; // The point from where the vehicule is comming
   private Node		attachPoint;
   private ArrayList<Node>	path = new ArrayList<Node>();
   private int			speed;
@@ -30,6 +30,7 @@ public class Vehicule implements java.io.Serializable {
     this.km = km;
     this.coord = coord;
     this.attachPoint = attachPoint;
+    this.incomingCoord = this.coord;
     this.path = path;
     this.speed = speed;
   }
@@ -37,6 +38,7 @@ public class Vehicule implements java.io.Serializable {
   public Vehicule(Vehicule vehicule) {
     this.km = vehicule.km;
     this.coord = vehicule.coord;
+    this.incomingCoord = this.coord;
     this.attachPoint = vehicule.attachPoint;
     this.path = vehicule.path;
     this.speed = vehicule.speed;
@@ -98,6 +100,31 @@ public class Vehicule implements java.io.Serializable {
   // Other
   //***************
 
+  /*
+  ** This function is called every time a node from the patch is reached (on Vehicule.moveOn())
+  **
+  ** Use Pythagore to update the number of km drived by the vehicule so far
+  ** This function assume that 1 coord unit is equal to 1km
+  **
+  */
+  private void		_updatingKm()
+  {
+    int			i;
+    int[]		tmp_coord = {0, 0};
+    int[]		pythagore = {0, 0};
+
+    i = -1;
+    while (++i < 2)
+    {
+      tmp_coord[i] = (path.get(0).getCoord()[i] - this.incomingCoord[i]);
+      tmp_coord[i] = ((tmp_coord[i] > 0) ? (tmp_coord[i]) : -(tmp_coord[i]));
+      pythagore[i] = tmp_coord[i] * tmp_coord[i];
+    }
+    this.km += Math.sqrt((pythagore[0]) + (pythagore[1]));
+    this.incomingCoord = path.get(0).getCoord();
+    if (debug == true) System.out.println("Vehicule.moveOn(): Updating km to " + this.km);
+  }
+
   public void		moveOn() {
     if (this.path != null && this.path.size() > 0 && this.isFree() == false)
     {
@@ -121,11 +148,12 @@ public class Vehicule implements java.io.Serializable {
 
       if (coord[0] == x_dst && coord[1] == y_dst) // If we are on the point, remove it from the path and go on
       {
+	this._updatingKm();
 	this.path.remove(0);
 	this.moveOn();
 	return;
       }
-      if (!(coord[0] == x_dst && coord[1] == y_dst))
+      while (!(coord[0] == x_dst && coord[1] == y_dst))
       {
 	e2 = 2 * err;
 	if (e2 > -dy)
@@ -137,7 +165,11 @@ public class Vehicule implements java.io.Serializable {
 			       + " (dst node = " + x_dst + ":" + y_dst + ")");
 	}
 	if (coord[0] == x_dst && coord[1] == y_dst)
+	{
+	  this._updatingKm();
+	  this.path.remove(0);
 	  return;
+	}
 	if (e2 < dx)
 	{
 	  err = err + dx;
