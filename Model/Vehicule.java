@@ -73,11 +73,16 @@ public class Vehicule implements java.io.Serializable {
   }
 
   void		setPath(ArrayList<Node> newPath) {
-    this.state = EVehiculeState.ON_THE_ROAD;
-    if (this.path.isEmpty())
-      this.path = newPath;
+    if (newPath != null && newPath.size() > 0)
+    {
+      this.state = EVehiculeState.ON_THE_ROAD;
+      if (this.path.isEmpty())
+	this.path = newPath;
+      else
+	this.path.addAll(newPath);
+    }
     else
-      this.path.addAll(newPath);
+      System.out.println("Vehicule.setPath(): Error: Trying to set a null or empty path");
   }
 
   void		setSpeed(int newSpeed) {
@@ -93,7 +98,7 @@ public class Vehicule implements java.io.Serializable {
   //***************
 
   public void		moveOn() {
-    if (this.isFree() == false)
+    if (this.path != null && this.path.size() > 0 && this.isFree() == false)
     {
       int	e2;
       int	dx;
@@ -134,8 +139,13 @@ public class Vehicule implements java.io.Serializable {
 	}
       }
     }
+    else if (path != null && path.size() == 0)
+      System.out.println("Vehicule.moveOn(): Error: Trying to move whitout any path set."
+			 + " Path = " + path.size());
+    else if (this.isFree() == true)
+      System.out.println("Vehicule.moveOn(): Error: this.isFree() == true");
     else
-      System.out.println("Vehicule.moveOn(): Error: Trying to move whitout any path set.");
+      System.out.println("Vehicule.moveOn(): Error: Trying to move with a 'null' path set.");
   }
 
   int			treatUrgency() {
@@ -143,10 +153,13 @@ public class Vehicule implements java.io.Serializable {
     return 0;
   }
 
+  /*
+  ** Return true if the vehicule has nothing more to do (no path)
+  */
   boolean		isFree() {
-    if (this.path != null && this.path.isEmpty())
-      return false;
-    return true;
+    if (this.path != null && this.path.size() > 0)
+      return (false);
+    return (true);
   }
 
 }
