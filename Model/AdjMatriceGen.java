@@ -25,11 +25,9 @@ public class AdjMatriceGen {
       if (coord[0] == neigh_node.getData().getCoord()[0]
 	  && coord[1] == neigh_node.getData().getCoord()[1])
       {
-	System.out.println("Is in path return true");
 	return (true);
       }
     }
-    System.out.println("Is in path return false");
     return (false);
   }
 

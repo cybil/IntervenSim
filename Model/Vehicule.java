@@ -7,6 +7,7 @@ public class Vehicule implements java.io.Serializable {
     WAITING, ON_THE_ROAD, WORKING;
   }
 
+  private boolean	debug = false;
   private float		km;
   private int[]		coord;
   private Node		attachPoint;
@@ -118,24 +119,32 @@ public class Vehicule implements java.io.Serializable {
       dir_y = (y_dst > coord[1] ? 1 : -1);
       err = dx - dy;
 
-      while (!(coord[0] == x_dst && coord[1] == y_dst))
+      if (coord[0] == x_dst && coord[1] == y_dst) // If we are on the point, remove it from the path and go on
+      {
+	this.path.remove(0);
+	this.moveOn();
+	return;
+      }
+      if (!(coord[0] == x_dst && coord[1] == y_dst))
       {
 	e2 = 2 * err;
 	if (e2 > -dy)
 	{
 	  err -= dy;
 	  coord[0] += dir_x;
-	  System.out.println("Vehicule.moveOn(): Moving on X to " + coord[0] + ":" + coord[1]
-			     + " (dst node = " + x_dst + ":" + y_dst + ")");
+	  if (this.debug == true)
+	    System.out.println("Vehicule.moveOn(): Moving on X to " + coord[0] + ":" + coord[1]
+			       + " (dst node = " + x_dst + ":" + y_dst + ")");
 	}
-	if (!(coord[0] == x_dst && coord[1] == y_dst))
-	  break;
+	if (coord[0] == x_dst && coord[1] == y_dst)
+	  return;
 	if (e2 < dx)
 	{
 	  err = err + dx;
 	  coord[1] += dir_y;
-	  System.out.println("Vehicule.moveOn(): Moving on Y to " + coord[0] + ":" + coord[1]
-			     + " (dst node = " + x_dst + ":" + y_dst + ")");
+	  if (this.debug == true)
+	    System.out.println("Vehicule.moveOn(): Moving on Y to " + coord[0] + ":" + coord[1]
+			       + " (dst node = " + x_dst + ":" + y_dst + ")");
 	}
       }
     }
