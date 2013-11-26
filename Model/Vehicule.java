@@ -9,7 +9,7 @@ public class Vehicule implements java.io.Serializable {
   private boolean	debug = true;
   private float		km;
   private int[]		coord;
-  private int[]		incomingCoord; // The point from where the vehicule is comming
+  private int[]		incomingCoord = {0, 0}; // The point from where the vehicule is comming
   private Node		attachPoint;
   private ArrayList<Node>	path = new ArrayList<Node>();
   private int			speed;
@@ -94,6 +94,7 @@ public class Vehicule implements java.io.Serializable {
 
   void		setCoord(int[] newCoord) {
     this.coord = newCoord;
+    this.incomingCoord = this.coord;
   }
 
   //***************
@@ -113,12 +114,13 @@ public class Vehicule implements java.io.Serializable {
     int[]		tmp_coord = {0, 0};
     int[]		pythagore = {0, 0};
 
-    i = -1;
-    while (++i < 2)
+    i = 0;
+    while (i < 2)
     {
       tmp_coord[i] = (path.get(0).getCoord()[i] - this.incomingCoord[i]);
       tmp_coord[i] = ((tmp_coord[i] > 0) ? (tmp_coord[i]) : -(tmp_coord[i]));
       pythagore[i] = tmp_coord[i] * tmp_coord[i];
+      i = i + 1;
     }
     this.km += Math.sqrt((pythagore[0]) + (pythagore[1]));
     this.incomingCoord = path.get(0).getCoord();
@@ -138,6 +140,8 @@ public class Vehicule implements java.io.Serializable {
       int	y_dst;
       Node	next_node;
 
+      if (debug == true) System.out.print("Vehicule.moveOn() path: ");
+      if (debug == true) AdjMatriceGen.prettyPrintPath(this.path);
       x_dst = path.get(0).getCoord()[0];
       y_dst = path.get(0).getCoord()[1];
       dx = x_dst - coord[0];dx = (dx > 0 ? dx : -dx);
