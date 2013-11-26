@@ -24,7 +24,9 @@ public class AdjMatriceGen {
       coord = node.getCoord();
       if (coord[0] == neigh_node.getData().getCoord()[0]
 	  && coord[1] == neigh_node.getData().getCoord()[1])
+      {
 	return (true);
+      }
     }
     return (false);
   }
@@ -45,7 +47,13 @@ public class AdjMatriceGen {
 	    == path.get(path.size() - 1))
 	{
 	  if (debug >= 5) System.out.println("_addOrReplacePath(): Replacing existing path");
+	  if (debug >= 5) System.out.print("==> List before: ");
+	  if (debug >= 5) prettyPrintPath(pathList.get(i)); // DEBUG
 	  pathList.set(i, new ArrayList<Node>(path));
+	  // pathList.remove(i);
+	  // pathList.add(i, new ArrayList<Node>(path));
+	  if (debug >= 5) System.out.print("==>  List After: ");
+	  if (debug >= 5) prettyPrintPath(pathList.get(i)); // DEBUG;
 	  return;
 	}
       }
@@ -84,7 +92,7 @@ public class AdjMatriceGen {
     }
     else
       this._addOrReplacePath(pathList, path);
-    path.remove(node.getData().getCoord());
+    path.remove(node.getData());
   }
 
   // Generate a list from a point to all the other
