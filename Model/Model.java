@@ -6,7 +6,7 @@ public class Model {
 	
     private Map			_map = new Map();
     private SimulationManager	_sim = new SimulationManager(_map);
-    //private FileManager	_file;
+    private FileManager	_file;
 	
 	
     //******************
@@ -20,11 +20,17 @@ public class Model {
     public Model(Map map) {
 	_map = map;
     }
+    
+    public Model(Map map, SimulationManager sim, FileManager file) {
+    	_map = map;
+    	_sim = sim;
+    	_file = file;
+    }
 		
     public Model(Model model) {
 	_map = model._map;
 	_sim = model._sim;
-	// _file = model._file;
+	_file = model._file;
     }
 
     //******************
@@ -35,26 +41,26 @@ public class Model {
 	return _map;
     }
 
-    /*public SimulationManager getSimulationManager() {
+    public SimulationManager getSimulationManager() {
       return _sim;
-      }
+    }
 	
       public FileManager	getFileManager() {
       return _file;
-      }*/
+    }
 	
 	
     public void setMap(Map map) {
 	_map = map;
     }
 	
-    /*public void setSimulationManager(SimulationManager sim) {
+    public void setSimulationManager(SimulationManager sim) {
       _sim = sim;
-      }
+    }
 	
       public void setFileManager(FileManager file) {
       _file = file;
-      }*/
+    }
 	
     //Fonction for Map
 	
