@@ -70,7 +70,7 @@ public class SelectButton extends JButton implements MouseListener {
 					  }
 	  }
 
-	  //Méthode appelee lorsque la souris sort de la zone du bouton
+	  //Methode appelee lorsque la souris sort de la zone du bouton
 	  public void mouseExited(MouseEvent event) {
 		  if (getCliked == false)
 		  try {
@@ -86,10 +86,10 @@ public class SelectButton extends JButton implements MouseListener {
 			    } 
 	  }
 
-	  //Méthode appelée lorsque l'on presse le bouton gauche de la souris
+	  //Methode appelee lorsque l'on presse le bouton gauche de la souris
 	  public void mousePressed(MouseEvent event) { }
 
-	  //Méthode appelée lorsque l'on relâche le clic de souris
+	  //Methode appelee lorsque l'on relache le clic de souris
 	  public void mouseReleased(MouseEvent event) {
 		  getCliked = !(getCliked);
 		  
