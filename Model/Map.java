@@ -14,6 +14,7 @@ public class Map implements java.io.Serializable {
     //******************
 
     public Map() {
+      // Jb: Pourquoi 10/10 en coordonnee ?
 	int[] coord = {10, 10};
 	this.vehicule.setCoord(coord);
 
