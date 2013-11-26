@@ -16,6 +16,8 @@ public class Vehicule implements java.io.Serializable {
   private EVehiculeState	state = EVehiculeState.WAITING;
 
   // For the moveOn() methode
+  private int		tick_ref = 60;
+  private int		tick_synch = tick_ref;
   private boolean	initMoveOn = false;
   private int	e2;
   private int	dx;
@@ -167,8 +169,23 @@ public class Vehicule implements java.io.Serializable {
     this.initMoveOn = false;
   }
 
+  /*
+  ** 1 clock tick correspond to 1 minutes.
+  ** Vehicule move in km/h, we move every 60 tick.
+  ** One diff in coord is equal to 1km.
+  */
+  public void		moveOn()
+  {
+    this.tick_synch -= 1;
+    if (this.tick_synch <= 0)
+    {
+      this.tick_synch = this.tick_ref;
+      this._moveOn();
+    }
+  }
   // TODO: gerer la vitesse (multiplier le nombre de boucle pour le kilometrage)
-  public void		moveOn() {
+  private void		_moveOn()
+  {
     if (this.path != null && this.path.size() > 0 && this.isFree() == false)
     {
 // Init: If we are on the point, remove it from the path and go on
