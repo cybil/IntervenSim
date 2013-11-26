@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+// TODO: refaire la recherche par rapport au coordonnee et non au nombre de node !!!
 
 public class AdjMatriceGen {
   // We only need the list of node to work on (not the complete graph)
@@ -127,7 +128,7 @@ public class AdjMatriceGen {
   }
 
   // Pretty print the content of a path
-  private void					prettyPrintPath(ArrayList<Node> path)
+  static public void				prettyPrintPath(ArrayList<Node> path)
   {
     int						i;
 
