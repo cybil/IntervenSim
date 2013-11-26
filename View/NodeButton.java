@@ -19,7 +19,7 @@ public class NodeButton extends JButton implements MouseListener {
 //				super(title);
 //			    this.name = title;
 			    try {
-			      img = ImageIO.read(new File("fondBouton.png"));
+			      img = ImageIO.read(new File("img/ubuntu48x48WoB.png"));
 			    } catch (IOException e) {
 			      e.printStackTrace();
 			    }
@@ -41,13 +41,13 @@ public class NodeButton extends JButton implements MouseListener {
 		  public void mouseClicked(MouseEvent event) {
 //			 if (getCliked == false)
 				try {
-			      this.img = ImageIO.read(new File("img/cursor48x48WoLG.png"));
+			      this.img = ImageIO.read(new File("img/ubuntu48x48WoLG.png"));
 			    } catch (IOException e) {
 			      e.printStackTrace();
 			    }
 //			 else
 //				 try {
-//				      this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
+//				      this.img = ImageIO.read(new File("img/ubuntu48x48WoB.png"));
 //				    } catch (IOException e) {
 //				      e.printStackTrace();
 //				    }
@@ -57,7 +57,7 @@ public class NodeButton extends JButton implements MouseListener {
 		  public void mouseEntered(MouseEvent event) { 
 			  if (getCliked == false)
 				  try {
-					  this.img = ImageIO.read(new File("img/cursor48x48WoG.png"));
+					  this.img = ImageIO.read(new File("img/ubuntu48x48WoG.png"));
 					  } catch (IOException e) {
 						  e.printStackTrace();
 						  }
@@ -67,13 +67,13 @@ public class NodeButton extends JButton implements MouseListener {
 		  public void mouseExited(MouseEvent event) {
 			  if (getCliked == false)
 			  try {
-			      this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
+			      this.img = ImageIO.read(new File("img/ubuntu48x48WoB.png"));
 			    } catch (IOException e) {
 			      e.printStackTrace();
 			    }
 			  else
 				  try {
-				      this.img = ImageIO.read(new File("img/cursor48x48WoLG.png"));
+				      this.img = ImageIO.read(new File("img/ubuntu48x48WoLG.png"));
 				    } catch (IOException e) {
 				      e.printStackTrace();
 				    } 

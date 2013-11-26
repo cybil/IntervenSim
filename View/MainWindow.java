@@ -36,6 +36,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		
 	content.setLayout(new GridBagLayout());
 	setPanels();
+	toolsBar.selectButton.addActionListener(new SelectButtonListener());
 	this.timer.start();
     }
 
@@ -87,4 +88,11 @@ public class MainWindow extends JFrame implements ActionListener {
     	this.setContentPane(content);
     	this.setVisible(true);
     }
+    
+    class SelectButtonListener implements ActionListener{
+        //Redéfinition de la méthode actionPerformed()
+        public void actionPerformed(ActionEvent arg0) {
+          System.out.print("Vous avez cliqué sur le bouton de Selection");        
+        }
+      }
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -26,14 +27,15 @@ public class SelectButton extends JButton implements MouseListener {
 	SelectButton() {
 //		super(title);
 //	    this.name = title;
+		this.setSize(new Dimension(48, 48));
 	    System.out.print("Misty");
 	    try {
 	      img = ImageIO.read(new File("cursor48x48WoB.png"));
 	    } catch (IOException e) {
 	      e.printStackTrace();
 	    }
-	    //Grâce à cette instruction, notre objet va s'écouter
-	    //Dès qu'un événement de la souris sera intercepté, il en sera averti
+	    //Grace a cette instruction, notre objet va s'ecouter
+	    //Des qu'un evenement de la souris sera intercepte, il en sera averti
 	    this.addMouseListener(this);
 	}
 	
@@ -42,7 +44,7 @@ public class SelectButton extends JButton implements MouseListener {
 	    g2d.drawImage(this.img, 0, 0, this.getWidth(), this.getHeight(), this);
 	  }
 	
-	//Méthode appelée lors du clic de souris
+	//Methode appelee lors du clic de souris
 	  public void mouseClicked(MouseEvent event) {
 //		 if (getCliked == false)
 			try {
@@ -58,7 +60,7 @@ public class SelectButton extends JButton implements MouseListener {
 //			    }
 	  }
 
-	  //Méthode appelée lors du survol de la souris
+	  //Methode appelee lors du survol de la souris
 	  public void mouseEntered(MouseEvent event) { 
 		  if (getCliked == false)
 			  try {
@@ -68,7 +70,7 @@ public class SelectButton extends JButton implements MouseListener {
 					  }
 	  }
 
-	  //Méthode appelée lorsque la souris sort de la zone du bouton
+	  //Méthode appelee lorsque la souris sort de la zone du bouton
 	  public void mouseExited(MouseEvent event) {
 		  if (getCliked == false)
 		  try {
