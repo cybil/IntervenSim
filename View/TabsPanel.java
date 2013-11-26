@@ -6,25 +6,26 @@ import java.awt.Dimension;
 import javax.swing.JTabbedPane;
 
 public class TabsPanel extends JPanel {
-	JTabbedPane onglets = new JTabbedPane(SwingConstants.TOP);
-	JPanel onglet1 = new JPanel();
-    JLabel titreOnglet1 = new JLabel("Onglet 1");
-    JPanel onglet2 = new JPanel();
-    JLabel titreOnglet2 = new JLabel("Onglet 2");
+	JTabbedPane tabs = new JTabbedPane(SwingConstants.TOP);
+	JPanel tab1 = new JPanel();
+    JLabel titletab1 = new JLabel("Edit map");
+    JPanel tab2 = new JPanel();
+    JLabel titletab2 = new JLabel("Statistics");
     
 	TabsPanel() {
 		this.setBackground(new Color(255, 0, 0));
-		setPreferredSize(new Dimension(400, 600));
-		setLayout(new BorderLayout());
-		
-	    onglet1.setPreferredSize(new Dimension(400, 500));
-	    onglet1.add(titreOnglet1);
-	    onglets.addTab("onglet1", onglet1);
-	
-	    onglet2.add(titreOnglet2);
-	    onglets.addTab("onglet2", onglet2);
+		this.setPreferredSize(new Dimension(400, 600));
+		this.setLayout(new BorderLayout());
+		this.setTabs();
 
-	    onglets.setOpaque(true);
-	    add(onglets, BorderLayout.CENTER);
+	}
+	void setTabs() {
+	    tab1.setPreferredSize(new Dimension(400, 500));
+	    tab1.add(titletab1);
+	    tabs.addTab("Map", tab1);
+	    tab2.add(titletab2);
+	    tabs.addTab("Stat", tab2);
+	    tabs.setOpaque(true);
+	    add(tabs, BorderLayout.CENTER);
 	}
 }
