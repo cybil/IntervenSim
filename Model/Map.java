@@ -49,11 +49,26 @@ public class Map implements java.io.Serializable {
 	    return true;
 	}
 	return false;
+	// Node			src;
+	// Node			dst;
+
+	// src = this.graph.getNode(coordNode1);
+	// dst = this.graph.getNode(coordNode2);
+	// if (src == null || dst == null)
+	// {
+	// 	System.out.print("Map.addRoad(): Error: Can't find node at ");
+	// 	if (src == null) System.out.println(coordNode1[0] + ":" + coordNode1[1]);
+	// 	else System.out.println(coordNode2[0] + ":" + coordNode2[1]);
+	// 	return (false);
+	// }
+	// else
+	// 	this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2));
+	// return (true);
     }
 
     public boolean		creatVehicule(int[] coord) {
 	this.vehicule.setCoord(coord);
-	return true;
+	return (true);
     }
 
     //***************

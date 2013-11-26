@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+// TODO: refaire la recherche par rapport au coordonnee et non au nombre de node !!!
 
 public class AdjMatriceGen {
   // We only need the list of node to work on (not the complete graph)
   private ArrayList<ArrayList<ArrayList<Node>>>	matrice;
-  private ArrayList<GraphNode>				_graphNode;
-  private int						debug;
+  private final ArrayList<GraphNode>		_graphNode; // Never changed in this class
+  private int					debug;
 
   public AdjMatriceGen(ArrayList<GraphNode> graphNode) {
     _graphNode = graphNode;
@@ -19,21 +20,27 @@ public class AdjMatriceGen {
     boolean			ret;
 
     ret = false;
+    if (debug >= 4) System.out.print("    AdjMatriceGen._isInPath("
+				     + neigh_node.getData().getCoord()[0]+":"
+				     + neigh_node.getData().getCoord()[1]+ "): Path = ");
     for (Node node: path)
     {
+      if (debug >= 4) this.prettyPrintPath(path);
       coord = node.getCoord();
       if (neigh_node.getData() != null)
       {
 	if (coord[0] == neigh_node.getData().getCoord()[0]
 	    && coord[1] == neigh_node.getData().getCoord()[1])
 	{
-	  return (true);
+	  ret = true;
+	  break;
 	}
       }
       else
 	System.out.println("AdjMatriceGen._isInPath(): Internal error: neigh_node.getData() == null");
     }
-    return (false);
+    if (debug >= 4) System.out.print("    Returing " + ret);
+    return (ret);
   }
 
   // Find if we have already a path to this node, add it or replace it with a shorter one
@@ -51,18 +58,18 @@ public class AdjMatriceGen {
 	if (known_path.size() > 0 && known_path.get(known_path.size() - 1)
 	    == path.get(path.size() - 1))
 	{
-	  if (debug >= 5) System.out.println("_addOrReplacePath(): Replacing existing path");
-	  if (debug >= 5) System.out.print("==> List before: ");
+	  if (debug >= 5) System.out.println("     _addOrReplacePath(): Replacing existing path");
+	  if (debug >= 5) System.out.print("     ==> List before: ");
 	  if (debug >= 5) prettyPrintPath(pathList.get(i)); // DEBUG
 	  pathList.set(i, new ArrayList<Node>(path));
 	  // pathList.remove(i);
 	  // pathList.add(i, new ArrayList<Node>(path));
-	  if (debug >= 5) System.out.print("==>  List After: ");
+	  if (debug >= 5) System.out.print("     ==>  List After: ");
 	  if (debug >= 5) prettyPrintPath(pathList.get(i)); // DEBUG;
 	  return;
 	}
       }
-    if (debug >= 5) System.out.println("_addOrReplacePath(): Adding new path");
+    if (debug >= 5) System.out.println("     _addOrReplacePath(): Adding new path");
     pathList.add(new ArrayList<Node>(path));
   }
 
@@ -73,10 +80,10 @@ public class AdjMatriceGen {
 						   ArrayList<Node> path,
 						   GraphNode node, int depth)
   {
-    if (debug >= 3) System.out.println("_recursive("
+    if (debug >= 3) System.out.println("   _recursive("
 				       + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1]
 				       + ", depth=" + depth
-				       + ")");
+				       + ") size getNeighbors() = " + node.getNeighbors().size());
     path.add(node.getData());
     if (depth > 0)
     {
@@ -109,19 +116,19 @@ public class AdjMatriceGen {
     ArrayList<ArrayList<Node>>		pathList = new ArrayList<ArrayList<Node>>();
     ArrayList<ArrayList<Node>>		tmp = new ArrayList<ArrayList<Node>>();
 
-    if (debug >= 2) System.out.println("_GetAllPathForOneNode(" + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1] + ")");
+    if (debug >= 2) System.out.println("  _GetAllPathForOneNode(" + node.getData().getCoord()[0] + ":" + node.getData().getCoord()[1] + ")");
     max_recur = _graphNode.size();
     i = _graphNode.size();
     while (--i > 0)
     {
-      if (debug >= 3) System.out.println("_GetAllPathForOneNode(): Starting depth " + i);
+      if (debug >= 3) System.out.println("   _GetAllPathForOneNode(): Starting depth " + i);
       this._recursive(pathList, new ArrayList<Node>(), node, i);
     }
     return (pathList);
   }
 
   // Pretty print the content of a path
-  private void					prettyPrintPath(ArrayList<Node> path)
+  static public void				prettyPrintPath(ArrayList<Node> path)
   {
     int						i;
 
