@@ -22,11 +22,16 @@ public class AdjMatriceGen {
     for (Node node: path)
     {
       coord = node.getCoord();
-      if (coord[0] == neigh_node.getData().getCoord()[0]
-	  && coord[1] == neigh_node.getData().getCoord()[1])
+      if (neigh_node.getData() != null)
       {
-	return (true);
+	if (coord[0] == neigh_node.getData().getCoord()[0]
+	    && coord[1] == neigh_node.getData().getCoord()[1])
+	{
+	  return (true);
+	}
       }
+      else
+	System.out.println("AdjMatriceGen._isInPath(): Internal error: neigh_node.getData() == null");
     }
     return (false);
   }
