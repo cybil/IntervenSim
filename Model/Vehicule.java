@@ -127,21 +127,29 @@ public class Vehicule implements java.io.Serializable {
   ** This function assume that 1 coord unit is equal to 1km
   **
   */
-  private void		_updatingKm()
+  static public float		pythagore(int[] src, int[] dst)
   {
     int			i;
+    float		total_cost;
     int[]		tmp_coord = {0, 0};
     int[]		pythagore = {0, 0};
 
     i = 0;
+    total_cost = 0;
     while (i < 2)
     {
-      tmp_coord[i] = (path.get(0).getCoord()[i] - this.incomingCoord[i]);
+      tmp_coord[i] = (src[i] - dst[i]);
       tmp_coord[i] = ((tmp_coord[i] > 0) ? (tmp_coord[i]) : -(tmp_coord[i]));
       pythagore[i] = tmp_coord[i] * tmp_coord[i];
       i = i + 1;
     }
-    this.km += Math.sqrt((pythagore[0]) + (pythagore[1]));
+    total_cost = (float)Math.sqrt((pythagore[0]) + (pythagore[1]));
+    return (total_cost);
+  }
+
+  private void		_updatingKm()
+  {
+    this.km += this.pythagore(this.incomingCoord, path.get(0).getCoord());
     if (debug == true) System.out.println("Vehicule.moveOn(): incoming src: "
 					  + this.incomingCoord[0] + ":"
 					  + this.incomingCoord[1]);
@@ -159,6 +167,7 @@ public class Vehicule implements java.io.Serializable {
     this.initMoveOn = false;
   }
 
+  // TODO: gerer la vitesse (multiplier le nombre de boucle pour le kilometrage)
   public void		moveOn() {
     if (this.path != null && this.path.size() > 0 && this.isFree() == false)
     {
