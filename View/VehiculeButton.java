@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException; 
+
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
@@ -18,7 +19,6 @@ public class VehiculeButton extends JButton implements MouseListener {
     VehiculeButton() {
 	super("B1");
 	this.name = "B1";
-	System.out.print("Misty");
 	try {
 	    this.img = ImageIO.read(new File("img/vehicule48x48WoB.png"));
 	} catch (IOException e) {
@@ -40,29 +40,30 @@ public class VehiculeButton extends JButton implements MouseListener {
 	
     //Methode appelee lors du clic de souris
     public void mouseClicked(MouseEvent event) {
-	//		 if (getCliked == false)
-	try {
-	    this.img = ImageIO.read(new File("img/vehicule48x48WoLG.png"));
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	//		 else
-	//			 try {
-	//			      this.img = ImageIO.read(new File("img/Vehicule48x48WoB.png"));
-	//			    } catch (IOException e) {
-	//			      e.printStackTrace();
-	//			    }
-    }
+    	if (getCliked == false)
+			try {
+				this.img = ImageIO.read(new File("img/vehicule48x48WoLG.png"));
+			    } catch (IOException e) {
+			    	e.printStackTrace();
+			    	}
+		else
+			try {
+				this.img = ImageIO.read(new File("img/vehicule48x48WoB.png"));
+			    } catch (IOException e) {
+			    	e.printStackTrace();
+			    	}
+    	getCliked = !(getCliked);
+		}
 
     //Methode appelee lors du survol de la souris
     public void mouseEntered(MouseEvent event) { 
 	if (getCliked == false)
 	    try {
-		this.img = ImageIO.read(new File("img/vehicule48x48WoG.png"));
-	    } catch (IOException e) {
-		e.printStackTrace();
-	    }
-    }
+	    	this.img = ImageIO.read(new File("img/vehicule48x48WoG.png"));
+	    	} catch (IOException e) {
+	    		e.printStackTrace();
+	    	}
+    	}
 
     //Methode appelee lorsque la souris sort de la zone du bouton
     public void mouseExited(MouseEvent event) {
@@ -84,8 +85,20 @@ public class VehiculeButton extends JButton implements MouseListener {
     public void mousePressed(MouseEvent event) { }
 
     //Methode appelee lorsque l'on relache le clic de souris
-    public void mouseReleased(MouseEvent event) {
-	getCliked = !(getCliked);
-		  
+    public void mouseReleased(MouseEvent event) {		  
     }
+    
+    protected void setGetCliked(boolean clic) {
+		  getCliked = clic;
+		  if (clic == false) {
+			  System.out.print("vehicule efface et clic vaut : " + clic + " \n");
+			  try {
+				  this.img = ImageIO.read(new File("img/vehicule48x48WoB.png"));
+				  } catch (IOException e) {
+					  e.printStackTrace();
+					  }
+			  }
+		  else
+			  System.out.print("vehicule NON efface et clic vaut : " + clic + " \n");
+	  }
 }

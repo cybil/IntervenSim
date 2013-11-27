@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 
 public class NodeGraphic extends JPanel implements MouseListener, MouseMotionListener {
 
-    private Image	imgNormal;
+    protected Image	imgNormal;
     private Image	imgSelected;
     private Image	imgPassedOver;
     public Image	currentImg;

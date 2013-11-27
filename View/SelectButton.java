@@ -21,14 +21,13 @@ import javax.swing.JButton;
 public class SelectButton extends JButton implements MouseListener {
 	private String name;
 	private Image img;
-	private boolean getCliked = false;
+	boolean getCliked = false;
 	
 	
 	SelectButton() {
 //		super(title);
 //	    this.name = title;
 		this.setSize(new Dimension(48, 48));
-	    System.out.print("Misty");
 	    try {
 	      img = ImageIO.read(new File("cursor48x48WoB.png"));
 	    } catch (IOException e) {
@@ -46,19 +45,20 @@ public class SelectButton extends JButton implements MouseListener {
 	
 	//Methode appelee lors du clic de souris
 	  public void mouseClicked(MouseEvent event) {
-//		 if (getCliked == false)
-			try {
-		      this.img = ImageIO.read(new File("img/cursor48x48WoLG.png"));
-		    } catch (IOException e) {
-		      e.printStackTrace();
-		    }
-//		 else
-//			 try {
-//			      this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
-//			    } catch (IOException e) {
-//			      e.printStackTrace();
-//			    }
-	  }
+			if (getCliked == false)
+				try {
+					this.img = ImageIO.read(new File("img/cursor48x48WoLG.png"));
+				    } catch (IOException e) {
+				    	e.printStackTrace();
+				    	}
+			else
+				try {
+					this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
+				    } catch (IOException e) {
+				    	e.printStackTrace();
+				    	}
+			getCliked = !(getCliked);
+			}
 
 	  //Methode appelee lors du survol de la souris
 	  public void mouseEntered(MouseEvent event) { 
@@ -91,7 +91,20 @@ public class SelectButton extends JButton implements MouseListener {
 
 	  //Methode appelee lorsque l'on relache le clic de souris
 	  public void mouseReleased(MouseEvent event) {
-		  getCliked = !(getCliked);
-		  
+
+	  }
+	  
+	  protected void setGetCliked(boolean clic) {
+		  getCliked = clic;
+		  if (clic == false) {
+			  try {
+				  System.out.print("select efface et clic vaut : " + clic + " \n");
+				  this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
+				  } catch (IOException e) {
+					  e.printStackTrace();
+					  }
+			  }
+		  else
+			  System.out.print("select NON efface et clic vaut : " + clic + " \n");
 	  }
 }
