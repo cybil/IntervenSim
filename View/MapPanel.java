@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
+import java.awt.BasicStroke;
 
 public class MapPanel extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -50,6 +51,10 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     static Controller		controller;
     static int[]		coordMovedNode = new int[2];
     static boolean		isDragging = false;
+    static int[]		roadCoord1 = new int[2];
+    static int[]		roadCoord2 = new int[2];
+    static NodeGraphic		destRoad = null;
+    static boolean	        drawTempRoad = false;
 
     MapPanel(Controller controller) {
 	try {
@@ -62,6 +67,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	    e.printStackTrace();
 	}
 	this.controller = controller;
+	//this.setBackground(Color.);
 	this.setPreferredSize(new Dimension(300, 600));
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
@@ -76,17 +82,33 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	Image		bck;
 
 	super.paintComponent(g);
+
+	g.setColor(Color.GRAY);
+	int		j = 60;
+	while (j < 10000) {
+	    g.drawLine(0, j, 10000, j);
+	    j += 60;
+	}
+	int		k = 60;
+	while (k < 10000) {
+	    g.drawLine(k, 0, k, 10000);
+	    k += 60;
+	}
 	this.removeAll();
 	i = -1;
-	while (++i < this.nodes.size()) {
-	    this.add(this.nodes.get(i));
-	}
-
 	if ((bck = this.controller._model.getMap().getBackground()) != null)
 	    g.drawImage(bck, 0, 0, this);
+	if (this.drawTempRoad == true) {
+	    g.setColor(Color.GREEN);
+	    g.drawLine(this.roadCoord1[0], this.roadCoord1[1], this.roadCoord2[0], this.roadCoord2[1]);
+	    this.drawTempRoad = false;
+	}
 	for (RoadGraphic r : this.roads) {
-	    System.out.println("COUCOU LES AMIS: x1:" + r.x1 + " - y1: " + r.y1 + " // x2: " + r.x2 + " - y2: " + r.y2);
+	    g.setColor(Color.BLACK);
 	    g.drawLine(r.x1, r.y1, r.x2, r.y2);
+	}
+	while (++i < this.nodes.size()) {
+	    this.add(this.nodes.get(i));
 	}
 	if (this.isPressed == true) {
 	    g.drawLine(this.x1, this.y1, this.x2, this.y2);
@@ -109,26 +131,34 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
     public void		displayMap(ArrayList<String> formatMap)
     {
+	roads.clear();
 	for (String s : formatMap) {
 	    if (s.charAt(0) == 'V') {
-		// int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-		// int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-		// NodeGraphic		newNode = new NodeGraphic(this.vehicule,
-		// 						  this.vehicule,
-		// 						  this.vehicule, x, y);
-		// this.nodes.add(newNode);
-		// this.add(newNode);
+		if (isDragging == false) {
+		    int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+		    int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+		    if (this.containsNode(x, y) == false) {
+			NodeGraphic		newNode = new NodeGraphic(this.vehicule,
+									  this.vehicule,
+									  this.vehicule, x, y);
+			newNode.setLayout(null);
+			this.add(newNode);
+			this.validate();
+			nodes.add(newNode);
+		    }
+		}
 	    }
 	    else if (s.charAt(0) == 'N') {
 		if (isDragging == false) {
 		    int	_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		    int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-		
+		    
 		    if (this.containsNode(_x, _y) == false) {
 			NodeGraphic		newNode = new NodeGraphic(this.nodeNormal,
 									  this.nodeAttachPoint,
-									  this.nodeUrgency, _x, _y);
-			newNode.setVisible(true);
+									  this.nodeUrgency,
+									  _x,
+									  _y);
 			newNode.setLayout(null);
 			this.add(newNode);
 			this.validate();
@@ -155,7 +185,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		// this.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'R') {
-		System.out.println("================================== blAAAAA !!!");
 		int	x1 = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		int	y1 = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
 		String	s2 = s.substring(s.lastIndexOf(":"));
@@ -166,6 +195,10 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	    }
 	    this.repaint();
 	}
+    }
+
+    static void	updateRoads() {
+	
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -212,9 +245,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	System.out.println("Ret = " + ret);
     }
 
-    static int[]	roadCoord1 = new int[2];
-    static NodeGraphic	destRoad = null;
-
     static void	setDestRoad(NodeGraphic n) {
 	destRoad = n;
     }
@@ -229,6 +259,12 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	controller.eventAddRoad(roadCoord1, coord2);
     }
 
+    static void		drawRoadToCursor(int p_x, int p_y) {
+	drawTempRoad = true;
+	roadCoord2[0] = p_x;
+	roadCoord2[1] = p_y;
+    }
+    
     static void		setIsDragging(boolean b) {
 	isDragging = b;
     }
