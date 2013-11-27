@@ -110,7 +110,7 @@ public class MainWindow extends JFrame implements ActionListener {
     
     // ActionListener class for select button
     class SelectButtonListener implements ActionListener{
-        //Redéfinition de la méthode actionPerformed()
+        //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
           System.out.print("Vous avez cliqué sur le bouton de Selection\n");
          toolsBar.setCliked(0);

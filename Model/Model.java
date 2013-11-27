@@ -6,7 +6,7 @@ public class Model {
 	
     private Map			_map = new Map();
     private SimulationManager	_sim = new SimulationManager(_map);
-    private FileManager	_file;
+    private FileManager	_file = new FileManager(_map, _sim);
 	
 	
     //******************
@@ -18,7 +18,16 @@ public class Model {
     }
 	
     public Model(Map map) {
-	_map = map;
+    	_map = map;
+    	_sim = new SimulationManager(_map);
+    	_file = new FileManager(_map, _sim);
+    }
+    
+    public Model(Map map, SimulationManager sim)
+    {
+    	_map = map;
+    	_sim = sim;
+    	_file = new FileManager(_map, _sim);
     }
     
     public Model(Map map, SimulationManager sim, FileManager file) {
