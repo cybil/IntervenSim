@@ -112,34 +112,34 @@ public class MainWindow extends JFrame implements ActionListener {
     class SelectButtonListener implements ActionListener{
         //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez cliqué sur le bouton de Selection\n");
+          System.out.print("Vous avez clique sur le bouton de Selection\n");
          toolsBar.setCliked(0);
          mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
         }
       }
     
     class VehiculeButtonListener implements ActionListener{
-        //Redéfinition de la méthode actionPerformed()
+        //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez cliqué sur le bouton Vehicule\n");        
+          System.out.print("Vous avez clique sur le bouton Vehicule\n");        
           toolsBar.setCliked(1);
           mapPanel.setSelectedObject(MapPanel.EObjectTools.VEHICULE);
           }
       }
     
     class RoadButtonListener implements ActionListener{
-        //Redéfinition de la méthode actionPerformed()
+        //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez cliqué sur le bouton Road\n");        
+          System.out.print("Vous avez clique sur le bouton Road\n");        
           toolsBar.setCliked(2);
           mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
           }
       }
     
     class NodeButtonListener implements ActionListener{
-        //Redéfinition de la méthode actionPerformed()
+        //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez cliqué sur le bouton Node\n");        
+          System.out.print("Vous avez clique sur le bouton Node\n");        
           toolsBar.setCliked(3);
           mapPanel.setSelectedObject(MapPanel.EObjectTools.NODE);
           }
