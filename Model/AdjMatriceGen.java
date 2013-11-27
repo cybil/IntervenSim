@@ -43,6 +43,26 @@ public class AdjMatriceGen {
     return (ret);
   }
 
+  // Calculate the cost of a path
+  // It take one parameter, the path
+  // It return the total cost.
+  private float			_pathCost(ArrayList<Node> path)
+  {
+    int				i;
+    Node			src;
+    float			total_cost;
+
+    i = 0;
+    total_cost = 0;
+    src = path.get(0);
+    while ((i + 1) < path.size())
+    {
+      total_cost += Vehicule.pythagore(path.get(i).getCoord(), path.get(i + 1).getCoord());
+      i = i + 1;
+    }
+    return (total_cost);
+  }
+
   // Find if we have already a path to this node, add it or replace it with a shorter one
   private void			_addOrReplacePath(ArrayList<ArrayList<Node>> pathList,
 						  ArrayList<Node> path)
@@ -55,8 +75,9 @@ public class AdjMatriceGen {
       while (--i >= 0)
       {
 	known_path = pathList.get(i);
-	if (known_path.size() > 0 && known_path.get(known_path.size() - 1)
-	    == path.get(path.size() - 1))
+	if (known_path.size() > 0
+	    && known_path.get(known_path.size() - 1) == path.get(path.size() - 1)
+	    && this._pathCost(known_path) > this._pathCost(path))
 	{
 	  if (debug >= 5) System.out.println("     _addOrReplacePath(): Replacing existing path");
 	  if (debug >= 5) System.out.print("     ==> List before: ");
