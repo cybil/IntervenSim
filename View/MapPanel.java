@@ -48,6 +48,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     static NodeGraphic			movedNode;
 
     static Controller		controller;
+    static int[]		coordMovedNode = new int[2];
 
     MapPanel(Controller controller) {
 	try {
@@ -196,11 +197,23 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     }
 
     public void	mouseMoved(MouseEvent e) {
-	System.out.println("Move !"); 
+	// System.out.println("Move !"); 
     }
 
     public void	mouseDragged(MouseEvent e) {
 	System.out.println("Drag !");
+    }
+
+    static void	setMovedNode1(int x, int y) {
+	coordMovedNode[0] = x;
+	coordMovedNode[1] = y;
+    }
+
+    static void	setMovedNode2(NodeGraphic n) {
+	int[]		coordMovedNode2 = {n.getX(), n.getY()};
+
+	System.out.println("======================================== AAAAAAAAAAAAAAAAAAA");
+	controller.eventEditNodeCoord(coordMovedNode, coordMovedNode2);
     }
 
 }

@@ -35,7 +35,6 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.currentImg = this.imgNormal;
 	this._node_x = p_x;
 	this._node_y = p_y;
-	//System.out.println("NODE --- create ! X: " + this.x + " // Y: " + this.y);
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
     }
@@ -78,6 +77,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    {
 		oldx = e.getXOnScreen();
 		oldy = e.getYOnScreen();
+		MapPanel.setMovedNode2(this);
 	    }
     }
 
@@ -87,6 +87,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    {
 		oldx = e.getXOnScreen();
 		oldy = e.getYOnScreen();
+		MapPanel.setMovedNode1(this.getX(), this.getY());
 	    }
     }
 
@@ -96,8 +97,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
     public void	mouseDragged(MouseEvent e) {
 	System.out.println("NODE --- Drag !");
-	int new_x = oldx_rel + (e.getXOnScreen() - oldx);
-	int new_y = oldy_rel + (e.getYOnScreen() - oldy);
+	int new_x = oldx + (e.getXOnScreen() - oldx);
+	int new_y = oldy + (e.getYOnScreen() - oldy);
 	this._node_x = new_x;
 	this._node_y = new_y;
     }

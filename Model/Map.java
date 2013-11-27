@@ -91,6 +91,8 @@ public class Map implements java.io.Serializable {
 
 
     public boolean		editNodeCoord(int[] oldCoord, int[] newCoord) {
+	System.out.println("============ EDIT NODE ==============");
+
 	if (this.graph.getNode(oldCoord) != null) {
 	    this.graph.getNode(oldCoord).setCoord(newCoord);
 	    return true;
