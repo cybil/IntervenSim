@@ -12,6 +12,7 @@ public class Vehicule implements java.io.Serializable {
   private int[]		incomingCoord = {0, 0}; // The point from where the vehicule is comming
   private Node		attachPoint; // Attach point of the vehicule
   private ArrayList<Node>	path = new ArrayList<Node>(); // path to follow
+  private ArrayList<ArrayList<Node>>	listOpath = new ArrayList<ArrayList<Node>>();
   private int			speed; // km/h
   private EVehiculeState	state = EVehiculeState.WAITING;
 
@@ -97,24 +98,21 @@ public class Vehicule implements java.io.Serializable {
   void		setPath(ArrayList<Node> newPath) {
     int		last;
 
-    if (newPath != null && newPath.size() > 0)
+    this.listOpath.add(newPath);
+    if (newPath != null && newPath.size() > 0 && this.path.size() == 0)
     {
-      last = this.path.size() - 1;
-      last = (last > 0 ? last : 0);
-      this.state = EVehiculeState.ON_THE_ROAD;
-      if (this.path.isEmpty())
-	this.path = newPath;
-      else
-      {
-	this.path.clear();
-      	this.path = newPath;
-      }
       if (this.urgencyNode != null) // Cancel the urgency if a new path is given
       {
 	this.lastUrgency.cancelTreatment();
 	if (debug == true) System.out.println("Vehicule.setPath(): cancel urgency.");
       }
+      this.state = EVehiculeState.ON_THE_ROAD;
+      this.path = this.listOpath.get(0);
+      this.listOpath.remove(0);
+      last = this.path.size() - 1;
+      last = (last > 0 ? last : 0);
       this.urgencyNode = this.path.get(last);
+      this.lastUrgency = this.urgencyNode.getNextUrgency();
       // this.path.remove(last);
     }
     else
@@ -183,38 +181,48 @@ public class Vehicule implements java.io.Serializable {
     this.initMoveOn = false;
   }
 
-  /*
-  ** 1 clock tick correspond to 1 minutes.
-  ** Vehicule move in km/h, we move every 60 tick.
-  ** One diff in coord is equal to 1km.
-  ** TODO: tester le cas ou l'on bouge sur son propre noeud / traiter deux urgences de suite sur
-  ** le meme node
-  */
+/*
+** 1 clock tick correspond to 1 minutes.
+** Vehicule move in km/h, we move every 60 tick.
+** One diff in coord is equal to 1km.
+** TODO: tester le cas ou l'on bouge sur son propre noeud / traiter deux urgences de suite sur
+** le meme node
+*/
   public void		moveOn()
   {
     int			move_rate;
 
-    move_rate = this.tick_ref / this.speed;
-    this.tick_synch -= 1;
-    if (this.tick_synch <= 0)
-      this.tick_synch = this.tick_ref;
-
-    speed_adjust += (3600 / this.speed);
-    while (speed_adjust > 60)
+    // Move to the next path availaible after the treatment of the last urgency
+    if (this.state == EVehiculeState.WAITING && this.path.size() == 0 && this.listOpath.size() > 0)
     {
-      if (this.path.size() > 0)
-	this._moveOn();
-      speed_adjust -= 60;
+      this.path = this.listOpath.get(0);
+      this.listOpath.remove(0);
+      this.state = EVehiculeState.ON_THE_ROAD;
     }
-    speed_adjust = speed_adjust % 60;
+    if (this.state != EVehiculeState.WAITING)
+    {
+      move_rate = this.tick_ref / this.speed;
+      this.tick_synch -= 1;
+      if (this.tick_synch <= 0)
+	this.tick_synch = this.tick_ref;
 
-    if (this.path.size() == 0 && this.urgencyNode != null)
-      this.treatUrgency();
-    else
-      this.state = EVehiculeState.WAITING;
+      speed_adjust += (3600 / this.speed);
+      while (speed_adjust > 60)
+      {
+	if (this.path.size() > 0)
+	  this._moveOn();
+	speed_adjust -= 60;
+      }
+      speed_adjust = speed_adjust % 60;
 
-    // if ((this.tick_sync % move_rate) == 0)
-    //   this._moveOn();
+      if (this.path.size() == 0 && this.urgencyNode != null)
+	this.treatUrgency();
+      else
+	this.state = EVehiculeState.WAITING;
+
+      // if ((this.tick_sync % move_rate) == 0)
+      //   this._moveOn();
+    }
   }
 
   /*
@@ -305,3 +313,4 @@ public class Vehicule implements java.io.Serializable {
     return (true);
   }
 }
+
