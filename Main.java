@@ -5,18 +5,18 @@ public class Main
     public static void	main(String[] args)
     {
 	Controller		controller = new Controller();
-	controller.eventPutNode(300, 100);
-	controller.eventPutNode(451, 84);
-	controller.eventPutNode(63, 10);
-	controller.eventPutNode(236, 152);
-	controller.eventPutNode(84, 212);
-	controller.eventPutNode(413, 85);
+	// controller.eventPutNode(300, 100);
+	// controller.eventPutNode(451, 84);
+	// controller.eventPutNode(63, 10);
+	// controller.eventPutNode(236, 152);
+	// controller.eventPutNode(84, 212);
+	// controller.eventPutNode(413, 85);
 
 	int[]		c1 = {300, 100};
 	int[]		c2 = {413, 85};
-	controller.eventAddNodeUrgency(c1, Urgency.EUrgencyState.SLEEPING, 10);
+	// controller.eventAddNodeUrgency(c1, Urgency.EUrgencyState.SLEEPING, 10);
 
-	controller.eventAddRoad(c1, c2);
+	// controller.eventAddRoad(c1, c2);
 
 	controller.displayMap();
 

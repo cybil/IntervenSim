@@ -90,9 +90,9 @@ public class MainWindow extends JFrame implements ActionListener {
     }
     
     class SelectButtonListener implements ActionListener{
-        //Redéfinition de la méthode actionPerformed()
+        //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez cliqué sur le bouton de Selection");        
+          System.out.print("Vous avez clique sur le bouton de Selection");        
         }
       }
 }
