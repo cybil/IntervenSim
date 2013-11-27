@@ -24,17 +24,15 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     private boolean	isSelected = false;
     private int		buttonPressed = 0;
 
-    public int		getx()
-    {
+    public int		getx() {
 	return (this._node_x);
     }
-    public int		gety()
-    {
+
+    public int		gety() {
 	return (this._node_y);
     }
 	
-    public NodeGraphic()
-    {
+    public NodeGraphic() {
 	System.out.println("NODE --- CONSTRUCTION DEFAULT");
     }
 
@@ -48,11 +46,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this._node_y = p_y;
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
+	this.setOpaque(false);
     }
 
     public void		paintComponent(Graphics g) {
 	super.paintComponent(g);
-	this.setBounds(this.getx(), this.gety(), 20, 20);
+	this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
 	g.drawImage(this.currentImg, 0, 0, this);
     }
 
@@ -123,6 +122,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    int new_y = oldy_rel + (e.getYOnScreen() - oldy);
 	    this._node_x = new_x;
 	    this._node_y = new_y;
+	    MapPanel.drawRoadToCursor(new_x, new_y);
 	    MapPanel.setIsDragging(true);
 	}
     }

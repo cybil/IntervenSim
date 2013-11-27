@@ -16,7 +16,7 @@ public class Map implements java.io.Serializable {
     public Map() {
 	// Jb: Pourquoi 10/10 en coordonnee ?
 	// Cybil: Pour le mettre a un endroit pour test de l'afficher :)
-	int[] coord = {50, 50};
+	int[] coord = {-1000, -1000};
 	this.vehicule.setCoord(coord);
 
     }
