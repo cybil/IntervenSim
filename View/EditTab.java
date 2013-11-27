@@ -25,9 +25,9 @@ public class EditTab extends JPanel {
 	    this.add(new JLabel("Edit map"));
 	    
 	content.setLayout(cl);
-    //On définit le layout
+    //On definit le layout
     content.setLayout(cl);
-    //On ajoute les cartes à la pile avec un nom pour les retrouver
+    //On ajoute les cartes a la pile avec un nom pour les retrouver
     content.add(vehiculeTab, listContent[0]);
     content.add(nodeTab, listContent[1]);
     content.add(roadTab, listContent[2]);
