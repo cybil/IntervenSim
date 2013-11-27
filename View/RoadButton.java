@@ -15,11 +15,10 @@ public class RoadButton extends JButton implements MouseListener {
 	private String name;
 	private Image img;
 	private boolean getCliked = false;
+
 	RoadButton() {
-//		super(title);
-//	    this.name = title;
 	    try {
-	      img = ImageIO.read(new File("fondBouton.png"));
+	      img = ImageIO.read(new File("img/road48x48WoB.png"));
 	    } catch (IOException e) {
 	      e.printStackTrace();
 	    }
@@ -30,11 +29,7 @@ public class RoadButton extends JButton implements MouseListener {
 	
 	public void paintComponent(Graphics g){
 	    Graphics2D g2d = (Graphics2D)g;
-//	    GradientPaint gp = new GradientPaint(0, 0, Color.blue, 0, 20, Color.cyan, true);
-//	    g2d.setPaint(gp);
 	    g2d.drawImage(this.img, 0, 0, this.getWidth(), this.getHeight(), this);
-//	    g2d.setColor(Color.black);
-//	    g2d.drawString(this.name, this.getWidth() / 2 - (this.getWidth() /  2 /4), (this.getHeight() / 2) + 5);
 	  }
 	
 	//Methode appelee lors du clic de souris
