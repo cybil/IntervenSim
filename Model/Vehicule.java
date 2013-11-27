@@ -28,7 +28,8 @@ public class Vehicule implements java.io.Serializable {
   private int	dir_y;
   private int	x_dst;
   private int	y_dst;
-  private Node	next_node;
+  private Node		urgencyNode = null;
+  private Urgency	lastUrgency = null;
 
   //******************
   //	Constructor
@@ -90,6 +91,9 @@ public class Vehicule implements java.io.Serializable {
     this.attachPoint = attachPoint;
   }
 
+  /*
+  ** TODO: remplacer le addAll par une liste de path (plus facile pour gerer les urgences imbrique)
+  */
   void		setPath(ArrayList<Node> newPath) {
     int		last;
 
@@ -101,8 +105,17 @@ public class Vehicule implements java.io.Serializable {
       if (this.path.isEmpty())
 	this.path = newPath;
       else
-	this.path.addAll(newPath);
-      this.path.remove(last);
+      {
+	this.path.clear();
+      	this.path = newPath;
+      }
+      if (this.urgencyNode != null) // Cancel the urgency if a new path is given
+      {
+	this.lastUrgency.cancelTreatment();
+	if (debug == true) System.out.println("Vehicule.setPath(): cancel urgency.");
+      }
+      this.urgencyNode = this.path.get(last);
+      // this.path.remove(last);
     }
     else
       System.out.println("Vehicule.setPath(): Error: Trying to set a null or empty path");
@@ -174,6 +187,8 @@ public class Vehicule implements java.io.Serializable {
   ** 1 clock tick correspond to 1 minutes.
   ** Vehicule move in km/h, we move every 60 tick.
   ** One diff in coord is equal to 1km.
+  ** TODO: tester le cas ou l'on bouge sur son propre noeud / traiter deux urgences de suite sur
+  ** le meme node
   */
   public void		moveOn()
   {
@@ -185,19 +200,29 @@ public class Vehicule implements java.io.Serializable {
       this.tick_synch = this.tick_ref;
 
     speed_adjust += (3600 / this.speed);
-    while (speed_adjust < 60)
+    while (speed_adjust > 60)
     {
-      this._moveOn();
+      if (this.path.size() > 0)
+	this._moveOn();
       speed_adjust -= 60;
     }
     speed_adjust = speed_adjust % 60;
 
+    if (this.path.size() == 0 && this.urgencyNode != null)
+      this.treatUrgency();
+    else
+      this.state = EVehiculeState.WAITING;
+
     // if ((this.tick_sync % move_rate) == 0)
     //   this._moveOn();
   }
-  // TODO: gerer la vitesse (multiplier le nombre de boucle pour le kilometrage)
+
+  /*
+  ** Internal function under Vehicule.moveOn()
+  */
   private void		_moveOn()
   {
+    this.state = EVehiculeState.ON_THE_ROAD;
     if (this.path != null && this.path.size() > 0 && this.isFree() == false)
     {
 // Init: If we are on the point, remove it from the path and go on
@@ -253,9 +278,22 @@ public class Vehicule implements java.io.Serializable {
       System.out.println("Vehicule.moveOn(): Error: Trying to move with a 'null' path set.");
   }
 
+  /*
+  ** Manage an urgency as long as necessary
+  */
   int			treatUrgency() {
-    this.state = EVehiculeState.WORKING;
-    return 0;
+    if (this.path.size() == 0 && this.urgencyNode != null)
+    {
+      this.state = EVehiculeState.WORKING;
+      if (this.lastUrgency.getState() == Urgency.EUrgencyState.WAITING)
+	this.lastUrgency.beginTreatment();
+      if (this.lastUrgency.Treatment() == true) // Urgency treatment finished
+      {
+	this.urgencyNode.removeUrgency(this.lastUrgency);
+	this.state = EVehiculeState.WAITING;
+      }
+    }
+    return (0);
   }
 
   /*
@@ -266,5 +304,4 @@ public class Vehicule implements java.io.Serializable {
       return (false);
     return (true);
   }
-
 }
