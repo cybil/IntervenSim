@@ -5,7 +5,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 
-
 public class NodeGraphic extends JPanel implements MouseListener, MouseMotionListener {
 
     protected Image	imgNormal;
@@ -112,6 +111,9 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	else if (e.getButton() == MouseEvent.BUTTON1
 		 && MapPanel.selectedObject == MapPanel.EObjectTools.ROAD) {
 	    MapPanel.setRoadNode1(this.getx(), this.gety());
+	}
+	if (e.getButton() == MouseEvent.BUTTON3) {
+	    MapPanel.deleteNode(this);
 	}
 	MapPanel.mouseX = this.getx();
 	MapPanel.mouseY = this.gety();

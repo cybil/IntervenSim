@@ -278,4 +278,11 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     static void		setIsDragging(boolean b) {
 	isDragging = b;
     }
+
+    static void		deleteNode(NodeGraphic n) {
+	int[]		coord = {n.getx(), n.gety()};
+	System.out.println(" ----------------------------- DELETE NODE ");
+	nodes.remove(n);
+	controller.eventDeleteNode(coord);
+    }
 }

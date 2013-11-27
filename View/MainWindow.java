@@ -133,7 +133,7 @@ public class MainWindow extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent arg0) {
           System.out.print("Vous avez clique sur le bouton Road\n");        
           toolsBar.setCliked(2);
-          mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
+          mapPanel.setSelectedObject(MapPanel.EObjectTools.ROAD);
           tabsPanel.editTab.showPanel(2);
           }
       }
