@@ -124,6 +124,7 @@ public class MainWindow extends JFrame implements ActionListener {
           System.out.print("Vous avez clique sur le bouton Vehicule\n");        
           toolsBar.setCliked(1);
           mapPanel.setSelectedObject(MapPanel.EObjectTools.VEHICULE);
+          tabsPanel.editTab.showPanel(0);
           }
       }
     
@@ -133,6 +134,7 @@ public class MainWindow extends JFrame implements ActionListener {
           System.out.print("Vous avez clique sur le bouton Road\n");        
           toolsBar.setCliked(2);
           mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
+          tabsPanel.editTab.showPanel(2);
           }
       }
     
@@ -142,6 +144,7 @@ public class MainWindow extends JFrame implements ActionListener {
           System.out.print("Vous avez clique sur le bouton Node\n");        
           toolsBar.setCliked(3);
           mapPanel.setSelectedObject(MapPanel.EObjectTools.NODE);
+          tabsPanel.editTab.showPanel(1);
           }
       }
     
