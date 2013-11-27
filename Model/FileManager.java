@@ -28,6 +28,14 @@ public class FileManager {
 		}
 	}
 	
+	public FileManager(Map map, SimulationManager sim)
+	{
+		_map = map;
+		_sim = sim;
+		_stat = new Statistic();
+		_date = new Dates();
+	}
+	
 	public FileManager(Map map, SimulationManager sim, Statistic stat) {
 		_map = map;
 		_sim = sim;
