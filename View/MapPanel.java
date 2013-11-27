@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
-import java.awt.BasicStroke;
+import java.awt.Font;
 
 public class MapPanel extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -29,10 +29,10 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     }
 
     public enum EObjectTools {
-	VEHICULE, NODE, CURSOR;
+	VEHICULE, NODE, CURSOR, ROAD;
     }
 
-    private EObjectTools selectedObject = EObjectTools.CURSOR;
+    static EObjectTools selectedObject = EObjectTools.CURSOR;
     private int		x1;
     private int		y1;
     private int		x2;
@@ -55,6 +55,9 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     static int[]		roadCoord2 = new int[2];
     static NodeGraphic		destRoad = null;
     static boolean	        drawTempRoad = false;
+
+    static int			mouseX;
+    static int			mouseY;
 
     MapPanel(Controller controller) {
 	try {
@@ -83,6 +86,10 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
 	super.paintComponent(g);
 
+	Font f = new Font("Helvetica", Font.BOLD, 14);
+	g.setFont(f);
+	g.drawString("Echelle:" + 100, this.getWidth() - 120, this.getHeight() - 10);
+	g.drawString("X: " + this.mouseX + " Y: " + this.mouseY, 10, this.getHeight() - 10);
 	g.setColor(Color.GRAY);
 	int		j = 60;
 	while (j < 10000) {
@@ -197,10 +204,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	}
     }
 
-    static void	updateRoads() {
-	
-    }
-
     public void mouseClicked(MouseEvent e) {
 	System.out.println("Clicked ! X: " + e.getX() + " // Y: " + e.getY());
     }
@@ -211,11 +214,14 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
     public void mouseEntered(MouseEvent e) {
 	System.out.println("Entered !");
+	this.mouseX = e.getX();
+	this.mouseY = e.getY();
     }
 
     public void mouseReleased(MouseEvent e) {
 	System.out.println("Released !");
-	if (e.getButton() == MouseEvent.BUTTON1) {
+	if (e.getButton() == MouseEvent.BUTTON1
+	    && this.selectedObject == EObjectTools.NODE) {
 	    this.controller.eventPutNode(e.getX(), e.getY());
 	}
     }
@@ -226,10 +232,14 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
     public void	mouseMoved(MouseEvent e) {
 	// System.out.println("Move !"); 
+	this.mouseX = e.getX();
+	this.mouseY = e.getY();
     }
 
     public void	mouseDragged(MouseEvent e) {
 	System.out.println("Drag !");
+	this.mouseX = e.getX();
+	this.mouseY = e.getY();
     }
 
     static void	setMovedNode1(int x, int y) {

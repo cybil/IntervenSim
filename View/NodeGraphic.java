@@ -84,20 +84,23 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
     public void mouseReleased(MouseEvent e) {
 	System.out.println("Node --- Released !");
-	if (e.getButton() == MouseEvent.BUTTON1)
+	if (e.getButton() == MouseEvent.BUTTON1
+	    && MapPanel.selectedObject == MapPanel.EObjectTools.NODE)
 	    {
 		oldx = e.getXOnScreen();
 		oldy = e.getYOnScreen();
 		MapPanel.setMovedNode2(this.getx(), this.gety());
 		MapPanel.setIsDragging(false);
 	    }
-	else if (e.getButton() == MouseEvent.BUTTON3)
+	else if (e.getButton() == MouseEvent.BUTTON1
+		 && MapPanel.selectedObject == MapPanel.EObjectTools.ROAD)
 	    MapPanel.setRoadNode2();
     }
 
     public void mousePressed(MouseEvent e) {
 	this.buttonPressed = e.getButton();
-	if (e.getButton() == MouseEvent.BUTTON1)
+	if (e.getButton() == MouseEvent.BUTTON1
+	    && MapPanel.selectedObject == MapPanel.EObjectTools.NODE)
 	    {
 		System.out.println("Node --- Pressed !");
 		oldx = e.getXOnScreen();
@@ -106,9 +109,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 		oldy_rel = this.gety();
 		MapPanel.setMovedNode1(this.getx(), this.gety());
 	    }
-	else if (e.getButton() == MouseEvent.BUTTON3) {
+	else if (e.getButton() == MouseEvent.BUTTON1
+		 && MapPanel.selectedObject == MapPanel.EObjectTools.ROAD) {
 	    MapPanel.setRoadNode1(this.getx(), this.gety());
 	}
+	MapPanel.mouseX = this.getx();
+	MapPanel.mouseY = this.gety();
     }
 
     public void	mouseMoved(MouseEvent e) {
@@ -116,14 +122,17 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
     public void	mouseDragged(MouseEvent e) {
-	if (this.buttonPressed == MouseEvent.BUTTON1) {
+	if (this.buttonPressed == MouseEvent.BUTTON1
+	    && MapPanel.selectedObject == MapPanel.EObjectTools.NODE) {
 	    System.out.println("NODE --- Drag !");
 	    int new_x = oldx_rel + (e.getXOnScreen() - oldx);
 	    int new_y = oldy_rel + (e.getYOnScreen() - oldy);
 	    this._node_x = new_x;
 	    this._node_y = new_y;
-	    MapPanel.drawRoadToCursor(new_x, new_y);
+	    // MapPanel.drawRoadToCursor(new_x, new_y);
 	    MapPanel.setIsDragging(true);
 	}
+	MapPanel.mouseX = e.getX();
+	MapPanel.mouseY = e.getY();
     }
 } 
