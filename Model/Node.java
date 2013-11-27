@@ -74,7 +74,7 @@ public class Node implements java.io.Serializable {
     }
 	
     public void			setCoord(int[] newCoord) {
-	this.coord = newCoord;
+      this.coord = newCoord.clone();
     }
 	
     public void			setUrgencyTime(int id, float time) {
