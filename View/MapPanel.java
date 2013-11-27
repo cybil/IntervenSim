@@ -144,10 +144,12 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		if (isDragging == false) {
 		    int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		    int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+		    
 		    if (this.containsNode(x, y) == false) {
 			NodeGraphic		newNode = new NodeGraphic(this.vehicule,
 									  this.vehicule,
 									  this.vehicule, x, y);
+
 			newNode.setLayout(null);
 			this.add(newNode);
 			this.validate();
@@ -224,6 +226,10 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	    && this.selectedObject == EObjectTools.NODE) {
 	    this.controller.eventPutNode(e.getX(), e.getY());
 	}
+	else if (e.getButton() == MouseEvent.BUTTON1
+	    && this.selectedObject == EObjectTools.VEHICULE) {
+	    this.controller.eventCreatVehicule(e.getX(), e.getY());
+	}
     }
 
     public void mousePressed(MouseEvent e) {
@@ -231,7 +237,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     }
 
     public void	mouseMoved(MouseEvent e) {
-	// System.out.println("Move !"); 
 	this.mouseX = e.getX();
 	this.mouseY = e.getY();
     }
@@ -281,7 +286,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
     static void		deleteNode(NodeGraphic n) {
 	int[]		coord = {n.getx(), n.gety()};
-	System.out.println(" ----------------------------- DELETE NODE ");
 	nodes.remove(n);
 	controller.eventDeleteNode(coord);
     }

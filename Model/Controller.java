@@ -60,7 +60,8 @@ public class Controller {
 	return _model.getMap().addRoad(coordNode1, coordNode2);
     }
 	
-    public boolean		eventCreatVehicule(int[] coord) {
+    public boolean		eventCreatVehicule(int x, int y) {
+	int[]		coord = {x, y};
 	return _model.getMap().creatVehicule(coord);
     }
 	

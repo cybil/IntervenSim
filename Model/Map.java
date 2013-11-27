@@ -60,7 +60,7 @@ public class Map implements java.io.Serializable {
     }
 
     public boolean		creatVehicule(int[] coord) {
-	this.vehicule.setCoord(coord);
+	this.vehicule.setCoord(coord.clone());
 	return (true);
     }
 
