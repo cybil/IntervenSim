@@ -13,8 +13,8 @@ public class ToolsBar extends JPanel {
 	protected NodeButton nodeButton = new NodeButton();
 
 	ToolsBar() {
-		this.setPreferredSize(new Dimension(60, 192));
-		this.setBackground(new Color(0, 255, 0));
+		this.setPreferredSize(new Dimension(49, 192));
+		//this.setBackground(new Color(0, 255, 0));
 
 		this.setLayout(new GridLayout(4, 1));
 	    this.add(selectButton);

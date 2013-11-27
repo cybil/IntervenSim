@@ -70,7 +70,6 @@ public class VehiculeTab extends JPanel {
 	    speedJtf.setPreferredSize(new Dimension(50, 30));
 	    speedPanel.add(speedJtf);
 	    speedPanel.add(new JLabel("km/h"));
-	    this.add(speedPanel);
-		
+	    this.add(speedPanel);		
 	}
 }
