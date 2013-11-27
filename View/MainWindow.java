@@ -1,49 +1,59 @@
 import java.util.ArrayList;
+
 import javax.swing.JFrame;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
 import java.awt.event.*;
 
 public class MainWindow extends JFrame implements ActionListener {
-    private static boolean		inst = false;
+    private boolean				inst = false;
     private Controller			controller;
-    private static JPanel		content = new JPanel();
-    private static MenuBar		menuBar = new MenuBar();
-    private static ButtonBar		buttonBar = new ButtonBar();
-    private static TabsPanel		tabsPanel = new TabsPanel();
-    private static ToolsBar		toolsBar = new ToolsBar();
-    private static MapPanel		mapPanel;
-    private static GridBagConstraints	gbc = new GridBagConstraints();
-    private Map				map;
-
-    private Timer			timer = new Timer(10, this);
-
+    private JPanel				content = new JPanel();
+    private MenuBar				menuBar = new MenuBar();
+    private ButtonBar			buttonBar = new ButtonBar();
+    private TabsPanel			tabsPanel = new TabsPanel();
+    private ToolsBar			toolsBar = new ToolsBar();
+    private MapPanel			mapPanel;
+    private GridBagConstraints	gbc = new GridBagConstraints();
+    private Map					map;
+    private Timer				timer = new Timer(10, this);
+    
     public MainWindow(Controller controller) throws NombreInstanceGUIException{
 	if (inst == true)
 	    throw new NombreInstanceGUIException("Il existe deja une instance de la classe mainWindow.");
 	inst = true;
-   	this.setTitle("IntervenSim by Teks");
-	this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-	this.setLocationRelativeTo(null);
-	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.setVisible(true);
-	this.setJMenuBar(menuBar);
+	configureJFrame();
 	this.controller = controller;
 	this.mapPanel = new MapPanel(this.controller);
 	this.map = this.controller._model.getMap();
-		
-	content.setLayout(new GridBagLayout());
 	setPanels();
-	toolsBar.selectButton.addActionListener(new SelectButtonListener());
+	listenToolBarButtons();
 	this.timer.start();
     }
 
+    // action Performed class
     public void actionPerformed(ActionEvent event) {
 	this.mapPanel.displayMap(this.map.getFormatMap());
     }
     
+    //Configure all JFrame attributs
+    void configureJFrame() {
+     	this.setTitle("IntervenSim by Teks");
+    	this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    	this.setLocationRelativeTo(null);
+    	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	this.setVisible(true);
+    	this.setJMenuBar(menuBar);
+    	content.setLayout(new GridBagLayout());
+    	}
+    
+    
+    //set all main panels
     private void setPanels() {
     	gbc.gridx = 0;
     	gbc.gridy = 0;
@@ -89,10 +99,51 @@ public class MainWindow extends JFrame implements ActionListener {
     	this.setVisible(true);
     }
     
+    //Listen to Tool Bar Buttons
+    void listenToolBarButtons() {
+    	this.toolsBar.selectButton.addActionListener(new SelectButtonListener());
+    	this.toolsBar.vehiculeButton.addActionListener(new VehiculeButtonListener());
+    	this.toolsBar.roadButton.addActionListener(new RoadButtonListener());
+    	this.toolsBar.nodeButton.addActionListener(new NodeButtonListener());
+    }
+    
+    
+    // ActionListener class for select button
     class SelectButtonListener implements ActionListener{
         //Redéfinition de la méthode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez cliqué sur le bouton de Selection");        
+          System.out.print("Vous avez cliqué sur le bouton de Selection\n");
+         toolsBar.setCliked(0);
+         mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
         }
       }
+    
+    class VehiculeButtonListener implements ActionListener{
+        //Redéfinition de la méthode actionPerformed()
+        public void actionPerformed(ActionEvent arg0) {
+          System.out.print("Vous avez cliqué sur le bouton Vehicule\n");        
+          toolsBar.setCliked(1);
+          mapPanel.setSelectedObject(MapPanel.EObjectTools.VEHICULE);
+          }
+      }
+    
+    class RoadButtonListener implements ActionListener{
+        //Redéfinition de la méthode actionPerformed()
+        public void actionPerformed(ActionEvent arg0) {
+          System.out.print("Vous avez cliqué sur le bouton Road\n");        
+          toolsBar.setCliked(2);
+          mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
+          }
+      }
+    
+    class NodeButtonListener implements ActionListener{
+        //Redéfinition de la méthode actionPerformed()
+        public void actionPerformed(ActionEvent arg0) {
+          System.out.print("Vous avez cliqué sur le bouton Node\n");        
+          toolsBar.setCliked(3);
+          mapPanel.setSelectedObject(MapPanel.EObjectTools.NODE);
+          }
+      }
+    
+    
 }

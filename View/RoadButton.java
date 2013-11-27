@@ -39,19 +39,20 @@ public class RoadButton extends JButton implements MouseListener {
 	
 	//Methode appelee lors du clic de souris
 	  public void mouseClicked(MouseEvent event) {
-//		 if (getCliked == false)
+		if (getCliked == false)
 			try {
-		      this.img = ImageIO.read(new File("img/cursor48x48WoLG.png"));
-		    } catch (IOException e) {
-		      e.printStackTrace();
-		    }
-//		 else
-//			 try {
-//			      this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
-//			    } catch (IOException e) {
-//			      e.printStackTrace();
-//			    }
-	  }
+				this.img = ImageIO.read(new File("img/cursor48x48WoLG.png"));
+			    } catch (IOException e) {
+			    	e.printStackTrace();
+			    	}
+		else
+			try {
+				this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
+			    } catch (IOException e) {
+			    	e.printStackTrace();
+			    	}
+		getCliked = !(getCliked);
+		}
 
 	  //Methode appelee lors du survol de la souris
 	  public void mouseEntered(MouseEvent event) { 
@@ -61,7 +62,7 @@ public class RoadButton extends JButton implements MouseListener {
 				  } catch (IOException e) {
 					  e.printStackTrace();
 					  }
-	  }
+	  	}
 
 	  //Methode appelee lorsque la souris sort de la zone du bouton
 	  public void mouseExited(MouseEvent event) {
@@ -84,6 +85,20 @@ public class RoadButton extends JButton implements MouseListener {
 
 	  //Methode appelee lorsque l'on relache le clic de souris
 	  public void mouseReleased(MouseEvent event) {
-		  getCliked = !(getCliked);
+
+	  }
+	  
+	  protected void setGetCliked(boolean clic) {
+		  getCliked = clic;
+		  if (clic == false) {
+			  try {
+				  System.out.print("road efface et clic vaut : " + clic + " \n");
+				  this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
+				  } catch (IOException e) {
+					  e.printStackTrace();
+					  }
+			  }
+		  else
+			  System.out.print("road NON efface et clic vaut : " + clic + " \n");
 	  }
 }
