@@ -38,17 +38,10 @@ public class Map implements java.io.Serializable {
 	return false;
     }
 
-    public static boolean		findNode(int[] c1, int[] c2)
-    {
-	return false;
-    }
 
     public boolean		addRoad(int[] coordNode1, int[] coordNode2) {
-	if (this.findNode(coordNode1, coordNode2) == true) {
-	    this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2));
-	    return true;
-	}
-	return false;
+	this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2));
+	return true;
 	// Node			src;
 	// Node			dst;
 

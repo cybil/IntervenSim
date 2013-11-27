@@ -22,6 +22,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     private int		oldy_rel;
 
     private boolean	isSelected = false;
+    private int		buttonPressed = 0;
 
     public int		getx()
     {
@@ -32,7 +33,13 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	return (this._node_y);
     }
 	
+    public NodeGraphic()
+    {
+	System.out.println("NODE --- CONSTRUCTION DEFAULT");
+    }
+
     public NodeGraphic(Image imgNormal, Image imgSelected, Image imgPassedOver, int p_x, int p_y) {
+	System.out.println("NODE --- CONSTRUCTION");
 	this.imgNormal = imgNormal;
 	this.imgSelected = imgSelected;
 	this.imgPassedOver = imgPassedOver;
@@ -73,28 +80,36 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     public void mouseEntered(MouseEvent e) {
 	System.out.println("NODE --- Entered !");
 	this.currentImg = this.imgPassedOver;
+	MapPanel.setDestRoad(this);
     }
 
     public void mouseReleased(MouseEvent e) {
 	System.out.println("Node --- Released !");
-	if (e.getButton() == MouseEvent.BUTTON3)
+	if (e.getButton() == MouseEvent.BUTTON1)
 	    {
 		oldx = e.getXOnScreen();
 		oldy = e.getYOnScreen();
-		MapPanel.setMovedNode2(this);
+		MapPanel.setMovedNode2(this.getx(), this.gety());
+		MapPanel.setIsDragging(false);
 	    }
+	else if (e.getButton() == MouseEvent.BUTTON3)
+	    MapPanel.setRoadNode2();
     }
 
     public void mousePressed(MouseEvent e) {
-	System.out.println("Node --- Pressed !");
-	if (e.getButton() == MouseEvent.BUTTON3)
+	this.buttonPressed = e.getButton();
+	if (e.getButton() == MouseEvent.BUTTON1)
 	    {
+		System.out.println("Node --- Pressed !");
 		oldx = e.getXOnScreen();
 		oldy = e.getYOnScreen();
 		oldx_rel = this.getx();
 		oldy_rel = this.gety();
-		MapPanel.setMovedNode1(this.getX(), this.getY());
+		MapPanel.setMovedNode1(this.getx(), this.gety());
 	    }
+	else if (e.getButton() == MouseEvent.BUTTON3) {
+	    MapPanel.setRoadNode1(this.getx(), this.gety());
+	}
     }
 
     public void	mouseMoved(MouseEvent e) {
@@ -102,10 +117,13 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
     public void	mouseDragged(MouseEvent e) {
-	System.out.println("NODE --- Drag !");
-	int new_x = oldx_rel + (e.getXOnScreen() - oldx);
-	int new_y = oldy_rel + (e.getYOnScreen() - oldy);
-	this._node_x = new_x;
-	this._node_y = new_y;
+	if (this.buttonPressed == MouseEvent.BUTTON1) {
+	    System.out.println("NODE --- Drag !");
+	    int new_x = oldx_rel + (e.getXOnScreen() - oldx);
+	    int new_y = oldy_rel + (e.getYOnScreen() - oldy);
+	    this._node_x = new_x;
+	    this._node_y = new_y;
+	    MapPanel.setIsDragging(true);
+	}
     }
 } 
