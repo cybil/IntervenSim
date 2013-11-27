@@ -49,6 +49,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
     static Controller		controller;
     static int[]		coordMovedNode = new int[2];
+    static boolean		isDragging = false;
 
     MapPanel(Controller controller) {
 	try {
@@ -71,34 +72,35 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     }
 
     public void		paintComponent(Graphics g) {
+	int		i;
 	Image		bck;
 
 	super.paintComponent(g);
 	this.removeAll();
-	for (NodeGraphic n : nodes) {
-	    this.add(n);
+	i = -1;
+	while (++i < this.nodes.size()) {
+	    this.add(this.nodes.get(i));
 	}
 
 	if ((bck = this.controller._model.getMap().getBackground()) != null)
 	    g.drawImage(bck, 0, 0, this);
-	// for (RoadGraphic r : this.roads) {
-	//     g.drawLine(r.x1, r.y1, r.x2, r.y2);
-	// }
-	// for (NodeGraphic n : this.nodes) {
-	//     g.drawImage(n.currentImg, n.x - (n.currentImg.getWidth(null) / 2), n.y - (n.currentImg.getHeight(null) / 2), this);
-	// }
+	for (RoadGraphic r : this.roads) {
+	    System.out.println("COUCOU LES AMIS: x1:" + r.x1 + " - y1: " + r.y1 + " // x2: " + r.x2 + " - y2: " + r.y2);
+	    g.drawLine(r.x1, r.y1, r.x2, r.y2);
+	}
 	if (this.isPressed == true) {
 	    g.drawLine(this.x1, this.y1, this.x2, this.y2);
 	}
 
     }
 
-    public static boolean	containsNode(int x, int y)
+    public static boolean	containsNode(int p_x, int p_y)
     {
 	int	i = 0;
+
 	while (i < nodes.size()) {
-	    if (nodes.get(i).getx() == x
-		&& nodes.get(i).gety() == y)
+	    if (nodes.get(i).getx() == p_x
+		&& nodes.get(i).gety() == p_y)
 		return true;
 	    ++i;
 	}
@@ -107,8 +109,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
     public void		displayMap(ArrayList<String> formatMap)
     {
-	// this.nodes.clear();
-	// this.removeAll();
 	for (String s : formatMap) {
 	    if (s.charAt(0) == 'V') {
 		// int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
@@ -116,23 +116,24 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		// NodeGraphic		newNode = new NodeGraphic(this.vehicule,
 		// 						  this.vehicule,
 		// 						  this.vehicule, x, y);
-		// // this.nodes.add(newNode);
+		// this.nodes.add(newNode);
 		// this.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'N') {
-		int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-		int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+		if (isDragging == false) {
+		    int	_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+		    int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
 		
-		if (this.containsNode(x, y) == false) {
-		    System.out.println(" ------------------- COUCOUUUU");
-		    NodeGraphic		newNode = new NodeGraphic(this.nodeNormal,
-								  this.nodeAttachPoint,
-								  this.nodeUrgency, x, y);
-		    newNode.setVisible(true);
-		    newNode.setLayout(null);
-		    this.add(newNode);
-		    this.validate();
-		    nodes.add(newNode);
+		    if (this.containsNode(_x, _y) == false) {
+			NodeGraphic		newNode = new NodeGraphic(this.nodeNormal,
+									  this.nodeAttachPoint,
+									  this.nodeUrgency, _x, _y);
+			newNode.setVisible(true);
+			newNode.setLayout(null);
+			this.add(newNode);
+			this.validate();
+			nodes.add(newNode);
+		    }
 		}
 	    }
 	    else if (s.charAt(0) == 'A') {
@@ -154,13 +155,14 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		// this.add(newNode);
 	    }
 	    else if (s.charAt(0) == 'R') {
-		// int	x1 = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-		// int	y1 = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
-		// String	s2 = s.substring(s.lastIndexOf(":"));
-		// int	x2 = Integer.parseInt(s2.substring(s2.indexOf(":") + 1, s2.indexOf(",")));
-		// int	y2 = Integer.parseInt(s2.substring(s2.indexOf(",") + 1));
-		// RoadGraphic		newRoad = new RoadGraphic(x1, y1, x2, y2);
-		// this.roads.add(newRoad);
+		System.out.println("================================== blAAAAA !!!");
+		int	x1 = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+		int	y1 = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
+		String	s2 = s.substring(s.lastIndexOf(":"));
+		int	x2 = Integer.parseInt(s2.substring(s2.indexOf(":") + 1, s2.indexOf(",")));
+		int	y2 = Integer.parseInt(s2.substring(s2.indexOf(",") + 1));
+		RoadGraphic		newRoad = new RoadGraphic(x1, y1, x2, y2);
+		this.roads.add(newRoad);
 	    }
 	    this.repaint();
 	}
@@ -181,14 +183,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     public void mouseReleased(MouseEvent e) {
 	System.out.println("Released !");
 	if (e.getButton() == MouseEvent.BUTTON1) {
-	    // Verifier quel est l'item selectionne pour placer un element
 	    this.controller.eventPutNode(e.getX(), e.getY());
-	}
-	else if (e.getButton() == MouseEvent.BUTTON3) {
-	    this.isPressed = false;
-	    int[]	coord1 = {this.x1, this.y1};
-	    int[]	coord2 = {e.getX(), e.getY()};
-	    this.controller.eventAddRoad(coord1, coord2);
 	}
     }
 
@@ -209,11 +204,32 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	coordMovedNode[1] = y;
     }
 
-    static void	setMovedNode2(NodeGraphic n) {
-	int[]		coordMovedNode2 = {n.getX(), n.getY()};
+    static void	setMovedNode2(int x, int y) {
+	int[]		coordMovedNode2 = {x, y};
+	boolean		ret;
 
-	System.out.println("======================================== AAAAAAAAAAAAAAAAAAA");
-	controller.eventEditNodeCoord(coordMovedNode, coordMovedNode2);
+	ret = controller.eventEditNodeCoord(coordMovedNode, coordMovedNode2);
+	System.out.println("Ret = " + ret);
     }
 
+    static int[]	roadCoord1 = new int[2];
+    static NodeGraphic	destRoad = null;
+
+    static void	setDestRoad(NodeGraphic n) {
+	destRoad = n;
+    }
+
+    static void	setRoadNode1(int x, int y) {
+	roadCoord1[0] = x;
+	roadCoord1[1] = y;
+    }
+
+    static void	setRoadNode2() {
+	int[]	coord2 = {destRoad.getx(), destRoad.gety()};
+	controller.eventAddRoad(roadCoord1, coord2);
+    }
+
+    static void		setIsDragging(boolean b) {
+	isDragging = b;
+    }
 }

@@ -87,6 +87,7 @@ public class Graph implements java.io.Serializable{
 	int			status;
 	int			roadLength;
 
+	System.out.println("=========== NEW ROAD ===========");
 	status = 0;
 	roadLength = 10;  // 10 valeur par defaut d'une taille de route (a caluculer)
 	for (GraphNode n : this.graphNode) {
