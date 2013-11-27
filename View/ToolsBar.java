@@ -53,4 +53,19 @@ public class ToolsBar extends JPanel {
 		}
 		this.repaint();
 	}
+	
+	boolean getCliked(int button) {
+		switch (button) {
+		case 0 :
+			return (selectButton.getNbCliked());
+		case 1 :
+			return (vehiculeButton.getNbCliked());
+		case 2 :
+			return (roadButton.getNbCliked());
+		case 3 :
+			return (nodeButton.getNbCliked());
+		default :
+			return false;
+		}
+	}
 }

@@ -43,7 +43,7 @@ public class RoadButton extends JButton implements MouseListener {
 		else
 			try {
 				this.img = ImageIO.read(new File("img/road48x48WoB.png"));
-			    } catch (IOException e) {
+			} catch (IOException e) {
 			    	e.printStackTrace();
 			    	}
 		getCliked = !(getCliked);
@@ -95,5 +95,9 @@ public class RoadButton extends JButton implements MouseListener {
 			  }
 		  else
 			  System.out.print("road NON efface et clic vaut : " + clic + " \n");
+	  }
+	  
+	  public boolean getNbCliked() {
+		  return (getCliked);
 	  }
 }

@@ -101,4 +101,8 @@ public class VehiculeButton extends JButton implements MouseListener {
 		  else
 			  System.out.print("vehicule NON efface et clic vaut : " + clic + " \n");
 	  }
+    
+    public boolean getNbCliked() {
+		  return (getCliked);
+    }
 }
