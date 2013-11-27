@@ -121,9 +121,15 @@ public class MainWindow extends JFrame implements ActionListener {
     class VehiculeButtonListener implements ActionListener{
         //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez clique sur le bouton Vehicule\n");        
-          toolsBar.setCliked(1);
-          mapPanel.setSelectedObject(MapPanel.EObjectTools.VEHICULE);
+          System.out.print("Vous avez clique sur le bouton Vehicule\n");
+//          if (toolsBar.getCliked(1) == false) {
+        	  toolsBar.setCliked(1);
+        	  mapPanel.setSelectedObject(MapPanel.EObjectTools.VEHICULE);
+//          } else {
+//        	  toolsBar.setCliked(1);
+//        	  toolsBar.setCliked(0);
+//        	  mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
+//          }  
           tabsPanel.editTab.showPanel(0);
           }
       }
@@ -132,21 +138,33 @@ public class MainWindow extends JFrame implements ActionListener {
         //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
           System.out.print("Vous avez clique sur le bouton Road\n");        
-          toolsBar.setCliked(2);
-          mapPanel.setSelectedObject(MapPanel.EObjectTools.ROAD);
+//          if (toolsBar.getCliked(2) == false) {
+        	  toolsBar.setCliked(2);
+              mapPanel.setSelectedObject(MapPanel.EObjectTools.ROAD);
+//          } else {
+//        	  toolsBar.setCliked(2);
+//        	  toolsBar.setCliked(0);
+//        	  mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
+//          }
           tabsPanel.editTab.showPanel(2);
           }
-      }
+        }
     
     class NodeButtonListener implements ActionListener{
         //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
           System.out.print("Vous avez clique sur le bouton Node\n");        
-          toolsBar.setCliked(3);
-          mapPanel.setSelectedObject(MapPanel.EObjectTools.NODE);
+//          if (toolsBar.getCliked(3) == false) {
+        	  toolsBar.setCliked(3);
+              mapPanel.setSelectedObject(MapPanel.EObjectTools.NODE);
+//              } else {
+//            	  toolsBar.setCliked(3);
+//            	  toolsBar.setCliked(0);
+//            	  mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
+//              }
           tabsPanel.editTab.showPanel(1);
           }
-      }
+        }
     
     
 }
