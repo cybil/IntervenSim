@@ -14,8 +14,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     public Image	currentImg;
     private int		_node_x;
     private int		_node_y;
+    // absolute Coord copy
     private int		oldx;
     private int		oldy;
+    // relative coord copy
+    private int		oldx_rel;
+    private int		oldy_rel;
 
     private boolean	isSelected = false;
 
@@ -87,6 +91,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    {
 		oldx = e.getXOnScreen();
 		oldy = e.getYOnScreen();
+		oldx_rel = this.getx();
+		oldy_rel = this.gety();
 		MapPanel.setMovedNode1(this.getX(), this.getY());
 	    }
     }
@@ -97,8 +103,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
     public void	mouseDragged(MouseEvent e) {
 	System.out.println("NODE --- Drag !");
-	int new_x = oldx + (e.getXOnScreen() - oldx);
-	int new_y = oldy + (e.getYOnScreen() - oldy);
+	int new_x = oldx_rel + (e.getXOnScreen() - oldx);
+	int new_y = oldy_rel + (e.getYOnScreen() - oldy);
 	this._node_x = new_x;
 	this._node_y = new_y;
     }
