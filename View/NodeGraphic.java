@@ -7,29 +7,42 @@ import java.awt.event.MouseEvent;
 
 
 public class NodeGraphic extends JPanel implements MouseListener, MouseMotionListener {
-    
+
     private Image	imgNormal;
     private Image	imgSelected;
     private Image	imgPassedOver;
     public Image	currentImg;
-    public int		x;
-    public int		y;
+    private int		_node_x;
+    private int		_node_y;
+    private int		oldx;
+    private int		oldy;
+
     private boolean	isSelected = false;
+
+    public int		getx()
+    {
+	return (this._node_x);
+    }
+    public int		gety()
+    {
+	return (this._node_y);
+    }
 	
-    public NodeGraphic(Image imgNormal, Image imgSelected, Image imgPassedOver, int x, int y) {
+    public NodeGraphic(Image imgNormal, Image imgSelected, Image imgPassedOver, int p_x, int p_y) {
 	this.imgNormal = imgNormal;
 	this.imgSelected = imgSelected;
 	this.imgPassedOver = imgPassedOver;
 	this.currentImg = this.imgNormal;
-	this.x = x;
-	this.y = y;
+	this._node_x = p_x;
+	this._node_y = p_y;
+	//System.out.println("NODE --- create ! X: " + this.x + " // Y: " + this.y);
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
     }
 
     public void		paintComponent(Graphics g) {
 	super.paintComponent(g);
-	this.setBounds(this.x, this.y, 20, 20);
+	this.setBounds(this.getx(), this.gety(), 20, 20);
 	g.drawImage(this.currentImg, 0, 0, this);
     }
 
@@ -59,28 +72,22 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.currentImg = this.imgPassedOver;
     }
 
-    // Pour les Noeuds/Roads, voir pour faire une class NodeGraphic/RoadGraphic qui herite de JPanel et MouseListener, pour pouvoir detecter les events souris dessus et les dessiner plus facilement
-    // Plus simple pour deplacer les composants sur la map, les selectionner, faire des effets dessus etc.
-
-    static int	oldX;
-    static int	oldY;
-
     public void mouseReleased(MouseEvent e) {
-	if (e.getButton() == MouseEvent.BUTTON1) {
-	    System.out.println("Node --- Released !");
-	    oldX = e.getX();
-	    oldY = e.getY();
-	    this.setBounds(oldX, oldY, 20, 20);
-	    MapPanel.setMovedNode(null);
-	}
+	System.out.println("Node --- Released !");
+	if (e.getButton() == MouseEvent.BUTTON3)
+	    {
+		oldx = e.getXOnScreen();
+		oldy = e.getYOnScreen();
+	    }
     }
+
     public void mousePressed(MouseEvent e) {
-	if (e.getButton() == MouseEvent.BUTTON1) {
-	    System.out.println("Node --- Pressed !");
-	    oldX = e.getX();
-	    oldY = e.getY();
-	    MapPanel.setMovedNode(this);
-	}
+	System.out.println("Node --- Pressed !");
+	if (e.getButton() == MouseEvent.BUTTON3)
+	    {
+		oldx = e.getXOnScreen();
+		oldy = e.getYOnScreen();
+	    }
     }
 
     public void	mouseMoved(MouseEvent e) {
@@ -88,10 +95,10 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
     public void	mouseDragged(MouseEvent e) {
-	if (e.getButton() == MouseEvent.BUTTON1) {
-	    System.out.println("NODE --- Drag !");
-	    this.x = e.getX();
-	    this.y = e.getY();
-	}
+	System.out.println("NODE --- Drag !");
+	int new_x = oldx_rel + (e.getXOnScreen() - oldx);
+	int new_y = oldy_rel + (e.getYOnScreen() - oldy);
+	this._node_x = new_x;
+	this._node_y = new_y;
     }
 } 

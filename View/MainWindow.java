@@ -18,7 +18,7 @@ public class MainWindow extends JFrame implements ActionListener {
     private static GridBagConstraints	gbc = new GridBagConstraints();
     private Map				map;
 
-    private Timer			timer = new Timer(500, this);
+    private Timer			timer = new Timer(10, this);
 
     public MainWindow(Controller controller) throws NombreInstanceGUIException{
 	if (inst == true)

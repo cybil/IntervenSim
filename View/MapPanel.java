@@ -47,7 +47,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     private ArrayList<RoadGraphic>	roads = new ArrayList<RoadGraphic>();
     static NodeGraphic			movedNode;
 
-    private Controller		controller;
+    static Controller		controller;
 
     MapPanel(Controller controller) {
 	try {
@@ -96,8 +96,8 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     {
 	int	i = 0;
 	while (i < nodes.size()) {
-	    if (nodes.get(i).x == x
-		&& nodes.get(i).y == y)
+	    if (nodes.get(i).getx() == x
+		&& nodes.get(i).gety() == y)
 		return true;
 	    ++i;
 	}
@@ -171,18 +171,10 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
     public void mouseExited(MouseEvent e) {
 	System.out.println("Exited !");
-
     }
 
     public void mouseEntered(MouseEvent e) {
 	System.out.println("Entered !");
-	if (movedNode != null) {
-	    System.out.println("MOVE NODE " + movedNode.x + " - " + movedNode.y);
-	    // movedNode.setBounds(e.getX(), e.getY(), 20, 20);
-	    int[]		old = {movedNode.x, movedNode.y};
-	    int[]		newCoord = {e.getX(), e.getY()};
-	    this.controller.eventEditNodeCoord(old, newCoord);
-	}
     }
 
     public void mouseReleased(MouseEvent e) {
@@ -197,44 +189,18 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	    int[]	coord2 = {e.getX(), e.getY()};
 	    this.controller.eventAddRoad(coord1, coord2);
 	}
-	if (movedNode != null) {
-	    movedNode = null;
-	}
     }
 
     public void mousePressed(MouseEvent e) {
-	if (e.getButton() == MouseEvent.BUTTON1) {
 	System.out.println("Pressed !");
-	    this.isPressed = true;
-	    this.x1 = e.getX();
-	    this.y1 = e.getY();
-	    this.x2 = e.getX();
-	    this.y2 = e.getY();
-	}
     }
 
     public void	mouseMoved(MouseEvent e) {
 	System.out.println("Move !"); 
-	if (movedNode != null) {
-	    System.out.println("MOVE NODE " + movedNode.x + " - " + movedNode.y);
-	    // movedNode.setBounds(e.getX(), e.getY(), 20, 20);
-	    int[]		old = {movedNode.x, movedNode.y};
-	    int[]		newCoord = {e.getX(), e.getY()};
-	    this.controller.eventEditNodeCoord(old, newCoord);
-	}
     }
 
     public void	mouseDragged(MouseEvent e) {
 	System.out.println("Drag !");
-	if (this.isPressed == true) {
-	    this.x2 = e.getX();
-	    this.y2 = e.getY();
-	}
     }
 
-    static void setMovedNode(NodeGraphic n) {
-	System.out.println("SETTER !");
-	movedNode = n;
-	System.out.println("X:::: " + movedNode.x);
-    }
 }
