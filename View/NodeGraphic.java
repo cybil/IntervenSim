@@ -1,11 +1,20 @@
 import javax.swing.JPanel; 
 import java.awt.Image;
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
 
 public class NodeGraphic extends JPanel implements MouseListener, MouseMotionListener {
+
+    private JPopupMenu	jpm = new JPopupMenu();
+    private JMenuItem	delete = new JMenuItem("Supprimer");
+
+    private DeleteNode	toDel = new DeleteNode(this);
 
     protected Image	imgNormal;
     private Image	imgSelected;
@@ -19,9 +28,24 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     // relative coord copy
     private int		oldx_rel;
     private int		oldy_rel;
+    // pos du panel
+    private int		image_x;
+    private int		image_y;
 
     private boolean	isSelected = false;
     private int		buttonPressed = 0;
+
+    private class DeleteNode implements ActionListener {
+	NodeGraphic	node;
+	public DeleteNode(NodeGraphic n) {
+	    this.node = n;
+	}
+
+	public void actionPerformed(ActionEvent e) {
+	    System.out.println("============================ DELETE ============");
+	    MapPanel.deleteNode(node);
+	}
+    }
 
     public int		getx() {
 	return (this._node_x);
@@ -43,9 +67,13 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.currentImg = this.imgNormal;
 	this._node_x = p_x;
 	this._node_y = p_y;
+	this.image_x = p_x - 10;
+	this.image_y = p_y - 10;
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
 	this.setOpaque(false);
+	this.jpm.add(this.delete);
+	this.delete.addActionListener(this.toDel);
     }
 
     public void		paintComponent(Graphics g) {
@@ -56,11 +84,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
     public void mouseClicked(MouseEvent e) {
 	System.out.println("NODE --- Clicked ! X: " + e.getX() + " // Y: " + e.getY());
-	if (this.isSelected == false) {
+	if (MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR
+	    && this.isSelected == false) {
 	    this.currentImg = this.imgSelected;
 	    this.isSelected = true;
 	}
-	else {
+	else if (MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR) {
 	    this.currentImg = this.imgPassedOver;
 	    this.isSelected = false;
 	}
@@ -78,13 +107,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     public void mouseEntered(MouseEvent e) {
 	System.out.println("NODE --- Entered !");
 	this.currentImg = this.imgPassedOver;
-	MapPanel.setDestRoad(this);
     }
 
     public void mouseReleased(MouseEvent e) {
 	System.out.println("Node --- Released !");
 	if (e.getButton() == MouseEvent.BUTTON1
-	    && MapPanel.selectedObject == MapPanel.EObjectTools.NODE)
+	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
 	    {
 		oldx = e.getXOnScreen();
 		oldy = e.getYOnScreen();
@@ -93,13 +121,13 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    }
 	else if (e.getButton() == MouseEvent.BUTTON1
 		 && MapPanel.selectedObject == MapPanel.EObjectTools.ROAD)
-	    MapPanel.setRoadNode2();
+	    MapPanel.setRoadNode(this.getx(), this.gety());
     }
 
     public void mousePressed(MouseEvent e) {
 	this.buttonPressed = e.getButton();
 	if (e.getButton() == MouseEvent.BUTTON1
-	    && MapPanel.selectedObject == MapPanel.EObjectTools.NODE)
+	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
 	    {
 		System.out.println("Node --- Pressed !");
 		oldx = e.getXOnScreen();
@@ -108,12 +136,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 		oldy_rel = this.gety();
 		MapPanel.setMovedNode1(this.getx(), this.gety());
 	    }
-	else if (e.getButton() == MouseEvent.BUTTON1
-		 && MapPanel.selectedObject == MapPanel.EObjectTools.ROAD) {
-	    MapPanel.setRoadNode1(this.getx(), this.gety());
-	}
 	if (e.getButton() == MouseEvent.BUTTON3) {
-	    MapPanel.deleteNode(this);
+	    jpm.show(this, e.getX(), e.getY());
 	}
 	MapPanel.mouseX = this.getx();
 	MapPanel.mouseY = this.gety();
@@ -125,16 +149,16 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
     public void	mouseDragged(MouseEvent e) {
 	if (this.buttonPressed == MouseEvent.BUTTON1
-	    && MapPanel.selectedObject == MapPanel.EObjectTools.NODE) {
+	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR) {
 	    System.out.println("NODE --- Drag !");
 	    int new_x = oldx_rel + (e.getXOnScreen() - oldx);
 	    int new_y = oldy_rel + (e.getYOnScreen() - oldy);
 	    this._node_x = new_x;
 	    this._node_y = new_y;
-	    // MapPanel.drawRoadToCursor(new_x, new_y);
 	    MapPanel.setIsDragging(true);
+	    MapPanel.setMovedNode2(this.getx(), this.gety());
 	}
-	MapPanel.mouseX = e.getX();
-	MapPanel.mouseY = e.getY();
+	MapPanel.mouseX = this.getx();
+	MapPanel.mouseY = this.gety();
     }
 } 
