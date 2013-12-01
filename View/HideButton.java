@@ -8,38 +8,29 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException; 
+
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonModel;
-import javax.swing.JFrame;
-import javax.swing.JToggleButton;
 
-public class RoadButton extends JToggleButton implements MouseListener {
+public class HideButton extends JButton implements MouseListener {
 	private String name;
-	private Image imgNotSelected;
-	private Image imgSelected;
-	private Image imgMouseEntered;
 	private Image img;
-
-	RoadButton() {
-		this.setSize(48, 48);
-		this.setPreferredSize(new Dimension(48, 48));
-		this.setMaximumSize(new Dimension(48, 48));
-		this.setMinimumSize(new Dimension(48, 48));
+//	private boolean isCliked = false;
+	
+	HideButton() {
+		this.setSize(20, 20);
+		this.setPreferredSize(new Dimension(20, 20));
+		this.setMaximumSize(new Dimension(20, 20));
+		this.setMinimumSize(new Dimension(20, 20));
 	    try {
-	    	this.imgNotSelected = ImageIO.read(new File("img/road48x48WoB.png"));
-		      this.imgSelected = ImageIO.read(new File("img/road48x48WoLG.png"));
-		      this.imgMouseEntered = ImageIO.read(new File("img/road48x48WoG.png"));
+	      img = ImageIO.read(new File("img/exit.png"));
 	    } catch (IOException e) {
 	      e.printStackTrace();
 	    }
-	    this.img = this.imgNotSelected;
 	    //Grace a cette instruction, notre objet va s'ecouter
 	    //Des qu'un evenement de la souris sera intercepte, il en sera averti
 	    this.addMouseListener(this);
-	    setOpaque(false);
-	    this.setToolTipText("Creat Roads");
+	    this.setToolTipText("Hide");
 	}
 	
 	public void paintComponent(Graphics g){
@@ -49,21 +40,21 @@ public class RoadButton extends JToggleButton implements MouseListener {
 	
 	//Methode appelee lors du clic de souris
 	  public void mouseClicked(MouseEvent event) {
-		  this.img = this.imgSelected;
+//		  isCliked = !(isCliked);
 		}
 
 	  //Methode appelee lors du survol de la souris
-		  public void mouseEntered(MouseEvent event) { 
-			  if (this.isSelected() == false)
-				  this.img = this.imgMouseEntered;
-			  }
+	  public void mouseEntered(MouseEvent event) { 
+//		  if (getCliked == false)
+			  try {
+				  this.img = ImageIO.read(new File("img/exit2.png"));
+				  } catch (IOException e) {
+					  e.printStackTrace();
+					  }
+	  	}
 
 	  //Methode appelee lorsque la souris sort de la zone du bouton
 	  public void mouseExited(MouseEvent event) {
-		  if (this.isSelected() == false)
-			  this.img = this.imgNotSelected;
-		  else
-			  this.img = this.imgSelected;
 	  }
 
 	  //Methode appelee lorsque l'on presse le bouton gauche de la souris
@@ -74,8 +65,11 @@ public class RoadButton extends JToggleButton implements MouseListener {
 
 	  }
 	  
-	  protected void deselectButton() {
-		  this.img = this.imgNotSelected;
-		  this.repaint();
+	  protected void setGetCliked(boolean clic) {
+
 	  }
+	  
+//	  public boolean getNbCliked() {
+//		  return (getCliked);
+//	  }
 }

@@ -23,48 +23,68 @@ public class VehiculeTab extends JPanel {
 	private JComboBox strategieCombo = new JComboBox();
 	private JFormattedTextField speedJtf = new JFormattedTextField(NumberFormat.getIntegerInstance());
 	private JPanel speedPanel = new JPanel();
+	private JLabel vehicleLabel = new JLabel("Vehicle");
+	private JLabel apLabel = new JLabel("Attachment point");
+	private JLabel strategyLabel = new JLabel("Select your strategy");
+	private JLabel speedLabel = new JLabel("Enter speed");
+	private JLabel spaceLabel = new JLabel(" a");
 	
 	VehiculeTab() {
 		this.setBackground(Color.white);
-		this.setPreferredSize(new Dimension(400, 600));
-		this.setLayout(new GridLayout(11, 1));
-		this.add(new JLabel("vehicle"));
-	    
+		this.setPreferredSize(new Dimension(200, 500));
+		this.setSize(new Dimension(200, 500));
+		this.setMaximumSize(new Dimension(200, 500));
+		this.setMinimumSize(new Dimension(200, 500));
+		this.setLayout(new GridLayout(13, 1));
+
+		//vehicul coordonates
+		vehicleLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+		this.add(vehicleLabel);
+
 		xJtf.setFont(new Font("Arial", Font.BOLD, 14));
 	    xJtf.setPreferredSize(new Dimension(50, 30));
 		xPanel.add(new JLabel("x :"));
 	    xPanel.add(xJtf);
+	    //xPanel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 	    this.add(xPanel);
 	    
 	    yJtf.setFont(new Font("Arial", Font.BOLD, 14));
 	    yJtf.setPreferredSize(new Dimension(50, 30));
 		yPanel.add(new JLabel("y :"));
 	    yPanel.add(yJtf);
+	   // yPanel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 	    this.add(yPanel);
-	    
-		this.add(new JLabel("Attachment point"));
+	
+	    // Attchment point coordinates
+	    apLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+		this.add(apLabel);
+		
 		xPtAttacheJtf.setFont(new Font("Arial", Font.BOLD, 14));
 	    xPtAttacheJtf.setPreferredSize(new Dimension(50, 30));
 		xPtAttachePanel.add(new JLabel("x :"));
 	    xPtAttachePanel.add(xPtAttacheJtf);
+	    xPtAttacheJtf.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 	    this.add(xPtAttachePanel);
 	    
 	    yPtAttacheJtf.setFont(new Font("Arial", Font.BOLD, 14));
 	    yPtAttacheJtf.setPreferredSize(new Dimension(50, 30));
 		yPtAttachePanel.add(new JLabel("y :"));
 	    yPtAttachePanel.add(yPtAttacheJtf);
+	    yPtAttacheJtf.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 	    this.add(yPtAttachePanel);
 	    
 	    ptAttacheButton.setSize(50, 20);
 	    this.add(ptAttacheButton);
 	    
-		this.add(new JLabel("Strategy"));
-		
+	    // Strategy choice
 		strategieCombo.setSize(new Dimension(50, 20));
+		strategieCombo.addItem("Select your strategy");
 		strategieCombo.addItem("Oldest Strategy");
 		this.add(strategieCombo);
 		
-		this.add(new JLabel("Speed"));
+		//Speed choice
+		speedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		this.add(speedLabel);
 		
 		speedJtf.setFont(new Font("Arial", Font.BOLD, 14));
 	    speedJtf.setPreferredSize(new Dimension(50, 30));

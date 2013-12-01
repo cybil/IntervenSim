@@ -10,8 +10,8 @@ import java.awt.GridLayout;
 import java.text.NumberFormat;
 
 public class RoadTab extends JPanel {
-	private JLabel road1Label = new JLabel("Road 1");
-	private JLabel road2Label = new JLabel("Road 2");
+	private JLabel road1Label = new JLabel("Node 1");
+	private JLabel road2Label = new JLabel("Node 2");
 	private JPanel x1Panel = new JPanel();
 	private JPanel y1Panel = new JPanel();
 	private JPanel x2Panel = new JPanel();
@@ -20,16 +20,15 @@ public class RoadTab extends JPanel {
 	private JFormattedTextField y1Jtf = new JFormattedTextField(NumberFormat.getIntegerInstance());
 	private JFormattedTextField x2Jtf = new JFormattedTextField(NumberFormat.getIntegerInstance());
 	private JFormattedTextField y2Jtf = new JFormattedTextField(NumberFormat.getIntegerInstance());
-	private JButton road1Button = new JButton("Select Road 1");
-	private JButton road2Button = new JButton("Select Road 2");
+	private JButton road1Button = new JButton("Select node 1");
+	private JButton road2Button = new JButton("Select node 2");
 	
 	RoadTab() {
 			this.setLayout(new GridLayout(8, 1));
-			setBackground(Color.white);
-			
-			setBackground(Color.white);
-			this.setPreferredSize(new Dimension(400, 600));
-			
+			this.setPreferredSize(new Dimension(200, 500));
+			this.setSize(new Dimension(200, 500));
+			this.setMaximumSize(new Dimension(200, 500));
+			this.setMinimumSize(new Dimension(200, 500));
 			road1Label.setSize(50, 30);
 			this.add(road1Label);
 			

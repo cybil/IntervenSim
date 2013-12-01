@@ -21,7 +21,10 @@ public class EditTab extends JPanel {
 	JPanel content = new JPanel();
 	
 	EditTab() {
-		this.setPreferredSize(new Dimension(400, 500));
+		this.setPreferredSize(new Dimension(200, 450));
+		this.setSize(new Dimension(200, 450));
+		this.setMaximumSize(new Dimension(200, 450));
+		this.setMinimumSize(new Dimension(200, 450));
 	    this.add(new JLabel("Edit map"));
 	    
 	content.setLayout(cl);

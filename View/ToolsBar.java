@@ -1,71 +1,62 @@
 import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 
 import java.awt.GridLayout;
 
-public class ToolsBar extends JPanel {
+import javax.swing.*;
+
+
+public class ToolsBar extends JToolBar {
 	protected SelectButton selectButton = new SelectButton();
 	protected VehiculeButton vehiculeButton = new VehiculeButton();
 	protected RoadButton roadButton = new RoadButton();
 	protected NodeButton nodeButton = new NodeButton();
-
+	private ButtonGroup buttonGroup = new ButtonGroup();
+	
 	ToolsBar() {
-		this.setPreferredSize(new Dimension(49, 192));
-		//this.setBackground(new Color(0, 255, 0));
+		this.setPreferredSize(new Dimension(60, 192));
 
 		this.setLayout(new GridLayout(4, 1));
+	    buttonGroup.add(selectButton);
+	    buttonGroup.add(vehiculeButton);
+	    buttonGroup.add(nodeButton);
+	    buttonGroup.add(roadButton);
 	    this.add(selectButton);
 	    this.add(vehiculeButton);
 	    this.add(nodeButton);
 	    this.add(roadButton);
+	    this.setFloatable(false);
 	    this.setVisible(true);
 	}
 	
-	void setCliked(int button) {
-		switch (button) {
-		case 0 :
-			System.out.print("select\n");
-			vehiculeButton.setGetCliked(false);
-			roadButton.setGetCliked(false);
-			nodeButton.setGetCliked(false);
+	void deselectButton(MapPanel.EObjectTools e) {
+		switch (e) {
+		case VEHICULE :
+			nodeButton.deselectButton();
+			selectButton.deselectButton();
+			roadButton.deselectButton();
 			break;
-		case 1 :
-			System.out.print("vehicule\n");
-			selectButton.setGetCliked(false);
-			roadButton.setGetCliked(false);
-			nodeButton.setGetCliked(false);
+		case NODE :
+			vehiculeButton.deselectButton();
+			selectButton.deselectButton();
+			roadButton.deselectButton();
 			break;
-		case 2 :
-			System.out.print("road\n");
-			selectButton.setGetCliked(false);
-			vehiculeButton.setGetCliked(false);
-			nodeButton.setGetCliked(false);
+		case CURSOR :
+			vehiculeButton.deselectButton();
+			nodeButton.deselectButton();
+			roadButton.deselectButton();
 			break;
-		case 3 :
-			System.out.print("NODE\n");
-			selectButton.setGetCliked(false);
-			roadButton.setGetCliked(false);
-			vehiculeButton.setGetCliked(false);
+		case ROAD :
+			vehiculeButton.deselectButton();
+			nodeButton.deselectButton();
+			selectButton.deselectButton();
 			break;
-		}
-		this.repaint();
-	}
-	
-	boolean getCliked(int button) {
-		switch (button) {
-		case 0 :
-			return (selectButton.getNbCliked());
-		case 1 :
-			return (vehiculeButton.getNbCliked());
-		case 2 :
-			return (roadButton.getNbCliked());
-		case 3 :
-			return (nodeButton.getNbCliked());
 		default :
-			return false;
+			break;
 		}
 	}
 }

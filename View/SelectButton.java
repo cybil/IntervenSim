@@ -1,4 +1,9 @@
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonModel;
+import javax.swing.JFrame;
+import javax.swing.JToggleButton;
 import java.io.File;
 import java.io.IOException;
 
@@ -18,24 +23,35 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-public class SelectButton extends JButton implements MouseListener {
+public class SelectButton extends JToggleButton implements MouseListener {
 	private String name;
+	private Image imgNotSelected;
+	private Image imgSelected;
+	private Image imgMouseEntered;
 	private Image img;
-	boolean getCliked = false;
+//	boolean getCliked = false;
 	
 	
 	SelectButton() {
 //		super(title);
 //	    this.name = title;
-		this.setSize(new Dimension(48, 48));
+		this.setSize(48, 48);
+		this.setPreferredSize(new Dimension(48, 48));
+		this.setMaximumSize(new Dimension(48, 48));
+		this.setMinimumSize(new Dimension(48, 48));
 	    try {
-	      img = ImageIO.read(new File("cursor48x48WoB.png"));
+	      this.imgNotSelected = ImageIO.read(new File("img/cursor48x48WoB.png"));
+	      this.imgSelected = ImageIO.read(new File("img/cursor48x48WoLG.png"));
+	      this.imgMouseEntered = ImageIO.read(new File("img/cursor48x48WoG.png"));
 	    } catch (IOException e) {
 	      e.printStackTrace();
 	    }
+	    this.img = this.imgNotSelected;
 	    //Grace a cette instruction, notre objet va s'ecouter
 	    //Des qu'un evenement de la souris sera intercepte, il en sera averti
 	    this.addMouseListener(this);
+	    this.setToolTipText("Select");
+	    setOpaque(false);
 	}
 	
 	public void paintComponent(Graphics g){
@@ -45,45 +61,21 @@ public class SelectButton extends JButton implements MouseListener {
 	
 	//Methode appelee lors du clic de souris
 	  public void mouseClicked(MouseEvent event) {
-			if (getCliked == false)
-				try {
-					this.img = ImageIO.read(new File("img/cursor48x48WoLG.png"));
-				    } catch (IOException e) {
-				    	e.printStackTrace();
-				    	}
-			else
-				try {
-					this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
-				    } catch (IOException e) {
-				    	e.printStackTrace();
-				    	}
-			getCliked = !(getCliked);
+					this.img = this.imgSelected;
 			}
 
 	  //Methode appelee lors du survol de la souris
 	  public void mouseEntered(MouseEvent event) { 
-		  if (getCliked == false)
-			  try {
-				  this.img = ImageIO.read(new File("img/cursor48x48WoG.png"));
-				  } catch (IOException e) {
-					  e.printStackTrace();
-					  }
+		  if (this.isSelected() == false)
+				  this.img = this.imgMouseEntered;
 	  }
 
 	  //Methode appelee lorsque la souris sort de la zone du bouton
 	  public void mouseExited(MouseEvent event) {
-		  if (getCliked == false)
-		  try {
-		      this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
-		    } catch (IOException e) {
-		      e.printStackTrace();
-		    }
+		  if (this.isSelected() == false)
+			  this.img = this.imgNotSelected;
 		  else
-			  try {
-			      this.img = ImageIO.read(new File("img/cursor48x48WoLG.png"));
-			    } catch (IOException e) {
-			      e.printStackTrace();
-			    } 
+			  this.img = this.imgSelected;
 	  }
 
 	  //Methode appelee lorsque l'on presse le bouton gauche de la souris
@@ -91,24 +83,10 @@ public class SelectButton extends JButton implements MouseListener {
 
 	  //Methode appelee lorsque l'on relache le clic de souris
 	  public void mouseReleased(MouseEvent event) {
-
 	  }
 	  
-	  protected void setGetCliked(boolean clic) {
-		  getCliked = clic;
-		  if (clic == false) {
-			  try {
-				  System.out.print("select efface et clic vaut : " + clic + " \n");
-				  this.img = ImageIO.read(new File("img/cursor48x48WoB.png"));
-				  } catch (IOException e) {
-					  e.printStackTrace();
-					  }
-			  }
-		  else
-			  System.out.print("select NON efface et clic vaut : " + clic + " \n");
-	  }
-	  
-	  public boolean getNbCliked() {
-		  return (getCliked);
+	  protected void deselectButton() {
+		  this.img = this.imgNotSelected;
+		  this.repaint();
 	  }
 }

@@ -1,4 +1,10 @@
 import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonModel;
+import javax.swing.JFrame;
+import javax.swing.JToggleButton;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,22 +17,33 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-public class VehiculeButton extends JButton implements MouseListener {
+public class VehiculeButton extends JToggleButton implements MouseListener {
     private String name;
+	private Image imgNotSelected;
+	private Image imgSelected;
+	private Image imgMouseEntered;
     private Image img;
-    private boolean getCliked = false;
 	
     VehiculeButton() {
-	super("B1");
-	this.name = "B1";
+//	super("B1");
+//	this.name = "B1";
+	this.setSize(48, 48);
+	this.setPreferredSize(new Dimension(48, 48));
+	this.setMaximumSize(new Dimension(48, 48));
+	this.setMinimumSize(new Dimension(48, 48));
 	try {
-	    this.img = ImageIO.read(new File("img/vehicule48x48WoB.png"));
+		this.imgNotSelected = ImageIO.read(new File("img/vehicule48x48WoB.png"));
+	      this.imgSelected = ImageIO.read(new File("img/vehicule48x48WoLG.png"));
+	      this.imgMouseEntered = ImageIO.read(new File("img/vehicule48x48WoG.png"));
 	} catch (IOException e) {
 	    e.printStackTrace();
+	    setOpaque(false);
 	}
+	this.img = this.imgNotSelected;
 	//Grace a cette instruction, notre objet va s'ecouter
 	//Des qu'un evenement de la souris sera intercepte, il en sera averti
 	this.addMouseListener(this);
+	this.setToolTipText("Creat the vehicle");
     }
 	
     public void paintComponent(Graphics g){
@@ -40,45 +57,21 @@ public class VehiculeButton extends JButton implements MouseListener {
 	
     //Methode appelee lors du clic de souris
     public void mouseClicked(MouseEvent event) {
-    	if (getCliked == false)
-			try {
-				this.img = ImageIO.read(new File("img/vehicule48x48WoLG.png"));
-			    } catch (IOException e) {
-			    	e.printStackTrace();
-			    	}
-		else
-			try {
-				this.img = ImageIO.read(new File("img/vehicule48x48WoB.png"));
-			    } catch (IOException e) {
-			    	e.printStackTrace();
-			    	}
-    	getCliked = !(getCliked);
+    	this.img = this.imgSelected;
 		}
 
     //Methode appelee lors du survol de la souris
     public void mouseEntered(MouseEvent event) { 
-	if (getCliked == false)
-	    try {
-	    	this.img = ImageIO.read(new File("img/vehicule48x48WoG.png"));
-	    	} catch (IOException e) {
-	    		e.printStackTrace();
-	    	}
+    	 if (this.isSelected() == false)
+			  this.img = this.imgMouseEntered;
     	}
 
     //Methode appelee lorsque la souris sort de la zone du bouton
     public void mouseExited(MouseEvent event) {
-	if (getCliked == false)
-	    try {
-		this.img = ImageIO.read(new File("img/vehicule48x48WoB.png"));
-	    } catch (IOException e) {
-		e.printStackTrace();
-	    }
-	else
-	    try {
-		this.img = ImageIO.read(new File("img/vehicule48x48WoLG.png"));
-	    } catch (IOException e) {
-		e.printStackTrace();
-	    } 
+    	if (this.isSelected() == false)
+			  this.img = this.imgNotSelected;
+		  else
+			  this.img = this.imgSelected;
     }
 
     //Methode appelee lorsque l'on presse le bouton gauche de la souris
@@ -88,21 +81,8 @@ public class VehiculeButton extends JButton implements MouseListener {
     public void mouseReleased(MouseEvent event) {		  
     }
     
-    protected void setGetCliked(boolean clic) {
-		  getCliked = clic;
-		  if (clic == false) {
-			  System.out.print("vehicule efface et clic vaut : " + clic + " \n");
-			  try {
-				  this.img = ImageIO.read(new File("img/vehicule48x48WoB.png"));
-				  } catch (IOException e) {
-					  e.printStackTrace();
-					  }
-			  }
-		  else
-			  System.out.print("vehicule NON efface et clic vaut : " + clic + " \n");
+    protected void deselectButton() {
+		  this.img = this.imgNotSelected;
+		  this.repaint();
 	  }
-    
-    public boolean getNbCliked() {
-		  return (getCliked);
-    }
 }

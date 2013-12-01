@@ -1,9 +1,4 @@
 import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonModel;
-import javax.swing.JFrame;
-import javax.swing.JToggleButton;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -17,33 +12,26 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-public class NodeButton extends JToggleButton implements MouseListener {
-		private String name;
-		private Image imgNotSelected;
-		private Image imgSelected;
-		private Image imgMouseEntered;
+public class UndoButton extends JButton implements MouseListener{
 		private Image img;
 		
-		NodeButton() {
-//				super(title);
-//			    this.name = title;
+		UndoButton() {
 			this.setSize(48, 48);
 			this.setPreferredSize(new Dimension(48, 48));
 			this.setMaximumSize(new Dimension(48, 48));
 			this.setMinimumSize(new Dimension(48, 48));
+//				super(title);
+//			    this.name = title;
 			    try {
-			    	this.imgNotSelected = ImageIO.read(new File("img/nodebutton48x48WoB.png"));
-				      this.imgSelected = ImageIO.read(new File("img/nodebutton48x48WoLG.png"));
-				      this.imgMouseEntered = ImageIO.read(new File("img/nodebutton48x48WoG.png"));
+			      img = ImageIO.read(new File("img/undobutton.png"));
 			    } catch (IOException e) {
 			      e.printStackTrace();
 			    }
-			    this.img = this.imgNotSelected;
 			    //Grace a cette instruction, notre objet va s'ecouter
 			    //Des qu'un evenement de la souris sera intercepte, il en sera averti
+			    this.setOpaque(false);
 			    this.addMouseListener(this);
-			    this.setToolTipText("Creat Nodes");
-			    setOpaque(false);
+			    this.setToolTipText("Undo");
 			}
 		
 		public void paintComponent(Graphics g){
@@ -57,21 +45,14 @@ public class NodeButton extends JToggleButton implements MouseListener {
 		
 		//Methode appelee lors du clic de souris
 		  public void mouseClicked(MouseEvent event) {
-			  this.img = this.imgSelected;
 			  }
 
 		  //Methode appelee lors du survol de la souris
 		  public void mouseEntered(MouseEvent event) { 
-			  if (this.isSelected() == false)
-				  this.img = this.imgMouseEntered;
 		  }
 
 		  //Methode appelee lorsque la souris sort de la zone du bouton
 		  public void mouseExited(MouseEvent event) {
-			  if (this.isSelected() == false)
-				  this.img = this.imgNotSelected;
-			  else
-				  this.img = this.imgSelected;
 		  }
 
 		  //Methode appelee lorsque l'on presse le bouton gauche de la souris
@@ -80,11 +61,6 @@ public class NodeButton extends JToggleButton implements MouseListener {
 		  //Methode appelee lorsque l'on relache le clic de souris
 		  public void mouseReleased(MouseEvent event) {
 }
-
-		  
-		  protected void deselectButton() {
-			  this.img = this.imgNotSelected;
-			  this.repaint();
+		  protected void setGetCliked(boolean clic) {
 		  }
-		  
-}
+	}
