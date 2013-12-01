@@ -151,4 +151,16 @@ public class Controller {
        public void eventSetStrategy(int strat) {
     	   _model.getSimulationManager().setStrategy(strat);
        }
+       
+       public int eventGetStrategy(int strat) {
+    	   return _model.getSimulationManager().getStrategy();
+       }
+       
+       public int eventKmDone(){
+    	   return _model.getFileManager().getStat().getKm();
+       }
+       
+       public int eventTreatmentTimeAvg() {
+    	   return _model.getFileManager().getStat().getMidWaiting();
+       }
 }
