@@ -47,7 +47,6 @@ public class FileManager {
 		_date = new Dates();
 	}
 	
-	// si le fichier existe déjà
 	public boolean existFileMap()
 	{
 		if (_fileMap != null)
@@ -55,7 +54,6 @@ public class FileManager {
 		return false;
 	}
 	
-	// si le fichier existe déjà
 	public boolean existFileSim()
 	{
 		if (_fileStat != null)
@@ -63,7 +61,6 @@ public class FileManager {
 		return false;
 	}
 	
-	// si le fichier existe déjà
 	public boolean existFileStat()
 	{
 		if (_fileSim != null)
@@ -71,7 +68,6 @@ public class FileManager {
 		return false;
 	}
 	
-	// Si le fichier courant est différent de l'etat actuel
 	public boolean compareToSavedFileMap()
 	{
 		if (_fileMap != null)
