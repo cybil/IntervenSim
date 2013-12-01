@@ -48,7 +48,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     }
     
     public void			setStrategy(int strat) {
-    this.strategy.setCurrStrategy(strat);
+    		this.strategy.setCurrStrategy(strat);
     }
 
     //***************
@@ -78,11 +78,11 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
 	if (this.state == ESimulationState.RUNNING) {
 	    this.state = ESimulationState.PAUSED;
 	    this.timer.stop();
-	}
+		}
 	else if (this.state == ESimulationState.PAUSED) {
 	    this.state = ESimulationState.RUNNING;
 	    this.timer.start();
-	}
+		}
     }
 
     public void			stop() {
