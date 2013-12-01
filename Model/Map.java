@@ -5,7 +5,7 @@ public class Map implements java.io.Serializable {
 
     private Graph		graph = new Graph();
     private float		scale = 1;
-    private Vehicule		vehicule = new Vehicule();
+    private Vehicule		vehicule;
     private Image		image = null;
     private int			zoom = 100;
 
@@ -14,11 +14,6 @@ public class Map implements java.io.Serializable {
     //******************
 
     public Map() {
-	// Jb: Pourquoi 10/10 en coordonnee ?
-	// Cybil: Pour le mettre a un endroit pour test de l'afficher :)
-	int[] coord = {-1000, -1000};
-	this.vehicule.setCoord(coord);
-
     }
 
     //***************
@@ -60,13 +55,21 @@ public class Map implements java.io.Serializable {
     }
 
     public boolean		creatVehicule(int[] coord) {
+	if (this.vehicule != null)
+	    return false;
+	this.vehicule = new Vehicule();
 	this.vehicule.setCoord(coord.clone());
-	return (true);
+	return true;
     }
 
     //***************
     //	Delete
     //***************
+
+    public boolean		deleteVehicule() {
+	this.vehicule = null;
+	return true;
+    }
 
     public boolean		deleteNode(int[] coord) {
 	this.graph.deleteNode(coord);
@@ -103,7 +106,7 @@ public class Map implements java.io.Serializable {
 
     public boolean		editAttachPoint(int[] coord, boolean state) {
 	if (this.graph.getNode(coord) != null) {
-	    this.graph.getNode(coord).setAttachPoint(new AttachPoint(state, this.vehicule));
+	    this.graph.getNode(coord).setAttachPoint(state);
 	    return true;
 	}
 	return false;
@@ -113,6 +116,10 @@ public class Map implements java.io.Serializable {
     // * Getters
     //**
     
+    public int[]		getAttachPointCoord() {
+	return this.graph.getAttachPointCoord();
+    }
+
     public Image		getBackground() {
 	return this.image;
     }
@@ -122,7 +129,9 @@ public class Map implements java.io.Serializable {
     }
 
     public int[]		getVehiculeCoord() {
-	return this.vehicule.getCoord();
+	if (this.vehicule != null)
+	    return this.vehicule.getCoord();
+	return null;
     }
 
     public int			getNbNode() {
@@ -144,18 +153,20 @@ public class Map implements java.io.Serializable {
 	// Road:	R:x1,y1:x2,y2
 
 	// Ajout du vehicule
-	String			formatVehicule = "V:";
-	formatVehicule += this.vehicule.getCoord()[0] + "," + this.vehicule.getCoord()[1];
-	format.add(formatVehicule);
+	if (this.vehicule != null) {
+	    String			formatVehicule = "V:";
+	    formatVehicule += this.vehicule.getCoord()[0] + "," + this.vehicule.getCoord()[1];
+	    format.add(formatVehicule);
+	}
 
 	// Ajout des noeuds
 	ArrayList<GraphNode>	nodes = this.graph.getGraphNode();
 	for (GraphNode n : nodes) {
 	    String		str;
 	    if (n.getData().hasUrgency() == true
-		&& n.getData().getAttachPoint() != null)
+		&& n.getData().getAttachPoint() == true)
 		str = "B:";
-	    else if (n.getData().getAttachPoint() != null)
+	    else if (n.getData().getAttachPoint() == true)
 		str = "A:";
 	    else if (n.getData().hasUrgency() == true)
 		str = "U:";
@@ -195,6 +206,12 @@ public class Map implements java.io.Serializable {
 	return graph.getNodeUrgency();
     }
 
+    public boolean		hasVehicule() {
+	if (this.vehicule == null)
+	    return false;
+	return true;
+    }
+
     //**
     // * Setters
     //**
@@ -214,7 +231,8 @@ public class Map implements java.io.Serializable {
 
     public void		setVehiculeCoord(int x, int y) {
 	int[]		newCoord = {x, y};
-	this.vehicule.setCoord(newCoord);
+	if (this.vehicule != null)
+	    this.vehicule.setCoord(newCoord);
     }
 
     public void		setBackground(Image bck) {

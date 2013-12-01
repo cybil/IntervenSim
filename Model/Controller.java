@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -52,8 +53,9 @@ public class Controller {
 	return _model.getMap().editTreatmentTime(coord, time, id);
     }
 	
-    public boolean		eventEditAttachPoint(int[] coord, boolean state) {
-	return _model.getMap().editAttachPoint(coord, state);
+    public boolean		eventEditAttachPoint(int x, int y) {
+	int[]			coord = {x, y};
+	return _model.getMap().editAttachPoint(coord, true);
     }
 	
     public boolean		eventAddRoad(int[] coordNode1, int[] coordNode2) {
@@ -62,11 +64,20 @@ public class Controller {
 	
     public boolean		eventCreatVehicule(int x, int y) {
 	int[]		coord = {x, y};
-	return _model.getMap().creatVehicule(coord);
+	if (_model.getMap().hasVehicule() == true) {
+	    _model.getMap().setVehiculeCoord(x, y);
+	    return false;
+	}
+	_model.getMap().creatVehicule(coord);
+	return true;
     }
 	
     public boolean		eventDeleteNode(int[] coord) {
 	return _model.getMap().deleteNode(coord);
+    }
+
+    public boolean		eventDeleteVehicule() {
+	return _model.getMap().deleteVehicule();
     }
 	
     public boolean		eventDeleteRoad(int[] coord1, int[] coord2) {
@@ -108,31 +119,35 @@ public class Controller {
 		
       //Fonction for FileManager
 		
-      public boolean eventSaveMap() {
-      return _model.getFileManager().saveMap();
+      public boolean eventSaveMap(File p_file) {
+      return _model.getFileManager().saveMap(p_file);
       }
 		
-       public boolean eventLoadMap(String path) {
-       return _model.getFileManager().loadMap(path);
+       public boolean eventLoadMap(File p_file) {
+       return _model.getFileManager().loadMap(p_file);
        }
 		
-       public boolean eventImportImage(String path) {
-       return _model.getFileManager().importImage(path);
+       public boolean eventImportImage(File p_file) {
+       return _model.getFileManager().importImage(p_file);
        }
 		
-       public boolean eventSaveSim() {
-       return _model.getFileManager().saveSim();
+       public boolean eventSaveSim(File p_file) {
+       return _model.getFileManager().saveSim(p_file);
        }
 		
-       public boolean eventLoadSim(String path) {
-       return _model.getFileManager().loadSim(path);
+       public boolean eventLoadSim(File p_file) {
+       return _model.getFileManager().loadSim(p_file);
        }
 		
-       public boolean eventSaveStat() {
-       return _model.getFileManager().saveStat();
+       public boolean eventSaveStat(File p_file) {
+       return _model.getFileManager().saveStat(p_file);
        }
 		
-       public boolean eventLoadStat(String path) throws ClassNotFoundException, IOException {
-       return _model.getFileManager().loadStat(path);
+       public boolean eventLoadStat(File p_file) throws ClassNotFoundException, IOException {
+       return _model.getFileManager().loadStat(p_file);
+       }
+       
+       public void eventSetStrategy(int strat) {
+    	   _model.getSimulationManager().setStrategy(strat);
        }
 }

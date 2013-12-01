@@ -62,6 +62,14 @@ public class Graph implements java.io.Serializable{
 	return this.graphNode;
     }
 
+    public int[]		getAttachPointCoord() {
+	for (GraphNode n : this.graphNode) {
+	    if (n.getData().getAttachPoint() == true)
+		return n.getData().getCoord();
+	}
+	return null;
+    }
+
     //****************
     //	Set Functions
     //****************
@@ -76,7 +84,7 @@ public class Graph implements java.io.Serializable{
 
     public boolean		creatNode(int x, int y) {
 	int[]			coord = {x, y};
-	Node			newNode = new Node(coord, null);
+	Node			newNode = new Node(coord, false);
 	GraphNode		newGraphNode = new GraphNode(newNode);
 	
 	this.graphNode.add(newGraphNode);
