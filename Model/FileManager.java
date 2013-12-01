@@ -13,13 +13,13 @@ public class FileManager {
 
 	private Map _map;
 	private SimulationManager _sim;
-	private Dates _date;
+	//private Dates _date;
 	private Statistic _stat;
 	private File _fileMap = null;
 	private File _fileSim = null;
 	private File _fileStat = null;
 	
-	private class Dates
+	/*private class Dates
 	{
 		Date actuelle = new Date();
 		
@@ -30,21 +30,21 @@ public class FileManager {
 			String dat = dateFormat.format(actuelle);
 			return dat;
 		}
-	}
+	}*/
 	
 	public FileManager(Map map, SimulationManager sim)
 	{
 		_map = map;
 		_sim = sim;
 		_stat = new Statistic();
-		_date = new Dates();
+		//_date = new Dates();
 	}
 	
 	public FileManager(Map map, SimulationManager sim, Statistic stat) {
 		_map = map;
 		_sim = sim;
 		_stat = stat;
-		_date = new Dates();
+		//_date = new Dates();
 	}
 	
 	public boolean existFileMap()
@@ -107,7 +107,6 @@ public class FileManager {
 	public boolean saveMap(File p_file) {
 		try {
 			FileOutputStream file = new FileOutputStream(p_file);
-		    System.out.println("test : " + "Map"+ _date.date() +".ser");
 		    ObjectOutputStream oos = new ObjectOutputStream(file);
 		    oos.writeObject(_map);
 		    oos.flush();
@@ -173,7 +172,6 @@ public class FileManager {
 	public boolean saveSim(File p_file) {
 		try {
 		FileOutputStream file = new FileOutputStream(p_file);
-	      System.out.println("test : " + "Sim"+ _date.date() +".ser");
 	      ObjectOutputStream oos = new ObjectOutputStream(file);
 	      oos.writeObject(_sim);
 	      oos.flush();
@@ -209,7 +207,6 @@ public class FileManager {
 	public boolean saveStat(File p_file) {
 		try {
 		      FileOutputStream file = new FileOutputStream(p_file);
-		      System.out.println("test : " + "Stat"+ _date.date() +".ser");
 		      ObjectOutputStream oos = new ObjectOutputStream(file);
 		      oos.writeObject(_stat);
 		      oos.flush();
