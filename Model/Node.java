@@ -5,17 +5,17 @@ public class Node implements java.io.Serializable {
 
     private int[]		coord;
     private ArrayList<Urgency>	urgencyList = new ArrayList<Urgency>();
-    private AttachPoint		attachPoint;
+    private boolean		attachPoint;
 	
     //******************
     //	Constructor
     //******************
 	
     public Node() {
-	this.attachPoint = null;
+	this.attachPoint = false;
     }
 	
-    public Node(int[] newCoord, AttachPoint newAttachPoint) {
+    public Node(int[] newCoord, boolean newAttachPoint) {
 	this.coord = newCoord;
 	this.attachPoint = newAttachPoint;
     }
@@ -30,7 +30,7 @@ public class Node implements java.io.Serializable {
     //	Get Functions
     //*****************
 	
-    public AttachPoint		getAttachPoint() {
+    public boolean		getAttachPoint() {
 	return this.attachPoint;
     }
 	
@@ -69,7 +69,7 @@ public class Node implements java.io.Serializable {
     //	Set Functions
     //****************
 	
-    public void			setAttachPoint(AttachPoint newAttachPoint) {
+    public void			setAttachPoint(boolean newAttachPoint) {
 	this.attachPoint = newAttachPoint;
     }
 	

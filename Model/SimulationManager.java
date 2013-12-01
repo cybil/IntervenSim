@@ -9,7 +9,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     }
 
     private Map			map;
-    // private Strategy		strategy = new Strategy();
+    private Strategy		strategy;
     // private Statistic		statistic = new Statistic();
     private int			speed = 1000;
     private ESimulationState	state = ESimulationState.BEGIN;
@@ -21,6 +21,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
 
     public SimulationManager(Map map) {
 	this.map = map;
+	this.strategy = new StratOldestUrgency(map);
     }
 
     //***************
@@ -35,12 +36,19 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
 	return this.state;
     }
 
+    public int	getStrategy() {
+    	return strategy.getCurrStrategy();
+    }
     //***************
     // * Setters
     //***************
 
     public void			setSpeed(int newSpeed) {
 	this.speed = newSpeed;
+    }
+    
+    public void			setStrategy(int strat) {
+    this.strategy.setCurrStrategy(strat);
     }
 
     //***************
@@ -60,7 +68,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
 
     	this.map.actualizeVehicule();
     }
-
+   
     public void			play(boolean display) {
 	this.state = ESimulationState.RUNNING;
 	this.timer.start();;

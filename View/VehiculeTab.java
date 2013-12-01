@@ -27,7 +27,8 @@ public class VehiculeTab extends JPanel {
 	private JLabel apLabel = new JLabel("Attachment point");
 	private JLabel strategyLabel = new JLabel("Select your strategy");
 	private JLabel speedLabel = new JLabel("Enter speed");
-	private JLabel spaceLabel = new JLabel(" a");
+	private JButton vehiculeCoordinatesConfirmButton = new JButton("OK");
+	
 	
 	VehiculeTab() {
 		this.setBackground(Color.white);
@@ -52,7 +53,7 @@ public class VehiculeTab extends JPanel {
 	    yJtf.setPreferredSize(new Dimension(50, 30));
 		yPanel.add(new JLabel("y :"));
 	    yPanel.add(yJtf);
-	   // yPanel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+	    yPanel.add(vehiculeCoordinatesConfirmButton);
 	    this.add(yPanel);
 	
 	    // Attchment point coordinates
