@@ -96,7 +96,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	}
 	this.controller = controller;
 	this.setBackground(Color.GRAY);
-<<<<<<< HEAD
 
 	// Zoom
 	W = maxX;
@@ -108,12 +107,9 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
 	// this.add(scrollPane);
 	this.setPreferredSize(new Dimension(maxX, maxY));
-=======
-	this.setSize(new Dimension(300, 600));
-	this.setMaximumSize(new Dimension(300, 600));
-	this.setMinimumSize(new Dimension(300, 600));
-	this.setPreferredSize(new Dimension(300, 600));
->>>>>>> ccb5cc162d2466b1fe9543fb895ed609229b789b
+	this.setSize(new Dimension(maxX, maxY));
+	this.setMaximumSize(new Dimension(maxX, maxY));
+	this.setMinimumSize(new Dimension(maxX, maxY));
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
 
@@ -183,12 +179,9 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	  // System.out.println("loop");
 	  this.add(this.nodes.get(i));
 	}
-<<<<<<< HEAD
 	g2.setTransform(at);
-=======
 	if (this.graphVehicule != null)
 	    this.add(this.graphVehicule);
->>>>>>> ccb5cc162d2466b1fe9543fb895ed609229b789b
     }
 
     public static boolean	containsNode(int p_x, int p_y) {
@@ -241,16 +234,9 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		if (isDragging == false) {
 		    int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		    int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-<<<<<<< HEAD
-
-		    if (this.containsNode(x, y) == false) {
-			NodeGraphic		newNode = new NodeGraphic(this.vehicule,
-=======
-		    
 		    if (this.graphVehicule == null) {
 			NodeGraphic		newNode = new NodeGraphic(EObjectTools.VEHICULE,
 									  this.vehicule,
->>>>>>> ccb5cc162d2466b1fe9543fb895ed609229b789b
 									  this.vehicule,
 									  this.vehicule, x, y,
 									  unScaleX(x), unScaleY(y));
@@ -263,7 +249,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		}
 	    }
 	    else if (s.charAt(0) == 'N') {
-<<<<<<< HEAD
 	      if (isDragging == false) {
 		int	_x = unScaleX(Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(","))));
 		int	_y = unScaleY(Integer.parseInt(s.substring(s.indexOf(",") + 1)));
@@ -271,7 +256,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		// System.out.println("CREATE NODE GRAPHIC AT ?? : " + scaleX(_x) + " - " + scaleY(_y));
 		if (this.containsNode(_x, _y) == false) {
 		  System.out.println("CREATE NODE GRAPHIC : " + _x + " - " + _y);
-		  NodeGraphic		newNode = new NodeGraphic(this.nodeNormal,
+		  NodeGraphic		newNode = new NodeGraphic(EObjectTools.NODE, this.nodeNormal,
 								  this.nodeAttachPoint,
 								  this.nodeUrgency,
 								  _x, _y,
@@ -281,25 +266,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		  this.add(newNode);
 		  this.validate();
 		  nodes.add(newNode);
-=======
-		if (isDragging == false) {
-		    int	_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-		    int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-		    
-		    if (this.containsNode(_x, _y) == false) {
-			System.out.println("CREATE NODE GRAPHIC : " + _x + " - " + _y);
-			NodeGraphic		newNode = new NodeGraphic(EObjectTools.NODE,
-									  this.nodeNormal,
-									  this.nodeAttachPoint,
-									  this.nodeUrgency,
-									  _x,
-									  _y);
-			newNode.setLayout(null);
-			this.add(newNode);
-			this.validate();
-			nodes.add(newNode);
-		    }
->>>>>>> ccb5cc162d2466b1fe9543fb895ed609229b789b
 		}
 	      }
 	    }
@@ -370,7 +336,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	this.mouseY = e.getY();
     }
 
-<<<<<<< HEAD
   public void mouseReleased(MouseEvent e) {
     if (e.getButton() == MouseEvent.BUTTON1
 	&& this.selectedObject == EObjectTools.NODE) {
@@ -378,17 +343,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
       // System.out.println("Coord    real: " + scaleX(e.getX()) + ":" + scaleY(e.getY()));
       this.controller.eventPutNode(scaleX(e.getX()), scaleY(e.getY()));
       // System.exit(0);
-=======
-    public void mouseReleased(MouseEvent e) {
-	if (e.getButton() == MouseEvent.BUTTON1
-	    && this.selectedObject == EObjectTools.NODE) {
-	    this.controller.eventPutNode(e.getX(), e.getY());
-	}
-	// else if (e.getButton() == MouseEvent.BUTTON1
-	// 	 && this.selectedObject == EObjectTools.VEHICULE) {
-	//     this.controller.eventCreatVehicule(e.getX(), e.getY());
-	// }
->>>>>>> ccb5cc162d2466b1fe9543fb895ed609229b789b
     }
     else if (e.getButton() == MouseEvent.BUTTON1
 	     && this.selectedObject == EObjectTools.VEHICULE) {
@@ -523,7 +477,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	roads.remove(getRoad(coord3[0], coord3[1], coord4[0], coord4[1]));
 	controller.eventDeleteRoad(coord3, coord4);
     }
-<<<<<<< HEAD
   //
   // Zoom code
   //
@@ -582,7 +535,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
   static public int unScale(int coord, int curr_max, int real_max) {
     return (int)(((double) coord / real_max) * curr_max);
   }
-=======
 
     static void		setVehiculeAt(int x, int y) {
 	boolean		ret;
@@ -593,6 +545,4 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	    graphVehicule.sety(y);
 	}
     }
-
->>>>>>> ccb5cc162d2466b1fe9543fb895ed609229b789b
 }
