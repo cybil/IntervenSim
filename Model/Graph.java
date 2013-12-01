@@ -97,7 +97,7 @@ public class Graph implements java.io.Serializable{
 
 	System.out.println("=========== NEW ROAD ===========");
 	status = 0;
-	roadLength = 10;  // 10 valeur par defaut d'une taille de route (a caluculer)
+	roadLength = (int)Vehicule.pythagore(node1.getCoord(), node2.getCoord());
 	for (GraphNode n : this.graphNode) {
 	    if (n.getData() == node1) {
 		n.addNeighbor(new GraphNode(node2), roadLength);
@@ -121,7 +121,6 @@ public class Graph implements java.io.Serializable{
 	for (GraphNode n : this.graphNode) {
 	    n.deleteNeighbor(this.getNode(coord));
 	}
-
 	for (GraphNode n : this.graphNode) {
 	    if (n.getData().getCoord()[0] == coord[0]
 		&& n.getData().getCoord()[1] == coord[1]) {
@@ -132,6 +131,13 @@ public class Graph implements java.io.Serializable{
 	return false;
     }
 	
+    public void			deleteAttachPoint() {
+	for (GraphNode n : this.graphNode) {
+	    if (n.getData().getAttachPoint() == true)
+		n.getData().setAttachPoint(false);
+	}
+    }
+
     public boolean		deleteRoad(Node node1, Node node2) {
 	int			status = 0;
 	for (GraphNode n : this.graphNode) {

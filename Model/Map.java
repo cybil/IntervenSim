@@ -105,6 +105,7 @@ public class Map implements java.io.Serializable {
     }
 
     public boolean		editAttachPoint(int[] coord, boolean state) {
+	this.graph.deleteAttachPoint();
 	if (this.graph.getNode(coord) != null) {
 	    this.graph.getNode(coord).setAttachPoint(state);
 	    return true;

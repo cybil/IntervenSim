@@ -88,7 +88,8 @@ public class Controller {
 	return _model.getMap().editNodeCoord(oldCoord, newCoord);
     }
 	
-    public boolean		eventAddNodeUrgency(int[] coord, Urgency.EUrgencyState state, float triggDate) {
+    public boolean		eventAddNodeUrgency(int x, int y, Urgency.EUrgencyState state, float triggDate) {
+	int[]			coord = {x, y};
 	return _model.getMap().addNodeUrgency(coord, state, triggDate);
     }
 	
