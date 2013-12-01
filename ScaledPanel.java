@@ -36,6 +36,8 @@ public class ScaledPanel extends JPanel {
 	  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	  ScaledPanel	scaledPanel = new ScaledPanel();
 	  JScrollPane scrollPane = new JScrollPane(scaledPanel);
+
+	  // scrollPane.setViewportBorder();
 	  scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 	  scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	  frame.add(scrollPane);
@@ -61,17 +63,35 @@ public class ScaledPanel extends JPanel {
 
   private int getW()
   {
+    // requestFocus();
+    setBackground(Color.WHITE);
+    // this.setPreferredSize(new Dimension(W, H));
+    invalidate();
+    // removeAll();
+    revalidate();
+    // setBackground(Color.WHITE);
+    validate();
+    // setBackground(Color.WHITE);
+    repaint();
     this.setPreferredSize(new Dimension(W, H));
     return (this.W);
   }
   private int getH()
   {
+    setBackground(Color.WHITE);
     this.setPreferredSize(new Dimension(W, H));
+    invalidate();
+    // revalidate();
+    setBackground(Color.WHITE);
+    validate();
+    setBackground(Color.WHITE);
+    repaint();
     return (this.H);
   }
 
   @Override
   public void paintComponent(Graphics g) {
+    super.paintComponent(g);
     Graphics2D g2D = (Graphics2D) g;
     g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -151,10 +171,11 @@ public class ScaledPanel extends JPanel {
     public void keyPressed(KeyEvent e) {
       int code = e.getKeyCode();
       switch (code) {
-	case KeyEvent.VK_Z: H++; repaint(); break;
-	case KeyEvent.VK_S: H--; repaint(); break;
-	case KeyEvent.VK_Q: W++; repaint(); break;
-	case KeyEvent.VK_D: W--; repaint(); break;
+	// case KeyEvent.VK_Z: H -= 10; paintComponent(getGraphics()); break;
+	case KeyEvent.VK_Z: H -= 10; getW(); break;
+	case KeyEvent.VK_S: H += 10; repaint(); getW(); break;
+	case KeyEvent.VK_Q: W -= 10; invalidate(); getW(); break;
+	case KeyEvent.VK_D: W += 10; validate(); getW(); break;
 	case KeyEvent.VK_UP:
 	  moveChecker(0, -1);
 	  break;
@@ -218,15 +239,12 @@ public class ScaledPanel extends JPanel {
   private double scaleX(int x) {
     return ((double) x / getW()) * maxX;
   }
-
   private double scaleY(int y) {
     return ((double) y / getH()) * maxY;
   }
-
   private double unScaleX(int x) {
     return ((double) x / maxX) * getW();
   }
-
   private double unScaleY(int y) {
     return ((double) y / maxY) * getH();
   }
