@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import java.awt.event.*;
+import javax.swing.*;
 
 import javax.swing.JToolBar;
 
@@ -61,6 +62,12 @@ public class MainWindow extends JFrame implements ActionListener {
 	tabToolBar.add(seeTabButton, BorderLayout.NORTH);
 	tabToolBar.setVisible(false);
 	this.timer.start();
+
+	// JScrollPane scrollPane = new JScrollPane(mapPanel);
+	// scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+	// scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+	// this.add(scrollPane);
     }
 
     // action Performed class
@@ -110,7 +117,14 @@ public class MainWindow extends JFrame implements ActionListener {
     	gbc.gridwidth = GridBagConstraints.REMAINDER; 	// et de la ligne
     	gbc.anchor = GridBagConstraints.FIRST_LINE_START;
     	gbc.fill = GridBagConstraints.BOTH;
-    	content.add(mapPanel, gbc);
+
+	JScrollPane scrollPane = new JScrollPane(mapPanel);
+	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+	content.add(scrollPane, gbc);
+
+    	// content.add(mapPanel, gbc);
     	   
     	gbc.gridx = 0;
     	gbc.gridy = 2;
