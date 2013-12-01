@@ -35,7 +35,7 @@ public class Node implements java.io.Serializable {
     }
 	
     public int[]		getCoord() {
-	return this.coord;
+      return this.coord.clone();
     }
 	
     public boolean		hasUrgency() {
