@@ -147,4 +147,8 @@ public class Controller {
        public boolean eventLoadStat(File p_file) throws ClassNotFoundException, IOException {
        return _model.getFileManager().loadStat(p_file);
        }
+       
+       public void eventSetStrategy() {
+    	   _model.getSimulationManager().
+       }
 }
