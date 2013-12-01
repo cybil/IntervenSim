@@ -9,7 +9,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     }
 
     private Map			map;
-    private Strategy		strategy = new StratOldestUrgency(map);
+    private Strategy		strategy;
     // private Statistic		statistic = new Statistic();
     private int			speed = 1000;
     private ESimulationState	state = ESimulationState.BEGIN;
@@ -21,6 +21,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
 
     public SimulationManager(Map map) {
 	this.map = map;
+	this.strategy = new StratOldestUrgency(map);
     }
 
     //***************
