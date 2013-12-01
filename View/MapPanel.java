@@ -22,8 +22,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.*;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
-public class MapPanel extends JPanel implements MouseListener, MouseMotionListener {
+public class MapPanel extends JPanel implements
+				     MouseListener,
+				     MouseMotionListener,
+				     MouseWheelListener {
 
     public enum EObjectTools {
 	VEHICULE, NODE, CURSOR, ROAD, ATTACH_POINT, URGENCY;
@@ -112,6 +117,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	this.setMinimumSize(new Dimension(maxX, maxY));
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
+	this.addMouseWheelListener(this);
 
 	// Zoom
 	// this.addKeyListener(new KeyHandler());
@@ -349,33 +355,33 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
       this.controller.eventCreatVehicule(e.getX(), e.getY());
       // this.controller.eventCreatVehicule((int)scaleX(e.getX()), (int)scaleY(e.getY()));
     }
-    else if (e.getButton() == MouseEvent.BUTTON1)
-    {
-      this.H += 10;
-      this.W += 10;
-      this.setPreferredSize(new Dimension(W, H));
-      this.rescaleAllNode();
-      // invalidate();
-      // // removeAll();
-      revalidate();
-      // // setBackground(Color.WHITE);
-      // validate();
+    // else if (e.getButton() == MouseEvent.BUTTON1)
+    // {
+    //   this.H += 10;
+    //   this.W += 10;
+    //   this.setPreferredSize(new Dimension(W, H));
+    //   this.rescaleAllNode();
+    //   // invalidate();
+    //   // // removeAll();
+    //   revalidate();
+    //   // // setBackground(Color.WHITE);
+    //   // validate();
 
-      // repaint();
-    }
-    else if (e.getButton() == MouseEvent.BUTTON3)
-    {
-      this.H -= 10;
-      this.W -= 10;
-      this.setPreferredSize(new Dimension(W, H));
-      this.rescaleAllNode();
-      // invalidate();
-      // // removeAll();
-      revalidate();
-      // // setBackground(Color.WHITE);
-      // validate();
-      // repaint();
-    }
+    //   // repaint();
+    // }
+    // else if (e.getButton() == MouseEvent.BUTTON3)
+    // {
+    //   this.H -= 10;
+    //   this.W -= 10;
+    //   this.setPreferredSize(new Dimension(W, H));
+    //   this.rescaleAllNode();
+    //   // invalidate();
+    //   // // removeAll();
+    //   revalidate();
+    //   // // setBackground(Color.WHITE);
+    //   // validate();
+    //   // repaint();
+    // }
   }
 
   public void	rescaleAllNode()
@@ -496,6 +502,23 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
   //     }
   //   }
   // // }
+
+  @Override
+  public void mouseWheelMoved(MouseWheelEvent e) {
+    int notches = e.getWheelRotation();
+
+    // if (notches < 0) {
+    //   this.H += 10;
+    //   this.W += 10;
+    // } else {
+    // }
+    this.H += 10*notches;
+    this.W += 10*notches;
+    this.setPreferredSize(new Dimension(W, H));
+    this.rescaleAllNode();
+    revalidate();
+    // saySomething(message, e);
+  }
 
   private int getW()
   {
