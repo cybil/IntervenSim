@@ -108,6 +108,8 @@ public class Map implements java.io.Serializable {
 	this.graph.deleteAttachPoint();
 	if (this.graph.getNode(coord) != null) {
 	    this.graph.getNode(coord).setAttachPoint(state);
+	    if (this.vehicule == null)
+		this.vehicule = new Vehicule(coord);
 	    return true;
 	}
 	return false;
