@@ -136,6 +136,14 @@ public class MainWindow extends JFrame implements ActionListener {
     	this.setVisible(true);
     }
     
+    public void editObject(NodeGraphic Object) {
+    	//	if (Object.type == MapPanel.EObjectTools.VEHICULE) {
+    	//		tabsPanel.editTab.showPanel(0, Object);
+    	//	} else {
+    	//		tabsPanel.editTab.showPanel(1, Object);
+    	//	}
+    }
+    
     //Listen to Tool Bar Buttons
     void listenToolBarButtons() {
     	this.toolsBar.selectButton.addActionListener(new SelectButtonListener());

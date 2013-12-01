@@ -84,6 +84,9 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	}
 	this.controller = controller;
 	this.setBackground(Color.GRAY);
+	this.setSize(new Dimension(300, 600));
+	this.setMaximumSize(new Dimension(300, 600));
+	this.setMinimumSize(new Dimension(300, 600));
 	this.setPreferredSize(new Dimension(300, 600));
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);

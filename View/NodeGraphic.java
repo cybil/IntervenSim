@@ -12,7 +12,10 @@ import javax.swing.JMenuItem;
 public class NodeGraphic extends JPanel implements MouseListener, MouseMotionListener {
 
     private JPopupMenu	jpm = new JPopupMenu();
-    private JMenuItem	delete = new JMenuItem("Supprimer");
+    private JMenuItem	editNodeItem = new JMenuItem("Edit Node");
+    private JMenuItem	addUrgencyItem = new JMenuItem("Add Urgency");
+    private JMenuItem	setAttachmentPointItem = new JMenuItem("Set as Attachment Point");
+    private JMenuItem	delete = new JMenuItem("Delete");
 
     private DeleteNode	toDel = new DeleteNode(this);
 
@@ -135,6 +138,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 		oldx_rel = this.getx();
 		oldy_rel = this.gety();
 		MapPanel.setMovedNode1(this.getx(), this.gety());
+		//editObject(this);
 	    }
 	if (e.getButton() == MouseEvent.BUTTON3) {
 	    jpm.show(this, e.getX(), e.getY());
