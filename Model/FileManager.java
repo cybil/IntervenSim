@@ -15,9 +15,9 @@ public class FileManager {
 	private SimulationManager _sim;
 	private Dates _date;
 	private Statistic _stat;
-	private File _fileMap;
-	private File _fileSim;
-	private File _fileStat;
+	private File _fileMap = null;
+	private File _fileSim = null;
+	private File _fileStat = null;
 	
 	private class Dates
 	{
@@ -48,31 +48,80 @@ public class FileManager {
 	}
 	
 	// si le fichier existe déjà
-	/*public boolean existFileMap()
+	public boolean existFileMap()
 	{
-		
+		if (_fileMap != null)
+			return true;
 		return false;
-	}*/
+	}
+	
+	// si le fichier existe déjà
+	public boolean existFileSim()
+	{
+		if (_fileStat != null)
+			return true;
+		return false;
+	}
+	
+	// si le fichier existe déjà
+	public boolean existFileStat()
+	{
+		if (_fileSim != null)
+			return true;
+		return false;
+	}
 	
 	// Si le fichier courant est différent de l'etat actuel
-	/*public boolean compareToSavedFileMap()
+	public boolean compareToSavedFileMap()
 	{
+		if (_fileMap != null)
+			return true;
 		
-	}*/
+		File fichier = new File("tmpMap.ser");
+		if (_fileMap.compareTo(fichier) != 0)
+			return true;
+		return false;
+			
+	}
+	
+	public boolean compareToSavedFileSim()
+	{
+		if (_fileSim != null)
+			return true;
+		
+		File fichier = new File("tmpSim.ser");
+		if (_fileSim.compareTo(fichier) != 0)
+			return true;
+		return false;
+			
+	}
+	
+	public boolean compareToSavedFileStat()
+	{
+		if (_fileStat != null)
+			return true;
+		
+		File fichier = new File("tmpStat.ser");
+		if (_fileStat.compareTo(fichier) != 0)
+			return true;
+		return false;
+			
+	}
 	
 	public boolean saveMap(File p_file) {
 		try {
 			FileOutputStream file = new FileOutputStream(p_file);
-		      System.out.println("test : " + "Map"+ _date.date() +".ser");
-		      ObjectOutputStream oos = new ObjectOutputStream(file);
-		      oos.writeObject(_map);
-		      oos.flush();
-		      oos.close();
+		    System.out.println("test : " + "Map"+ _date.date() +".ser");
+		    ObjectOutputStream oos = new ObjectOutputStream(file);
+		    oos.writeObject(_map);
+		    oos.flush();
+		    oos.close();
 		    }
 		    catch (java.io.IOException e) {
 		    	e.printStackTrace();
 		    	return false;
-		    }	
+		    }
+		this._fileMap = p_file;
 		return true;
 	}
 	
@@ -91,7 +140,8 @@ public class FileManager {
 				e.printStackTrace();
 				return false;
 			}
-			return true;
+		this._fileMap = p_file;
+		return true;
 	}
 	
 	public boolean importImage(File p_file) {
@@ -136,8 +186,9 @@ public class FileManager {
 	    catch (java.io.IOException e) {
 	    	e.printStackTrace();
 	    	return false;
-	    }	
-	return true;
+	    }
+		this._fileSim = p_file;
+		return true;
 	}
 	
 	public boolean loadSim(File p_file) {
@@ -155,7 +206,8 @@ public class FileManager {
 				e.printStackTrace();
 				return false;
 			}
-			return true;
+		this._fileSim = p_file;
+		return true;
 	}
 	
 	public boolean saveStat(File p_file) {
@@ -170,7 +222,8 @@ public class FileManager {
 		    catch (java.io.IOException e) {
 		    	e.printStackTrace();
 		    	return false;
-		    }		
+		    }	
+		this._fileStat = p_file;
 		return true;
 	}
 	
@@ -189,6 +242,7 @@ public class FileManager {
 			e.printStackTrace();
 			return false;
 		}
+		this._fileStat = p_file;
 		return true;
 	}
 }
