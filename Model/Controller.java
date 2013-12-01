@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -108,31 +109,31 @@ public class Controller {
 		
       //Fonction for FileManager
 		
-      public boolean eventSaveMap() {
-      return _model.getFileManager().saveMap();
+      public boolean eventSaveMap(File p_file) {
+      return _model.getFileManager().saveMap(p_file);
       }
 		
-       public boolean eventLoadMap(String path) {
-       return _model.getFileManager().loadMap(path);
+       public boolean eventLoadMap(File p_file) {
+       return _model.getFileManager().loadMap(p_file);
        }
 		
-       public boolean eventImportImage(String path) {
-       return _model.getFileManager().importImage(path);
+       public boolean eventImportImage(File p_file) {
+       return _model.getFileManager().importImage(p_file);
        }
 		
-       public boolean eventSaveSim() {
-       return _model.getFileManager().saveSim();
+       public boolean eventSaveSim(File p_file) {
+       return _model.getFileManager().saveSim(p_file);
        }
 		
-       public boolean eventLoadSim(String path) {
-       return _model.getFileManager().loadSim(path);
+       public boolean eventLoadSim(File p_file) {
+       return _model.getFileManager().loadSim(p_file);
        }
 		
-       public boolean eventSaveStat() {
-       return _model.getFileManager().saveStat();
+       public boolean eventSaveStat(File p_file) {
+       return _model.getFileManager().saveStat(p_file);
        }
 		
-       public boolean eventLoadStat(String path) throws ClassNotFoundException, IOException {
-       return _model.getFileManager().loadStat(path);
+       public boolean eventLoadStat(File p_file) throws ClassNotFoundException, IOException {
+       return _model.getFileManager().loadStat(p_file);
        }
 }
