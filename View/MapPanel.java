@@ -22,7 +22,7 @@ import java.awt.Font;
 public class MapPanel extends JPanel implements MouseListener, MouseMotionListener {
 
     public enum EObjectTools {
-	VEHICULE, NODE, CURSOR, ROAD;
+	VEHICULE, NODE, CURSOR, ROAD, ATTACH_POINT, URGENCY;
     }
 
     static EObjectTools selectedObject = EObjectTools.CURSOR;
@@ -175,7 +175,8 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		    int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
 		    
 		    if (this.graphVehicule == null) {
-			NodeGraphic		newNode = new NodeGraphic(this.vehicule,
+			NodeGraphic		newNode = new NodeGraphic(EObjectTools.VEHICULE,
+									  this.vehicule,
 									  this.vehicule,
 									  this.vehicule, x, y);
 
@@ -193,7 +194,8 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		    
 		    if (this.containsNode(_x, _y) == false) {
 			System.out.println("CREATE NODE GRAPHIC : " + _x + " - " + _y);
-			NodeGraphic		newNode = new NodeGraphic(this.nodeNormal,
+			NodeGraphic		newNode = new NodeGraphic(EObjectTools.NODE,
+									  this.nodeNormal,
 									  this.nodeAttachPoint,
 									  this.nodeUrgency,
 									  _x,
@@ -212,7 +214,8 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
 		    if (this.containsNode(_x, _y) == false) {
 			System.out.println("CREATE ATTACH GRAPHIC : " + _x + " - " + _y);
-			NodeGraphic		newNode = new NodeGraphic(this.nodeAttachPoint,
+			NodeGraphic		newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
+									  this.nodeAttachPoint,
 									  this.nodeAttachPoint,
 									  this.nodeAttachPoint,
 									  _x,
@@ -230,7 +233,8 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		    int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
 
 		    if (this.containsNode(_x, _y) == false) {
-			NodeGraphic		newNode = new NodeGraphic(this.nodeUrgency,
+			NodeGraphic		newNode = new NodeGraphic(EObjectTools.URGENCY,
+									  this.nodeUrgency,
 									  this.nodeUrgency,
 									  this.nodeUrgency,
 									  _x,

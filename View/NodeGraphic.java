@@ -35,6 +35,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     private boolean	isSelected = false;
     private int		buttonPressed = 0;
 
+    public MapPanel.EObjectTools	type;
+
     private class DeleteNode implements ActionListener {
 	NodeGraphic	node;
 	public DeleteNode(NodeGraphic n) {
@@ -67,8 +69,10 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	System.out.println("NODE --- CONSTRUCTION DEFAULT");
     }
 
-    public NodeGraphic(Image imgNormal, Image imgSelected, Image imgPassedOver, int p_x, int p_y) {
+    public NodeGraphic(MapPanel.EObjectTools type, Image imgNormal,
+		       Image imgSelected, Image imgPassedOver, int p_x, int p_y) {
 	System.out.println("NODE --- CONSTRUCTION");
+	this.type = type;
 	this.imgNormal = imgNormal;
 	this.imgSelected = imgSelected;
 	this.imgPassedOver = imgPassedOver;
