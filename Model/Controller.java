@@ -147,7 +147,7 @@ public class Controller {
        return _model.getFileManager().loadStat(p_file);
        }
        
-       public void eventSetStrategy() {
-    	   _model.getSimulationManager().
+       public void eventSetStrategy(int strat) {
+    	   _model.getSimulationManager().setStrategy(strat);
        }
 }
