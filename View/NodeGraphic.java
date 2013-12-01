@@ -48,11 +48,19 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
     public int		getx() {
-	return (this._node_x);
+	return this._node_x;
     }
 
     public int		gety() {
-	return (this._node_y);
+	return this._node_y;
+    }
+
+    public void		setx(int new_x) {
+	this._node_x = new_x;
+    }
+
+    public void		sety(int new_y) {
+	this._node_y = new_y;
     }
 	
     public NodeGraphic() {
@@ -126,15 +134,19 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
     public void mousePressed(MouseEvent e) {
 	this.buttonPressed = e.getButton();
-	if (e.getButton() == MouseEvent.BUTTON1
-	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
-	    {
-		System.out.println("Node --- Pressed !");
-		oldx = e.getXOnScreen();
-		oldy = e.getYOnScreen();
-		oldx_rel = this.getx();
-		oldy_rel = this.gety();
-		MapPanel.setMovedNode1(this.getx(), this.gety());
+	if (e.getButton() == MouseEvent.BUTTON1)
+	    if (MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
+		{
+		    System.out.println("Node --- Pressed !");
+		    oldx = e.getXOnScreen();
+		    oldy = e.getYOnScreen();
+		    oldx_rel = this.getx();
+		    oldy_rel = this.gety();
+		    MapPanel.setMovedNode1(this.getx(), this.gety());
+		}
+	    else if (MapPanel.selectedObject == MapPanel.EObjectTools.VEHICULE) {
+		System.out.println("COUCOU LES AMIS");
+		MapPanel.setVehiculeAt(this.getx(), this.gety());
 	    }
 	if (e.getButton() == MouseEvent.BUTTON3) {
 	    jpm.show(this, e.getX(), e.getY());

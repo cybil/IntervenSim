@@ -72,6 +72,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	    MapPanel.deleteRoad(road);
 	}
     }
+
     MapPanel(Controller controller) {
 	try {
 	    this.nodeUrgency = ImageIO.read(new File("img/nodeUrgency.png"));
@@ -118,7 +119,8 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	while (++i < this.nodes.size()) {
 	    this.add(this.nodes.get(i));
 	}
-
+	if (this.graphVehicule != null)
+	    this.add(this.graphVehicule);
     }
 
     public static boolean	containsNode(int p_x, int p_y) {
@@ -161,6 +163,8 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	return null;
     }
 
+    static NodeGraphic		graphVehicule = null;
+
     public void		displayMap(ArrayList<String> formatMap)
     {
 	roads.clear();
@@ -170,7 +174,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		    int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 		    int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
 		    
-		    if (this.containsNode(x, y) == false) {
+		    if (this.graphVehicule == null) {
 			NodeGraphic		newNode = new NodeGraphic(this.vehicule,
 									  this.vehicule,
 									  this.vehicule, x, y);
@@ -178,7 +182,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 			newNode.setLayout(null);
 			this.add(newNode);
 			this.validate();
-			nodes.add(newNode);
+			this.graphVehicule = newNode;
 		    }
 		}
 	    }
@@ -226,7 +230,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 		    int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
 
 		    if (this.containsNode(_x, _y) == false) {
-			System.out.println("CREATE URGENCY GRAPHIC : " + _x + " - " + _y);
 			NodeGraphic		newNode = new NodeGraphic(this.nodeUrgency,
 									  this.nodeUrgency,
 									  this.nodeUrgency,
@@ -270,10 +273,10 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	    && this.selectedObject == EObjectTools.NODE) {
 	    this.controller.eventPutNode(e.getX(), e.getY());
 	}
-	else if (e.getButton() == MouseEvent.BUTTON1
-		 && this.selectedObject == EObjectTools.VEHICULE) {
-	    this.controller.eventCreatVehicule(e.getX(), e.getY());
-	}
+	// else if (e.getButton() == MouseEvent.BUTTON1
+	// 	 && this.selectedObject == EObjectTools.VEHICULE) {
+	//     this.controller.eventCreatVehicule(e.getX(), e.getY());
+	// }
     }
 
     public void mousePressed(MouseEvent e) {
@@ -347,8 +350,15 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 
     static void		deleteNode(NodeGraphic n) {
 	int[]		coord = {n.getx(), n.gety()};
-	nodes.remove(n);
-	controller.eventDeleteNode(coord);
+	
+	if (nodes.contains(n) == true) {
+	    nodes.remove(n);
+	    controller.eventDeleteNode(coord);
+	}
+	else {
+	    graphVehicule = null;
+	    controller.eventDeleteVehicule();
+	}
     }
 
     static void		deleteRoad(RoadGraphic r) {
@@ -361,6 +371,16 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	int[]		coord4 = {r.getx1(), r.gety1()};
 	roads.remove(getRoad(coord3[0], coord3[1], coord4[0], coord4[1]));
 	controller.eventDeleteRoad(coord3, coord4);
+    }
+
+    static void		setVehiculeAt(int x, int y) {
+	boolean		ret;
+
+	ret = controller.eventCreatVehicule(x, y);
+	if (ret == false) {
+	    graphVehicule.setx(x);
+	    graphVehicule.sety(y);
+	}
     }
 
 }

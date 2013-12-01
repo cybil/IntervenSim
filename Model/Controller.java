@@ -52,8 +52,9 @@ public class Controller {
 	return _model.getMap().editTreatmentTime(coord, time, id);
     }
 	
-    public boolean		eventEditAttachPoint(int[] coord, boolean state) {
-	return _model.getMap().editAttachPoint(coord, state);
+    public boolean		eventEditAttachPoint(int x, int y) {
+	int[]			coord = {x, y};
+	return _model.getMap().editAttachPoint(coord, true);
     }
 	
     public boolean		eventAddRoad(int[] coordNode1, int[] coordNode2) {
@@ -62,11 +63,20 @@ public class Controller {
 	
     public boolean		eventCreatVehicule(int x, int y) {
 	int[]		coord = {x, y};
-	return _model.getMap().creatVehicule(coord);
+	if (_model.getMap().hasVehicule() == true) {
+	    _model.getMap().setVehiculeCoord(x, y);
+	    return false;
+	}
+	_model.getMap().creatVehicule(coord);
+	return true;
     }
 	
     public boolean		eventDeleteNode(int[] coord) {
 	return _model.getMap().deleteNode(coord);
+    }
+
+    public boolean		eventDeleteVehicule() {
+	return _model.getMap().deleteVehicule();
     }
 	
     public boolean		eventDeleteRoad(int[] coord1, int[] coord2) {
