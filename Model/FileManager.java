@@ -31,6 +31,30 @@ public class FileManager {
 		}
 	}*/
 	
+	public void setMap(Map map) {
+		_map = map;
+	}
+	
+	public void setSim(SimulationManager sim) {
+		_sim = sim;
+	}
+	
+	public void setStat(Statistic stat) {
+		_stat = stat;
+	}
+	
+	public Map getMap() {
+		return _map;
+	}
+	
+	public SimulationManager getSim() {
+		return _sim;
+	}
+	
+	public Statistic getStat() {
+		return _stat;
+	}
+	
 	public FileManager(Map map, SimulationManager sim)
 	{
 		_map = map;

@@ -1,4 +1,4 @@
-import javax.swing.JPanel; 
+import javax.swing.JPanel;
 import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
@@ -31,6 +31,11 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     // relative coord copy
     private int		oldx_rel;
     private int		oldy_rel;
+
+    // Real coord from the real graph
+    private int		real_x;
+    private int		real_y;
+
     // pos du panel
     private int		image_x;
     private int		image_y;
@@ -52,10 +57,25 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	}
     }
 
+  public void	rescaleCoord(int curr_x_max, int curr_y_max, int real_x_max, int real_y_max)
+  {
+    this._node_x = MapPanel.unScale(this.real_x, curr_x_max, real_x_max);
+    this._node_y = MapPanel.unScale(this.real_y, curr_y_max, real_y_max);
+  }
+
+  public Image	getImgNormal()  {
+    return (this.imgNormal);
+  }
+  public Image	getImgSelected()  {
+    return (this.imgSelected);
+  }
+  public Image	getImgPassedOver()  {
+    return (this.imgPassedOver);
+  }
+
     public int		getx() {
 	return this._node_x;
     }
-
     public int		gety() {
 	return this._node_y;
     }
@@ -67,13 +87,21 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     public void		sety(int new_y) {
 	this._node_y = new_y;
     }
-	
+
+    public int		getRealX() {
+	return (this.real_x);
+    }
+    public int		getRealY() {
+	return (this.real_y);
+    }
+
     public NodeGraphic() {
 	System.out.println("NODE --- CONSTRUCTION DEFAULT");
     }
 
-    public NodeGraphic(MapPanel.EObjectTools type, Image imgNormal,
-		       Image imgSelected, Image imgPassedOver, int p_x, int p_y) {
+public NodeGraphic(MapPanel.EObjectTools type, Image imgNormal, Image imgSelected, Image imgPassedOver,
+		       int p_x, int p_y,
+		       int real_x, int real_y) {
 	System.out.println("NODE --- CONSTRUCTION");
 	this.type = type;
 	this.imgNormal = imgNormal;
@@ -82,6 +110,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.currentImg = this.imgNormal;
 	this._node_x = p_x;
 	this._node_y = p_y;
+	this.real_x = real_x;
+	this.real_y = real_y;
 	this.image_x = p_x - 10;
 	this.image_y = p_y - 10;
 	this.addMouseListener(this);
@@ -108,7 +138,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    this.currentImg = this.imgPassedOver;
 	    this.isSelected = false;
 	}
-	    
+
     }
 
     public void mouseExited(MouseEvent e) {
@@ -181,4 +211,4 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	MapPanel.mouseX = this.getx();
 	MapPanel.mouseY = this.gety();
     }
-} 
+}
