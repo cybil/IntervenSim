@@ -18,11 +18,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 import java.awt.Font;
-<<<<<<< HEAD
 import java.awt.BorderLayout;
-
-public class MapPanel extends JPanel implements MouseListener, MouseMotionListener {
-=======
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -34,7 +30,6 @@ public class MapPanel extends JPanel implements
 				     MouseListener,
 				     MouseMotionListener,
 				     MouseWheelListener {
->>>>>>> ec50769f532c64fa54f70ab517e98527f5c2752c
 
     public enum EObjectTools {
 	VEHICULE, NODE, CURSOR, ROAD, ATTACH_POINT, URGENCY;
