@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 import java.awt.Font;
+import java.awt.BorderLayout;
 
 public class MapPanel extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -57,7 +58,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
     private JPopupMenu	jpm = new JPopupMenu();
     private JMenuItem	delete = new JMenuItem("Supprimer");
     private DeleteRoad	toDel = new DeleteRoad();
-
+    
     private class DeleteRoad implements ActionListener {
 	RoadGraphic	road;
 	public DeleteRoad() {
@@ -83,6 +84,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseMotionListen
 	catch (IOException e) {
 	    e.printStackTrace();
 	}
+	
 	this.controller = controller;
 	this.setBackground(Color.GRAY);
 	this.setSize(new Dimension(300, 600));
