@@ -63,11 +63,6 @@ public class MainWindow extends JFrame implements ActionListener {
 	tabToolBar.setVisible(false);
 	this.timer.start();
 
-	// JScrollPane scrollPane = new JScrollPane(mapPanel);
-	// scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-	// scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-	// this.add(scrollPane);
     }
 
     // action Performed class
@@ -119,6 +114,8 @@ public class MainWindow extends JFrame implements ActionListener {
     	gbc.fill = GridBagConstraints.BOTH;
 
 	JScrollPane scrollPane = new JScrollPane(mapPanel);
+	scrollPane.setWheelScrollingEnabled(false);
+	mapPanel.setScrollBarRef(scrollPane);
 	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
