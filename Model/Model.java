@@ -182,13 +182,13 @@ public class Model {
 	
     public void addToRedo() {
     	if (_redo.size() > 7)
-    		_redo.remove(_redo.size());
+    		_redo.remove(_redo.size() - 1);
     	_redo.push(_map);
     }
     
     public void addToUndo() {
     	if (_undo.size() > 7)
-		_undo.remove(_undo.size());
+		_undo.remove(_undo.size() - 1);
 	_undo.push(_map);
     }
     
