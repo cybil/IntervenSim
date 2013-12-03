@@ -93,6 +93,14 @@ public class Controller {
 	return _model.addNodeUrgency(coord, state, triggDate);
     }
 	
+    public void		eventRedo() {
+    	_model.redo();
+    }
+    
+    public void		eventUndo() {
+    	_model.undo();
+    }
+    
     //Fonction for SimulationManager
     public void eventPlay() {
       _model.play();
