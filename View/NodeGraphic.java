@@ -57,21 +57,21 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	}
     }
 
-  public void	rescaleCoord(int curr_x_max, int curr_y_max, int real_x_max, int real_y_max)
-  {
-    this._node_x = MapPanel.unScale(this.real_x, curr_x_max, real_x_max);
-    this._node_y = MapPanel.unScale(this.real_y, curr_y_max, real_y_max);
-  }
+    public void	rescaleCoord(int curr_x_max, int curr_y_max, int real_x_max, int real_y_max)
+    {
+	this._node_x = MapPanel.unScale(this.real_x, curr_x_max, real_x_max);
+	this._node_y = MapPanel.unScale(this.real_y, curr_y_max, real_y_max);
+    }
 
-  public Image	getImgNormal()  {
-    return (this.imgNormal);
-  }
-  public Image	getImgSelected()  {
-    return (this.imgSelected);
-  }
-  public Image	getImgPassedOver()  {
-    return (this.imgPassedOver);
-  }
+    public Image	getImgNormal()  {
+	return (this.imgNormal);
+    }
+    public Image	getImgSelected()  {
+	return (this.imgSelected);
+    }
+    public Image	getImgPassedOver()  {
+	return (this.imgPassedOver);
+    }
 
     public int		getx() {
 	return this._node_x;
@@ -88,9 +88,18 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this._node_y = new_y;
     }
 
+    public void		setIsSelected(boolean b) {
+	if (b == true)
+	    this.currentImg = this.imgSelected;
+	else
+	    this.currentImg = this.imgNormal;
+	this.isSelected = b;
+    }
+
     public int		getRealX() {
 	return (this.real_x);
     }
+
     public int		getRealY() {
 	return (this.real_y);
     }
@@ -99,7 +108,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	System.out.println("NODE --- CONSTRUCTION DEFAULT");
     }
 
-public NodeGraphic(MapPanel.EObjectTools type, Image imgNormal, Image imgSelected, Image imgPassedOver,
+    public NodeGraphic(MapPanel.EObjectTools type, Image imgNormal,
+		       Image imgSelected, Image imgPassedOver,
 		       int p_x, int p_y,
 		       int real_x, int real_y) {
 	System.out.println("NODE --- CONSTRUCTION");
@@ -180,7 +190,7 @@ public NodeGraphic(MapPanel.EObjectTools type, Image imgNormal, Image imgSelecte
 		    oldx_rel = this.getx();
 		    oldy_rel = this.gety();
 		    MapPanel.setMovedNode1(this.getx(), this.gety());
-			//editObject(this);
+		    //editObject(this);
 		}
 	    else if (MapPanel.selectedObject == MapPanel.EObjectTools.VEHICULE) {
 		System.out.println("COUCOU LES AMIS");
@@ -206,7 +216,7 @@ public NodeGraphic(MapPanel.EObjectTools type, Image imgNormal, Image imgSelecte
 	    this._node_x = new_x;
 	    this._node_y = new_y;
 	    MapPanel.setIsDragging(true);
-	    MapPanel.setMovedNode2(this.getx(), this.gety());
+	   
 	}
 	MapPanel.mouseX = this.getx();
 	MapPanel.mouseY = this.gety();
