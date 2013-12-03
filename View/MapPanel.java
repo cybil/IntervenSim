@@ -73,7 +73,7 @@ public class MapPanel extends JPanel implements
   private int H;
   //Zoom
   private static final int maxX = 300;
-  private static final int maxY = 600;
+  private static final int maxY = 300;
 
     private class DeleteRoad implements ActionListener {
 	RoadGraphic	road;
@@ -114,9 +114,10 @@ public class MapPanel extends JPanel implements
 
 	// this.add(scrollPane);
 	this.setPreferredSize(new Dimension(maxX, maxY));
-	this.setSize(new Dimension(maxX, maxY));
-	this.setMaximumSize(new Dimension(maxX, maxY));
-	this.setMinimumSize(new Dimension(maxX, maxY));
+
+	// this.setSize(new Dimension(maxX, maxY));
+	// this.setMaximumSize(new Dimension(maxX, maxY));
+	// this.setMinimumSize(new Dimension(maxX, maxY));
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
 	this.addMouseWheelListener(this);
@@ -144,18 +145,16 @@ public class MapPanel extends JPanel implements
 	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			     RenderingHints.VALUE_ANTIALIAS_ON);
 	AffineTransform at = g2.getTransform();
+	g2.drawString("Echelle:" + 100,
+		      this.getWidth() - 120,
+		      this.getHeight() - 10);
+	g2.drawString("X: " + scaleX(this.mouseX) + " Y: " + scaleY(this.mouseY),
+		      10,
+		      this.getHeight() - 10);
 	g2.scale(
-	  (double) this.getW() / maxX,
-	  (double) this.getH() / maxY);
+	  (double) this.getW() / (double)maxX,
+	  (double) this.getH() / (double)maxY);
 
-	Font f = new Font("Helvetica", Font.BOLD, 14);
-	g2.setFont(f);
-	g2.drawString("Echelle:" + (int)unScaleX(100),
-		      (int)scaleX(this.getWidth() - 120),
-		      (int)scaleY(this.getHeight() - 10));
-	g2.drawString("X: " + this.mouseX + " Y: " + this.mouseY,
-		      (int)scaleX(10),
-		      (int)scaleY(this.getHeight() - 10));
 	this.removeAll();
 	// if ((bck = this.controller._model.getMap().getBackground()) != null)
 	//     g.drawImage(bck, 0, 0, this);
@@ -354,7 +353,7 @@ public class MapPanel extends JPanel implements
     }
     else if (e.getButton() == MouseEvent.BUTTON1
 	     && this.selectedObject == EObjectTools.VEHICULE) {
-      this.controller.eventCreatVehicule(e.getX(), e.getY());
+      this.controller.eventCreatVehicule(scaleX(e.getX()), scaleY(e.getY()));
       // this.controller.eventCreatVehicule((int)scaleX(e.getX()), (int)scaleY(e.getY()));
     }
     // else if (e.getButton() == MouseEvent.BUTTON1)
@@ -509,16 +508,21 @@ public class MapPanel extends JPanel implements
   public void mouseWheelMoved(MouseWheelEvent e) {
     int notches = e.getWheelRotation();
 
-    // if (notches < 0) {
-    //   this.H += 10;
-    //   this.W += 10;
-    // } else {
+    // while (notches != 0)
+    // {
+    //   if (notches < 0) {
+    //   } else {
+    // 	notches--;
+    //   }
     // }
-    this.H += 10*notches;
-    this.W += 10*notches;
-    this.setPreferredSize(new Dimension(W, H));
-    this.rescaleAllNode();
-    revalidate();
+    if ((notches < 0 && this.H > 10 && this.W > 10) || (notches > 0))
+    {
+      this.H += 10 * notches;
+      this.W += 10 * notches;
+      // this.setPreferredSize(new Dimension(W, H));
+      this.rescaleAllNode();
+      revalidate();
+    }
     // saySomething(message, e);
   }
 
@@ -542,23 +546,23 @@ public class MapPanel extends JPanel implements
   }
 
   private int scaleX(int x) {
-    return (int)(((double) x / getW()) * maxX);
+    return (int)(((double) x / (double)getW()) * (double)maxX);
   }
   private int scaleY(int y) {
-    return (int)(((double) y / getH()) * maxY);
+    return (int)(((double) y / (double)getH()) * (double)maxY);
   }
   private int unScaleX(int x) {
-    return (int)(((double) x / maxX) * getW());
+    return (int)(((double) x / (double)maxX) * (double)getW());
   }
   private int unScaleY(int y) {
-    return (int)(((double) y / maxY) * getH());
+    return (int)(((double) y / (double)maxY) * (double)getH());
   }
 
   static public int scale(int coord, int curr_max, int real_max) {
-    return (int)(((double) coord / curr_max) * real_max);
+    return (int)(((double) coord / (double)curr_max) * (double)real_max);
   }
   static public int unScale(int coord, int curr_max, int real_max) {
-    return (int)(((double) coord / real_max) * curr_max);
+    return (int)(((double) coord / (double)real_max) * (double)curr_max);
   }
 
     static void		setVehiculeAt(int x, int y) {
