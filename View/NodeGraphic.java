@@ -161,12 +161,12 @@ public NodeGraphic(MapPanel.EObjectTools type, Image imgNormal, Image imgSelecte
 	    {
 		oldx = e.getXOnScreen();
 		oldy = e.getYOnScreen();
-		MapPanel.setMovedNode2(this.getx(), this.gety());
+		MapPanel.setMovedNode2(this.getX(), this.getY());
 		MapPanel.setIsDragging(false);
 	    }
 	else if (e.getButton() == MouseEvent.BUTTON1
 		 && MapPanel.selectedObject == MapPanel.EObjectTools.ROAD)
-	    MapPanel.setRoadNode(this.getx(), this.gety());
+	    MapPanel.setRoadNode(this.getX(), this.getY());
     }
 
     public void mousePressed(MouseEvent e) {
