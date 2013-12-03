@@ -246,104 +246,120 @@ public class MapPanel extends JPanel implements
 
     static NodeGraphic		graphVehicule = null;
 
-    public void		displayMap(ArrayList<String> formatMap)
-    {
-	roads.clear();
-	for (String s : formatMap) {
-	    if (s.charAt(0) == 'V') {
-		if (isDragging == false) {
-		    int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-		    int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-		    if (this.graphVehicule == null) {
-			NodeGraphic		newNode = new NodeGraphic(EObjectTools.VEHICULE,
-									  this.vehicule,
-									  this.vehicule,
-									  this.vehicule, x, y,
-									  unScaleX(x), unScaleY(y));
+  private NodeGraphic		_displayMapNode(String s)
+  {
+    NodeGraphic			newNode = null;
+    int	_x = unScaleX(Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(","))));
+    int	_y = unScaleY(Integer.parseInt(s.substring(s.indexOf(",") + 1)));
 
-			newNode.setLayout(null);
-			this.add(newNode);
-			this.validate();
-			this.graphVehicule = newNode;
-		    }
-		}
-	    }
-	    else if (s.charAt(0) == 'N') {
-	      if (isDragging == false) {
-		int	_x = unScaleX(Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(","))));
-		int	_y = unScaleY(Integer.parseInt(s.substring(s.indexOf(",") + 1)));
-
-		// System.out.println("CREATE NODE GRAPHIC AT ?? : " + scaleX(_x) + " - " + scaleY(_y));
-		if (this.containsNode(_x, _y) == false) {
-		  System.out.println("CREATE NODE GRAPHIC : " + _x + " - " + _y);
-		  NodeGraphic		newNode = new NodeGraphic(EObjectTools.NODE, this.nodeNormal,
-								  this.nodeAttachPoint,
-								  this.nodeUrgency,
-								  _x, _y,
-								  scaleX(_x),
-								  scaleY(_y));
-		  newNode.setLayout(null);
-		  this.add(newNode);
-		  this.validate();
-		  nodes.add(newNode);
-		}
-	      }
-	    }
-	    else if (s.charAt(0) == 'A') {
-		if (isDragging == false) {
-		    int	_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-		    int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
-
-		    if (this.containsNode(_x, _y) == false) {
-			System.out.println("CREATE ATTACH GRAPHIC : " + _x + " - " + _y);
-			NodeGraphic		newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
-									  this.nodeAttachPoint,
-									  this.nodeAttachPoint,
-									  this.nodeAttachPoint,
-									  _x, _y,
-									  unScaleX(_x),
-									  unScaleY(_y));
-			newNode.setLayout(null);
-			this.add(newNode);
-			this.validate();
-			nodes.add(newNode);
-		    }
-		}
-	    }
-	    else if (s.charAt(0) == 'U') {
-		if (isDragging == false) {
-		    int	_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-		    int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
-
-		    if (this.containsNode(_x, _y) == false) {
-			NodeGraphic		newNode = new NodeGraphic(EObjectTools.URGENCY,
-									  this.nodeUrgency,
-									  this.nodeUrgency,
-									  this.nodeUrgency,
-									  _x, _y,
-									  unScaleX(_x),
-									  unScaleY(_y));
-			newNode.setLayout(null);
-			this.add(newNode);
-			this.validate();
-			nodes.add(newNode);
-		    }
-		}
-	    }
-	    else if (s.charAt(0) == 'R') {
-		int	x1 = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-		int	y1 = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
-		String	s2 = s.substring(s.lastIndexOf(":"));
-		int	x2 = Integer.parseInt(s2.substring(s2.indexOf(":") + 1, s2.indexOf(",")));
-		int	y2 = Integer.parseInt(s2.substring(s2.indexOf(",") + 1));
-		if (this.containsRoad(x1, y1, x2, y2) == false) {
-		    RoadGraphic		newRoad = new RoadGraphic(x1, y1, x2, y2);
-		    this.roads.add(newRoad);
-		}
-	    }
-	    this.repaint();
-	}
+    // System.out.println("CREATE NODE GRAPHIC AT ?? : " + scaleX(_x) + " - " + scaleY(_y));
+    if (this.containsNode(_x, _y) == false) {
+      System.out.println("CREATE NODE GRAPHIC : " + _x + " - " + _y);
+      newNode = new NodeGraphic(EObjectTools.NODE, this.nodeNormal,
+				this.nodeAttachPoint,
+				this.nodeUrgency,
+				_x, _y,
+				scaleX(_x), scaleY(_y));
+      nodes.add(newNode);
     }
+    return (newNode);
+  }
+  private NodeGraphic		_displayMapAttachPoint(String s)
+  {
+    NodeGraphic			newNode = null;
+    int	_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+    int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+
+    if (this.containsNode(_x, _y) == false) {
+      System.out.println("CREATE ATTACH GRAPHIC : " + _x + " - " + _y);
+      newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
+				this.nodeAttachPoint,
+				this.nodeAttachPoint,
+				this.nodeAttachPoint,
+				_x, _y,
+				unScaleX(_x), unScaleY(_y));
+      nodes.add(newNode);
+    }
+    return (newNode);
+  }
+  private NodeGraphic		_displayMapVehicule(String s)
+  {
+    NodeGraphic		newNode = null;
+    int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+    int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+
+    if (this.graphVehicule == null) {
+      newNode = new NodeGraphic(EObjectTools.VEHICULE,
+				this.vehicule,
+				this.vehicule,
+				this.vehicule, x, y,
+				unScaleX(x), unScaleY(y));
+      this.graphVehicule = newNode;
+    }
+    return (newNode);
+  }
+  private NodeGraphic		_displayMapUrgency(String s)
+  {
+    NodeGraphic		newNode	= null;
+    int	_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+    int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
+
+    if (this.containsNode(_x, _y) == false) {
+      newNode = new NodeGraphic(EObjectTools.URGENCY,
+				this.nodeUrgency,
+				this.nodeUrgency,
+				this.nodeUrgency,
+				_x, _y,
+				unScaleX(_x), unScaleY(_y));
+      nodes.add(newNode);
+    }
+    return (newNode);
+  }
+  private void		_displayMapRoad(String s)
+  {
+    int	x1 = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+    int	y1 = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
+    String	s2 = s.substring(s.lastIndexOf(":"));
+    int	x2 = Integer.parseInt(s2.substring(s2.indexOf(":") + 1, s2.indexOf(",")));
+    int	y2 = Integer.parseInt(s2.substring(s2.indexOf(",") + 1));
+    if (this.containsRoad(x1, y1, x2, y2) == false) {
+      RoadGraphic		newRoad = new RoadGraphic(x1, y1, x2, y2);
+      this.roads.add(newRoad);
+    }
+  }
+
+  public void		displayMap(ArrayList<String> formatMap)
+  {
+    NodeGraphic		newNode = null;
+
+    roads.clear();
+    for (String s : formatMap) {
+      if (s.charAt(0) == 'R') {
+	this._displayMapRoad(s);
+      }
+      else if (isDragging == false)
+      {
+	if (s.charAt(0) == 'V') {
+	  newNode = this._displayMapVehicule(s);
+	}
+	else if (s.charAt(0) == 'N') {
+	  newNode = this._displayMapNode(s);
+	}
+	else if (s.charAt(0) == 'A') {
+	  newNode = this._displayMapAttachPoint(s);
+	}
+	else if (s.charAt(0) == 'U') {
+	  newNode = this._displayMapUrgency(s);
+	}
+	if (newNode != null) {
+	  newNode.setLayout(null);
+	  this.add(newNode);
+	  this.validate();
+	}
+      }
+      this.repaint();
+    }
+  }
 
     public void mouseClicked(MouseEvent e) {
     }
