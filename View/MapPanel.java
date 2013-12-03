@@ -472,11 +472,24 @@ public class MapPanel extends JPanel implements
 	    this.selectedBoxCoord2[1] = e.getY();
 
 	    // Selection des elements a l'interieur du rectangle
+	    int		x1 = this.selectedBoxCoord1[0];
+	    int		y1 = this.selectedBoxCoord1[1];
+	    int		x2 = this.selectedBoxCoord2[0];
+	    int		y2 = this.selectedBoxCoord2[1];
+
 	    for (NodeGraphic n : this.nodes) {
-		if (n.getx() > this.selectedBoxCoord1[0]
-		    && n.getx() < this.selectedBoxCoord2[0]
-		    && n.gety() > this.selectedBoxCoord1[1]
-		    && n.gety() < this.selectedBoxCoord2[1]) {
+		if ((x1 < x2 && y1 < y2
+		    && n.getx() < x2 && n.getx() > x1
+		     && n.gety() < y2 && n.gety() > y1)
+		    || (x2 < x1 && y2 < y1
+			&& n.getx() < x1 && n.getx() > x2
+			&& n.gety() < y1 && n.gety() > y2)
+		    || (x1 > x2 && y1 < y2
+			&& n.getx() < x1 && n.getx() > x2
+			&& n.gety() < y2 && n.gety() > y1)
+		    || (x1 < x2 && y1 > y2
+			&& n.getx() < x2 && n.getx() > x1
+			&& n.gety() < y1 && n.gety() > y2)) {
 		    this.selectedItemsList.add(n);
 		    n.setIsSelected(true);
 		}
