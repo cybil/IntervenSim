@@ -76,16 +76,16 @@ public class MapPanel extends JPanel implements
 
     private JScrollPane	scrolBarRef = null;
 
-    // zoom
-    private int W;
-    private int H;
     //Zoom
-    private static int maxX = 300;
-    private static int maxY = 300;
+    private static int W;
+    private static int H;
+    public static int maxX = 300;
+    public static int maxY = 300;
 
     private class DeleteRoad implements ActionListener {
 	RoadGraphic		road;
 	ArrayList<NodeGraphic>	nodes;
+
 	public DeleteRoad() {
 	}
 
@@ -272,11 +272,14 @@ public class MapPanel extends JPanel implements
 
     static NodeGraphic		graphVehicule = null;
 
+
     private NodeGraphic		_displayMapNode(String s)
     {
 	NodeGraphic			newNode = null;
-	int	_x = unScaleX(Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(","))));
-	int	_y = unScaleY(Integer.parseInt(s.substring(s.indexOf(",") + 1)));
+	int rel_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+	int rel_y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+	int	_x = unScaleX(rel_x);
+	int	_y = unScaleY(rel_y);
 
 	// System.out.println("CREATE NODE GRAPHIC AT ?? : " + scaleX(_x) + " - " + scaleY(_y));
 	if (this.containsNode(_x, _y) == false) {
@@ -285,7 +288,7 @@ public class MapPanel extends JPanel implements
 				      this.nodeAttachPoint,
 				      this.nodeUrgency,
 				      _x, _y,
-				      scaleX(_x), scaleY(_y));
+				      rel_x, rel_y);
 	    nodes.add(newNode);
 	}
 	return (newNode);
@@ -294,8 +297,10 @@ public class MapPanel extends JPanel implements
     private NodeGraphic		_displayMapAttachPoint(String s)
     {
 	NodeGraphic			newNode = null;
-	int	_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-	int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+	int rel_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+	int rel_y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+	int	_x = unScaleX(rel_x);
+	int	_y = unScaleY(rel_y);
 
 	if (this.containsNode(_x, _y) == false) {
 	    System.out.println("CREATE ATTACH GRAPHIC : " + _x + " - " + _y);
@@ -304,7 +309,7 @@ public class MapPanel extends JPanel implements
 				      this.nodeAttachPoint,
 				      this.nodeAttachPoint,
 				      _x, _y,
-				      unScaleX(_x), unScaleY(_y));
+				      rel_x, rel_y);
 	    nodes.add(newNode);
 	}
 	return (newNode);
@@ -313,15 +318,17 @@ public class MapPanel extends JPanel implements
     private NodeGraphic		_displayMapVehicule(String s)
     {
 	NodeGraphic		newNode = null;
-	int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-	int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+	int rel_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+	int rel_y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+	int	_x = unScaleX(rel_x);
+	int	_y = unScaleY(rel_y);
 
 	if (this.graphVehicule == null) {
 	    newNode = new NodeGraphic(EObjectTools.VEHICULE,
 				      this.vehicule,
 				      this.vehicule,
-				      this.vehicule, x, y,
-				      unScaleX(x), unScaleY(y));
+				      this.vehicule, _x, _y,
+				      rel_x, rel_y);
 	    this.graphVehicule = newNode;
 	}
 	return (newNode);
@@ -330,8 +337,10 @@ public class MapPanel extends JPanel implements
     private NodeGraphic		_displayMapUrgency(String s)
     {
 	NodeGraphic		newNode	= null;
-	int	_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-	int	_y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
+	int	rel_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+	int	rel_y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
+	int	_x = unScaleX(rel_x);
+	int	_y = unScaleY(rel_y);
 
 	if (this.containsNode(_x, _y) == false) {
 	    newNode = new NodeGraphic(EObjectTools.URGENCY,
@@ -339,7 +348,7 @@ public class MapPanel extends JPanel implements
 				      this.nodeUrgency,
 				      this.nodeUrgency,
 				      _x, _y,
-				      unScaleX(_x), unScaleY(_y));
+				      rel_x, rel_y);
 	    nodes.add(newNode);
 	}
 	return (newNode);
@@ -368,7 +377,7 @@ public class MapPanel extends JPanel implements
 		this._displayMapRoad(s);
 	    }
 	    else if (isDragging == false)
-	    	{
+		{
 		    if (s.charAt(0) == 'V') {
 			newNode = this._displayMapVehicule(s);
 		    }
@@ -511,13 +520,13 @@ public class MapPanel extends JPanel implements
 
     static void	setRoadNode(int x, int y) {
 	if (drawing == false) {
-	    roadCoord1[0] = x;
-	    roadCoord1[1] = y;
+	    roadCoord1[0] = MapPanel.scaleX(x);
+	    roadCoord1[1] = MapPanel.scaleY(y);
 	    drawing = true;
 	}
 	else {
-	    roadCoord2[0] = x;
-	    roadCoord2[1] = y;
+	    roadCoord2[0] = MapPanel.scaleX(x);
+	    roadCoord2[1] = MapPanel.scaleY(y);
 	    controller.eventAddRoad(roadCoord1, roadCoord2);
 	    drawing = false;
 	}
@@ -528,7 +537,7 @@ public class MapPanel extends JPanel implements
     }
 
     static void		deleteNode(NodeGraphic n) {
-	int[]		coord = {n.getx(), n.gety()};
+	int[]		coord = {n.getRealX(), n.getRealY()};
 	
 	if (nodes.contains(n) == true) {
 	    nodes.remove(n);
@@ -599,23 +608,23 @@ public class MapPanel extends JPanel implements
 	this.scrolBarRef = scrolBarRef;
     }
 
-    private int getW()  {
-	return (this.W);
+    public static int getW()  {
+	return (W);
     }
-    private int getH()  {
-	return (this.H);
+    public static int getH()  {
+	return (H);
     }
 
-    private int scaleX(int x) {
+    public static int scaleX(int x) {
 	return (int)(((double) x / (double)getW()) * (double)maxX);
     }
-    private int scaleY(int y) {
+    public static int scaleY(int y) {
 	return (int)(((double) y / (double)getH()) * (double)maxY);
     }
-    private int unScaleX(int x) {
+    public static int unScaleX(int x) {
 	return (int)(((double) x / (double)maxX) * (double)getW());
     }
-    private int unScaleY(int y) {
+    public static int unScaleY(int y) {
 	return (int)(((double) y / (double)maxY) * (double)getH());
     }
 

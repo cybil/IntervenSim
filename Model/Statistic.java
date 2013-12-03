@@ -89,6 +89,10 @@ public class Statistic implements java.io.Serializable {
 		return _vehicule._km;
 	}
 	
+	public int getSpeed() {
+		return _vehicule._speed;
+	}
+	
 	public int getMidWaiting() {
 		return _vehicule._midTimeOnTheRoad;
 	}
@@ -118,6 +122,10 @@ public class Statistic implements java.io.Serializable {
 		_vehicule._km = km;
 	}
 	
+	public void setSpeed(int speed) {
+		_vehicule._speed = speed;
+	}
+	
 	public void setMidWaiting(int midTimeOnTheRoad) {
 		_vehicule._midTimeOnTheRoad = midTimeOnTheRoad;
 	}
@@ -128,5 +136,19 @@ public class Statistic implements java.io.Serializable {
 	
 	public boolean addUrgencyInfo(UrgencyInfo urgencyInfo) {
 		return _urgencyInfo.add(urgencyInfo);
+	}
+	
+	public boolean addUrgencyInfo(int triggerDate, int endDate, int treatmentTime) {
+		return _urgencyInfo.add(new UrgencyInfo(triggerDate, endDate, treatmentTime));
+	}
+	
+	public int getTimeFinal() {
+		int time;
+		
+		time = _vehicule._km * _vehicule._speed;
+		for (int i = 0; i < _urgencyInfo.size(); i++)
+			time += _urgencyInfo.get(i)._treatmentTime;
+		return time;
+		
 	}
 }

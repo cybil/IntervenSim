@@ -42,7 +42,7 @@ public class Controller {
     }
 	
     public boolean eventPutNode(int x, int y) {
-	return _model.getMap().addNode(x, y);
+	return _model.putNode(x, y);
     }
 	
     public void eventGetDisplay() {
@@ -55,13 +55,14 @@ public class Controller {
 	
     public boolean		eventEditAttachPoint(int x, int y) {
 	int[]			coord = {x, y};
-	return _model.getMap().editAttachPoint(coord, true);
+	return _model.editAttachPoint(coord, true);
     }
 	
     public boolean		eventAddRoad(int[] coordNode1, int[] coordNode2) {
-	return _model.getMap().addRoad(coordNode1, coordNode2);
+	return _model.addRoad(coordNode1, coordNode2);
     }
 	
+    //pas encore redo
     public boolean		eventCreatVehicule(int x, int y) {
 	int[]		coord = {x, y};
 	if (_model.getMap().hasVehicule() == true) {
@@ -73,19 +74,19 @@ public class Controller {
     }
 	
     public boolean		eventDeleteNode(int[] coord) {
-	return _model.getMap().deleteNode(coord);
+	return _model.deleteNode(coord);
     }
 
     public boolean		eventDeleteVehicule() {
-	return _model.getMap().deleteVehicule();
+	return _model.deleteVehicule();
     }
 	
     public boolean		eventDeleteRoad(int[] coord1, int[] coord2) {
-	return _model.getMap().deleteRoad(coord1, coord2);
+	return _model.deleteRoad(coord1, coord2);
     }
 	
     public boolean		eventEditNodeCoord(int[] oldCoord, int[] newCoord) {
-	return _model.getMap().editNodeCoord(oldCoord, newCoord);
+	return _model.editNodeCoord(oldCoord, newCoord);
     }
 	
     public boolean		eventAddNodeUrgency(int x, int y, Urgency.EUrgencyState state, float triggDate) {
@@ -93,6 +94,14 @@ public class Controller {
 	return _model.getMap().addNodeUrgency(coord, state, triggDate);
     }
 	
+    public void		eventRedo() {
+    	_model.redo();
+    }
+    
+    public void		eventUndo() {
+    	_model.undo();
+    }
+    
     //Fonction for SimulationManager
     public void eventPlay() {
       _model.play();
@@ -116,6 +125,10 @@ public class Controller {
 		
       public int eventGetSpeed() {
       return _model.getSpeed();
+      }
+      
+      public ArrayList<String> eventGetStrategyList() {
+    	  return _model.getSimulationManager().getStrategyList();
       }
 		
       //Fonction for FileManager

@@ -9,6 +9,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     }
 
     private Map			map;
+    private	ArrayList<Strategy>	strategyList = new ArrayList<Strategy>();
     private Strategy		strategy;
     // private Statistic		statistic = new Statistic();
     private int			speed = 1000;
@@ -21,7 +22,8 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
 
     public SimulationManager(Map map) {
 	this.map = map;
-	this.strategy = new StratOldestUrgency(map);
+	//this.strategy = new StratOldestUrgency(map);
+	this.strategyList.add(0, new StratOldestUrgency(map));
     }
 
     //***************
@@ -37,8 +39,17 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     }
 
     public int	getStrategy() {
-    	return strategy.getCurrStrategy();
+    	return strategyList.indexOf(strategy);
     }
+    
+    public ArrayList<String> getStrategyList() {
+    	ArrayList<String>	list = new ArrayList<String>();
+    	
+    	for (int i = 0; i < strategyList.size(); i++)
+    		list.add(i, strategyList.get(i).getSrategyName());
+    	return list;
+    }
+    
     //***************
     // * Setters
     //***************
@@ -48,7 +59,8 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     }
     
     public void			setStrategy(int strat) {
-    		this.strategy.setCurrStrategy(strat);
+    	if (strat <= strategyList.size())
+    		strategy = strategyList.get(strat);
     }
 
     //***************

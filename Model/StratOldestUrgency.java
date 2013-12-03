@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 public class StratOldestUrgency extends Strategy
 {
+	static String _name = "Plus vieille urgence";
+	
+	
   public StratOldestUrgency(Map map)
   {
     super(map);
@@ -37,5 +40,10 @@ public class StratOldestUrgency extends Strategy
 	}
     }
     return (null);
+  }
+  
+  @Override
+  String getSrategyName() {
+	  return _name;
   }
 }
