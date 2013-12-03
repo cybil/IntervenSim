@@ -482,25 +482,6 @@ public class MapPanel extends JPanel implements
 	roads.remove(getRoad(coord3[0], coord3[1], coord4[0], coord4[1]));
 	controller.eventDeleteRoad(coord3, coord4);
     }
-  //
-  // Zoom code
-  //
-  // private class KeyHandler implements KeyAdapter {
-
-  //   @Override
-  // public void keyReleased(KeyEvent e) {      System.out.println("Key event");}
-  // public void keyTyped(KeyEvent e) {      System.out.println("Key event");}
-  //   public void keyPressed(KeyEvent e) {
-  //     int code = e.getKeyCode();
-  //     System.out.println("Key event");
-  //     switch (code) {
-  // 	case KeyEvent.VK_Z: H -= 10; getW(); break;
-  // 	case KeyEvent.VK_S: H += 10; repaint(); getW(); break;
-  // 	case KeyEvent.VK_Q: W -= 10; invalidate(); getW(); break;
-  // 	case KeyEvent.VK_D: W += 10; validate(); getW(); break;
-  //     }
-  //   }
-  // // }
 
   @Override
   public void mouseWheelMoved(MouseWheelEvent e) {
@@ -508,21 +489,18 @@ public class MapPanel extends JPanel implements
     int	max_node_y = maxY;
     int notches = e.getWheelRotation();
 
-    // while (notches != 0)
-    // {
-      if (notches < 0) {
-	System.out.println("Zoom");
-      } else {
-	System.out.println("UnZoom");
-      }
-    // }
+      // if (notches < 0) {
+      // 	System.out.println("Zoom");
+      // } else {
+      // 	System.out.println("UnZoom");
+      // }
       if ((notches > 0
 	   && (this.H - (10 * notches) > 10)
 	   && (this.W - (10 * notches) > 10))
-	  || (notches > 0))
+	  || (notches < 0))
     {
-      this.H -= 10 * notches;
-      this.W -= 10 * notches;
+      this.H -= 10 * notches + (this.H / 10) * (notches > 0 ? 1 : -1);
+      this.W -= 10 * notches + (this.W / 10) * (notches > 0 ? 1 : -1);
       // if (H > maxX || W > maxY)
       // this.setPreferredSize(new Dimension(this.W,
       // 					  this.H));
@@ -542,7 +520,7 @@ public class MapPanel extends JPanel implements
 	if (node.gety() > max_node_y)
 	  max_node_y = node.gety();
       }
-      this.setPreferredSize(new Dimension(max_node_x + 100, max_node_y + 100));
+      this.setPreferredSize(new Dimension(max_node_x + 50, max_node_y + 50));
       revalidate();
     }
     // saySomething(message, e);

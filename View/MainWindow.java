@@ -41,7 +41,7 @@ public class MainWindow extends JFrame implements ActionListener {
     private JToolBar			tabToolBar = new JToolBar();
     private SeeTabButton		seeTabButton = new SeeTabButton();
 
-    
+
     public MainWindow(Controller controller) throws NombreInstanceGUIException{
 	if (inst == true)
 	    throw new NombreInstanceGUIException("Il existe deja une instance de la classe mainWindow.");
@@ -69,7 +69,7 @@ public class MainWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent event) {
 	this.mapPanel.displayMap(this.map.getFormatMap());
     }
-    
+
     //Configure all JFrame attributs
     void configureJFrame() {
      	this.setTitle("IntervenSim by Teks");
@@ -80,8 +80,7 @@ public class MainWindow extends JFrame implements ActionListener {
     	this.setJMenuBar(menuBar);
     	content.setLayout(new GridBagLayout());
     	}
-    
-    
+
     //set all main panels
     private void setPanels() {
     	gbc.gridx = 0;
@@ -93,7 +92,7 @@ public class MainWindow extends JFrame implements ActionListener {
     	gbc.fill = GridBagConstraints.HORIZONTAL;
     	gbc.anchor = GridBagConstraints.FIRST_LINE_START;
     	content.add(buttonBar, gbc);
-    	    	    
+
     	gbc.gridx = 0;
     	gbc.gridy = GridBagConstraints.RELATIVE;
     	gbc.weightx = 1;
@@ -103,7 +102,7 @@ public class MainWindow extends JFrame implements ActionListener {
     	gbc.fill = GridBagConstraints.NONE;
     	gbc.anchor = GridBagConstraints.FIRST_LINE_START;
     	content.add(toolsBar, gbc);
-    	    
+
     	gbc.gridx = 1;
     	gbc.gridy = 1;
     	gbc.weightx = 3.4;
@@ -122,7 +121,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	content.add(scrollPane, gbc);
 
     	// content.add(mapPanel, gbc);
-    	   
+
     	gbc.gridx = 0;
     	gbc.gridy = 2;
     	gbc.weightx = 1;
@@ -132,7 +131,7 @@ public class MainWindow extends JFrame implements ActionListener {
     	gbc.fill = GridBagConstraints.VERTICAL;
     	gbc.anchor = GridBagConstraints.FIRST_LINE_START;
     	content.add(tabsPanel, gbc);
-    	
+
     	gbc.gridx = 0;
     	gbc.gridy = 2;
     	gbc.weightx = 1;
@@ -142,11 +141,11 @@ public class MainWindow extends JFrame implements ActionListener {
     	gbc.fill = GridBagConstraints.VERTICAL;
     	gbc.anchor = GridBagConstraints.FIRST_LINE_START;
     	content.add(tabToolBar, gbc);
-    	
+
     	this.setContentPane(content);
     	this.setVisible(true);
     }
-    
+
     public void editObject(NodeGraphic Object) {
     	//	if (Object.type == MapPanel.EObjectTools.VEHICULE) {
     	//		tabsPanel.editTab.showPanel(0, Object);
@@ -154,7 +153,7 @@ public class MainWindow extends JFrame implements ActionListener {
     	//		tabsPanel.editTab.showPanel(1, Object);
     	//	}
     }
-    
+
     //Listen to Tool Bar Buttons
     void listenToolBarButtons() {
     	this.toolsBar.selectButton.addActionListener(new SelectButtonListener());
@@ -162,12 +161,12 @@ public class MainWindow extends JFrame implements ActionListener {
     	this.toolsBar.roadButton.addActionListener(new RoadButtonListener());
     	this.toolsBar.nodeButton.addActionListener(new NodeButtonListener());
     }
-    
+
     void listenTabButton() {
     	this.tabsPanel.hideButton.addActionListener(new HideButtonListener());
       	this.seeTabButton.addActionListener(new SeeTabButtonListener());
     }
-    
+
     // ActionListener class for ToolsBar Buttons
     class SelectButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
@@ -176,7 +175,7 @@ public class MainWindow extends JFrame implements ActionListener {
          toolsBar.deselectButton(MapPanel.EObjectTools.CURSOR);
         }
       }
-    
+
     class VehiculeButtonListener implements ActionListener{
         //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
@@ -186,27 +185,27 @@ public class MainWindow extends JFrame implements ActionListener {
           toolsBar.deselectButton(MapPanel.EObjectTools.VEHICULE);
           }
       }
-    
+
     class RoadButtonListener implements ActionListener{
         //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez clique sur le bouton Road\n");        
+          System.out.print("Vous avez clique sur le bouton Road\n");
           mapPanel.setSelectedObject(MapPanel.EObjectTools.ROAD);
           tabsPanel.editTab.showPanel(2);
           toolsBar.deselectButton(MapPanel.EObjectTools.ROAD);
           }
         }
-    
+
     class NodeButtonListener implements ActionListener{
         //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez clique sur le bouton Node\n");        
+          System.out.print("Vous avez clique sur le bouton Node\n");
           mapPanel.setSelectedObject(MapPanel.EObjectTools.NODE);
           tabsPanel.editTab.showPanel(1);
           toolsBar.deselectButton(MapPanel.EObjectTools.NODE);
           }
         }
-    
+
     // ActionListener class for TabsPanel
     class HideButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
@@ -215,7 +214,7 @@ public class MainWindow extends JFrame implements ActionListener {
         	tabToolBar.setVisible(true);
           }
         }
-    
+
     class SeeTabButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
         	System.out.print("clic seeTabButton\n");
@@ -223,72 +222,72 @@ public class MainWindow extends JFrame implements ActionListener {
         	tabsPanel.setVisible(true);
           }
         }
-    
+
     // ActionListener class for ButtonBar
     class NewButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
     class OpenFileButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
     class SaveFileButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
     class LoadMapButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
     class UndoButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
     class RedoButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
     class SelectAllButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
     class PlayButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
     class PauseButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
     class StopButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
     class SkipButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	
+
         }
     }
-    
+
 }
