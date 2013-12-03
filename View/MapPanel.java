@@ -23,6 +23,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
@@ -68,12 +69,14 @@ public class MapPanel extends JPanel implements
     private JMenuItem	delete = new JMenuItem("Supprimer");
     private DeleteRoad	toDel = new DeleteRoad();
 
+  private JScrollPane	scrolBarRef = null;
+
   // zoom
   private int W;
   private int H;
   //Zoom
-  private static final int maxX = 300;
-  private static final int maxY = 300;
+  private static int maxX = 300;
+  private static int maxY = 300;
 
     private class DeleteRoad implements ActionListener {
 	RoadGraphic	road;
@@ -105,6 +108,8 @@ public class MapPanel extends JPanel implements
 	this.setBackground(Color.GRAY);
 
 	// Zoom
+	// maxY = this.getHeight();
+	// maxX = this.getWidth();
 	W = maxX;
 	H = maxY;
 
@@ -137,25 +142,33 @@ public class MapPanel extends JPanel implements
     }
 
   @Override
-    public void		paintComponent(Graphics g) {
-	Graphics2D	g2 = (Graphics2D)g;
-	// Image		bck;
+  public void		paintComponent(Graphics g) {
+    int		view_x;
+    int		view_y;
+    Graphics2D	g2 = (Graphics2D)g;
+    // Image		bck;
 
-	super.paintComponent(g);
-	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-			     RenderingHints.VALUE_ANTIALIAS_ON);
-	AffineTransform at = g2.getTransform();
-	g2.drawString("Echelle:" + 100,
-		      this.getWidth() - 120,
-		      this.getHeight() - 10);
-	g2.drawString("X: " + scaleX(this.mouseX) + " Y: " + scaleY(this.mouseY),
-		      10,
-		      this.getHeight() - 10);
-	g2.scale(
-	  (double) this.getW() / (double)maxX,
-	  (double) this.getH() / (double)maxY);
+    super.paintComponent(g);
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+			RenderingHints.VALUE_ANTIALIAS_ON);
+    AffineTransform at = g2.getTransform();
 
-	this.removeAll();
+    view_x = scrolBarRef.getViewport().getViewPosition().x;
+    view_y = scrolBarRef.getViewport().getViewRect().y;
+      // + scrolBarRef.getViewport().getViewRect().width;
+    // view_y = scrolBarRef.getViewport().getViewPosition().y;
+    // System.out.println("x:" + view_x + " / y:" + view_y);
+    g2.drawString("Echelle:" + 100,
+    		  scrolBarRef.getWidth() - 120,
+    		  view_y + scrolBarRef.getHeight() - 30);
+    g2.drawString("X: " + scaleX(this.mouseX) + " Y: " + scaleY(this.mouseY),
+    		  10,
+    		  view_y + scrolBarRef.getHeight() - 30);
+    g2.scale(
+      (double) this.getW() / (double)maxX,
+      (double) this.getH() / (double)maxY);
+
+    this.removeAll();
 	// if ((bck = this.controller._model.getMap().getBackground()) != null)
 	//     g.drawImage(bck, 0, 0, this);
 
@@ -519,29 +532,22 @@ public class MapPanel extends JPanel implements
     {
       this.H += 10 * notches;
       this.W += 10 * notches;
-      // this.setPreferredSize(new Dimension(W, H));
+      if (H > maxX || W > maxY)
+	this.setPreferredSize(new Dimension(W, H));
       this.rescaleAllNode();
       revalidate();
     }
     // saySomething(message, e);
   }
 
-  private int getW()
-  {
-    // invalidate();
-    // revalidate();
-    // validate();
-    //this.setPreferredSize(new Dimension(W, H));
-    // repaint();
+  public void	setScrollBarRef(JScrollPane scrolBarRef)  {
+    this.scrolBarRef = scrolBarRef;
+  }
+
+  private int getW()  {
     return (this.W);
   }
-  private int getH()
-  {
-    // setBackground(Color.WHITE);
-    //this.setPreferredSize(new Dimension(W, H));
-    // invalidate();
-    // validate();
-    // repaint();
+  private int getH()  {
     return (this.H);
   }
 
