@@ -159,10 +159,10 @@ public class MapPanel extends JPanel implements
     // view_y = scrolBarRef.getViewport().getViewPosition().y;
     // System.out.println("x:" + view_x + " / y:" + view_y);
     g2.drawString("Echelle:" + 100,
-    		  scrolBarRef.getWidth() - 120,
+    		  view_x + scrolBarRef.getWidth() - 120,
     		  view_y + scrolBarRef.getHeight() - 30);
     g2.drawString("X: " + scaleX(this.mouseX) + " Y: " + scaleY(this.mouseY),
-    		  10,
+    		  view_x + 10,
     		  view_y + scrolBarRef.getHeight() - 30);
     g2.scale(
       (double) this.getW() / (double)maxX,
@@ -375,43 +375,12 @@ public class MapPanel extends JPanel implements
   public void mouseReleased(MouseEvent e) {
     if (e.getButton() == MouseEvent.BUTTON1
 	&& this.selectedObject == EObjectTools.NODE) {
-      // System.out.println("Coord graphic: " + e.getX() + ":" + e.getY());
-      // System.out.println("Coord    real: " + scaleX(e.getX()) + ":" + scaleY(e.getY()));
       this.controller.eventPutNode(scaleX(e.getX()), scaleY(e.getY()));
-      // System.exit(0);
     }
     else if (e.getButton() == MouseEvent.BUTTON1
 	     && this.selectedObject == EObjectTools.VEHICULE) {
       this.controller.eventCreatVehicule(scaleX(e.getX()), scaleY(e.getY()));
-      // this.controller.eventCreatVehicule((int)scaleX(e.getX()), (int)scaleY(e.getY()));
     }
-    // else if (e.getButton() == MouseEvent.BUTTON1)
-    // {
-    //   this.H += 10;
-    //   this.W += 10;
-    //   this.setPreferredSize(new Dimension(W, H));
-    //   this.rescaleAllNode();
-    //   // invalidate();
-    //   // // removeAll();
-    //   revalidate();
-    //   // // setBackground(Color.WHITE);
-    //   // validate();
-
-    //   // repaint();
-    // }
-    // else if (e.getButton() == MouseEvent.BUTTON3)
-    // {
-    //   this.H -= 10;
-    //   this.W -= 10;
-    //   this.setPreferredSize(new Dimension(W, H));
-    //   this.rescaleAllNode();
-    //   // invalidate();
-    //   // // removeAll();
-    //   revalidate();
-    //   // // setBackground(Color.WHITE);
-    //   // validate();
-    //   // repaint();
-    // }
   }
 
   public void	rescaleAllNode()
@@ -535,22 +504,45 @@ public class MapPanel extends JPanel implements
 
   @Override
   public void mouseWheelMoved(MouseWheelEvent e) {
+    int	max_node_x = maxX;
+    int	max_node_y = maxY;
     int notches = e.getWheelRotation();
 
     // while (notches != 0)
     // {
-    //   if (notches < 0) {
-    //   } else {
-    // 	notches--;
-    //   }
+      if (notches < 0) {
+	System.out.println("Zoom");
+      } else {
+	System.out.println("UnZoom");
+      }
     // }
-    if ((notches < 0 && this.H > 10 && this.W > 10) || (notches > 0))
+      if ((notches > 0
+	   && (this.H - (10 * notches) > 10)
+	   && (this.W - (10 * notches) > 10))
+	  || (notches > 0))
     {
-      this.H += 10 * notches;
-      this.W += 10 * notches;
-      if (H > maxX || W > maxY)
-	this.setPreferredSize(new Dimension(W, H));
+      this.H -= 10 * notches;
+      this.W -= 10 * notches;
+      // if (H > maxX || W > maxY)
+      // this.setPreferredSize(new Dimension(this.W,
+      // 					  this.H));
+      // this.setPreferredSize(new Dimension((int)((double) this.getW() / (double)maxX) * maxX,
+      // 					  (int)((double) this.getH() / (double)maxY) * maxY));
+      // this.setPreferredSize(new Dimension(scale(this.W, maxX, this.W),
+      // 					  scale(this.H, maxY, this.H)));
+      // this.setPreferredSize(new Dimension(scale(maxX, this.W, maxX),
+      // 					  scale(maxY, this.H, maxY)));
+	// this.setPreferredSize(new Dimension(scale(maxX, this.W, unScaleX(this.W)),
+	// 				    scale(maxY, this.H, unScaleY(this.H))));
       this.rescaleAllNode();
+      for (NodeGraphic node: nodes)
+      {
+	if (node.getx() > max_node_x)
+	  max_node_x = node.getx();
+	if (node.gety() > max_node_y)
+	  max_node_y = node.gety();
+      }
+      this.setPreferredSize(new Dimension(max_node_x + 100, max_node_y + 100));
       revalidate();
     }
     // saySomething(message, e);
