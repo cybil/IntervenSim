@@ -13,7 +13,7 @@ abstract class Strategy
     this._map = map;
     this._matrice = genMatrice.GetAdjMatrice();
   }
-
+  
   /*!
   ** Get the current strategy used
   */
@@ -37,6 +37,11 @@ abstract class Strategy
   */
   abstract ArrayList<Node>	getPath();
 
+  /*!
+  ** Return the name of strategy
+  */
+  abstract String		getSrategyName();
+  
   /*!
   ** Return the oldest urgency on the map
   */

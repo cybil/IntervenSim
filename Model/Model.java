@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.Stack;
 
 
 public class Model {
@@ -7,6 +7,8 @@ public class Model {
     private Map			_map = new Map();
     private SimulationManager	_sim = new SimulationManager(_map);
     private FileManager	_file = new FileManager(_map, _sim);
+    private Stack<Map> _undo = new Stack<Map>();
+    private Stack<Map> _redo = new Stack<Map>();
 	
 	
     //******************
@@ -35,7 +37,7 @@ public class Model {
     	_sim = sim;
     	_file = file;
     }
-		
+
     public Model(Model model) {
 	_map = model._map;
 	_sim = model._sim;
@@ -73,8 +75,9 @@ public class Model {
 	
     //Fonction for Map
 	
-    public boolean putNode(int x, int y) {		
-	return _map.addNode(x, y);
+    public boolean putNode(int x, int y) {
+    	_redo.push(_map);
+    	return _map.addNode(x, y);
     }
 	
     public void getDisplay() {
@@ -99,28 +102,39 @@ public class Model {
 	return _map.editAttachPoint(coord, state);
     }
 	
-    public boolean		addRoad(int[] coordNode1, int[] coordNode2) {
-	return _map.addRoad(coordNode1, coordNode2);
+    public boolean		addRoad(int[] coordNode1, int[] coordNode2) {	
+    	addToRedo();
+    	return _map.addRoad(coordNode1, coordNode2);
     }
 	
     public boolean		creatVehicule(int[] coord) {
-	return _map.creatVehicule(coord);
+    	addToRedo();
+    	return _map.creatVehicule(coord);
     }
 	
     public boolean		deleteNode(int[] coord) {
+    	addToRedo();
 	return _map.deleteNode(coord);
     }
 	
     public boolean		deleteRoad(int[] coord1, int[] coord2) {
+    	addToRedo();
 	return _map.deleteRoad(coord1, coord2);
     }
 	
     public boolean		editNodeCoord(int[] oldCoord, int[] newCoord) {
-	return _map.editNodeCoord(oldCoord, newCoord);
+    	addToRedo();
+    	return _map.editNodeCoord(oldCoord, newCoord);
     }
 	
     boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state, float triggDate) {
-	return _map.addNodeUrgency(coord, state, triggDate);
+    	addToRedo();
+    	return _map.addNodeUrgency(coord, state, triggDate);
+    }
+    
+    public boolean		deleteVehicule() {
+    	addToRedo();
+    	return _map.deleteVehicule();
     }
 	
     //quequesse?
@@ -151,7 +165,33 @@ public class Model {
     public int getSpeed() {
 	return _sim.getSpeed();
     }
+    
+    public void redo() {
+    	if (_redo.size() != 0) {
+    		addToUndo();
+    		_map = _redo.pop();
+    	}
+    }
+    
+    public void undo() {
+    	if (_undo.size() != 0) {
+    		addToRedo();
+    		_map = _undo.pop();
+    	}
+    }
 	
+    public void addToRedo() {
+    	if (_redo.size() > 7)
+    		_redo.remove(_redo.size());
+    	_redo.push(_map);
+    }
+    
+    public void addToUndo() {
+    	if (_undo.size() > 7)
+		_undo.remove(_undo.size());
+	_undo.push(_map);
+    }
+    
     //Fonction for FileManager
 	
     // public boolean saveMap() {
