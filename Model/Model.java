@@ -2,15 +2,16 @@ import java.util.Stack;
 
 
 public class Model {
-
 	
     private Map			_map = new Map();
     private SimulationManager	_sim = new SimulationManager(_map);
     private FileManager	_file = new FileManager(_map, _sim);
     private Stack<Map> _undo = new Stack<Map>();
     private Stack<Map> _redo = new Stack<Map>();
-	
-	
+	private int _xPos = 0;
+	private int _yPos = 0;
+    
+    
     //******************
     //	Constructor
     //******************
@@ -95,11 +96,11 @@ public class Model {
     }
 	
     public boolean	editTreatmentTime(int[] coord, float time, int id) {
-	return _map.editTreatmentTime(coord, time, id);
+    	return _map.editTreatmentTime(coord, time, id);
     }
 	
     public boolean		editAttachPoint(int[] coord, boolean state) {
-	return _map.editAttachPoint(coord, state);
+    	return _map.editAttachPoint(coord, state);
     }
 	
     public boolean		addRoad(int[] coordNode1, int[] coordNode2) {	
@@ -114,16 +115,16 @@ public class Model {
 	
     public boolean		deleteNode(int[] coord) {
     	addToRedo();
-	return _map.deleteNode(coord);
+    	return _map.deleteNode(coord);
     }
 	
     public boolean		deleteRoad(int[] coord1, int[] coord2) {
     	addToRedo();
-	return _map.deleteRoad(coord1, coord2);
+    	return _map.deleteRoad(coord1, coord2);
     }
 	
     public boolean		editNodeCoord(int[] oldCoord, int[] newCoord) {
-    	addToRedo();
+    	addToRedo(oldCoord, newCoord);
     	return _map.editNodeCoord(oldCoord, newCoord);
     }
 	
@@ -180,6 +181,20 @@ public class Model {
     	}
     }
 	
+    public void addToRedo(int[] coordOld, int[] coordNew) {
+    	if (_xPos == coordOld[0] && _yPos == coordOld[1]) {
+    		_xPos = coordNew[0];
+    		_yPos = coordNew[1];
+    		_redo.pop();
+    		_redo.push(_map);
+    	}
+    	else {
+    		if (_redo.size() > 7)
+    			_redo.remove(_redo.size() - 1);
+    		_redo.push(_map);
+    	}
+    }
+    
     public void addToRedo() {
     	if (_redo.size() > 7)
     		_redo.remove(_redo.size() - 1);
