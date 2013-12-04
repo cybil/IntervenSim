@@ -5,17 +5,35 @@ import java.awt.BasicStroke;
 
 public class RoadGraphic {
 
+  int	x1;
+  int	x2;
+  int	y1;
+  int	y2;
     private Line2D	line;
     private BasicStroke	stroke;
 
     public RoadGraphic(int x1, int y1, int x2, int y2) {
 	this.line = new Line2D.Float(x1, y1, x2, y2);
 	this.stroke = new BasicStroke(5.0f);
+	this.setCoord(x1, y1, x2, y2);
     }
 
     //*********
     // GETTERS
     //*********
+
+    public int		getRealx1() {
+      return x1;
+    }
+    public int		getRealx2() {
+      return x2;
+    }
+    public int		getRealy1() {
+      return y1;
+    }
+    public int		getRealy2() {
+      return y2;
+    }
 
     public int		getx1() {
 	return (int)this.line.getX1();
@@ -39,6 +57,10 @@ public class RoadGraphic {
     //*********
 
     public void		setCoord(int x1, int y1, int x2, int y2) {
+      this.x1 = x1;
+      this.x2 = x2;
+      this.y1 = y1;
+      this.y2 = y2;
 	this.line.setLine(x1, y1, x2, y2);
     }
 

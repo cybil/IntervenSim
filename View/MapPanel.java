@@ -371,6 +371,7 @@ public class MapPanel extends JPanel implements
     {
 	NodeGraphic		newNode = null;
 
+	System.out.println("");
 	roads.clear();
 	for (String s : formatMap) {
 	    if (s.charAt(0) == 'R') {
@@ -490,17 +491,19 @@ public class MapPanel extends JPanel implements
 	this.mouseY = e.getY();
     }
 
-    static void	setMovedNode1(int x, int y) {
-	coordMovedNode[0] = x;
-	coordMovedNode[1] = y;
+    static void	setMovedNode1(int x_rel, int y_rel) {
+      coordMovedNode[0] = x_rel;
+      coordMovedNode[1] = y_rel;
     }
 
     static void	setMovedNode2(int x, int y) {
-	int[]		coordMovedNode2 = {x, y};
+      // int[]		coordMovedNode2 = {scaleX(x), scaleY(y)};
+      // int[]		coordMovedNode2 = {scaleX(x), scaleY(y)};
+      int[]		coordMovedNode2 = {x, y};
 
 	controller.eventEditNodeCoord(coordMovedNode, coordMovedNode2);
-	coordMovedNode[0] = x;
-	coordMovedNode[1] = y;
+	coordMovedNode[0] = coordMovedNode2[0];
+	coordMovedNode[1] = coordMovedNode2[1];
     }
 
     static void		setStartCoord(int x, int y) {
@@ -628,9 +631,11 @@ public class MapPanel extends JPanel implements
 	return (int)(((double) y / (double)maxY) * (double)getH());
     }
 
+  // Passage des coord graphique aux coord réel
     static public int scale(int coord, int curr_max, int real_max) {
 	return (int)(((double) coord / (double)curr_max) * (double)real_max);
     }
+  // Passage des coord réel aux coord graphique
     static public int unScale(int coord, int curr_max, int real_max) {
 	return (int)(((double) coord / (double)real_max) * (double)curr_max);
     }

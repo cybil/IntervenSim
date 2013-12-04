@@ -26,11 +26,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     private int		_node_x;
     private int		_node_y;
     // absolute Coord copy
-    private int		oldx;
-    private int		oldy;
-    // relative coord copy
-    private int		oldx_rel;
-    private int		oldy_rel;
+    private int		oldx_win;
+    private int		oldy_win;
 
     // Real coord from the real graph
     private int		real_x;
@@ -169,10 +166,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	if (e.getButton() == MouseEvent.BUTTON1
 	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
 	    {
-		oldx = e.getXOnScreen();
-		oldy = e.getYOnScreen();
-		MapPanel.setMovedNode2(this.getX(), this.getY());
-		MapPanel.setIsDragging(false);
+	      this.real_x = this.getRealX() - MapPanel.scaleX(e.getX() - oldx_win);
+	      this.real_y = this.getRealY() - MapPanel.scaleY(e.getY() - oldy_win);
+	      this._node_x = e.getX();
+	      this._node_y = e.getY();
+	      MapPanel.setMovedNode2(this.getRealX(), this.getRealY());
+	      MapPanel.setIsDragging(false);
 	    }
 	else if (e.getButton() == MouseEvent.BUTTON1
 		 && MapPanel.selectedObject == MapPanel.EObjectTools.ROAD)
@@ -185,11 +184,9 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    if (MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
 		{
 		    System.out.println("Node --- Pressed !");
-		    oldx = e.getXOnScreen();
-		    oldy = e.getYOnScreen();
-		    oldx_rel = this.getx();
-		    oldy_rel = this.gety();
-		    MapPanel.setMovedNode1(this.getx(), this.gety());
+		    oldx_win = this.getx(); // Get relative windows coord X/Y
+		    oldy_win = this.gety();
+		    MapPanel.setMovedNode1(this.getRealX(), this.getRealY());
 		    //editObject(this);
 		}
 	    else if (MapPanel.selectedObject == MapPanel.EObjectTools.VEHICULE) {
@@ -211,12 +208,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	if (this.buttonPressed == MouseEvent.BUTTON1
 	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR) {
 	    System.out.println("NODE --- Drag !");
-	    int new_x = oldx_rel + (e.getXOnScreen() - oldx);
-	    int new_y = oldy_rel + (e.getYOnScreen() - oldy);
-	    this._node_x = new_x;
-	    this._node_y = new_y;
+	    // int new_x = oldx_rel + (e.getX() - oldx);
+	    // int new_y = oldy_rel + (e.getY() - oldy);
+	    this._node_x = e.getX();
+	    this._node_y = e.getY();
 	    MapPanel.setIsDragging(true);
-	   
+	    // MapPanel.setMovedNode2(this.getx(), this.gety());
 	}
 	MapPanel.mouseX = this.getx();
 	MapPanel.mouseY = this.gety();
