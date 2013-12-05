@@ -552,7 +552,10 @@ public class MapPanel extends JPanel implements
     public void	rescaleAllNode()
     {
 	for (NodeGraphic node:nodes)
+	{
 	    node.rescaleCoord(getW(), getH(), maxX, maxY);
+	    node.scaleImage();
+	}
     }
 
     public void mousePressed(MouseEvent e) {
@@ -705,6 +708,7 @@ public class MapPanel extends JPanel implements
 		// this.setPreferredSize(new Dimension(scale(maxX, this.W, unScaleX(this.W)),
 		// 				    scale(maxY, this.H, unScaleY(this.H))));
 		this.rescaleAllNode();
+		mapChanged = true;
 		for (NodeGraphic node: nodes)
 		    {
 			if (node.getx() > max_node_x)
@@ -712,7 +716,8 @@ public class MapPanel extends JPanel implements
 			if (node.gety() > max_node_y)
 			    max_node_y = node.gety();
 		    }
-		this.setPreferredSize(new Dimension(max_node_x + 50, max_node_y + 50));
+		// if (max_node_x + 50 > maxX && max_node_y + 50 > maxY)
+		  this.setPreferredSize(new Dimension(max_node_x + 50, max_node_y + 50));
 		revalidate();
 	    }
 	// saySomething(message, e);

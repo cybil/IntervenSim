@@ -19,6 +19,16 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
     private DeleteNode	toDel = new DeleteNode(this);
 
+
+  // A utiliser pour resize l'image en zoom
+  // public Image getScaledInstance(int width,
+  // 				 int height,
+  // 				 int hints)
+  // Original
+    protected Image	_imgNormal;
+    private Image	_imgSelected;
+    private Image	_imgPassedOver;
+
     protected Image	imgNormal;
     private Image	imgSelected;
     private Image	imgPassedOver;
@@ -79,12 +89,32 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	return this._node_y;
     }
 
-    public void		setx(int new_x) {
-	this._node_x = new_x;
-    }
+
+  public void		scaleImage()
+  {
+    int		tmp;
+    int		new_img_width;
+    int		new_img_heigth;
+
+    // tmp = this.imgNormal.getWidth(null);
+    new_img_width = MapPanel.unScaleX(25);
+
+    // new_img_heigth = this.imgNormal.getHeight(null);
+    new_img_heigth = MapPanel.unScaleY(25);
+    this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
+						       new_img_heigth,
+						       Image.SCALE_SMOOTH);
+  }
+
+  public void		setx(int new_x) {
+
+    this._node_x = new_x;
+    // this._node_x += -25;
+  }
 
     public void		sety(int new_y) {
 	this._node_y = new_y;
+	// this._node_y += -25;
     }
 
     public void		setIsSelected(boolean b) {
@@ -122,9 +152,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.imgNormal = imgNormal;
 	this.imgSelected = imgSelected;
 	this.imgPassedOver = imgPassedOver;
+	this._imgNormal = imgNormal;
+	this._imgSelected = imgSelected;
+	this._imgPassedOver = imgPassedOver;
 	this.currentImg = this.imgNormal;
-	this._node_x = p_x;
-	this._node_y = p_y;
+	this.setx(p_x);
+	this.sety(p_y);
 	this.real_x = real_x;
 	this.real_y = real_y;
 	this.image_x = p_x - 10;

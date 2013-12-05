@@ -36,16 +36,16 @@ public class RoadGraphic {
     }
 
     public int		getx1() {
-	return (int)this.line.getX1();
+	return (int)this.line.getX1() + 5;
     }
     public int		getx2() {
-	return (int)this.line.getX2();
+	return (int)this.line.getX2() + 5;
     }
     public int		gety1() {
-	return (int)this.line.getY1();
+	return (int)this.line.getY1() + 5;
     }
     public int		gety2() {
-	return (int)this.line.getY2();
+	return (int)this.line.getY2() + 5;
     }
 
     public BasicStroke	getStroke() {
