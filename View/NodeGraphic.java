@@ -183,8 +183,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
   public void	updateMouseCoordInfo(MouseEvent e)
   {
-    MapPanel.mouseX = e.getX();
-    MapPanel.mouseY = e.getY();
+    updateMouseCoordInfo(e.getX(), e.getY());
+  }
+  public void	updateMouseCoordInfo(int x, int y)
+  {
+    MapPanel.mouseX = x;
+    MapPanel.mouseY = y;
   }
 
     public void mousePressed(MouseEvent e) {
@@ -219,10 +223,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    // int new_y = oldy_rel + (e.getY() - oldy);
 	    // this._node_x = e.getX();
 	    // this._node_y = e.getY();
-	    MapPanel.setMovedNode2(this.getx() + e.getX(), this.gety() + e.getY());
+	    this.setx(this.getx() + e.getX());
+	    this.sety(this.gety() + e.getY());
+	    MapPanel.setMovedNode2(this.getx(), this.gety());
 	    MapPanel.setIsDragging(true);
 	    // MapPanel.setMovedNode2(e.getX(), e.getY());
 	}
-	this.updateMouseCoordInfo(e);
+	this.updateMouseCoordInfo(this.getx(), this.gety());
     }
 }
