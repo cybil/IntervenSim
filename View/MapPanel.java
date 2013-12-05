@@ -109,12 +109,29 @@ public class MapPanel extends JPanel implements
 		MapPanel.deleteRoad(road);
 	}
     }
+
+  // Delete road in the real graph
+    static void		deleteRoad(RoadGraphic r) {
+	int[]		coord1 = {r.getRealx1(), r.getRealy1()};
+	int[]		coord2 = {r.getRealx2(), r.getRealy2()};
+	if (controller.eventDeleteRoad(coord1, coord2) == false)
+	  System.out.println("MapPanel.deleteRoad(): Error: Road does not exist");
+
+	int[]		coord3 = {r.getRealx2(), r.getRealy2()};
+	int[]		coord4 = {r.getRealx1(), r.getRealy1()};
+	// roads.remove(getRoad(coord3[0], coord3[1], coord4[0], coord4[1]));
+	if (controller.eventDeleteRoad(coord3, coord4) == false)
+	  System.out.println("MapPanel.deleteRoad(): Error: Road does not exist");
+	// roads.remove(roads.size() - 1);
+	System.out.println("MapPanel.deleteRoad: Total road left: " + roads.size());
+    }
+
     static void		deleteNode(NodeGraphic n) {
-	int[]		coord = {n.getx(), n.gety()};
+	int[]		coord = {n.getRealX(), n.getRealY()};
 
 	if (nodes.contains(n) == true) {
 	    nodes.remove(0);
-	    System.out.println("deleteNode: delete road  ============");
+	    System.out.println("deleteNode: delete Node  ============");
 	    controller.eventDeleteNode(coord);
 	}
 	else {
@@ -250,31 +267,31 @@ public class MapPanel extends JPanel implements
 	}
     }
 
-    public static boolean	containsNode(int p_x, int p_y) {
-	int	i = 0;
+    // public static boolean	containsNode(int p_x, int p_y) {
+    // 	int	i = 0;
 
-	while (i < nodes.size()) {
-	    if (nodes.get(i).getx() == p_x
-		&& nodes.get(i).gety() == p_y)
-		return true;
-	    ++i;
-	}
-	return false;
-    }
+    // 	while (i < nodes.size()) {
+    // 	    if (nodes.get(i).getx() == p_x
+    // 		&& nodes.get(i).gety() == p_y)
+    // 		return true;
+    // 	    ++i;
+    // 	}
+    // 	return false;
+    // }
 
-    public static boolean	containsRoad(int x1, int y1, int x2, int y2) {
-	int	i = 0;
+    // public static boolean	containsRoad(int x1, int y1, int x2, int y2) {
+    // 	int	i = 0;
 
-	while (i < roads.size()) {
-	    if (roads.get(i).getx1() == x1
-		&& roads.get(i).gety1() == y1
-		&& roads.get(i).getx2() == x2
-		&& roads.get(i).gety2() == y2)
-		return true;
-	    ++i;
-	}
-	return false;
-    }
+    // 	while (i < roads.size()) {
+    // 	    if (roads.get(i).getx1() == x1
+    // 		&& roads.get(i).gety1() == y1
+    // 		&& roads.get(i).getx2() == x2
+    // 		&& roads.get(i).gety2() == y2)
+    // 		return true;
+    // 	    ++i;
+    // 	}
+    // 	return false;
+    // }
 
     public static RoadGraphic	getRoad(int x1, int y1, int x2, int y2) {
 	int	i = 0;
@@ -343,16 +360,16 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	if (this.containsNode(_x, _y) == false) {
-	    System.out.println("CREATE ATTACH GRAPHIC : " + _x + " - " + _y);
-	    newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
-				      this.nodeAttachPoint,
-				      this.nodeAttachPoint,
-				      this.nodeAttachPoint,
-				      _x, _y,
-				      rel_x, rel_y);
-	    nodes.add(newNode);
-	}
+	// if (this.containsNode(_x, _y) == false) {
+	//     System.out.println("CREATE ATTACH GRAPHIC : " + _x + " - " + _y);
+	//     newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
+	// 			      this.nodeAttachPoint,
+	// 			      this.nodeAttachPoint,
+	// 			      this.nodeAttachPoint,
+	// 			      _x, _y,
+	// 			      rel_x, rel_y);
+	//     nodes.add(newNode);
+	// }
 	return (newNode);
     }
 
@@ -383,34 +400,36 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	if (this.containsNode(_x, _y) == false) {
-	    newNode = new NodeGraphic(EObjectTools.URGENCY,
-				      this.nodeUrgency,
-				      this.nodeUrgency,
-				      this.nodeUrgency,
-				      _x, _y,
-				      rel_x, rel_y);
-	    nodes.add(newNode);
-	}
+	// if (this.containsNode(_x, _y) == false) {
+	//     newNode = new NodeGraphic(EObjectTools.URGENCY,
+	// 			      this.nodeUrgency,
+	// 			      this.nodeUrgency,
+	// 			      this.nodeUrgency,
+	// 			      _x, _y,
+	// 			      rel_x, rel_y);
+	//     nodes.add(newNode);
+	// }
 	return (newNode);
     }
 
   private void		_displayMapRoad(String s, int road_it)
     {
       RoadGraphic	road = null;
-	int	x1 = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
-	int	y1 = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
+	int	x1_real = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+	int	y1_real = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
 	String	s2 = s.substring(s.lastIndexOf(":"));
-	int	x2 = Integer.parseInt(s2.substring(s2.indexOf(":") + 1, s2.indexOf(",")));
-	int	y2 = Integer.parseInt(s2.substring(s2.indexOf(",") + 1));
+	int	x2_real = Integer.parseInt(s2.substring(s2.indexOf(":") + 1, s2.indexOf(",")));
+	int	y2_real = Integer.parseInt(s2.substring(s2.indexOf(",") + 1));
+	int	x1, x2, y1, y2;
 	// if (this.containsRoad(x1, y1, x2, y2) == false) {
 	//     RoadGraphic		newRoad = new RoadGraphic(x1, y1, x2, y2);
 	//     this.roads.add(newRoad);
 	// }
-	x1 = unScaleX(x1);
-	x2 = unScaleX(x2);
-	y1 = unScaleX(y1);
-	y2 = unScaleX(y2);
+	x1 = unScaleX(x1_real);
+	x2 = unScaleX(x2_real);
+	y1 = unScaleX(y1_real);
+	y2 = unScaleX(y2_real);
+	// System.out.println("====> Adding road ");
 	while (this.roads.size() <= road_it)
 	{
 	  this.roads.add(new RoadGraphic(0, 0, 0, 0));
@@ -427,6 +446,7 @@ public class MapPanel extends JPanel implements
 	  System.out.print("From(new) "+x1+":"+y1);
 	  System.out.println(" to(new)"+x2+":"+y2);
 	  road.setCoord(x1, y1, x2, y2);
+	  road.setRealCoord(x1_real, y1_real, x2_real, y2_real);
 	  this.roads.set(road_it, road);
 	  // this.mapChanged = true;
 	}
@@ -468,9 +488,13 @@ public class MapPanel extends JPanel implements
 		    }
 		}
 	}
-	// System.out.println("Size:" + nodes.size());
-	// for (NodeGraphic node:nodes)
-	//   this.add(node);
+	if (isDragging == false)
+	{
+	  while (roads.size() > roads_it) // Cleaning useless road (to remove the 2Dline on the screen also)
+	    roads.remove(roads.size() - 1);
+	  while (nodes.size() > nodes_it) // Cleaning useless node
+	    nodes.remove(nodes.size() - 1);
+	}
 	if (this.mapChanged == true || this.wasOut == 2) // Only revalidate if something move
 	{
 	  this.validate();
@@ -649,22 +673,6 @@ public class MapPanel extends JPanel implements
 
     static void		setIsDragging(boolean b) {
 	isDragging = b;
-    }
-
-    static void		deleteRoad(RoadGraphic r) {
-	int[]		coord1 = {r.getRealx1(), r.getRealy1()};
-	int[]		coord2 = {r.getRealx2(), r.getRealy2()};
-	if (controller.eventDeleteRoad(coord1, coord2) == false)
-	  System.out.println("MapPanel.deleteRoad(): Error: Road does not exist");
-
-	int[]		coord3 = {r.getRealx2(), r.getRealy2()};
-	int[]		coord4 = {r.getRealx1(), r.getRealy1()};
-	roads.remove(getRoad(coord3[0], coord3[1], coord4[0], coord4[1]));
-	if (controller.eventDeleteRoad(coord3, coord4) == false)
-	  System.out.println("MapPanel.deleteRoad(): Error: Road does not exist");
-	roads.remove(roads.size() - 1);
-	System.out.println("MapPanel.deleteRoad: Total road left: " + roads.size());
-	// roads.remove(roads.size() - 1);
     }
 
     @Override
