@@ -21,8 +21,7 @@ public class Map implements java.io.Serializable {
     //***************
 
     public boolean		addNode(int x, int y) {
-	this.graph.creatNode(x, y);
-	return true;
+      return (this.graph.creatNode(x, y));
     }
 
     public boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state, float triggDate) {

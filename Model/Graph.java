@@ -87,8 +87,13 @@ public class Graph implements java.io.Serializable{
 	Node			newNode = new Node(coord, false);
 	GraphNode		newGraphNode = new GraphNode(newNode);
 	
+	for (GraphNode node:graphNode)
+	{
+	  if (node.equals(newGraphNode) == true)
+	    return (false);
+	}
 	this.graphNode.add(newGraphNode);
-	return true;
+	return (true);
     }
 	
     public boolean		creatRoad(Node node1, Node node2) {
