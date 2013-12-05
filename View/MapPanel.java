@@ -44,6 +44,7 @@ public class MapPanel extends JPanel implements
     private boolean	isPressed = false;
 
   private boolean		mapChanged;
+  private int			wasOut = 0; // 0:OK - 1:Out - 2:Enter
     private Image		background;
     private Image		nodeUrgency;
     private Image		nodeAttachPoint;
@@ -455,8 +456,11 @@ public class MapPanel extends JPanel implements
 	// System.out.println("Size:" + nodes.size());
 	// for (NodeGraphic node:nodes)
 	//   this.add(node);
-	if (this.mapChanged == true) // Only revalidate if something move
+	if (this.mapChanged == true || this.wasOut == 2) // Only revalidate if something move
+	{
 	  this.validate();
+	  this.wasOut = 0;
+	}
 	this.repaint();
     }
 
@@ -470,13 +474,17 @@ public class MapPanel extends JPanel implements
     }
 
     public void mouseExited(MouseEvent e) {
+      this.wasOut = 1;
+      // revalidate();
 	// this.mouseX = e.getX();
 	// this.mouseY = e.getY();
     }
 
     public void mouseEntered(MouseEvent e) {
-	this.mouseX = e.getX();
-	this.mouseY = e.getY();
+      if (this.wasOut == 1)
+	wasOut = 2;
+      this.mouseX = e.getX();
+      this.mouseY = e.getY();
     }
 
   public void mouseReleased(MouseEvent e) {

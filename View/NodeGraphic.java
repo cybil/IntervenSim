@@ -28,6 +28,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     // absolute Coord copy
     private int		oldx_win;
     private int		oldy_win;
+    private int		oldx_screen;
+    private int		oldy_screen;
 
     // Real coord from the real graph
     private int		real_x;
@@ -173,7 +175,9 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
 	    {
 	      System.out.println("Node --- definitive change of node coord !");
-	      MapPanel.setMovedNode2(this.getx() + e.getX(), this.gety() + e.getY());
+	      this.setx(oldx_win + (e.getXOnScreen() - oldx_screen));
+	      this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
+	      MapPanel.setMovedNode2(this.getx(), this.gety());
 	      MapPanel.setIsDragging(false);
 	    }
 	else if (e.getButton() == MouseEvent.BUTTON1
@@ -207,6 +211,10 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	if (e.getButton() == MouseEvent.BUTTON3) {
 	    jpm.show(this, e.getX(), e.getY());
 	}
+	oldx_win = this.getx();
+	oldy_win = this.gety();
+	oldx_screen = e.getXOnScreen();
+	oldy_screen = e.getYOnScreen();
 	this.updateMouseCoordInfo(e);
     }
 
@@ -223,8 +231,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    // int new_y = oldy_rel + (e.getY() - oldy);
 	    // this._node_x = e.getX();
 	    // this._node_y = e.getY();
-	    this.setx(this.getx() + e.getX());
-	    this.sety(this.gety() + e.getY());
+	    this.setx(oldx_win + (e.getXOnScreen() - oldx_screen));
+	    this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
 	    MapPanel.setMovedNode2(this.getx(), this.gety());
 	    MapPanel.setIsDragging(true);
 	    // MapPanel.setMovedNode2(e.getX(), e.getY());
