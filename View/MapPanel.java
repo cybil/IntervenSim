@@ -109,6 +109,21 @@ public class MapPanel extends JPanel implements
 		MapPanel.deleteRoad(road);
 	}
     }
+    static void		deleteNode(NodeGraphic n) {
+	int[]		coord = {n.getx(), n.gety()};
+
+	if (nodes.contains(n) == true) {
+	    nodes.remove(0);
+	    System.out.println("deleteNode: delete road  ============");
+	    controller.eventDeleteNode(coord);
+	}
+	else {
+	    graphVehicule = null;
+	    System.out.println("deleteNode: delete vehicule  ============");
+	    controller.eventDeleteVehicule();
+	}
+    }
+
 
     MapPanel(Controller controller) {
 	try {
@@ -636,29 +651,20 @@ public class MapPanel extends JPanel implements
 	isDragging = b;
     }
 
-    static void		deleteNode(NodeGraphic n) {
-	int[]		coord = {n.getRealX(), n.getRealY()};
-
-	if (nodes.contains(n) == true) {
-	    nodes.remove(n);
-	    controller.eventDeleteNode(coord);
-	}
-	else {
-	    graphVehicule = null;
-	    controller.eventDeleteVehicule();
-	}
-    }
-
     static void		deleteRoad(RoadGraphic r) {
-	int[]		coord1 = {r.getx1(), r.gety1()};
-	int[]		coord2 = {r.getx2(), r.gety2()};
-	roads.remove(r);
-	controller.eventDeleteRoad(coord1, coord2);
+	int[]		coord1 = {r.getRealx1(), r.getRealy1()};
+	int[]		coord2 = {r.getRealx2(), r.getRealy2()};
+	if (controller.eventDeleteRoad(coord1, coord2) == false)
+	  System.out.println("MapPanel.deleteRoad(): Error: Road does not exist");
 
-	int[]		coord3 = {r.getx2(), r.gety2()};
-	int[]		coord4 = {r.getx1(), r.gety1()};
+	int[]		coord3 = {r.getRealx2(), r.getRealy2()};
+	int[]		coord4 = {r.getRealx1(), r.getRealy1()};
 	roads.remove(getRoad(coord3[0], coord3[1], coord4[0], coord4[1]));
-	controller.eventDeleteRoad(coord3, coord4);
+	if (controller.eventDeleteRoad(coord3, coord4) == false)
+	  System.out.println("MapPanel.deleteRoad(): Error: Road does not exist");
+	roads.remove(roads.size() - 1);
+	System.out.println("MapPanel.deleteRoad: Total road left: " + roads.size());
+	// roads.remove(roads.size() - 1);
     }
 
     @Override

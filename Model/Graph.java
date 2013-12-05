@@ -2,20 +2,20 @@ import java.util.ArrayList;
 
 
 public class Graph implements java.io.Serializable{
-	
+
     private ArrayList<GraphNode>	graphNode = new ArrayList<GraphNode>();
 
     //******************
     //	Constructor
     //******************
-	
+
     public Graph() {
     }
-	
+
     public Graph(ArrayList<GraphNode> newGraphNode) {
 	this.graphNode = newGraphNode;
     }
-	
+
     public Graph(Graph graph) {
 	this.graphNode = graph.graphNode;
     }
@@ -86,7 +86,7 @@ public class Graph implements java.io.Serializable{
 	int[]			coord = {x, y};
 	Node			newNode = new Node(coord, false);
 	GraphNode		newGraphNode = new GraphNode(newNode);
-	
+
 	for (GraphNode node:graphNode)
 	{
 	  if (node.equals(newGraphNode) == true)
@@ -95,7 +95,7 @@ public class Graph implements java.io.Serializable{
 	this.graphNode.add(newGraphNode);
 	return (true);
     }
-	
+
     public boolean		creatRoad(Node node1, Node node2) {
 	int			status;
 	int			roadLength;
@@ -135,7 +135,7 @@ public class Graph implements java.io.Serializable{
 	}
 	return false;
     }
-	
+
     public void			deleteAttachPoint() {
 	for (GraphNode n : this.graphNode) {
 	    if (n.getData().getAttachPoint() == true)
@@ -144,9 +144,14 @@ public class Graph implements java.io.Serializable{
     }
 
     public boolean		deleteRoad(Node node1, Node node2) {
+      if (node1 == null || node2 == null)
+      {
+	System.out.println("Graph.deleteRoad: Node1 or Node2 is null");
+	return (false);
+      }
 	int			status = 0;
 	for (GraphNode n : this.graphNode) {
-	    if (n.getData().getCoord()[0] == node1.getCoord()[0]
+	  if (n.getData().getCoord()[0] == node1.getCoord()[0]
 		&& n.getData().getCoord()[1] == node1.getCoord()[1]) {
 		n.deleteNeighbor(node2);
 		++status;
@@ -160,5 +165,5 @@ public class Graph implements java.io.Serializable{
 		return true;
 	}
 	return false;
-    }    
+    }
 }

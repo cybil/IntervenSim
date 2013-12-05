@@ -70,13 +70,11 @@ public class Map implements java.io.Serializable {
     }
 
     public boolean		deleteNode(int[] coord) {
-	this.graph.deleteNode(coord);
-	return true;
+      return (this.graph.deleteNode(coord));
     }
 
     public boolean		deleteRoad(int[] coord1, int[] coord2) {
-	this.graph.deleteRoad(this.graph.getNode(coord1), this.graph.getNode(coord2));
-	return true;
+      return (this.graph.deleteRoad(this.graph.getNode(coord1), this.graph.getNode(coord2)));
     }
 
     //***************
