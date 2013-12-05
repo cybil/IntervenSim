@@ -34,8 +34,7 @@ public class Map implements java.io.Serializable {
 
 
     public boolean		addRoad(int[] coordNode1, int[] coordNode2) {
-	this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2));
-	return true;
+      return (this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2)));
 	// Node			src;
 	// Node			dst;
 

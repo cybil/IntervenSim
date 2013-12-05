@@ -178,7 +178,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    }
 	else if (e.getButton() == MouseEvent.BUTTON1
 		 && MapPanel.selectedObject == MapPanel.EObjectTools.ROAD)
-	    MapPanel.setRoadNode(this.getX(), this.getY());
+	  MapPanel.setRoadNode(this.getRealX(), this.getRealY());
     }
 
   public void	updateMouseCoordInfo(MouseEvent e)
