@@ -96,9 +96,15 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     public int		getRealX() {
 	return (this.real_x);
     }
-
     public int		getRealY() {
 	return (this.real_y);
+    }
+
+    public void		setRealX(int new_real_y) {
+	this.real_x = new_real_y;
+    }
+    public void		setRealY(int new_real_y) {
+	this.real_y = new_real_y;
     }
 
     public NodeGraphic() {
@@ -166,11 +172,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	if (e.getButton() == MouseEvent.BUTTON1
 	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
 	    {
-	      this.real_x = this.getRealX() - MapPanel.scaleX(e.getX() - oldx_win);
-	      this.real_y = this.getRealY() - MapPanel.scaleY(e.getY() - oldy_win);
-	      this._node_x = e.getX();
-	      this._node_y = e.getY();
-	      MapPanel.setMovedNode2(this.getRealX(), this.getRealY());
+	      System.out.println("Node --- definitive change of node coord !");
+	      MapPanel.setMovedNode2(this.getx() + e.getX(), this.gety() + e.getY());
 	      MapPanel.setIsDragging(false);
 	    }
 	else if (e.getButton() == MouseEvent.BUTTON1
@@ -178,14 +181,18 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    MapPanel.setRoadNode(this.getX(), this.getY());
     }
 
+  public void	updateMouseCoordInfo(MouseEvent e)
+  {
+    MapPanel.mouseX = e.getX();
+    MapPanel.mouseY = e.getY();
+  }
+
     public void mousePressed(MouseEvent e) {
 	this.buttonPressed = e.getButton();
 	if (e.getButton() == MouseEvent.BUTTON1)
 	    if (MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
 		{
 		    System.out.println("Node --- Pressed !");
-		    oldx_win = this.getx(); // Get relative windows coord X/Y
-		    oldy_win = this.gety();
 		    MapPanel.setMovedNode1(this.getRealX(), this.getRealY());
 		    //editObject(this);
 		}
@@ -196,12 +203,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	if (e.getButton() == MouseEvent.BUTTON3) {
 	    jpm.show(this, e.getX(), e.getY());
 	}
-	MapPanel.mouseX = this.getx();
-	MapPanel.mouseY = this.gety();
+	this.updateMouseCoordInfo(e);
     }
 
     public void	mouseMoved(MouseEvent e) {
 	System.out.println("Node --- Move !");
+	this.updateMouseCoordInfo(e);
     }
 
     public void	mouseDragged(MouseEvent e) {
@@ -210,12 +217,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    System.out.println("NODE --- Drag !");
 	    // int new_x = oldx_rel + (e.getX() - oldx);
 	    // int new_y = oldy_rel + (e.getY() - oldy);
-	    this._node_x = e.getX();
-	    this._node_y = e.getY();
+	    // this._node_x = e.getX();
+	    // this._node_y = e.getY();
+	    MapPanel.setMovedNode2(this.getx() + e.getX(), this.gety() + e.getY());
 	    MapPanel.setIsDragging(true);
-	    // MapPanel.setMovedNode2(this.getx(), this.gety());
+	    // MapPanel.setMovedNode2(e.getX(), e.getY());
 	}
-	MapPanel.mouseX = this.getx();
-	MapPanel.mouseY = this.gety();
+	this.updateMouseCoordInfo(e);
     }
 }

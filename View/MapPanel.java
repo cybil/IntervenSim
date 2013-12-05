@@ -43,6 +43,7 @@ public class MapPanel extends JPanel implements
     private int		y2;
     private boolean	isPressed = false;
 
+  private boolean		mapChanged;
     private Image		background;
     private Image		nodeUrgency;
     private Image		nodeAttachPoint;
@@ -176,12 +177,15 @@ public class MapPanel extends JPanel implements
 	g2.drawString("Echelle:" + 100,
 		      view_x + scrolBarRef.getWidth() - 120,
 		      view_y + scrolBarRef.getHeight() - 30);
-	g2.drawString("X: " + scaleX(this.mouseX) + " Y: " + scaleY(this.mouseY),
+	g2.drawString("X_real: " + scaleX(this.mouseX) + " Y_real: " + scaleY(this.mouseY),
 		      view_x + 10,
 		      view_y + scrolBarRef.getHeight() - 30);
-	g2.scale(
-		 (double) this.getW() / (double)maxX,
-		 (double) this.getH() / (double)maxY);
+	g2.drawString("X: " + this.mouseX + " Y: " + this.mouseY,
+		      view_x + 10,
+		      view_y + scrolBarRef.getHeight() - 45);
+	// g2.scale(
+	// 	 (double) this.getW() / (double)maxX,
+	// 	 (double) this.getH() / (double)maxY);
 
 	this.removeAll();
 	// if ((bck = this.controller._model.getMap().getBackground()) != null)
@@ -272,8 +276,7 @@ public class MapPanel extends JPanel implements
 
     static NodeGraphic		graphVehicule = null;
 
-
-    private NodeGraphic		_displayMapNode(String s)
+  private NodeGraphic		_displayMapNode(String s, int nodes_it)
     {
 	NodeGraphic			newNode = null;
 	int rel_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
@@ -281,16 +284,37 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	// System.out.println("CREATE NODE GRAPHIC AT ?? : " + scaleX(_x) + " - " + scaleY(_y));
-	if (this.containsNode(_x, _y) == false) {
-	    System.out.println("CREATE NODE GRAPHIC : " + _x + " - " + _y);
-	    newNode = new NodeGraphic(EObjectTools.NODE, this.nodeNormal,
-				      this.nodeAttachPoint,
-				      this.nodeUrgency,
-				      _x, _y,
-				      rel_x, rel_y);
-	    nodes.add(newNode);
+	while (nodes.size() <= nodes_it)
+	{
+	  nodes.add(new NodeGraphic(EObjectTools.NODE,
+				    this.nodeNormal,
+				    this.nodeAttachPoint,
+				    this.nodeUrgency,
+				    0, 0, 0, 0));
+	    System.out.println("NODE --- Creating new graphic");
 	}
+	newNode = nodes.get(nodes_it);
+	if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y)
+	{
+	  newNode.setx(_x);
+	  newNode.sety(_y);
+	  newNode.setRealX(rel_x);
+	  newNode.setRealY(rel_y);
+	  nodes.set(nodes_it, newNode);
+	  System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
+	  this.mapChanged = true;
+	}
+	// System.out.println("CREATE NODE GRAPHIC AT ?? : " + scaleX(_x) + " - " + scaleY(_y));
+	// if (this.containsNode(_x, _y) == false) {
+	    // System.out.println("CREATE NODE GRAPHIC : " + _x + " - " + _y);
+	    // newNode = new NodeGraphic(EObjectTools.NODE, this.nodeNormal,
+	    // 			      this.nodeAttachPoint,
+	    // 			      this.nodeUrgency,
+	    // 			      _x, _y,
+	    // 			      rel_x, rel_y);
+	    // nodes.add(newNode);
+	// }
+	// return (null);
 	return (newNode);
     }
 
@@ -369,10 +393,14 @@ public class MapPanel extends JPanel implements
 
     public void		displayMap(ArrayList<String> formatMap)
     {
+      int		nodes_it;
 	NodeGraphic		newNode = null;
 
-	System.out.println("");
+	this.mapChanged = false;
+	nodes_it = 0;
+	// System.out.println("");
 	roads.clear();
+	// nodes.clear();
 	for (String s : formatMap) {
 	    if (s.charAt(0) == 'R') {
 		this._displayMapRoad(s);
@@ -383,7 +411,8 @@ public class MapPanel extends JPanel implements
 			newNode = this._displayMapVehicule(s);
 		    }
 		    else if (s.charAt(0) == 'N') {
-			newNode = this._displayMapNode(s);
+		      newNode = this._displayMapNode(s, nodes_it);
+			nodes_it++;
 		    }
 		    else if (s.charAt(0) == 'A') {
 			newNode = this._displayMapAttachPoint(s);
@@ -394,10 +423,14 @@ public class MapPanel extends JPanel implements
 		    if (newNode != null) {
 			newNode.setLayout(null);
 			this.add(newNode);
-			this.validate();
 		    }
 		}
 	}
+	// System.out.println("Size:" + nodes.size());
+	// for (NodeGraphic node:nodes)
+	//   this.add(node);
+	if (this.mapChanged == true)
+	  this.validate();
 	this.repaint();
     }
 
@@ -418,17 +451,28 @@ public class MapPanel extends JPanel implements
 	this.mouseY = e.getY();
     }
 
-    public void mouseReleased(MouseEvent e) {
-	if (e.getButton() == MouseEvent.BUTTON1
-	    && this.selectedObject == EObjectTools.NODE) {
-	    this.controller.eventPutNode(scaleX(e.getX()), scaleY(e.getY()));
-	}
-	else if (e.getButton() == MouseEvent.BUTTON1
-		 && this.selectedObject == EObjectTools.VEHICULE) {
-	    this.controller.eventCreatVehicule(scaleX(e.getX()), scaleY(e.getY()));
-	}
-	this.isDragging = false;
+  public void mouseReleased(MouseEvent e) {
+    NodeGraphic	newNode;
+
+    if (e.getButton() == MouseEvent.BUTTON1
+	&& this.selectedObject == EObjectTools.NODE) {
+      if (this.controller.eventPutNode(scaleX(e.getX()), scaleY(e.getY())) == true)
+      {
+	// System.out.println("CREATE NODE GRAPHIC : " + e.getX() + " - " + e.getY());
+	// newNode = new NodeGraphic(EObjectTools.NODE, this.nodeNormal,
+	// 			  this.nodeAttachPoint,
+	// 			  this.nodeUrgency,
+	// 			  e.getX(), e.getY(),
+	// 			  scaleX(e.getX()), scaleY(e.getY()));
+	// nodes.add(newNode);
+      }
     }
+    else if (e.getButton() == MouseEvent.BUTTON1
+	     && this.selectedObject == EObjectTools.VEHICULE) {
+      this.controller.eventCreatVehicule(scaleX(e.getX()), scaleY(e.getY()));
+    }
+    this.isDragging = false;
+  }
 
     public void	rescaleAllNode()
     {
@@ -504,19 +548,22 @@ public class MapPanel extends JPanel implements
 	this.mouseY = e.getY();
     }
 
+  // x_rel and y_rel are the real coord in the Graph
     static void	setMovedNode1(int x_rel, int y_rel) {
       coordMovedNode[0] = x_rel;
       coordMovedNode[1] = y_rel;
     }
 
+  // x and y are the graphical coord in the Graph
     static void	setMovedNode2(int x, int y) {
       // int[]		coordMovedNode2 = {scaleX(x), scaleY(y)};
-      // int[]		coordMovedNode2 = {scaleX(x), scaleY(y)};
-      int[]		coordMovedNode2 = {x, y};
+      int[]		coordMovedNode2 = {scaleX(x), scaleY(y)};
+      // int[]		coordMovedNode2 = {x, y};
 
-	controller.eventEditNodeCoord(coordMovedNode, coordMovedNode2);
-	coordMovedNode[0] = coordMovedNode2[0];
-	coordMovedNode[1] = coordMovedNode2[1];
+      if (controller.eventEditNodeCoord(coordMovedNode, coordMovedNode2) == false)
+	System.out.println("setMovedNode2: Error: Node does not exist !!!");
+      coordMovedNode[0] = coordMovedNode2[0];
+      coordMovedNode[1] = coordMovedNode2[1];
     }
 
     static void		setStartCoord(int x, int y) {
