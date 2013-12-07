@@ -45,7 +45,6 @@ public class UndoButton extends JButton implements MouseListener{
 		
     //Methode appelee lors du clic de souris
     public void mouseClicked(MouseEvent event) {
-	// this.controller.eventUndo();
     }
 
     //Methode appelee lors du survol de la souris
@@ -57,11 +56,13 @@ public class UndoButton extends JButton implements MouseListener{
     }
 
     //Methode appelee lorsque l'on presse le bouton gauche de la souris
-    public void mousePressed(MouseEvent event) { }
+    public void mousePressed(MouseEvent event) {
+    }
 
     //Methode appelee lorsque l'on relache le clic de souris
     public void mouseReleased(MouseEvent event) {
     }
+
     protected void setGetCliked(boolean clic) {
     }
 }

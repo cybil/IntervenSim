@@ -79,7 +79,7 @@ public class MainWindow extends JFrame implements ActionListener {
     	this.setVisible(true);
     	this.setJMenuBar(menuBar);
     	content.setLayout(new GridBagLayout());
-    	}
+    }
 
     //set all main panels
     private void setPanels() {
@@ -170,58 +170,58 @@ public class MainWindow extends JFrame implements ActionListener {
     // ActionListener class for ToolsBar Buttons
     class SelectButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-         System.out.print("Vous avez clique sur le bouton de Selection\n");
-         mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
-         toolsBar.deselectButton(MapPanel.EObjectTools.CURSOR);
+	    System.out.print("Vous avez clique sur le bouton de Selection\n");
+	    mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
+	    toolsBar.deselectButton(MapPanel.EObjectTools.CURSOR);
         }
-      }
+    }
 
     class VehiculeButtonListener implements ActionListener{
         //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez clique sur le bouton Vehicule\n");
-          mapPanel.setSelectedObject(MapPanel.EObjectTools.VEHICULE);
-          tabsPanel.editTab.showPanel(0);
-          toolsBar.deselectButton(MapPanel.EObjectTools.VEHICULE);
-          }
-      }
+	    System.out.print("Vous avez clique sur le bouton Vehicule\n");
+	    mapPanel.setSelectedObject(MapPanel.EObjectTools.VEHICULE);
+	    tabsPanel.editTab.showPanel(0);
+	    toolsBar.deselectButton(MapPanel.EObjectTools.VEHICULE);
+	}
+    }
 
     class RoadButtonListener implements ActionListener{
         //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez clique sur le bouton Road\n");
-          mapPanel.setSelectedObject(MapPanel.EObjectTools.ROAD);
-          tabsPanel.editTab.showPanel(2);
-          toolsBar.deselectButton(MapPanel.EObjectTools.ROAD);
-          }
-        }
+	    System.out.print("Vous avez clique sur le bouton Road\n");
+	    mapPanel.setSelectedObject(MapPanel.EObjectTools.ROAD);
+	    tabsPanel.editTab.showPanel(2);
+	    toolsBar.deselectButton(MapPanel.EObjectTools.ROAD);
+	}
+    }
 
     class NodeButtonListener implements ActionListener{
         //Redefinition de la methode actionPerformed()
         public void actionPerformed(ActionEvent arg0) {
-          System.out.print("Vous avez clique sur le bouton Node\n");
-          mapPanel.setSelectedObject(MapPanel.EObjectTools.NODE);
-          tabsPanel.editTab.showPanel(1);
-          toolsBar.deselectButton(MapPanel.EObjectTools.NODE);
-          }
-        }
+	    System.out.print("Vous avez clique sur le bouton Node\n");
+	    mapPanel.setSelectedObject(MapPanel.EObjectTools.NODE);
+	    tabsPanel.editTab.showPanel(1);
+	    toolsBar.deselectButton(MapPanel.EObjectTools.NODE);
+	}
+    }
 
     // ActionListener class for TabsPanel
     class HideButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	System.out.print("clic hideButton\n");
-        	tabsPanel.setVisible(false);
-        	tabToolBar.setVisible(true);
-          }
-        }
+	    System.out.print("clic hideButton\n");
+	    tabsPanel.setVisible(false);
+	    tabToolBar.setVisible(true);
+	}
+    }
 
     class SeeTabButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-        	System.out.print("clic seeTabButton\n");
-        	tabToolBar.setVisible(false);
-        	tabsPanel.setVisible(true);
-          }
-        }
+	    System.out.print("clic seeTabButton\n");
+	    tabToolBar.setVisible(false);
+	    tabsPanel.setVisible(true);
+	}
+    }
 
     // ActionListener class for ButtonBar
     class NewButtonListener implements ActionListener{
@@ -250,13 +250,11 @@ public class MainWindow extends JFrame implements ActionListener {
 
     class UndoButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
         }
     }
 
     class RedoButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
         }
     }
 

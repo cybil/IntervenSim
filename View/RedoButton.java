@@ -46,7 +46,6 @@ public class RedoButton extends JButton implements MouseListener{
 		
     //Methode appelee lors du clic de souris
     public void mouseClicked(MouseEvent event) {
-	// this.controller.eventRedo();
     }
 
     //Methode appelee lors du survol de la souris

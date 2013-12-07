@@ -20,11 +20,11 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     private DeleteNode	toDel = new DeleteNode(this);
 
 
-  // A utiliser pour resize l'image en zoom
-  // public Image getScaledInstance(int width,
-  // 				 int height,
-  // 				 int hints)
-  // Original
+    // A utiliser pour resize l'image en zoom
+    // public Image getScaledInstance(int width,
+    // 				 int height,
+    // 				 int hints)
+    // Original
     protected Image	_imgNormal;
     private Image	_imgSelected;
     private Image	_imgPassedOver;
@@ -62,7 +62,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
 	public void actionPerformed(ActionEvent e) {
 	    System.out.println("============================ DELETE ============");
-	    MapPanel.deleteNode(node);
+	    MapPanel.setSelection(this.node);
+	    MapPanel.deleteSelection();
 	}
     }
 
@@ -90,27 +91,27 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
 
-  public void		scaleImage()
-  {
-    int		tmp;
-    int		new_img_width;
-    int		new_img_heigth;
+    public void		scaleImage()
+    {
+	int		tmp;
+	int		new_img_width;
+	int		new_img_heigth;
 
-    // tmp = this.imgNormal.getWidth(null);
-    new_img_width = MapPanel.unScaleX(25);
+	// tmp = this.imgNormal.getWidth(null);
+	new_img_width = MapPanel.unScaleX(25);
 
-    // new_img_heigth = this.imgNormal.getHeight(null);
-    new_img_heigth = MapPanel.unScaleY(25);
-    this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
-						       new_img_heigth,
-						       Image.SCALE_SMOOTH);
-  }
+	// new_img_heigth = this.imgNormal.getHeight(null);
+	new_img_heigth = MapPanel.unScaleY(25);
+	this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
+							   new_img_heigth,
+							   Image.SCALE_SMOOTH);
+    }
 
-  public void		setx(int new_x) {
+    public void		setx(int new_x) {
 
-    this._node_x = new_x;
-    // this._node_x += -25;
-  }
+	this._node_x = new_x;
+	// this._node_x += -25;
+    }
 
     public void		sety(int new_y) {
 	this._node_y = new_y;
@@ -137,6 +138,10 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
     public void		setRealY(int new_real_y) {
 	this.real_y = new_real_y;
+    }
+
+    public boolean	isVehicule() {
+	return this.type == MapPanel.EObjectTools.VEHICULE ? true : false;
     }
 
     public NodeGraphic() {
@@ -181,10 +186,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    && this.isSelected == false) {
 	    this.currentImg = this.imgSelected;
 	    this.isSelected = true;
+	    MapPanel.setSelection(this);
 	}
 	else if (MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR) {
 	    this.currentImg = this.imgPassedOver;
 	    this.isSelected = false;
+	    MapPanel.setSelection(null);
 	}
 
     }
@@ -207,26 +214,25 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	if (e.getButton() == MouseEvent.BUTTON1
 	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
 	    {
-	      System.out.println("Node --- definitive change of node coord !");
-	      this.setx(oldx_win + (e.getXOnScreen() - oldx_screen));
-	      this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
-	      MapPanel.setMovedNode2(this.getx(), this.gety());
-	      MapPanel.setIsDragging(false);
+		System.out.println("Node --- definitive change of node coord !");
+		this.setx(oldx_win + (e.getXOnScreen() - oldx_screen));
+		this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
+		MapPanel.setMovedNode2(this.getx(), this.gety());
+		MapPanel.setIsDragging(false);
 	    }
 	else if (e.getButton() == MouseEvent.BUTTON1
 		 && MapPanel.selectedObject == MapPanel.EObjectTools.ROAD)
-	  MapPanel.setRoadNode(this.getRealX(), this.getRealY());
+	    MapPanel.setRoadNode(this.getRealX(), this.getRealY());
     }
 
-  public void	updateMouseCoordInfo(MouseEvent e)
-  {
-    updateMouseCoordInfo(e.getX(), e.getY());
-  }
-  public void	updateMouseCoordInfo(int x, int y)
-  {
-    MapPanel.mouseX = x;
-    MapPanel.mouseY = y;
-  }
+    public void	updateMouseCoordInfo(MouseEvent e) {
+	updateMouseCoordInfo(e.getX(), e.getY());
+    }
+
+    public void	updateMouseCoordInfo(int x, int y) {
+	MapPanel.mouseX = x;
+	MapPanel.mouseY = y;
+    }
 
     public void mousePressed(MouseEvent e) {
 	this.buttonPressed = e.getButton();
