@@ -28,7 +28,7 @@ import java.awt.event.MouseListener;
 
 public class MainWindow extends JFrame implements ActionListener {
     private boolean				inst = false;
-    private Controller			controller;
+    private Controller				controller;
     private JPanel				content = new JPanel();
     private MenuBar				menuBar = new MenuBar();
     private ButtonBar			buttonBar = new ButtonBar();
@@ -53,6 +53,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	setPanels();
 	listenToolBarButtons();
 	listenTabButton();
+	listenButtonBar();
 	tabToolBar.setSize(new Dimension(25, 50));
 	tabToolBar.setPreferredSize(new Dimension(25, 50));
 	tabToolBar.setMaximumSize(new Dimension(25, 50));
@@ -167,6 +168,21 @@ public class MainWindow extends JFrame implements ActionListener {
       	this.seeTabButton.addActionListener(new SeeTabButtonListener());
     }
 
+    void listenButtonBar() {
+	this.buttonBar.newButton.addActionListener(new NewButtonListener());
+	this.buttonBar.openFileButton.addActionListener(new OpenFileButtonListener());
+	this.buttonBar.saveFileButton.addActionListener(new SaveFileButtonListener());
+	this.buttonBar.loadMapButton.addActionListener(new LoadMapButtonListener());
+	// this.buttonBar.exportStatButton.addActionListener(new ExportStatButtonListener());
+	this.buttonBar.undoButton.addActionListener(new UndoButtonListener());
+	this.buttonBar.redoButton.addActionListener(new RedoButtonListener());
+    	this.buttonBar.selectAllButton.addActionListener(new SelectAllButtonListener());
+	this.buttonBar.playButton.addActionListener(new PlayButtonListener());
+	this.buttonBar.pauseButton.addActionListener(new PauseButtonListener());
+	this.buttonBar.stopButton.addActionListener(new StopButtonListener());
+	this.buttonBar.skipButton.addActionListener(new SkipButtonListener());
+    }
+
     // ActionListener class for ToolsBar Buttons
     class SelectButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
@@ -226,65 +242,76 @@ public class MainWindow extends JFrame implements ActionListener {
     // ActionListener class for ButtonBar
     class NewButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
+	    
         }
     }
 
     class OpenFileButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
+	    
         }
     }
 
     class SaveFileButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
+	    // Recuperer fichier !
+	    // controller.eventSaveMap();
         }
     }
 
     class LoadMapButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
+	    // Recuperer fichier !
+	    // controller.eventLoadMap();
         }
     }
 
     class UndoButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
+	    System.out.println("------> UNDO <------");
+	    controller.eventUndo();
         }
     }
 
     class RedoButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
+	    System.out.println("------> REDO <------");
+	    controller.eventRedo();
         }
     }
 
     class SelectAllButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
+	    System.out.println("------> SELECT ALL <------");
+	    mapPanel.selectAll();
         }
     }
 
     class PlayButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
+	    System.out.println("------> PLAY <------");
+	    controller.eventPlay();
         }
     }
 
     class PauseButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
+	    System.out.println("------> PAUSE <------");
+	    controller.eventPause();
         }
     }
 
     class StopButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
+	    System.out.println("------> STOP <------");
+	    controller.eventStop();
         }
     }
 
     class SkipButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-
+	    System.out.println("------> GO TO STAT <------");
+	    controller.eventGoToStat();
         }
     }
 

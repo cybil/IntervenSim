@@ -260,11 +260,14 @@ public class MapPanel extends JPanel implements
 	    && this.selectedBoxCoord1 != null) {
 	    g2.setStroke(new BasicStroke(1.0f));
 	    g2.setColor(Color.BLUE);
-	    g2.drawLine(this.selectedBoxCoord1[0], this.selectedBoxCoord1[1], this.selectedBoxCoord2[0], this.selectedBoxCoord1[1]);
-	    g2.drawLine(this.selectedBoxCoord2[0], this.selectedBoxCoord1[1], this.selectedBoxCoord2[0], this.selectedBoxCoord2[1]);
-
-	    g2.drawLine(this.selectedBoxCoord1[0], this.selectedBoxCoord1[1], this.selectedBoxCoord1[0], this.selectedBoxCoord2[1]);
-	    g2.drawLine(this.selectedBoxCoord1[0], this.selectedBoxCoord2[1], this.selectedBoxCoord2[0], this.selectedBoxCoord2[1]);
+	    g2.drawLine(this.selectedBoxCoord1[0], this.selectedBoxCoord1[1],
+			this.selectedBoxCoord2[0], this.selectedBoxCoord1[1]);
+	    g2.drawLine(this.selectedBoxCoord2[0], this.selectedBoxCoord1[1],
+			this.selectedBoxCoord2[0], this.selectedBoxCoord2[1]);
+	    g2.drawLine(this.selectedBoxCoord1[0], this.selectedBoxCoord1[1],
+			this.selectedBoxCoord1[0], this.selectedBoxCoord2[1]);
+	    g2.drawLine(this.selectedBoxCoord1[0], this.selectedBoxCoord2[1],
+			this.selectedBoxCoord2[0], this.selectedBoxCoord2[1]);
 	}
     }
 
@@ -573,9 +576,9 @@ public class MapPanel extends JPanel implements
 
     static void		setSelection(NodeGraphic node) {
 	if (node == null) {
-	selectedItemsList.clear();
-	for (NodeGraphic n : nodes)
-	    n.setIsSelected(false);
+	    selectedItemsList.clear();
+	    for (NodeGraphic n : nodes)
+		n.setIsSelected(false);
 	}
 	else
 	    selectedItemsList.add(node);
@@ -605,9 +608,9 @@ public class MapPanel extends JPanel implements
 	if (this.selectedObject == EObjectTools.CURSOR
 	    && e.getButton() == MouseEvent.BUTTON1) {
 	    // if (this.selectedItemsList.size() == 0) {
-		this.selectedBoxCoord1 = new int[2];
-		this.selectedBoxCoord1[0] = e.getX();
-		this.selectedBoxCoord1[1] = e.getY();
+	    this.selectedBoxCoord1 = new int[2];
+	    this.selectedBoxCoord1[0] = e.getX();
+	    this.selectedBoxCoord1[1] = e.getY();
 	    // }
 	}
     }

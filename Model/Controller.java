@@ -104,76 +104,76 @@ public class Controller {
     
     //Fonction for SimulationManager
     public void eventPlay() {
-      _model.play();
-      }
+	_model.play();
+    }
 
-      public void eventPause() {
-	  _model.pause();
-      }
+    public void eventPause() {
+	_model.pause();
+    }
 
-      public void eventStop() {
-	  _model.stop();
-      }
+    public void eventStop() {
+	_model.stop();
+    }
 		
-      public void eventGoToStat() {
-      _model.goToStat();
-      }
+    public void eventGoToStat() {
+	_model.goToStat();
+    }
 		
-      public void eventSetSpeed(int speed) {
-      _model.setSpeed(speed);
-      }
+    public void eventSetSpeed(int speed) {
+	_model.setSpeed(speed);
+    }
 		
-      public int eventGetSpeed() {
-      return _model.getSpeed();
-      }
+    public int eventGetSpeed() {
+	return _model.getSpeed();
+    }
       
-      public ArrayList<String> eventGetStrategyList() {
-    	  return _model.getSimulationManager().getStrategyList();
-      }
+    public ArrayList<String> eventGetStrategyList() {
+	return _model.getSimulationManager().getStrategyList();
+    }
 		
-      //Fonction for FileManager
+    //Fonction for FileManager
 		
-      public boolean eventSaveMap(File p_file) {
-      return _model.getFileManager().saveMap(p_file);
-      }
+    public boolean eventSaveMap(File p_file) {
+	return _model.getFileManager().saveMap(p_file);
+    }
 		
-       public boolean eventLoadMap(File p_file) {
-       return _model.getFileManager().loadMap(p_file);
-       }
+    public boolean eventLoadMap(File p_file) {
+	return _model.getFileManager().loadMap(p_file);
+    }
 		
-       public boolean eventImportImage(File p_file) {
-       return _model.getFileManager().importImage(p_file);
-       }
+    public boolean eventImportImage(File p_file) {
+	return _model.getFileManager().importImage(p_file);
+    }
 		
-       public boolean eventSaveSim(File p_file) {
-       return _model.getFileManager().saveSim(p_file);
-       }
+    public boolean eventSaveSim(File p_file) {
+	return _model.getFileManager().saveSim(p_file);
+    }
 		
-       public boolean eventLoadSim(File p_file) {
-       return _model.getFileManager().loadSim(p_file);
-       }
+    public boolean eventLoadSim(File p_file) {
+	return _model.getFileManager().loadSim(p_file);
+    }
 		
-       public boolean eventSaveStat(File p_file) {
-       return _model.getFileManager().saveStat(p_file);
-       }
+    public boolean eventSaveStat(File p_file) {
+	return _model.getFileManager().saveStat(p_file);
+    }
 		
-       public boolean eventLoadStat(File p_file) throws ClassNotFoundException, IOException {
-       return _model.getFileManager().loadStat(p_file);
-       }
+    public boolean eventLoadStat(File p_file) throws ClassNotFoundException, IOException {
+	return _model.getFileManager().loadStat(p_file);
+    }
        
-       public void eventSetStrategy(int strat) {
-    	   _model.getSimulationManager().setStrategy(strat);
-       }
+    public void eventSetStrategy(int strat) {
+	_model.getSimulationManager().setStrategy(strat);
+    }
        
-       public int eventGetStrategy(int strat) {
-    	   return _model.getSimulationManager().getStrategy();
-       }
+    public int eventGetStrategy(int strat) {
+	return _model.getSimulationManager().getStrategy();
+    }
        
-       public int eventKmDone(){
-    	   return _model.getFileManager().getStat().getKm();
-       }
+    public int eventKmDone(){
+	return _model.getFileManager().getStat().getKm();
+    }
        
-       public int eventTreatmentTimeAvg() {
-    	   return _model.getFileManager().getStat().getMidWaiting();
-       }
+    public int eventTreatmentTimeAvg() {
+	return _model.getFileManager().getStat().getMidWaiting();
+    }
 }
