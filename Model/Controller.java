@@ -104,7 +104,8 @@ public class Controller {
     
     //Fonction for SimulationManager
     public void eventPlay() {
-	_model.play();
+	if (_model.getMap().getVehiculeCoord() != null)
+	    _model.play();
     }
 
     public void eventPause() {

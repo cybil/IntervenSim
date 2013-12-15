@@ -198,6 +198,27 @@ public class MapPanel extends JPanel implements
 	// Image		bck;
 
 	super.paintComponent(g);
+
+	// Grille magnetique ----> ne bouge pas avec le zoom :: voir avec JB
+	float		motif[] = {10.0f, 5.0f};
+	BasicStroke	dotline = new BasicStroke(1.0f, 0, 0, 5.0f, motif, 0.0f);
+	g2.setStroke(dotline);
+	g2.setColor(Color.BLACK);
+	int		pas = 0;
+	while (pas < this.getWidth()) {
+	    g2.drawLine(pas, 0, pas, this.getHeight());
+	    pas += 100;
+	}
+	pas = 0;
+	while (pas < this.getHeight()) {
+	    g2.drawLine(0, pas, this.getWidth(), pas);
+	    pas += 100;
+	}
+
+	// Draw background image
+	// if ((bck = this.controller._model.getMap().getBackground()) != null)
+	//     g.drawImage(bck, 0, 0, this);
+
 	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
 	AffineTransform at = g2.getTransform();
@@ -221,9 +242,7 @@ public class MapPanel extends JPanel implements
 	// 	 (double) this.getH() / (double)maxY);
 
 	this.removeAll();
-	// if ((bck = this.controller._model.getMap().getBackground()) != null)
-	//     g.drawImage(bck, 0, 0, this);
-
+	g2.setColor(Color.BLACK);
 	for (RoadGraphic r : this.roads) {
 	    g2.setStroke(r.getStroke());
 	    g.drawLine(r.getx1(), r.gety1(), r.getx2(), r.gety2());
@@ -511,24 +530,28 @@ public class MapPanel extends JPanel implements
 	if (e.getButton() == MouseEvent.BUTTON1
 	    && this.selectedObject == EObjectTools.CURSOR) {
 	    for (NodeGraphic n : this.nodes)
-		n.setIsSelected(false);
+		if (n.type != EObjectTools.VEHICULE)
+		    n.setIsSelected(false);
 	    this.selectedItemsList.clear();
 	}
     }
 
     public void mouseExited(MouseEvent e) {
-	this.wasOut = 1;
+	// this.wasOut = 1;
 	// revalidate();
 	// this.mouseX = e.getX();
 	// this.mouseY = e.getY();
     }
 
     public void mouseEntered(MouseEvent e) {
-	if (this.wasOut == 1)
-	    wasOut = 2;
+	// if (this.wasOut == 1)
+	//     wasOut = 2;
 	this.mouseX = e.getX();
 	this.mouseY = e.getY();
     }
+
+    public int		coordMouseOld[] = new int[2];
+    public boolean	movedMap = false;
 
     public void mouseReleased(MouseEvent e) {
 	NodeGraphic	newNode;
@@ -554,6 +577,9 @@ public class MapPanel extends JPanel implements
 	    && e.getButton() == MouseEvent.BUTTON1) {
 	    this.selectedBoxCoord1 = null;
 	}
+	if (this.selectedObject == EObjectTools.CURSOR
+	    && e.getButton() == MouseEvent.BUTTON3)
+	    this.movedMap = false;
 	this.isDragging = false;
     }
 
@@ -613,6 +639,12 @@ public class MapPanel extends JPanel implements
 	    this.selectedBoxCoord1[1] = e.getY();
 	    // }
 	}
+	if (this.selectedObject == EObjectTools.CURSOR
+	    && e.getButton() == MouseEvent.BUTTON3) {
+	    this.coordMouseOld[0] = e.getX();
+	    this.coordMouseOld[1] = e.getY();
+	    this.movedMap = true;
+	}
     }
 
     public void	mouseMoved(MouseEvent e) {
@@ -624,7 +656,8 @@ public class MapPanel extends JPanel implements
 	System.out.println("Drag !");
 	this.isDragging = true;
 	if (this.selectedObject == EObjectTools.CURSOR
-	    && this.selectedBoxCoord1 != null) {
+	    && this.selectedBoxCoord1 != null
+	    && this.movedMap == false) {
 	    this.selectedBoxCoord2[0] = e.getX();
 	    this.selectedBoxCoord2[1] = e.getY();
 
@@ -654,6 +687,16 @@ public class MapPanel extends JPanel implements
 		    this.selectedItemsList.remove(n);
 		    n.setIsSelected(false);
 		}
+	    }
+	}
+	if (this.selectedObject == EObjectTools.CURSOR
+	    && this.movedMap == true) {
+	    for (NodeGraphic n : this.nodes) {
+		System.out.println("----->>>>>" + n.getx() + " + " + e.getX() + " - " + coordMouseOld[0]);
+		n.setx(n.getx() + (e.getX() - this.coordMouseOld[0]));
+		n.sety(n.gety() + (e.getY() - this.coordMouseOld[1]));
+		this.coordMouseOld[0] = e.getX();
+		this.coordMouseOld[1] = e.getY();
 	    }
 	}
 	this.mouseX = e.getX();
@@ -799,4 +842,13 @@ public class MapPanel extends JPanel implements
 	    graphVehicule.sety(y);
 	}
     }
+
+    static void		moveNode(NodeGraphic n, int x, int y) {
+	int[]		coord1 = {scaleX(n.getx()), scaleY(n.gety())};
+	int[]		coord2 = {scaleX(x), scaleY(y)};
+
+	if (controller.eventEditNodeCoord(coord1, coord2) == false)
+	    System.out.println("setMovedNode2: Error: Node does not exist !!!");
+    }
+
 }

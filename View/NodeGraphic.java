@@ -15,9 +15,11 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     private JMenuItem	editNodeItem = new JMenuItem("Edit Node");
     private JMenuItem	addUrgencyItem = new JMenuItem("Add Urgency");
     private JMenuItem	setAttachmentPointItem = new JMenuItem("Set as Attachment Point");
-    private JMenuItem	delete = new JMenuItem("Delete");
+    private JMenuItem	property = new JMenuItem("Property");
+    private JMenuItem	delete = new JMenuItem("Delete selection");
 
-    private DeleteNode	toDel = new DeleteNode(this);
+    private DeleteNode		toDel = new DeleteNode(this);
+    private EditProperty	editProperty = new EditProperty(this);
 
 
     // A utiliser pour resize l'image en zoom
@@ -53,6 +55,16 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     private int		buttonPressed = 0;
 
     public MapPanel.EObjectTools	type;
+
+    private class EditProperty implements ActionListener {
+	NodeGraphic	node;
+	public EditProperty(NodeGraphic n) {
+	    this.node = n;
+	}
+	public void actionPerformed(ActionEvent e) {
+	    Property	prop = new Property(node);
+	}
+    }
 
     private class DeleteNode implements ActionListener {
 	NodeGraphic	node;
@@ -170,8 +182,10 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
 	this.setOpaque(false);
+	this.jpm.add(this.property);
 	this.jpm.add(this.delete);
 	this.delete.addActionListener(this.toDel);
+	this.property.addActionListener(this.editProperty);
     }
 
     public void		paintComponent(Graphics g) {
