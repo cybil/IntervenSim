@@ -207,7 +207,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
 	// g.drawImage(this.currentImg, 0, 0, null);
 	// g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
-	//g.drawImage(this.currentImg, 0, 0, this);
+	// g.drawImage(this.currentImg, 0, 0, this);
     }
 
     public void		paintComponent(Graphics g) {
@@ -215,7 +215,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
 	// super.paintComponent(g);
 	// System.out.println("X/Y: " + this.getx() + ":" + this.gety());
-	this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
+	// this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
 	// g.drawImage(this.currentImg, 0, 0, null);
 	g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
     }
@@ -314,6 +314,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
 	    MapPanel.setMovedNode2(this.getx(), this.gety());
 	    MapPanel.setIsDragging(true);
+	    paintComponentCustom(getGraphics());
 	    // MapPanel.setMovedNode2(e.getX(), e.getY());
 	}
 	this.updateMouseCoordInfo(this.getx(), this.gety());
