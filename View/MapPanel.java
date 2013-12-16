@@ -73,6 +73,8 @@ public class MapPanel extends JPanel implements
 
     static ArrayList<NodeGraphic>	selectedItemsList = new ArrayList<NodeGraphic>();
 
+    static VehiculeGraphic	graphVehicule = null;
+
     private JPopupMenu	jpm = new JPopupMenu();
     private JMenuItem	delete = new JMenuItem("Delete selection");
     private DeleteRoad	toDel = new DeleteRoad();
@@ -331,8 +333,6 @@ public class MapPanel extends JPanel implements
 	return null;
     }
 
-    static NodeGraphic		graphVehicule = null;
-
     private NodeGraphic		_displayMapNode(String s, int nodes_it)
     {
 	NodeGraphic			newNode = null;
@@ -408,23 +408,24 @@ public class MapPanel extends JPanel implements
 	return (newNode);
     }
 
-    private NodeGraphic		_displayMapVehicule(String s)
+    private VehiculeGraphic		_displayMapVehicule(String s)
     {
-	NodeGraphic		newNode = null;
+	VehiculeGraphic		newVehicule = null;
 	int rel_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 	int rel_y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
 	if (this.graphVehicule == null) {
-	    newNode = new NodeGraphic(EObjectTools.VEHICULE,
-				      this.vehicule,
-				      this.vehicule,
-				      this.vehicule, _x, _y,
-				      rel_x, rel_y);
-	    this.graphVehicule = newNode;
+	    newVehicule = new VehiculeGraphic(this.vehicule, _x, _y,
+					      rel_x, rel_y);
+	    this.graphVehicule = newVehicule;
 	}
-	return (newNode);
+	newVehicule.setx(_x);
+	newVehicule.sety(_y);
+	newVehicule.setRealX(rel_x);
+	newVehicule.setRealY(rel_y);
+	return (newVehicule);
     }
 
     private NodeGraphic		_displayMapUrgency(String s, int nodes_it)
@@ -442,7 +443,7 @@ public class MapPanel extends JPanel implements
 					  this.nodeUrgency,
 					  this.nodeUrgency,
 					  0, 0, 0, 0));
-		System.out.println("NODE --- Creating new graphic");
+		System.out.println("NODE --- Creating new graphic : URGENCE");
 		this.mapChanged = true;
 	    }
 	newNode = nodes.get(nodes_it);
@@ -518,7 +519,7 @@ public class MapPanel extends JPanel implements
 	    else if (isDragging == false)
 		{
 		    if (s.charAt(0) == 'V') {
-			newNode = this._displayMapVehicule(s);
+			this._displayMapVehicule(s);
 		    }
 		    else if (s.charAt(0) == 'N') {
 			newNode = this._displayMapNode(s, nodes_it++);
@@ -894,6 +895,12 @@ public class MapPanel extends JPanel implements
 
     static boolean		getAttachPoint(NodeGraphic n) {
 	return controller.eventGetAttachPoint(scaleX(n.getx()), scaleY(n.gety()));
+    }
+
+    static void			deleteVehicule() {
+	System.out.println("DELETE VEHICULE !");
+	graphVehicule = null;
+	controller.eventDeleteVehicule();
     }
 
 }
