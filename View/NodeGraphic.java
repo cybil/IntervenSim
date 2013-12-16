@@ -196,8 +196,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
 	super.paintComponent(g);
 	this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
-	// g.drawImage(this.currentImg, this.getx(), this.gety(), this);
-	g.drawImage(this.currentImg, 0, 0, this);
+	g.drawImage(this.currentImg, 0, 0, null);
+	//g.drawImage(this.currentImg, 0, 0, this);
     }
 
     public void mouseClicked(MouseEvent e) {
