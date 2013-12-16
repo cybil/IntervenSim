@@ -8,6 +8,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
+import java.awt.Graphics2D;
 
 public class NodeGraphic extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -103,21 +104,22 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
 
-    public void		scaleImage()
-    {
-	int		tmp;
-	int		new_img_width;
-	int		new_img_heigth;
+    // public void		scaleImage()
+    // {
+    // 	int		tmp;
+    // 	int		new_img_width;
+    // 	int		new_img_heigth;
 
 	// tmp = this.imgNormal.getWidth(null);
-	new_img_width = MapPanel.unScaleX(25);
+	// new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null)) + 1;
 
 	// new_img_heigth = this.imgNormal.getHeight(null);
-	new_img_heigth = MapPanel.unScaleY(25);
-	this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
-							   new_img_heigth,
-							   Image.SCALE_SMOOTH);
-    }
+	// new_img_heigth = MapPanel.unScaleY(this._imgNormal.getHeight(null)) + 1;
+	// this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
+	// 						   new_img_heigth,
+	// 						   Image.SCALE_SMOOTH);
+	// super.getGraphics().drawImage(this.imgNormal, 0, 0, this);
+    // }
 
     public void		setx(int new_x) {
 
@@ -189,9 +191,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.property.addActionListener(this.editProperty);
     }
 
-    public void		paintComponent(Graphics g) {
+    public void		paintComponent(Graphics _g) {
+	Graphics2D	g = (Graphics2D)_g;
+
 	super.paintComponent(g);
 	this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
+	// g.drawImage(this.currentImg, this.getx(), this.gety(), this);
 	g.drawImage(this.currentImg, 0, 0, this);
     }
 
