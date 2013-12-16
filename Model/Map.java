@@ -84,8 +84,12 @@ public class Map implements java.io.Serializable {
     //***************
 
     public boolean		deleteVehicule() {
+      if (this.vehicule != null)
+      {
 	this.vehicule = null;
-	return true;
+	return (true);
+      }
+      return (false);
     }
 
     public boolean		deleteNode(int[] coord) {

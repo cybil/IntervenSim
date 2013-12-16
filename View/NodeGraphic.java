@@ -101,22 +101,22 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
 
-    // public void		scaleImage()
-    // {
-    // 	int		tmp;
-    // 	int		new_img_width;
-    // 	int		new_img_heigth;
+    public void		scaleImage()
+    {
+    	int		tmp;
+    	int		new_img_width;
+    	int		new_img_heigth;
 
-	// tmp = this.imgNormal.getWidth(null);
-	// new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null)) + 1;
+	tmp = this.imgNormal.getWidth(null);
+	new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null)) + 1;
 
-	// new_img_heigth = this.imgNormal.getHeight(null);
-	// new_img_heigth = MapPanel.unScaleY(this._imgNormal.getHeight(null)) + 1;
-	// this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
-	// 						   new_img_heigth,
-	// 						   Image.SCALE_SMOOTH);
+	new_img_heigth = this.imgNormal.getHeight(null);
+	new_img_heigth = MapPanel.unScaleY(this._imgNormal.getHeight(null)) + 1;
+	this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
+							   new_img_heigth,
+							   Image.SCALE_SMOOTH);
 	// super.getGraphics().drawImage(this.imgNormal, 0, 0, this);
-    // }
+    }
 
     public void		setx(int new_x) {
 
@@ -190,13 +190,24 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.property.addActionListener(this.editProperty);
     }
 
-    public void		paintComponent(Graphics _g) {
-	Graphics2D	g = (Graphics2D)_g;
+    public void		paintComponentCustom(Graphics g) {
+	// Graphics2D	g = (Graphics2D)_g;
 
-	super.paintComponent(g);
+	// super.paintComponent(g);
 	this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
-	g.drawImage(this.currentImg, 0, 0, null);
+	// g.drawImage(this.currentImg, 0, 0, null);
+	// g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
 	//g.drawImage(this.currentImg, 0, 0, this);
+    }
+
+    public void		paintComponent(Graphics g) {
+	// Graphics2D	g = (Graphics2D)_g;
+
+	// super.paintComponent(g);
+	// System.out.println("X/Y: " + this.getx() + ":" + this.gety());
+	this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
+	// g.drawImage(this.currentImg, 0, 0, null);
+	g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
     }
 
     public void mouseClicked(MouseEvent e) {
