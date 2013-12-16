@@ -128,9 +128,10 @@ public class Model {
     	return _map.editNodeCoord(oldCoord, newCoord);
     }
 	
-    boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state, float triggDate) {
+    boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state,
+				       float triggDate, float treatmentTime, int id) {
     	addToRedo();
-    	return _map.addNodeUrgency(coord, state, triggDate);
+    	return _map.addNodeUrgency(coord, state, triggDate, triggDate, id);
     }
     
     public boolean		deleteVehicule() {

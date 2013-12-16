@@ -182,7 +182,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
 	this.setOpaque(false);
-	this.jpm.add(this.property);
+	if (this.type != MapPanel.EObjectTools.VEHICULE)
+	    this.jpm.add(this.property);
 	this.jpm.add(this.delete);
 	this.delete.addActionListener(this.toDel);
 	this.property.addActionListener(this.editProperty);

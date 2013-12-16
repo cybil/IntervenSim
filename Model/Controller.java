@@ -1,6 +1,6 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Controller {
 
@@ -57,11 +57,31 @@ public class Controller {
 	int[]			coord = {x, y};
 	return _model.editAttachPoint(coord, true);
     }
+
+    public boolean		eventGetAttachPoint(int x, int y) {
+	if (_model.getMap().getAttachPointCoord() != null
+	    && _model.getMap().getAttachPointCoord()[0] == x
+	    && _model.getMap().getAttachPointCoord()[1] == y)
+	    return true;
+	return false;
+    }
 	
     public boolean		eventAddRoad(int[] coordNode1, int[] coordNode2) {
 	return _model.addRoad(coordNode1, coordNode2);
     }
+
+    public void			eventClearUrgency(int x, int y) {
+	int[]			coord = {x, y};
 	
+	_model.getMap().clearUrgency(coord);
+    }
+	
+    public Vector<String>	eventGetUrgencyList(int x, int y) {
+	int[]			coord = {x, y};
+	
+	return _model.getMap().getUrgencyList(coord);
+    }
+
     //pas encore redo
     public boolean		eventCreatVehicule(int x, int y) {
 	int[]		coord = {x, y};
@@ -89,9 +109,10 @@ public class Controller {
 	return _model.editNodeCoord(oldCoord, newCoord);
     }
 	
-    public boolean		eventAddNodeUrgency(int x, int y, Urgency.EUrgencyState state, float triggDate) {
+    public boolean		eventAddNodeUrgency(int x, int y, Urgency.EUrgencyState state,
+						    float triggDate, float treatmentTime, int id) {
 	int[]			coord = {x, y};
-	return _model.getMap().addNodeUrgency(coord, state, triggDate);
+	return _model.getMap().addNodeUrgency(coord, state, triggDate, treatmentTime, id);
     }
 	
     public void		eventRedo() {

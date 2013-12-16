@@ -26,6 +26,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.Vector;
 
 public class MapPanel extends JPanel implements
 					 MouseListener,
@@ -375,7 +376,7 @@ public class MapPanel extends JPanel implements
 	return (newNode);
     }
 
-    private NodeGraphic		_displayMapAttachPoint(String s)
+    private NodeGraphic		_displayMapAttachPoint(String s, int nodes_it)
     {
 	NodeGraphic			newNode = null;
 	int rel_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
@@ -383,16 +384,27 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	// if (this.containsNode(_x, _y) == false) {
-	//     System.out.println("CREATE ATTACH GRAPHIC : " + _x + " - " + _y);
-	//     newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
-	// 			      this.nodeAttachPoint,
-	// 			      this.nodeAttachPoint,
-	// 			      this.nodeAttachPoint,
-	// 			      _x, _y,
-	// 			      rel_x, rel_y);
-	//     nodes.add(newNode);
-	// }
+	while (nodes.size() <= nodes_it)
+	    {
+		nodes.add(new NodeGraphic(EObjectTools.ATTACH_POINT,
+					  this.nodeAttachPoint,
+					  this.nodeAttachPoint,
+					  this.nodeAttachPoint,
+					  0, 0, 0, 0));
+		System.out.println("NODE --- Creating new graphic");
+		this.mapChanged = true;
+	    }
+	newNode = nodes.get(nodes_it);
+	if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y)
+	    {
+		newNode.setx(_x);
+		newNode.sety(_y);
+		newNode.setRealX(rel_x);
+		newNode.setRealY(rel_y);
+		nodes.set(nodes_it, newNode);
+		System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
+		// this.mapChanged = true;
+	    }
 	return (newNode);
     }
 
@@ -415,23 +427,35 @@ public class MapPanel extends JPanel implements
 	return (newNode);
     }
 
-    private NodeGraphic		_displayMapUrgency(String s)
+    private NodeGraphic		_displayMapUrgency(String s, int nodes_it)
     {
-	NodeGraphic		newNode	= null;
+	NodeGraphic			newNode = null;
 	int	rel_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 	int	rel_y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	// if (this.containsNode(_x, _y) == false) {
-	//     newNode = new NodeGraphic(EObjectTools.URGENCY,
-	// 			      this.nodeUrgency,
-	// 			      this.nodeUrgency,
-	// 			      this.nodeUrgency,
-	// 			      _x, _y,
-	// 			      rel_x, rel_y);
-	//     nodes.add(newNode);
-	// }
+	while (nodes.size() <= nodes_it)
+	    {
+		nodes.add(new NodeGraphic(EObjectTools.URGENCY,
+					  this.nodeUrgency,
+					  this.nodeUrgency,
+					  this.nodeUrgency,
+					  0, 0, 0, 0));
+		System.out.println("NODE --- Creating new graphic");
+		this.mapChanged = true;
+	    }
+	newNode = nodes.get(nodes_it);
+	if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y)
+	    {
+		newNode.setx(_x);
+		newNode.sety(_y);
+		newNode.setRealX(rel_x);
+		newNode.setRealY(rel_y);
+		nodes.set(nodes_it, newNode);
+		System.out.println("NODE --- Changing graphic coord to real " + rel_x + " : " + rel_y);
+		// this.mapChanged = true;
+	    }
 	return (newNode);
     }
 
@@ -500,10 +524,10 @@ public class MapPanel extends JPanel implements
 			newNode = this._displayMapNode(s, nodes_it++);
 		    }
 		    else if (s.charAt(0) == 'A') {
-			newNode = this._displayMapAttachPoint(s);
+			newNode = this._displayMapAttachPoint(s, nodes_it++);
 		    }
 		    else if (s.charAt(0) == 'U') {
-			newNode = this._displayMapUrgency(s);
+			newNode = this._displayMapUrgency(s, nodes_it++);
 		    }
 		    if (newNode != null) {
 			newNode.setLayout(null);
@@ -849,6 +873,27 @@ public class MapPanel extends JPanel implements
 
 	if (controller.eventEditNodeCoord(coord1, coord2) == false)
 	    System.out.println("setMovedNode2: Error: Node does not exist !!!");
+    }
+
+    static void		addUrgencyToNode(NodeGraphic n, float trigg, float treat, int id) {
+	controller.eventAddNodeUrgency(scaleX(n.getx()), scaleY(n.gety()),
+				       Urgency.EUrgencyState.SLEEPING, trigg, treat, id);
+    }
+
+    static void		clearUrgency(NodeGraphic n) {
+	controller.eventClearUrgency(scaleX(n.getx()), scaleY(n.gety()));
+    }
+
+    static Vector<String>	getUrgencyList(NodeGraphic n) {
+	return controller.eventGetUrgencyList(scaleX(n.getx()), scaleY(n.gety()));
+    }
+
+    static void			setAttachPoint(NodeGraphic n) {
+	controller.eventEditAttachPoint(scaleX(n.getx()), scaleY(n.gety()));
+    }
+
+    static boolean		getAttachPoint(NodeGraphic n) {
+	return controller.eventGetAttachPoint(scaleX(n.getx()), scaleY(n.gety()));
     }
 
 }

@@ -92,6 +92,10 @@ public class Node implements java.io.Serializable {
 	this.urgencyList.add(newUrgency);
     }
 
+    public void			clearUrgency() {
+	this.urgencyList.clear();
+    }
+
     public void			removeUrgency(Urgency urgency) {
 	this.urgencyList.remove(urgency);
     }

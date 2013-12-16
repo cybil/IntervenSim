@@ -10,7 +10,7 @@ public class Urgency implements java.io.Serializable {
   private float		triggerDate;
   private float		endUrgencyDate;
   private float		UrgencyTreatmentTickLeft;
-  static int		id = 0;
+  private int		id;
 
   //******************
   //	Constructor
@@ -20,15 +20,16 @@ public class Urgency implements java.io.Serializable {
     this.treatmentTime = 5;
     this.triggerDate = 0;
     this.endUrgencyDate = 0;
-    this.id++;
+    this.id = 0;
   }
 
-  public Urgency(EUrgencyState state, float triggDate, float endUrgenDate, float treatTime) {
+    public Urgency(EUrgencyState state, float triggDate,
+		   float endUrgenDate, float treatTime, int urgId) {
     this.state = state;
     this.treatmentTime = treatTime;
     this.triggerDate = triggDate;
     this.endUrgencyDate = endUrgenDate;
-    this.id++;
+    this.id = urgId;
   }
 
   public Urgency(Urgency urgency) {
@@ -36,7 +37,7 @@ public class Urgency implements java.io.Serializable {
     this.treatmentTime = urgency.treatmentTime;
     this.triggerDate = urgency.triggerDate;
     this.endUrgencyDate = urgency.endUrgencyDate;
-    this.id++;
+    this.id = urgency.id;
   }
 
   //*****************
@@ -44,7 +45,7 @@ public class Urgency implements java.io.Serializable {
   //*****************
 
   public EUrgencyState	getState() {
-    return (this.state);
+    return this.state;
   }
 
   public float		getTreatmentTime() {

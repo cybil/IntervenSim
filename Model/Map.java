@@ -1,5 +1,5 @@
 import java.awt.Image;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Map implements java.io.Serializable {
 
@@ -20,21 +20,40 @@ public class Map implements java.io.Serializable {
     //	Add
     //***************
 
-    public boolean		addNode(int x, int y) {
-      return (this.graph.creatNode(x, y));
+    public Vector<String>	getUrgencyList(int[] coord) {
+	ArrayList<Urgency>	list = this.graph.getNode(coord).getUrgency();
+	Vector<String>		ret = new Vector<String>();
+
+	for (Urgency u : list) {
+	    String		str;
+	    str = "Date: " + Float.toString(u.getTriggerDate()) + " ; Treatment: " + Float.toString(u.getTreatmentTime());
+	    ret.add(str);
+	}
+	return ret;
     }
 
-    public boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state, float triggDate) {
+    public boolean		addNode(int x, int y) {
+	return (this.graph.creatNode(x, y));
+    }
+
+    public boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state,
+					       float triggDate, float treatmentTime, int id) {
 	if (this.graph.getNode(coord) != null) {
-	    Urgency			urg = new Urgency(state, triggDate, 0, 5);
+	    Urgency			urg = new Urgency(state, triggDate, 0, treatmentTime, id);
 	    this.graph.getNode(coord).addUrgency(urg);
 	}
 	return false;
     }
 
+    public void			clearUrgency(int[] coord) {
+	if (this.graph.getNode(coord) != null) {
+	    this.graph.getNode(coord).clearUrgency();
+	}	
+    }
+
 
     public boolean		addRoad(int[] coordNode1, int[] coordNode2) {
-      return (this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2)));
+	return (this.graph.creatRoad(this.graph.getNode(coordNode1), this.graph.getNode(coordNode2)));
 	// Node			src;
 	// Node			dst;
 
@@ -70,11 +89,11 @@ public class Map implements java.io.Serializable {
     }
 
     public boolean		deleteNode(int[] coord) {
-      return (this.graph.deleteNode(coord));
+	return (this.graph.deleteNode(coord));
     }
 
     public boolean		deleteRoad(int[] coord1, int[] coord2) {
-      return (this.graph.deleteRoad(this.graph.getNode(coord1), this.graph.getNode(coord2)));
+	return (this.graph.deleteRoad(this.graph.getNode(coord1), this.graph.getNode(coord2)));
     }
 
     //***************
