@@ -117,6 +117,13 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
 							   new_img_heigth,
 							   Image.SCALE_SMOOTH);
+	this.imgSelected = this._imgSelected.getScaledInstance(new_img_width,
+							   new_img_heigth,
+							   Image.SCALE_SMOOTH);
+	this.imgPassedOver = this._imgPassedOver.getScaledInstance(new_img_width,
+							   new_img_heigth,
+							   Image.SCALE_SMOOTH);
+	this.currentImg = this.imgNormal;
 	// super.getGraphics().drawImage(this.imgNormal, 0, 0, this);
     }
 
@@ -190,6 +197,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.jpm.add(this.delete);
 	this.delete.addActionListener(this.toDel);
 	this.property.addActionListener(this.editProperty);
+	this.scaleImage();
     }
 
     public void		paintComponentCustom(Graphics g) {
