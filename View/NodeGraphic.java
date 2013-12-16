@@ -13,9 +13,6 @@ import java.awt.Graphics2D;
 public class NodeGraphic extends JPanel implements MouseListener, MouseMotionListener {
 
     private JPopupMenu	jpm = new JPopupMenu();
-    private JMenuItem	editNodeItem = new JMenuItem("Edit Node");
-    private JMenuItem	addUrgencyItem = new JMenuItem("Add Urgency");
-    private JMenuItem	setAttachmentPointItem = new JMenuItem("Set as Attachment Point");
     private JMenuItem	property = new JMenuItem("Property");
     private JMenuItem	delete = new JMenuItem("Delete selection");
 
@@ -64,6 +61,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	}
 	public void actionPerformed(ActionEvent e) {
 	    Property	prop = new Property(node);
+	    MapPanel.setSelection(this.node);
+	    MapPanel.deleteSelection();
 	}
     }
 
@@ -155,7 +154,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
     public boolean	isVehicule() {
-	return this.type == MapPanel.EObjectTools.VEHICULE ? true : false;
+	return false;
     }
 
     public NodeGraphic() {
@@ -168,6 +167,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 		       int real_x, int real_y) {
 	System.out.println("NODE --- CONSTRUCTION");
 	this.type = type;
+	if (type == MapPanel.EObjectTools.URGENCY)
+	    System.out.println("-------> URGENCY TYPE");
 	this.imgNormal = imgNormal;
 	this.imgSelected = imgSelected;
 	this.imgPassedOver = imgPassedOver;
