@@ -351,38 +351,40 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	while (nodes.size() <= nodes_it)
-	    {
-	      newNode = new NodeGraphic(EObjectTools.NODE,
-					this.nodeNormal,
-					this.nodeAttachPoint,
-					this.nodeUrgency,
-					0, 0, 0, 0);
-	      // newNode.setGraphics(getGraphics());
-	      nodes.add(newNode);
-		System.out.println("NODE --- Creating new graphic");
-		 this.mapChanged = true;
-	    }
+	if (this._getNode(rel_x, rel_y) == null) // Create new node
+	{
+	  newNode = new NodeGraphic(EObjectTools.NODE,
+				    this.nodeNormal,
+				    this.nodeAttachPoint,
+				    this.nodeUrgency,
+				    _x, _y, rel_x, rel_y);
+	  // newNode.setGraphics(getGraphics());
+	  nodes.add(newNode);
+	  System.out.println("NODE --- Creating new graphic");
+	  // this.mapChanged = true;
+	}
+	else // Search existing node
+	{
 //	newNode = nodes.get(nodes_it);
-	newNode = this._getNode(rel_x, rel_y);
-	if (nodes_it != -1)
-	  newNode = nodes.get(nodes_it);
-	else
-	  newNode = nodes.get(nodes.size() - 1);
-
-	if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
-	    || newNode.getx() != _x || newNode.gety() != _y)
-	    {
-		newNode.setx(_x);
-		newNode.sety(_y);
-		newNode.setRealX(rel_x);
-		newNode.setRealY(rel_y);
-		// nodes.set(nodes_it, newNode);
-		System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
-		return (newNode);
-	    }
+	  newNode = this._getNode(rel_x, rel_y);
+	  if (nodes_it != -1)
+	    newNode = nodes.get(nodes_it);
+	  else
+	    newNode = nodes.get(nodes.size() - 1);
+	  if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
+	      || newNode.getx() != _x || newNode.gety() != _y)
+	  {
+	    newNode.setx(_x);
+	    newNode.sety(_y);
+	    newNode.setRealX(rel_x);
+	    newNode.setRealY(rel_y);
+	    // nodes.set(nodes_it, newNode);
+	    System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
+	    // return (newNode);
+	  }
+	}
 	newNode.paintComponent(getGraphics());
-	return (null);
+	return (newNode);
 	// return (null);
     }
 
@@ -400,7 +402,7 @@ public class MapPanel extends JPanel implements
 					  this.nodeAttachPoint,
 					  this.nodeAttachPoint,
 					  this.nodeAttachPoint,
-					  0, 0, 0, 0));
+					  30, 30, 30, 30));
 		System.out.println("NODE --- Creating new graphic");
 		this.mapChanged = true;
 	    }
@@ -451,7 +453,7 @@ public class MapPanel extends JPanel implements
 					  this.nodeUrgency,
 					  this.nodeUrgency,
 					  this.nodeUrgency,
-					  0, 0, 0, 0));
+					  30, 30, 30, 30));
 		System.out.println("NODE --- Creating new graphic");
 		this.mapChanged = true;
 	    }
@@ -513,7 +515,7 @@ public class MapPanel extends JPanel implements
     {
 	int		nodes_it;
 	int		roads_it;
-	NodeGraphic		newNode = null;
+	NodeGraphic	newNode = null;
 
 	this.mapChanged = false;
 	nodes_it = 0;
@@ -558,7 +560,7 @@ public class MapPanel extends JPanel implements
 	      this.validate();
 	      this.wasOut = 0;
 	      this.mapChanged = false;
-	      this.repaint();
+	      // this.repaint();
 	    }
 	//       System.out.println("Repaint");
 	this.repaint();
