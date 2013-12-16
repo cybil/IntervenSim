@@ -135,12 +135,16 @@ public class MapPanel extends JPanel implements
 	if (nodes.contains(n) == true) {
 	    nodes.remove(n);
 	    System.out.println("deleteNode: delete Node  ============");
-	    controller.eventDeleteNode(coord);
+	    if (controller.eventDeleteNode(coord) == false)
+	      System.out.println("MapPanel.deleteNode: Unable to delete the node");
 	}
 	else {
 	    graphVehicule = null;
 	    System.out.println("deleteNode: delete vehicule  ============");
-	    controller.eventDeleteVehicule();
+	    if (controller.eventDeleteVehicule() == false)
+	    {
+	      // System.out.println("MapPanel.deleteNode: Unable to delete vehicule");
+	    }
 	}
     }
 
@@ -383,7 +387,7 @@ public class MapPanel extends JPanel implements
 	    // return (newNode);
 	  }
 	}
-	newNode.paintComponent(getGraphics());
+	newNode.paintComponentCustom(getGraphics());
 	return (newNode);
 	// return (null);
     }
@@ -531,16 +535,16 @@ public class MapPanel extends JPanel implements
 	    else if (isDragging == false)
 		{
 		    if (s.charAt(0) == 'V') {
-			this._displayMapVehicule(s);
+		    	this._displayMapVehicule(s);
 		    }
 		    else if (s.charAt(0) == 'N') {
 			newNode = this._displayMapNode(s, nodes_it++);
 		    }
 		    else if (s.charAt(0) == 'A') {
-			newNode = this._displayMapAttachPoint(s, nodes_it++);
+		    	newNode = this._displayMapAttachPoint(s, nodes_it++);
 		    }
 		    else if (s.charAt(0) == 'U') {
-			newNode = this._displayMapUrgency(s, nodes_it++);
+		    	newNode = this._displayMapUrgency(s, nodes_it++);
 		    }
 		    if (newNode != null) {
 			newNode.setLayout(null);
@@ -630,10 +634,12 @@ public class MapPanel extends JPanel implements
 	    {
 		node.rescaleCoord(getW(), getH(), maxX, maxY);
 	    }
-	// for (NodeGraphic node:nodes)
-	// {
-	// 	node.scaleImage();
-	// }
+	for (NodeGraphic node:nodes)
+	{
+		node.scaleImage();
+		node.paintComponentCustom(getGraphics());
+		node.paintComponent(getGraphics());
+	}
     }
 
     public void		selectAll() {
