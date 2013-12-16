@@ -333,6 +333,16 @@ public class MapPanel extends JPanel implements
 	return null;
     }
 
+  private NodeGraphic		_getNode(int rel_x, int rel_y)
+  {
+    for (NodeGraphic node:nodes)
+    {
+      if (node.getRealX() == rel_x && node.getRealY() == rel_y)
+	return (node);
+    }
+    return (null);
+  }
+
     private NodeGraphic		_displayMapNode(String s, int nodes_it)
     {
 	NodeGraphic			newNode = null;
@@ -343,37 +353,37 @@ public class MapPanel extends JPanel implements
 
 	while (nodes.size() <= nodes_it)
 	    {
-		nodes.add(new NodeGraphic(EObjectTools.NODE,
-					  this.nodeNormal,
-					  this.nodeAttachPoint,
-					  this.nodeUrgency,
-					  0, 0, 0, 0));
+	      newNode = new NodeGraphic(EObjectTools.NODE,
+					this.nodeNormal,
+					this.nodeAttachPoint,
+					this.nodeUrgency,
+					0, 0, 0, 0);
+	      // newNode.setGraphics(getGraphics());
+	      nodes.add(newNode);
 		System.out.println("NODE --- Creating new graphic");
-		this.mapChanged = true;
+		 this.mapChanged = true;
 	    }
-	newNode = nodes.get(nodes_it);
-	if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y)
+//	newNode = nodes.get(nodes_it);
+	newNode = this._getNode(rel_x, rel_y);
+	if (nodes_it != -1)
+	  newNode = nodes.get(nodes_it);
+	else
+	  newNode = nodes.get(nodes.size() - 1);
+
+	if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
+	    || newNode.getx() != _x || newNode.gety() != _y)
 	    {
 		newNode.setx(_x);
 		newNode.sety(_y);
 		newNode.setRealX(rel_x);
 		newNode.setRealY(rel_y);
-		nodes.set(nodes_it, newNode);
+		// nodes.set(nodes_it, newNode);
 		System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
-		// this.mapChanged = true;
+		return (newNode);
 	    }
-	// System.out.println("CREATE NODE GRAPHIC AT ?? : " + scaleX(_x) + " - " + scaleY(_y));
-	// if (this.containsNode(_x, _y) == false) {
-	// System.out.println("CREATE NODE GRAPHIC : " + _x + " - " + _y);
-	// newNode = new NodeGraphic(EObjectTools.NODE, this.nodeNormal,
-	// 			      this.nodeAttachPoint,
-	// 			      this.nodeUrgency,
-	// 			      _x, _y,
-	// 			      rel_x, rel_y);
-	// nodes.add(newNode);
-	// }
+	newNode.paintComponent(getGraphics());
+	return (null);
 	// return (null);
-	return (newNode);
     }
 
     private NodeGraphic		_displayMapAttachPoint(String s, int nodes_it)
@@ -533,6 +543,7 @@ public class MapPanel extends JPanel implements
 		    if (newNode != null) {
 			newNode.setLayout(null);
 			this.add(newNode);
+			// newNode.paintComponent(getGraphics());
 		    }
 		}
 	}
@@ -545,9 +556,12 @@ public class MapPanel extends JPanel implements
 	    }
 	if (this.mapChanged == true || this.wasOut == 2) // Only revalidate if something move
 	    {
-		this.validate();
-		this.wasOut = 0;
+	      this.validate();
+	      this.wasOut = 0;
+	      this.mapChanged = false;
+	      this.repaint();
 	    }
+	//       System.out.println("Repaint");
 	this.repaint();
     }
 
@@ -613,8 +627,11 @@ public class MapPanel extends JPanel implements
 	for (NodeGraphic node:nodes)
 	    {
 		node.rescaleCoord(getW(), getH(), maxX, maxY);
-		node.scaleImage();
 	    }
+	// for (NodeGraphic node:nodes)
+	// {
+	// 	node.scaleImage();
+	// }
     }
 
     public void		selectAll() {
