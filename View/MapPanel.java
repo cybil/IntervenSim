@@ -333,15 +333,15 @@ public class MapPanel extends JPanel implements
 	return null;
     }
 
-  private NodeGraphic		_getNode(int rel_x, int rel_y)
-  {
-    for (NodeGraphic node:nodes)
+    private NodeGraphic		_getNode(int rel_x, int rel_y)
     {
-      if (node.getRealX() == rel_x && node.getRealY() == rel_y)
-	return (node);
+	for (NodeGraphic node:nodes)
+	    {
+		if (node.getRealX() == rel_x && node.getRealY() == rel_y)
+		    return (node);
+	    }
+	return (null);
     }
-    return (null);
-  }
 
     private NodeGraphic		_displayMapNode(String s, int nodes_it)
     {
@@ -353,22 +353,22 @@ public class MapPanel extends JPanel implements
 
 	while (nodes.size() <= nodes_it)
 	    {
-	      newNode = new NodeGraphic(EObjectTools.NODE,
-					this.nodeNormal,
-					this.nodeAttachPoint,
-					this.nodeUrgency,
-					0, 0, 0, 0);
-	      // newNode.setGraphics(getGraphics());
-	      nodes.add(newNode);
+		newNode = new NodeGraphic(EObjectTools.NODE,
+					  this.nodeNormal,
+					  this.nodeAttachPoint,
+					  this.nodeUrgency,
+					  0, 0, 0, 0);
+		// newNode.setGraphics(getGraphics());
+		nodes.add(newNode);
 		System.out.println("NODE --- Creating new graphic");
-		 this.mapChanged = true;
+		this.mapChanged = true;
 	    }
-//	newNode = nodes.get(nodes_it);
+	//	newNode = nodes.get(nodes_it);
 	newNode = this._getNode(rel_x, rel_y);
 	if (nodes_it != -1)
-	  newNode = nodes.get(nodes_it);
+	    newNode = nodes.get(nodes_it);
 	else
-	  newNode = nodes.get(nodes.size() - 1);
+	    newNode = nodes.get(nodes.size() - 1);
 
 	if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
 	    || newNode.getx() != _x || newNode.gety() != _y)
@@ -427,14 +427,16 @@ public class MapPanel extends JPanel implements
 	int	_y = unScaleY(rel_y);
 
 	if (this.graphVehicule == null) {
+	    System.out.println("---> CREATE VEHICULE <----");
 	    newVehicule = new VehiculeGraphic(this.vehicule, _x, _y,
 					      rel_x, rel_y);
 	    this.graphVehicule = newVehicule;
+	    this.mapChanged = true;
 	}
-	newVehicule.setx(_x);
-	newVehicule.sety(_y);
-	newVehicule.setRealX(rel_x);
-	newVehicule.setRealY(rel_y);
+	// newVehicule.setx(_x);
+	// newVehicule.sety(_y);
+	// newVehicule.setRealX(rel_x);
+	// newVehicule.setRealY(rel_y);
 	return (newVehicule);
     }
 
@@ -446,6 +448,8 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
+	if (_getNode(rel_x, rel_y).type != EObjectTools.URGENCY)
+	    deleteNode(_getNode(rel_x, rel_y));
 	while (nodes.size() <= nodes_it)
 	    {
 		nodes.add(new NodeGraphic(EObjectTools.URGENCY,
@@ -556,10 +560,10 @@ public class MapPanel extends JPanel implements
 	    }
 	if (this.mapChanged == true || this.wasOut == 2) // Only revalidate if something move
 	    {
-	      this.validate();
-	      this.wasOut = 0;
-	      this.mapChanged = false;
-	      this.repaint();
+		this.validate();
+		this.wasOut = 0;
+		this.mapChanged = false;
+		this.repaint();
 	    }
 	//       System.out.println("Repaint");
 	this.repaint();

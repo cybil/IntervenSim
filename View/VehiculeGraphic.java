@@ -175,7 +175,7 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
 
     public void mouseEntered(MouseEvent e) {
 	System.out.println("NODE --- Entered !");
-}
+    }
 
     public void mouseReleased(MouseEvent e) {
 	System.out.println("Node --- Released !");
