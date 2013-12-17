@@ -5,7 +5,7 @@ public class Map implements java.io.Serializable {
 
     private Graph		graph = new Graph();
     private float		scale = 1;
-    private Vehicule		vehicule = new Vehicule();
+    private Vehicule		vehicule;
     private Image		image = null;
     private int			zoom = 100;
 
@@ -16,34 +16,12 @@ public class Map implements java.io.Serializable {
     public Map() {
     }
 
-    public Map(Map map) {
-    	this.scale = map.getScale();
-
-    	this.graph = new Graph(map.getGraph());
-    	/*if (this.vehicule != null)
-    		this.vehicule = new Vehicule(map.getVehicule());*/
-    	vehicule = map.vehicule;
-    	this.image = map.getImage();
-    	this.zoom = map.getZoom();
-
-//    	graph = new Graph(map.graph);
-//    	scale = map.scale;
-//    	//vehicule = new Vehicule(map.vehicule);
-//    	vehicule = map.vehicule;
-//    	image = map.image;
-//    	zoom = map.zoom;
-    }
-
     //***************
     //	Add
     //***************
 
     public Vector<String>	getUrgencyList(int[] coord) {
-      Node			node = this.graph.getNode(coord);
-
-      if (node != null)
-      {
-	ArrayList<Urgency>	list = node.getUrgency();
+	ArrayList<Urgency>	list = this.graph.getNode(coord).getUrgency();
 	Vector<String>		ret = new Vector<String>();
 
 	for (Urgency u : list) {
@@ -52,10 +30,6 @@ public class Map implements java.io.Serializable {
 	    ret.add(str);
 	}
 	return ret;
-      }
-      else
-	System.out.println("Map.getUrgencyList(): Error Unable to find Node");
-      return (new Vector<String>());
     }
 
     public boolean		addNode(int x, int y) {
@@ -67,7 +41,6 @@ public class Map implements java.io.Serializable {
 	if (this.graph.getNode(coord) != null) {
 	    Urgency			urg = new Urgency(state, triggDate, 0, treatmentTime, id);
 	    this.graph.getNode(coord).addUrgency(urg);
-	    return (true);
 	}
 	return false;
     }
@@ -75,7 +48,7 @@ public class Map implements java.io.Serializable {
     public void			clearUrgency(int[] coord) {
 	if (this.graph.getNode(coord) != null) {
 	    this.graph.getNode(coord).clearUrgency();
-	}
+	}	
     }
 
 
@@ -99,7 +72,6 @@ public class Map implements java.io.Serializable {
     }
 
     public boolean		creatVehicule(int[] coord) {
-      System.out.println("Map.creatVehicule(" + coord[0] + ":" + coord[1] + ")");
 	if (this.vehicule != null)
 	    return false;
 	this.vehicule = new Vehicule();
@@ -165,7 +137,7 @@ public class Map implements java.io.Serializable {
     //**
     // * Getters
     //**
-
+    
     public int[]		getAttachPointCoord() {
 	return this.graph.getAttachPointCoord();
     }
@@ -204,9 +176,9 @@ public class Map implements java.io.Serializable {
 
 	// Ajout du vehicule
 	if (this.vehicule != null) {
-	   String			formatVehicule = "V:";
-	   formatVehicule += this.vehicule.getCoord()[0] + "," + this.vehicule.getCoord()[1];
-	   format.add(formatVehicule);
+	    String			formatVehicule = "V:";
+	    formatVehicule += this.vehicule.getCoord()[0] + "," + this.vehicule.getCoord()[1];
+	    format.add(formatVehicule);
 	}
 
 	// Ajout des noeuds
@@ -223,7 +195,7 @@ public class Map implements java.io.Serializable {
 	    else
 		str = "N:";
 	    str += n.getData().getCoord()[0] + "," + n.getData().getCoord()[1];
-
+		
 	    if (str.charAt(0) == 'U' || str.charAt(0) == 'B') {
 		if (n.getData().getNextUrgency().getState()
 		    == Urgency.EUrgencyState.SLEEPING)
@@ -316,41 +288,5 @@ public class Map implements java.io.Serializable {
     		System.out.println("");
     	    }
     }
-
-	public Graph getGraph() {
-		return graph;
-	}
-
-	public void setGraph(Graph graph) {
-		this.graph = graph;
-	}
-
-	public float getScale() {
-		return scale;
-	}
-
-	public void setScale(float scale) {
-		this.scale = scale;
-	}
-
-	public Vehicule getVehicule() {
-		return vehicule;
-	}
-
-	public void setVehicule(Vehicule vehicule) {
-		this.vehicule = vehicule;
-	}
-
-	public Image getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-	public int getZoom() {
-		return zoom;
-	}
 
 }
