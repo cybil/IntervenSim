@@ -17,7 +17,7 @@ public class Graph implements java.io.Serializable{
     }
 
     public Graph(Graph graph) {
-	this.graphNode = graph.graphNode;
+	this.graphNode = (ArrayList<GraphNode>) graph.graphNode.clone();
     }
 
     //*****************
