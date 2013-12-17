@@ -638,8 +638,8 @@ public class MapPanel extends JPanel implements
 	    {
 		while (roads.size() > roads_it) // Cleaning useless road (to remove the 2Dline on the screen also)
 		    roads.remove(roads.size() - 1);
-		// while (nodes.size() > nodes_it) // Cleaning useless node
-		//     nodes.remove(nodes.size() - 1);
+		while (nodes.size() > nodes_it) // Cleaning useless node
+		    nodes.remove(nodes.size() - 1);
 	    }
 	// Only revalidate if something move outside of the windows
 	if (this.mapChanged == true || this.wasOut == 2)
@@ -1000,7 +1000,9 @@ public class MapPanel extends JPanel implements
 
 	System.out.println("MapPanel.moveNode");
 	if (controller.eventEditNodeCoord(coord1, coord2) == false)
+	{
 	    System.out.println("MapPanel.moveNode(): Error: Node does not exist !!!");
+	}
     }
 
     static void		addUrgencyToNode(NodeGraphic n, float trigg, float treat, int id) {
