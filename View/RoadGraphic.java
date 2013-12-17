@@ -14,7 +14,7 @@ public class RoadGraphic {
 
     public RoadGraphic(int x1, int y1, int x2, int y2) {
 	this.line = new Line2D.Float(x1, y1, x2, y2);
-	this.stroke = new BasicStroke(5.0f);
+	this.stroke = new BasicStroke(MapPanel.unScaleX(5));
 	this.setCoord(x1, y1, x2, y2);
     }
 
@@ -36,16 +36,16 @@ public class RoadGraphic {
     }
 
     public int		getx1() {
-	return (int)this.line.getX1() + 5;
+	return (int)this.line.getX1();
     }
     public int		getx2() {
-	return (int)this.line.getX2() + 5;
+	return (int)this.line.getX2();
     }
     public int		gety1() {
-	return (int)this.line.getY1() + 5;
+	return (int)this.line.getY1();
     }
     public int		gety2() {
-	return (int)this.line.getY2() + 5;
+	return (int)this.line.getY2();
     }
 
     public BasicStroke	getStroke() {
@@ -58,6 +58,7 @@ public class RoadGraphic {
 
     public void		setCoord(int x1, int y1, int x2, int y2) {
       this.line.setLine(x1, y1, x2, y2);
+      this.stroke = new BasicStroke(MapPanel.unScaleX(5));
     }
     public void		setRealCoord(int x1, int y1, int x2, int y2) {
       this.x1 = x1;

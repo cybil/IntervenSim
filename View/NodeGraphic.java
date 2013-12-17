@@ -201,10 +201,15 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
     public void		paintComponentCustom(Graphics g) {
+      int		w;
+      int		h;
 	// Graphics2D	g = (Graphics2D)_g;
 
 	// super.paintComponent(g);
-	this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
+      w = this.currentImg.getWidth(null);
+      h = this.currentImg.getHeight(null);
+	this.setBounds(this.getx() - w/2,
+		       this.gety() - h/2, w, h);
 	// g.drawImage(this.currentImg, 0, 0, null);
 	// g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
 	// g.drawImage(this.currentImg, 0, 0, this);

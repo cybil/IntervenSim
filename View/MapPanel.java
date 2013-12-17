@@ -44,7 +44,7 @@ public class MapPanel extends JPanel implements
     private int		y2;
     private boolean	isPressed = false;
 
-    private boolean		mapChanged;
+    static private boolean	mapChanged;
     private int			wasOut = 0; // 0:OK - 1:Out - 2:Enter
     private Image		background;
     private Image		nodeUrgency;
@@ -205,6 +205,7 @@ public class MapPanel extends JPanel implements
 	// Image		bck;
 
 	super.paintComponent(g);
+	AffineTransform at = g2.getTransform();
 
 	// Grille magnetique ----> ne bouge pas avec le zoom :: voir avec JB
 	float		motif[] = {10.0f, 5.0f};
@@ -228,7 +229,6 @@ public class MapPanel extends JPanel implements
 
 	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
-	AffineTransform at = g2.getTransform();
 
 	view_x = scrolBarRef.getViewport().getViewPosition().x;
 	view_y = scrolBarRef.getViewport().getViewRect().y;
@@ -295,6 +295,7 @@ public class MapPanel extends JPanel implements
 	    g2.drawLine(this.selectedBoxCoord1[0], this.selectedBoxCoord2[1],
 			this.selectedBoxCoord2[0], this.selectedBoxCoord2[1]);
 	}
+	g2.setTransform(at);
     }
 
     // public static boolean	containsNode(int p_x, int p_y) {
@@ -521,6 +522,7 @@ public class MapPanel extends JPanel implements
 	int		nodes_it;
 	int		roads_it;
 	NodeGraphic	newNode = null;
+	ArrayList<NodeGraphic>	new_nodes = new ArrayList<NodeGraphic>();
 
 	this.mapChanged = false;
 	nodes_it = 0;
@@ -539,6 +541,7 @@ public class MapPanel extends JPanel implements
 		    }
 		    else if (s.charAt(0) == 'N') {
 			newNode = this._displayMapNode(s, nodes_it++);
+			new_nodes.add(newNode);
 		    }
 		    else if (s.charAt(0) == 'A') {
 		    	newNode = this._displayMapAttachPoint(s, nodes_it++);
@@ -553,7 +556,12 @@ public class MapPanel extends JPanel implements
 		    }
 		}
 	}
-	if (isDragging == false)
+	if (nodes_it > 0) // To remove old node
+	{
+	  nodes.clear();
+	  nodes.addAll(new_nodes);
+	}
+	if (isDragging == false) // To remove old road
 	    {
 		while (roads.size() > roads_it) // Cleaning useless road (to remove the 2Dline on the screen also)
 		    roads.remove(roads.size() - 1);
@@ -802,6 +810,8 @@ public class MapPanel extends JPanel implements
     }
 
     static void		setIsDragging(boolean b) {
+	if (isDragging == true && b == false)
+	  mapChanged = true;
 	isDragging = b;
     }
 
