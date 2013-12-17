@@ -99,7 +99,7 @@ public class SimulationManager implements Serializable, ActionListener {
 	  System.out.println("SimulationManager: Setting path to vehicule");
 	  path = this.strategyList.get(0).getPath();
 	  // this.strategyList.get(0)._map =  this.map;
-	  // this.strategyList.add(0, new StratOldestUrgency(this.map));
+	  this.strategyList.add(0, new StratOldestUrgency(this.map)); // Pour pouvoir ajouter un node et des roads en cours de route
 	  this.strategyList.get(0).setAttachPoint(this.map.getAttachPointCoord()[0],
 						  this.map.getAttachPointCoord()[1]);
 	  if (path == null || path.size() == 0)

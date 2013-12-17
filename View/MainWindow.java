@@ -341,7 +341,10 @@ public class MainWindow extends JFrame implements ActionListener {
 	    // if (controller.eventGetPathOK() == false)
 	    // 	JOptionPane.showMessageDialog(null, "There is no way to go to an urgency.");
 	    else
+	    {
 		controller.eventPlay();
+		MapPanel.running = true;
+	    }
         }
     }
 
@@ -355,6 +358,7 @@ public class MainWindow extends JFrame implements ActionListener {
     class StopButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
 	    System.out.println("------> STOP <------");
+	    MapPanel.running = false;
 	    controller.eventStop();
         }
     }

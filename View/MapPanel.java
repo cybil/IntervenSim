@@ -38,6 +38,7 @@ public class MapPanel extends JPanel implements
     }
 
     static EObjectTools selectedObject = EObjectTools.CURSOR;
+  static public boolean	running = false;
     private int		x1;
     private int		y1;
     private int		x2;
@@ -354,7 +355,7 @@ public class MapPanel extends JPanel implements
 	return null;
     }
 
-    private NodeGraphic		_getNode(int rel_x, int rel_y)
+    static private NodeGraphic		_getNode(int rel_x, int rel_y)
     {
 	for (NodeGraphic node:nodes)
 	    {
@@ -414,6 +415,8 @@ public class MapPanel extends JPanel implements
 			newNode.setImgSelected(this.nodeAttachPoint);
 			newNode.setImgPassedOver(this.nodeUrgency);
 			newNode.type = MapPanel.EObjectTools.NODE;
+			((MainWindow)SwingUtilities.getRoot(this)).scrollPane.revalidate();
+			rescaleAllNode();
 		    }
 
 		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
@@ -533,6 +536,8 @@ public class MapPanel extends JPanel implements
 			newNode.setImgSelected(this.nodeUrgency);
 			newNode.setImgPassedOver(this.nodeUrgency);
 			newNode.type = MapPanel.EObjectTools.URGENCY;
+			((MainWindow)SwingUtilities.getRoot(this)).scrollPane.revalidate();
+			rescaleAllNode();
 		    }
 
 		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
@@ -708,7 +713,7 @@ public class MapPanel extends JPanel implements
 	MapPanel.setIsDragging(false);
     }
 
-    public void	rescaleAllNode()
+    static public void	rescaleAllNode()
     {
 	for (NodeGraphic node:nodes)
 	    {
@@ -720,11 +725,11 @@ public class MapPanel extends JPanel implements
 		// node.paintComponentCustom(getGraphics());
 		// node.paintComponent(getGraphics());
 	    }
-	if (this.graphVehicule != null)
+	if (graphVehicule != null)
 	{
-	    this.graphVehicule.scaleImage();
-	    this.graphVehicule.setx(unScaleX(this.graphVehicule.getRealX()));
-	    this.graphVehicule.sety(unScaleY(this.graphVehicule.getRealY()));
+	    graphVehicule.scaleImage();
+	    graphVehicule.setx(unScaleX(graphVehicule.getRealX()));
+	    graphVehicule.sety(unScaleY(graphVehicule.getRealY()));
 	}
     }
 
@@ -973,6 +978,7 @@ public class MapPanel extends JPanel implements
 		if (ret == false) {
 		    graphVehicule.setx(x);
 		    graphVehicule.sety(y);
+		    // graphVehicule.setNodeOn(_getNode1(x, y));
 		}
 	    }
 	else
