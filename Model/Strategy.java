@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-abstract class Strategy
+abstract class Strategy implements java.io.Serializable
 {
   protected ArrayList<ArrayList<ArrayList<Node>>>	_matrice;
   protected int						_currentStrategy;

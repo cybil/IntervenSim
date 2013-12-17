@@ -189,6 +189,65 @@ public class Map implements java.io.Serializable {
 	return graph.getNbRoad();
     }
 
+    public void			setFormatMap(ArrayList<String> format) {
+	for (String s : format) {
+	    if (s.charAt(0) == 'V') {
+		int x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+		int y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+		int[]	coord = {x, y};
+		creatVehicule(coord);
+	    }
+	    else if (s.charAt(0) == 'N') {
+		int x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+		int y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+		int[]	coord = {x, y};
+		addNode(x, y);
+	    }
+	    else if (s.charAt(0) == 'A') {
+		int x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+		int y = Integer.parseInt(s.substring(s.indexOf(",") + 1));
+		int[]	coord = {x, y};
+		addNode(x, y);
+		editAttachPoint(coord, true);
+	    }
+	    else if (s.charAt(0) == 'U') {
+		int	x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
+		int	y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
+		int[]	coord = {x, y};
+		addNode(x, y);
+
+		String s2 = s.substring(s.lastIndexOf(":"));
+		int		i = 0;
+		while (s2.length() != 0) {
+		    char	state = s2.charAt(0);
+		    Float	trigg = Float.parseFloat(s2.substring(s2.indexOf("!") + 1,
+								      s2.indexOf("|")));
+		    Float	treat = Float.parseFloat(s2.substring(s2.indexOf("|") + 1,
+								      s2.indexOf("/")));
+
+		    addNodeUrgency(coord, Urgency.EUrgencyState.SLEEPING, trigg, treat, i++);
+		    s2 = s2.substring(s2.indexOf("/") + 1);
+		}
+	    }
+	}
+	for (String s : format) {
+	    if (s.charAt(0) == 'R') {
+		int	x1 = Integer.parseInt(s.substring(s.indexOf(":") + 1,
+							  s.indexOf(",")));
+		int	y1 = Integer.parseInt(s.substring(s.indexOf(",") + 1,
+							  s.lastIndexOf(":")));
+		String	s2 = s.substring(s.lastIndexOf(":"));
+		int	x2 = Integer.parseInt(s2.substring(s2.indexOf(":") + 1,
+							   s2.indexOf(",")));
+		int	y2 = Integer.parseInt(s2.substring(s2.indexOf(",") + 1));
+		int[]	coord1 = {x1, y1};
+		int[]	coord2 = {x2, y2};
+		addRoad(coord1, coord2);
+	    }
+	}
+
+    }
+
     public ArrayList<String>	getFormatMap() {
 
 	ArrayList<String>	format = new ArrayList<String>();
@@ -219,21 +278,26 @@ public class Map implements java.io.Serializable {
 	    else
 		str = "N:";
 	    str += n.getData().getCoord()[0] + "," + n.getData().getCoord()[1];
-		
-	    if (str.charAt(0) == 'U' || str.charAt(0) == 'B') {
-		if (n.getData().getNextUrgency().getState()
-		    == Urgency.EUrgencyState.SLEEPING)
-		    str += ":S";
-		if (n.getData().getNextUrgency().getState()
-		    == Urgency.EUrgencyState.WAITING)
-		    str += ":W";
-		if (n.getData().getNextUrgency().getState()
-		    == Urgency.EUrgencyState.IN_PROGRESS)
-		    str += ":P";
-		if (n.getData().getNextUrgency().getState()
-		    == Urgency.EUrgencyState.DONE)
-		    str += ":D";
-	    }
+	    if (str.charAt(0) == 'U' || str.charAt(0) == 'B')
+		str += ":";
+	    for (Urgency u : n.getData().getUrgency())
+		{
+		    if (str.charAt(0) == 'U' || str.charAt(0) == 'B') {
+			if (n.getData().getNextUrgency().getState()
+			    == Urgency.EUrgencyState.SLEEPING)
+			    str += "S!";
+			if (n.getData().getNextUrgency().getState()
+			    == Urgency.EUrgencyState.WAITING)
+			    str += "W!";
+			if (n.getData().getNextUrgency().getState()
+			    == Urgency.EUrgencyState.IN_PROGRESS)
+			    str += "P!";
+			if (n.getData().getNextUrgency().getState()
+			    == Urgency.EUrgencyState.DONE)
+			    str += "D!";
+		    }
+		    str += Float.toString(u.getTriggerDate()) + "|" + Float.toString(u.getTreatmentTime()) + "/";
+		}
 	    format.add(str);
 
 	    // Ajout des routes
