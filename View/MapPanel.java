@@ -197,6 +197,24 @@ public class MapPanel extends JPanel implements
 	this.selectedObject = obj;
     }
 
+  public void		drawMagneticGrid(Graphics2D g)
+  {
+	int		pas = 0;
+	float		motif[] = {10.0f, 5.0f};
+	BasicStroke	dotline = new BasicStroke(1.0f, 0, 0, 5.0f, motif, 0.0f);
+
+	g.setStroke(dotline);
+	while (pas < this.getWidth()) {
+	    g.drawLine(pas, 0, pas, this.getHeight());
+	    pas += unScaleX(100);
+	}
+	pas = 0;
+	while (pas < this.getHeight()) {
+	    g.drawLine(0, pas, this.getWidth(), pas);
+	    pas += unScaleY(100);
+	}
+  }
+
     @Override
 	public void		paintComponent(Graphics g) {
 	int		view_x;
@@ -205,23 +223,10 @@ public class MapPanel extends JPanel implements
 	// Image		bck;
 
 	super.paintComponent(g);
+	this.drawMagneticGrid(g2);
 	AffineTransform at = g2.getTransform();
 
-	// Grille magnetique ----> ne bouge pas avec le zoom :: voir avec JB
-	float		motif[] = {10.0f, 5.0f};
-	BasicStroke	dotline = new BasicStroke(1.0f, 0, 0, 5.0f, motif, 0.0f);
-	g2.setStroke(dotline);
 	g2.setColor(Color.BLACK);
-	int		pas = 0;
-	while (pas < this.getWidth()) {
-	    g2.drawLine(pas, 0, pas, this.getHeight());
-	    pas += 100;
-	}
-	pas = 0;
-	while (pas < this.getHeight()) {
-	    g2.drawLine(0, pas, this.getWidth(), pas);
-	    pas += 100;
-	}
 
 	// Draw background image
 	// if ((bck = this.controller._model.getMap().getBackground()) != null)
