@@ -201,17 +201,20 @@ public class Vehicule implements java.io.Serializable {
     {
 	int			move_rate;
 
+	speed = 1;
 	// Move to the next path availaible after the treatment of the last urgency
-	if (debug == true) System.out.println("path.size() " + this.path.size());
-	if (debug == true) System.out.println("listOpath.size() " + this.listOpath.size());
-	if (this.state == EVehiculeState.WAITING && this.path.size() == 0 && this.listOpath.size() > 0)
+	// if (debug == true) System.out.println("path.size() " + this.path.size());
+	// if (debug == true) System.out.println("listOpath.size() " + this.listOpath.size());
+	if (this.state == EVehiculeState.WAITING
+	    && (this.path == null || this.path.size() == 0)
+	    && this.listOpath.size() > 0)
 	    {
 	      if (debug == true) System.out.println("Vehicule.moveOn: Move to the next path");
 		this.path = this.listOpath.get(0);
 		this.listOpath.remove(0);
 		this.state = EVehiculeState.ON_THE_ROAD;
 	    }
-	if (this.state != EVehiculeState.WAITING)
+	if (this.state != EVehiculeState.WAITING && this.path != null)
 	    {
 	      if (debug == true) System.out.println("Vehicule.moveOn: this.state != EVehiculeState.WAITING");
 		move_rate = this.tick_ref / this.speed;
@@ -219,7 +222,7 @@ public class Vehicule implements java.io.Serializable {
 		if (this.tick_synch <= 0)
 		    this.tick_synch = this.tick_ref;
 
-		speed_adjust += (3600 / this.speed);
+		speed_adjust += (3600 / this.speed); // Vitesse de deplacement
 		while (speed_adjust > 60)
 		    {
 			if (this.path.size() > 0)
@@ -236,8 +239,8 @@ public class Vehicule implements java.io.Serializable {
 		// if ((this.tick_sync % move_rate) == 0)
 		//   this._moveOn();
 	    }
-	else
-	  if (debug == true) System.out.println("Vehicule.moveOn: else");
+	// else
+	//   if (debug == true) System.out.println("Vehicule.moveOn: else");
     }
 
     /*
@@ -306,12 +309,14 @@ public class Vehicule implements java.io.Serializable {
     ** Manage an urgency as long as necessary
     */
     int			treatUrgency() {
+      System.out.println("Vehicule.treatUrgency()");
 	if (this.path.size() == 0 && this.urgencyNode != null)
 	    {
+	      System.out.println("Vehicule.treatUrgency(): WORKING STATE");
 		this.state = EVehiculeState.WORKING;
 		if (this.lastUrgency.getState() == Urgency.EUrgencyState.WAITING)
 		    this.lastUrgency.beginTreatment();
-		if (this.lastUrgency.Treatment() == true) // Urgency treatment finished
+		else if (this.lastUrgency.Treatment() == true) // Urgency treatment finished
 		    {
 			this.urgencyNode.removeUrgency(this.lastUrgency);
 			this.state = EVehiculeState.WAITING;

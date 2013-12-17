@@ -14,7 +14,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     // private Statistic		statistic = new Statistic();
     private int			speed = 1;
     private ESimulationState	state = ESimulationState.BEGIN;
-    private Timer		timer = new Timer(1000 * speed, this);
+  private Timer		timer = new Timer(1000 / speed, this);
 
     //***************
     // * Constructor
@@ -55,7 +55,15 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     //***************
 
     public void			setSpeed(int newSpeed) {
+      if (newSpeed <= 0)
+	timer.stop();
+      else
+      {
 	this.speed = newSpeed;
+	timer.setDelay(1000 / this.speed);
+	if (timer.isRunning() == false)
+	  timer.start();
+      }
     }
 
     public void			setStrategy(int strat) {
@@ -73,7 +81,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     	for (Node n : this.map.getNodeUrgency()) {
     	    for (Urgency u : n.getUrgency()) {
     		u.setTriggerDate(u.getTriggerDate() - 1); // 1 selon gestion du temps
-    		if (u.getTriggerDate() <= 0)
+    		if (u.getTriggerDate() <= 0 && u.getState() == Urgency.EUrgencyState.SLEEPING)
     		    u.setState(Urgency.EUrgencyState.WAITING);
     	    }
     	}

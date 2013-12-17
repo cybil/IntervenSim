@@ -89,8 +89,10 @@ public class Urgency implements java.io.Serializable {
   */
   public void			beginTreatment()
   {
+    System.out.println("Urgency.beginTreatment():");
     if (this.state == EUrgencyState.WAITING)
     {
+      System.out.println("Urgency.beginTreatment(): STATE IN_PROGRESS");
       this.setState(EUrgencyState.IN_PROGRESS);
       this.UrgencyTreatmentTickLeft = treatmentTime;
     }
@@ -113,6 +115,7 @@ public class Urgency implements java.io.Serializable {
 	return (true);
       }
       UrgencyTreatmentTickLeft = UrgencyTreatmentTickLeft - 1;
+      System.out.println("Urgency.beginTreatment(): REDUCE TIME to " + UrgencyTreatmentTickLeft);
     }
     else
       System.out.println("Urgency.beginTreatment(): Error: this.state != EUrgencyState.WAITING");
@@ -124,6 +127,7 @@ public class Urgency implements java.io.Serializable {
   */
   public void			cancelTreatment()
   {
+    System.out.println("Urgency.beginTreatment(): CANCEL");
     if (this.state == EUrgencyState.IN_PROGRESS)
     {
       this.setState(EUrgencyState.WAITING);

@@ -407,6 +407,15 @@ public class MapPanel extends JPanel implements
 		    newNode = nodes.get(nodes_it);
 		else
 		    newNode = nodes.get(nodes.size() - 1);
+
+		if (newNode.type == MapPanel.EObjectTools.URGENCY)
+		    {
+			newNode.setImgNormal(this.nodeNormal);
+			newNode.setImgSelected(this.nodeAttachPoint);
+			newNode.setImgPassedOver(this.nodeUrgency);
+			newNode.type = MapPanel.EObjectTools.NODE;
+		    }
+
 		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
 		    || newNode.getx() != _x || newNode.gety() != _y)
 		    {
