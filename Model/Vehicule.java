@@ -108,15 +108,16 @@ public class Vehicule implements java.io.Serializable {
 	int		last;
 
 	this.listOpath.add(newPath);
-	if (newPath != null && newPath.size() > 0 && this.path.size() == 0)
+	if (newPath != null && newPath.size() > 0)
 	    {
-		if (this.urgencyNode != null) // Cancel the urgency if a new path is given
+		if (this.lastUrgency != null) // Cancel the urgency if a new path is given
 		    {
 			this.lastUrgency.cancelTreatment();
 			if (debug == true) System.out.println("Vehicule.setPath(): cancel urgency.");
 		    }
 		this.state = EVehiculeState.ON_THE_ROAD;
-		this.path = this.listOpath.get(0);
+		this.path = new ArrayList<Node>();
+		this.path.addAll(this.listOpath.get(0));
 		this.listOpath.remove(0);
 		last = this.path.size() - 1;
 		last = (last > 0 ? last : 0);
@@ -205,6 +206,8 @@ public class Vehicule implements java.io.Serializable {
 	// Move to the next path availaible after the treatment of the last urgency
 	// if (debug == true) System.out.println("path.size() " + this.path.size());
 	// if (debug == true) System.out.println("listOpath.size() " + this.listOpath.size());
+	if ((this.path == null || this.path.size() == 0) && this.lastUrgency == null)
+	  this.state = EVehiculeState.WAITING;
 	if (this.state == EVehiculeState.WAITING
 	    && (this.path == null || this.path.size() == 0)
 	    && this.listOpath.size() > 0)
@@ -231,14 +234,17 @@ public class Vehicule implements java.io.Serializable {
 		    }
 		speed_adjust = speed_adjust % 60;
 
-		if (this.path.size() == 0 && this.urgencyNode != null)
+		if (this.path.size() == 0 && this.urgencyNode != null && this.lastUrgency != null)
 		    this.treatUrgency();
-		else if (this.path.size() == 0 && this.urgencyNode == null)
-		    this.state = EVehiculeState.WAITING;
 
 		// if ((this.tick_sync % move_rate) == 0)
 		//   this._moveOn();
 	    }
+	else
+	{
+	  this.state = EVehiculeState.WAITING;
+	  this.path = null;
+	}
 	// else
 	//   if (debug == true) System.out.println("Vehicule.moveOn: else");
     }
@@ -320,6 +326,7 @@ public class Vehicule implements java.io.Serializable {
 		    {
 			this.urgencyNode.removeUrgency(this.lastUrgency);
 			this.state = EVehiculeState.WAITING;
+			this.lastUrgency = null;
 		    }
 	    }
 	return (0);
