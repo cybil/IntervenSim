@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class StratOldestUrgency extends Strategy
+public class StratOldestUrgency extends Strategy implements java.io.Serializable
 {
 	static String _name = "Plus vieille urgence";
 	

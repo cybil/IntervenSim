@@ -255,33 +255,58 @@ public class MainWindow extends JFrame implements ActionListener {
 
     class OpenFileButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-	    
-        }
-    }
 
-    class SaveFileButtonListener implements ActionListener{
-        public void actionPerformed(ActionEvent arg0) {
-	    // // Recuperer fichier !
-	    // // controller.eventSaveMap();
-	    // JFileChooser chooser = new JFileChooser();
-	    // // Note: source for ExampleFileFilter can be found in FileChooserDemo,
-	    // // under the demo/jfc directory in the JDK.
+	    JFileChooser chooser = new JFileChooser();
+
 	    // FileFilter filter = new FileFilter();
 	    // filter.addExtension("jpg");
 	    // filter.addExtension("gif");
 	    // filter.setDescription("JPG & GIF Images");
 	    // chooser.setFileFilter(filter);
-	    // int returnVal = chooser.showOpenDialog(this);
-	    // if (returnVal == JFileChooser.APPROVE_OPTION) {
-	    // 	System.out.println("You chose to open this file: " +
-	    // 			   chooser.getSelectedFile().getName());
-	    // }
+	    int returnVal = chooser.showOpenDialog(null);
+	    if (returnVal == JFileChooser.APPROVE_OPTION) {
+	    	System.out.println("You chose to open this file: " +
+	    			   chooser.getSelectedFile().getName());
+		controller.eventLoadMap(new File(chooser.getSelectedFile().getName()));
+	    }	    
+        }
+    }
+
+    class SaveFileButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent arg0) {
+	    JFileChooser chooser = new JFileChooser();
+
+	    // FileFilter filter = new FileFilter();
+	    // filter.addExtension("jpg");
+	    // filter.addExtension("gif");
+	    // filter.setDescription("JPG & GIF Images");
+	    // chooser.setFileFilter(filter);
+	    int returnVal = chooser.showOpenDialog(null);
+	    if (returnVal == JFileChooser.APPROVE_OPTION) {
+	    	System.out.println("You chose to open this file: " +
+	    			   chooser.getSelectedFile().getName());
+		controller.eventSaveMap(new File(chooser.getSelectedFile().getName()));
+	    }
         }
     }
 
     class LoadMapButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
 	    // Recuperer fichier !
+	    JFileChooser chooser = new JFileChooser();
+
+	    // FileFilter filter = new FileFilter();
+	    // filter.addExtension("jpg");
+	    // filter.addExtension("gif");
+	    // filter.setDescription("JPG & GIF Images");
+	    // chooser.setFileFilter(filter);
+	    int returnVal = chooser.showOpenDialog(null);
+	    if (returnVal == JFileChooser.APPROVE_OPTION) {
+	    	System.out.println("You chose to open this file: " +
+	    			   chooser.getSelectedFile().getName());
+		if (controller.eventLoadMap(new File(chooser.getSelectedFile().getName())) == false)
+		    JOptionPane.showMessageDialog(null, "File not found !", "Error", 0);
+	    }
 	    // controller.eventLoadMap();
         }
     }
@@ -311,7 +336,8 @@ public class MainWindow extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent arg0) {
 	    System.out.println("------> PLAY <------");
 	    if (controller.eventGetVehicule() == false)
-		JOptionPane.showMessageDialog(null, "There is no vehicule on the map.");
+		JOptionPane.showMessageDialog(null, "There is no vehicule on the map.",
+					      "Information", 0);
 	    // if (controller.eventGetPathOK() == false)
 	    // 	JOptionPane.showMessageDialog(null, "There is no way to go to an urgency.");
 	    else
