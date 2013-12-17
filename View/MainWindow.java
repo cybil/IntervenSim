@@ -27,6 +27,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MainWindow extends JFrame implements ActionListener {
+  public JScrollPane			scrollPane = null;
     private boolean				inst = false;
     private Controller				controller;
     private JPanel				content = new JPanel();
@@ -113,7 +114,7 @@ public class MainWindow extends JFrame implements ActionListener {
     	gbc.anchor = GridBagConstraints.FIRST_LINE_START;
     	gbc.fill = GridBagConstraints.BOTH;
 
-	JScrollPane scrollPane = new JScrollPane(mapPanel);
+	scrollPane = new JScrollPane(mapPanel);
 	scrollPane.setWheelScrollingEnabled(false);
 	mapPanel.setScrollBarRef(scrollPane);
 	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);

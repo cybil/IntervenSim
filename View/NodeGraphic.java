@@ -212,10 +212,6 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
   public void		paintComponent(Graphics g) {
-      int		w;
-      int		h;
-    // Graphics2D	g = (Graphics2D)_g;
-
     super.paintComponent(g);
     paintComponentCustom(g);
     g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
@@ -225,11 +221,13 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	System.out.println("NODE --- Clicked ! X: " + e.getX() + " // Y: " + e.getY());
 	if (MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR
 	    && this.isSelected == false) {
+	  System.out.println("NODE --- SELECTIOn");
 	    this.currentImg = this.imgSelected;
 	    this.isSelected = true;
 	    MapPanel.setSelection(this);
 	}
 	else if (MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR) {
+	  System.out.println("NODE --- DE SELECTION");
 	    this.currentImg = this.imgPassedOver;
 	    this.isSelected = false;
 	    MapPanel.setSelection(null);
@@ -238,7 +236,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
     public void mouseExited(MouseEvent e) {
-	System.out.println("Node --- Exited !");
+	System.out.println("NodeGraphic.mouseExited");
 	if (this.isSelected == true)
 	    this.currentImg = this.imgSelected;
 	else
@@ -246,20 +244,20 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
     public void mouseEntered(MouseEvent e) {
-	System.out.println("NODE --- Entered !");
+	System.out.println("NodeGraphic.mouseEntered");
 	this.currentImg = this.imgPassedOver;
     }
 
     public void mouseReleased(MouseEvent e) {
-	System.out.println("Node --- Released !");
+	System.out.println("NodeGraphic.mouseReleased");
 	if (e.getButton() == MouseEvent.BUTTON1
-	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR)
+	    && MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR
+	    && MapPanel.isDragging() == true)
 	    {
 		System.out.println("Node --- definitive change of node coord !");
 		this.setx(oldx_win + (e.getXOnScreen() - oldx_screen));
 		this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
 		MapPanel.setMovedNode2(this.getx(), this.gety());
-		MapPanel.setIsDragging(false);
 	    }
 	else if (e.getButton() == MouseEvent.BUTTON1
 		 && MapPanel.selectedObject == MapPanel.EObjectTools.ROAD)
