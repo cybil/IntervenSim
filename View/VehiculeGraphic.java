@@ -16,6 +16,7 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
     private JMenuItem	delete = new JMenuItem("Delete selection");
 
     private DeleteNode		toDel = new DeleteNode(this);
+  public NodeGraphic		nodeOn = null;
     // private EditProperty	editProperty = new EditProperty(this);
 
 
@@ -75,6 +76,11 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
     // 	this._node_x = MapPanel.unScale(this.real_x, curr_x_max, real_x_max);
     // 	this._node_y = MapPanel.unScale(this.real_y, curr_y_max, real_y_max);
     // }
+
+  public void		setNodeOn(NodeGraphic nodeOn)
+  {
+    this.nodeOn = nodeOn;
+  }
 
     public Image	getImgNormal()  {
 	return (this.imgNormal);
@@ -160,6 +166,11 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
       int		w;
       int		h;
 
+      if (MapPanel.running == false && nodeOn != null)
+      {
+	setRealX(nodeOn.getRealX());
+	setRealY(nodeOn.getRealY());
+      }
       w = this.currentImg.getWidth(null);
       h = this.currentImg.getHeight(null);
 

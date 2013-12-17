@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 import java.awt.Graphics2D;
+import javax.swing.*;
 
 public class NodeGraphic extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -298,6 +299,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    else if (MapPanel.selectedObject == MapPanel.EObjectTools.VEHICULE) {
 		System.out.println("COUCOU LES AMIS");
 		MapPanel.setVehiculeAt(this.getRealX(), this.getRealY());
+		MapPanel.graphVehicule.setNodeOn(this);
 	    }
 	if (e.getButton() == MouseEvent.BUTTON3) {
 	    jpm.show(this, e.getX(), e.getY());
@@ -324,6 +326,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    // this._node_y = e.getY();
 	    this.setx(oldx_win + (e.getXOnScreen() - oldx_screen));
 	    this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
+	    // if (MapPanel.running == false && MapPanel.graphVehicule.nodeOn != null)
+	    // {
+	    //   MapPanel.graphVehicule.setx(this.getx());
+	    //   MapPanel.graphVehicule.sety(this.gety());
+	    //   // ((MainWindow)SwingUtilities.getRoot(this)).scrollPane.revalidate();
+	    // }
 	    MapPanel.setMovedNode2(this.getx(), this.gety());
 	    MapPanel.setIsDragging(true);
 	    // paintComponentCustom(getGraphics());
