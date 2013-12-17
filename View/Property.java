@@ -115,8 +115,6 @@ class Property extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent arg0) {
 	if (arg0.getSource() == addUrgency) {
 	    AddUrgency	frame = new AddUrgency(this);
-	    Graphics g = ((MainWindow)SwingUtilities.getRoot(this)).scrollPane.getGraphics();
-	node.paintComponent(g);
 	}
 	if (arg0.getSource() == deleteUrgency) {
 	    if (this.list.getSelectedIndex() != -1)

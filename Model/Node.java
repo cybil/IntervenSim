@@ -57,12 +57,16 @@ public class Node implements java.io.Serializable {
     }
 
     public Urgency		getNextUrgency() {
+      if (this.urgencyList != null && this.urgencyList.size() > 0)
+      {
 	Urgency			next = this.urgencyList.get(0);
 	for (Urgency u : this.urgencyList) {
 	    if (u.getTriggerDate() < next.getTriggerDate())
 		next = u;
 	}
 	return next;
+      }
+      return (null);
     }
 
     //****************

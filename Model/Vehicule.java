@@ -6,7 +6,7 @@ public class Vehicule implements java.io.Serializable {
 	WAITING, ON_THE_ROAD, WORKING;
     }
 
-    private boolean	debug = false;
+    private boolean	debug = true;
     private float		km = 0; // number of km done
     private int[]		coord; // Coord of the vehicule
     private int[]		incomingCoord = {0, 0}; // The point from where the vehicule is comming
@@ -108,15 +108,16 @@ public class Vehicule implements java.io.Serializable {
 	int		last;
 
 	this.listOpath.add(newPath);
-	if (newPath != null && newPath.size() > 0 && this.path.size() == 0)
+	if (newPath != null && newPath.size() > 0)
 	    {
-		if (this.urgencyNode != null) // Cancel the urgency if a new path is given
+		if (this.lastUrgency != null) // Cancel the urgency if a new path is given
 		    {
 			this.lastUrgency.cancelTreatment();
 			if (debug == true) System.out.println("Vehicule.setPath(): cancel urgency.");
 		    }
 		this.state = EVehiculeState.ON_THE_ROAD;
-		this.path = this.listOpath.get(0);
+		this.path = new ArrayList<Node>();
+		this.path.addAll(this.listOpath.get(0));
 		this.listOpath.remove(0);
 		last = this.path.size() - 1;
 		last = (last > 0 ? last : 0);
@@ -201,21 +202,30 @@ public class Vehicule implements java.io.Serializable {
     {
 	int			move_rate;
 
+	speed = 1;
 	// Move to the next path availaible after the treatment of the last urgency
-	if (this.state == EVehiculeState.WAITING && this.path.size() == 0 && this.listOpath.size() > 0)
+	// if (debug == true) System.out.println("path.size() " + this.path.size());
+	// if (debug == true) System.out.println("listOpath.size() " + this.listOpath.size());
+	if ((this.path == null || this.path.size() == 0) && this.lastUrgency == null)
+	  this.state = EVehiculeState.WAITING;
+	if (this.state == EVehiculeState.WAITING
+	    && (this.path == null || this.path.size() == 0)
+	    && this.listOpath.size() > 0)
 	    {
+	      if (debug == true) System.out.println("Vehicule.moveOn: Move to the next path");
 		this.path = this.listOpath.get(0);
 		this.listOpath.remove(0);
 		this.state = EVehiculeState.ON_THE_ROAD;
 	    }
-	if (this.state != EVehiculeState.WAITING)
+	if (this.state != EVehiculeState.WAITING && this.path != null)
 	    {
+	      if (debug == true) System.out.println("Vehicule.moveOn: this.state != EVehiculeState.WAITING");
 		move_rate = this.tick_ref / this.speed;
 		this.tick_synch -= 1;
 		if (this.tick_synch <= 0)
 		    this.tick_synch = this.tick_ref;
 
-		speed_adjust += (3600 / this.speed);
+		speed_adjust += (3600 / this.speed); // Vitesse de deplacement
 		while (speed_adjust > 60)
 		    {
 			if (this.path.size() > 0)
@@ -224,14 +234,19 @@ public class Vehicule implements java.io.Serializable {
 		    }
 		speed_adjust = speed_adjust % 60;
 
-		if (this.path.size() == 0 && this.urgencyNode != null)
+		if (this.path.size() == 0 && this.urgencyNode != null && this.lastUrgency != null)
 		    this.treatUrgency();
-		else
-		    this.state = EVehiculeState.WAITING;
 
 		// if ((this.tick_sync % move_rate) == 0)
 		//   this._moveOn();
 	    }
+	else
+	{
+	  this.state = EVehiculeState.WAITING;
+	  this.path = null;
+	}
+	// else
+	//   if (debug == true) System.out.println("Vehicule.moveOn: else");
     }
 
     /*
@@ -240,12 +255,13 @@ public class Vehicule implements java.io.Serializable {
     private void		_moveOn()
     {
 	this.state = EVehiculeState.ON_THE_ROAD;
+	if (debug == true) System.out.println("Vehicule._moveOn(): Move to the next path");
 	if (this.path != null && this.path.size() > 0 && this.isFree() == false)
 	    {
 		// Init: If we are on the point, remove it from the path and go on
 		if (this.initMoveOn == false)
 		    {
-			if (debug == true) System.out.print("Vehicule.moveOn() from "
+			if (debug == true) System.out.print("Vehicule._moveOn() from "
 							    + this.incomingCoord[0] + ":"
 							    + this.incomingCoord[1]
 							    + " path: ");
@@ -271,7 +287,7 @@ public class Vehicule implements java.io.Serializable {
 				err -= dy;
 				coord[0] += dir_x;
 				if (this.debug == true)
-				    System.out.println("Vehicule.moveOn(): Moving on X to " + coord[0] + ":" + coord[1]
+				    System.out.println("Vehicule._moveOn(): Moving on X to " + coord[0] + ":" + coord[1]
 						       + " (dst node = " + x_dst + ":" + y_dst + ")");
 			    }
 			if (!(coord[0] == x_dst && coord[1] == y_dst) && e2 < dx)
@@ -279,7 +295,7 @@ public class Vehicule implements java.io.Serializable {
 				err += dx;
 				coord[1] += dir_y;
 				if (this.debug == true)
-				    System.out.println("Vehicule.moveOn(): Moving on Y to " + coord[0] + ":" + coord[1]
+				    System.out.println("Vehicule._moveOn(): Moving on Y to " + coord[0] + ":" + coord[1]
 						       + " (dst node = " + x_dst + ":" + y_dst + ")");
 			    }
 		    }
@@ -287,27 +303,30 @@ public class Vehicule implements java.io.Serializable {
 		    this._update();
 	    }
 	else if (path != null && path.size() == 0)
-	    System.out.println("Vehicule.moveOn(): Error: Trying to move whitout any path set."
+	    System.out.println("Vehicule._moveOn(): Error: Trying to move whitout any path set."
 			       + " Path = " + path.size());
 	else if (this.isFree() == true)
-	    System.out.println("Vehicule.moveOn(): Error: this.isFree() == true");
+	    System.out.println("Vehicule._moveOn(): Error: this.isFree() == true");
 	else
-	    System.out.println("Vehicule.moveOn(): Error: Trying to move with a 'null' path set.");
+	    System.out.println("Vehicule._moveOn(): Error: Trying to move with a 'null' path set.");
     }
 
     /*
     ** Manage an urgency as long as necessary
     */
     int			treatUrgency() {
+      System.out.println("Vehicule.treatUrgency()");
 	if (this.path.size() == 0 && this.urgencyNode != null)
 	    {
+	      System.out.println("Vehicule.treatUrgency(): WORKING STATE");
 		this.state = EVehiculeState.WORKING;
 		if (this.lastUrgency.getState() == Urgency.EUrgencyState.WAITING)
 		    this.lastUrgency.beginTreatment();
-		if (this.lastUrgency.Treatment() == true) // Urgency treatment finished
+		else if (this.lastUrgency.Treatment() == true) // Urgency treatment finished
 		    {
 			this.urgencyNode.removeUrgency(this.lastUrgency);
 			this.state = EVehiculeState.WAITING;
+			this.lastUrgency = null;
 		    }
 	    }
 	return (0);
