@@ -201,18 +201,27 @@ public class MapPanel extends JPanel implements
     public void		drawMagneticGrid(Graphics2D g)
     {
 	int		pas = 0;
-	float		motif[] = {10.0f, 5.0f};
-	BasicStroke	dotline = new BasicStroke(1.0f, 0, 0, 5.0f, motif, 0.0f);
+	float		motif[] = {1.0f, 1.0f};
 
+	if (unScaleX(100) < 20 || unScaleY(100) < 20)
+	{
+	  motif[0] = 10.0f;
+	  motif[1] = 10.0f;
+	}
+	BasicStroke	dotline = new BasicStroke(1.0f, 0, 0, 5.0f, motif, 0.0f);
 	g.setStroke(dotline);
 	while (pas < this.getWidth()) {
 	    g.drawLine(pas, 0, pas, this.getHeight());
 	    pas += unScaleX(100);
+	    if (unScaleX(100) < 20)
+	      pas += unScaleX(900);
 	}
 	pas = 0;
 	while (pas < this.getHeight()) {
 	    g.drawLine(0, pas, this.getWidth(), pas);
 	    pas += unScaleY(100);
+	    if (unScaleY(100) < 20)
+	      pas += unScaleY(900);
 	}
     }
 
@@ -763,8 +772,8 @@ public class MapPanel extends JPanel implements
 	if (this.selectedObject == EObjectTools.CURSOR
 	    && this.selectedBoxCoord1 != null
 	    && this.movedMap == false) {
-	    this.selectedBoxCoord2[0] = unScaleX(e.getX());
-	    this.selectedBoxCoord2[1] = unScaleY(e.getY());
+	    this.selectedBoxCoord2[0] = e.getX();
+	    this.selectedBoxCoord2[1] = e.getY();
 
 	    // Selection des elements a l'interieur du rectangle
 	    int		x1 = this.selectedBoxCoord1[0];
