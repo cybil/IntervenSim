@@ -23,7 +23,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     public SimulationManager(Map map) {
 	this.map = map;
 	//this.strategy = new StratOldestUrgency(map);
-	this.strategyList.add(0, new StratOldestUrgency(map));
+	// this.strategyList.add(0, new StratOldestUrgency(map));
     }
 
     //***************
@@ -41,15 +41,15 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     public int	getStrategy() {
     	return strategyList.indexOf(strategy);
     }
-    
+
     public ArrayList<String> getStrategyList() {
     	ArrayList<String>	list = new ArrayList<String>();
-    	
+
     	for (int i = 0; i < strategyList.size(); i++)
     		list.add(i, strategyList.get(i).getSrategyName());
     	return list;
     }
-    
+
     //***************
     // * Setters
     //***************
@@ -57,7 +57,7 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     public void			setSpeed(int newSpeed) {
 	this.speed = newSpeed;
     }
-    
+
     public void			setStrategy(int strat) {
     	if (strat <= strategyList.size())
     		strategy = strategyList.get(strat);
@@ -78,12 +78,20 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     	    }
     	}
 
+	Vehicule v = this.map.getVehicule();
+	if (v != null && v.getState() == Vehicule.EVehiculeState.WAITING
+	    && this.strategyList.size() > 0)
+	{
+	  System.out.println("SimulationManager: Setting path to vehicule");
+	  v.setPath(this.strategyList.get(0).getPath());
+	}
     	this.map.actualizeVehicule();
     }
-   
+
     public void			play(boolean display) {
 	this.state = ESimulationState.RUNNING;
-	this.timer.start();;
+	this.timer.start();
+	this.strategyList.add(0, new StratOldestUrgency(map));
     }
 
     public void			pause() {

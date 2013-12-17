@@ -44,7 +44,7 @@ public class MapPanel extends JPanel implements
     private int		y2;
     private boolean	isPressed = false;
 
-    static private boolean	mapChanged;
+    static public boolean	mapChanged;
     private int			wasOut = 0; // 0:OK - 1:Out - 2:Enter
     private boolean		wasZoomed = false;
     private Image		background;
@@ -712,7 +712,11 @@ public class MapPanel extends JPanel implements
 		// node.paintComponent(getGraphics());
 	    }
 	if (this.graphVehicule != null)
+	{
 	    this.graphVehicule.scaleImage();
+	    this.graphVehicule.setx(unScaleX(this.graphVehicule.getRealX()));
+	    this.graphVehicule.sety(unScaleY(this.graphVehicule.getRealY()));
+	}
     }
 
     public void		selectAll() {
@@ -954,7 +958,6 @@ public class MapPanel extends JPanel implements
     static void		setVehiculeAt(int x, int y) {
 	boolean		ret;
 
-	
 	ret = controller.eventCreatVehicule(x, y);
 	if (graphVehicule != null)
 	    {

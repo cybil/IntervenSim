@@ -263,6 +263,7 @@ public class Map implements java.io.Serializable {
     //**
 
     public void		actualizeVehicule() {
+      System.out.println("Map.actualizeVehicule()");
 	this.vehicule.moveOn();
     }
 
