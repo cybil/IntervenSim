@@ -97,8 +97,12 @@ public class Controller {
 	return _model.deleteNode(coord);
     }
 
+    public boolean		eventGetVehicule() {
+	return _model.getMap().hasVehicule();
+    }
+
     public boolean		eventDeleteVehicule() {
-	return _model.deleteVehicule();
+       	return _model.deleteVehicule();
     }
 	
     public boolean		eventDeleteRoad(int[] coord1, int[] coord2) {

@@ -499,14 +499,14 @@ public class MapPanel extends JPanel implements
 
 	if (this._getNode(rel_x, rel_y) == null) // Create new node
 	    {
-		newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
-					  this.nodeAttachPoint,
-					  this.nodeAttachPoint,
-					  this.nodeAttachPoint,
+		newNode = new NodeGraphic(EObjectTools.URGENCY,
+					  this.nodeUrgency,
+					  this.nodeUrgency,
+					  this.nodeUrgency,
 					  _x, _y, rel_x, rel_y);
 		// newNode.setGraphics(getGraphics());
 		nodes.add(newNode);
-		System.out.println("NODE --- Creating new graphic : " + _x + ":" + _y);
+		System.out.println("NODE --- Creating new graphic URGENCY : " + _x + ":" + _y);
 		// this.mapChanged = true;
 	    }
 	else
@@ -676,6 +676,7 @@ public class MapPanel extends JPanel implements
 	}
 	else if (e.getButton() == MouseEvent.BUTTON1
 		 && this.selectedObject == EObjectTools.VEHICULE) {
+	    System.out.println("COUCOU LES GENS !!!");
 	    this.controller.eventCreatVehicule(scaleX(e.getX()), scaleY(e.getY()));
 	}
 	if (this.selectedObject == EObjectTools.CURSOR
@@ -969,15 +970,15 @@ public class MapPanel extends JPanel implements
     }
 
     static Vector<String>	getUrgencyList(NodeGraphic n) {
-	return controller.eventGetUrgencyList(scaleX(n.getRealX()), scaleY(n.getRealY()));
+	return controller.eventGetUrgencyList(n.getRealX(), n.getRealY());
     }
 
     static void			setAttachPoint(NodeGraphic n) {
-	controller.eventEditAttachPoint(scaleX(n.getRealX()), scaleY(n.getRealY()));
+	controller.eventEditAttachPoint(n.getRealX(), n.getRealY());
     }
 
     static boolean		getAttachPoint(NodeGraphic n) {
-	return controller.eventGetAttachPoint(scaleX(n.getRealX()), scaleY(n.getRealY()));
+	return controller.eventGetAttachPoint(n.getRealX(), n.getRealY());
     }
 
     static void			deleteVehicule() {

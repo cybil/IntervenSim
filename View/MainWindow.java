@@ -295,7 +295,10 @@ public class MainWindow extends JFrame implements ActionListener {
     class PlayButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
 	    System.out.println("------> PLAY <------");
-	    controller.eventPlay();
+	    if (controller.eventGetVehicule() == false)
+		JOptionPane.showMessageDialog(null, "There is no vehicule on the map.");
+	    else
+		controller.eventPlay();
         }
     }
 

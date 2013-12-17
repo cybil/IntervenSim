@@ -87,7 +87,7 @@ class Property extends JFrame implements ActionListener {
 	this.panelButton.add(cancel);
 	this.panelButton.add(ok);
 	
-	this.listObj.addAll(MapPanel.getUrgencyList(node));
+	this.listObj.addAll(MapPanel.getUrgencyList(this.node));
 	list.updateUI();
 
 	this.panelList.setLayout(new FlowLayout());
