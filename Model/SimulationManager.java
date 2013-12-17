@@ -12,9 +12,9 @@ public class SimulationManager implements ActionListener, java.io.Serializable {
     private	ArrayList<Strategy>	strategyList = new ArrayList<Strategy>();
     private Strategy		strategy;
     // private Statistic		statistic = new Statistic();
-    private int			speed = 1000;
+    private int			speed = 1;
     private ESimulationState	state = ESimulationState.BEGIN;
-    private Timer		timer = new Timer(speed, this);
+    private Timer		timer = new Timer(1000 * speed, this);
 
     //***************
     // * Constructor

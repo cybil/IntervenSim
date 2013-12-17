@@ -61,8 +61,6 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	}
 	public void actionPerformed(ActionEvent e) {
 	    Property	prop = new Property(node);
-	    MapPanel.setSelection(this.node);
-	    MapPanel.deleteSelection();
 	}
     }
 

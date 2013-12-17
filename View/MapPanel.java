@@ -137,15 +137,15 @@ public class MapPanel extends JPanel implements
 	    nodes.remove(n);
 	    System.out.println("deleteNode: delete Node  ============");
 	    if (controller.eventDeleteNode(coord) == false)
-	      System.out.println("MapPanel.deleteNode: Unable to delete the node");
+		System.out.println("MapPanel.deleteNode: Unable to delete the node");
 	}
 	else {
 	    graphVehicule = null;
 	    System.out.println("deleteNode: delete vehicule  ============");
 	    if (controller.eventDeleteVehicule() == false)
-	    {
-	      // System.out.println("MapPanel.deleteNode: Unable to delete vehicule");
-	    }
+		{
+		    // System.out.println("MapPanel.deleteNode: Unable to delete vehicule");
+		}
 	}
     }
 
@@ -198,8 +198,8 @@ public class MapPanel extends JPanel implements
 	this.selectedObject = obj;
     }
 
-  public void		drawMagneticGrid(Graphics2D g)
-  {
+    public void		drawMagneticGrid(Graphics2D g)
+    {
 	int		pas = 0;
 	float		motif[] = {10.0f, 5.0f};
 	BasicStroke	dotline = new BasicStroke(1.0f, 0, 0, 5.0f, motif, 0.0f);
@@ -214,7 +214,7 @@ public class MapPanel extends JPanel implements
 	    g.drawLine(0, pas, this.getWidth(), pas);
 	    pas += unScaleY(100);
 	}
-  }
+    }
 
     @Override
 	public void		paintComponent(Graphics g) {
@@ -344,15 +344,15 @@ public class MapPanel extends JPanel implements
 	return null;
     }
 
-  private NodeGraphic		_getNode(int rel_x, int rel_y)
-  {
-    for (NodeGraphic node:nodes)
+    private NodeGraphic		_getNode(int rel_x, int rel_y)
     {
-      if (node.getRealX() == rel_x && node.getRealY() == rel_y)
-	return (node);
+	for (NodeGraphic node:nodes)
+	    {
+		if (node.getRealX() == rel_x && node.getRealY() == rel_y)
+		    return (node);
+	    }
+	return (null);
     }
-    return (null);
-  }
 
   private boolean			is_scrolled()
   {
@@ -378,42 +378,39 @@ public class MapPanel extends JPanel implements
 	int	_y = unScaleY(rel_y);
 
 	if (this._getNode(rel_x, rel_y) == null) // Create new node
-	{
-	  newNode = new NodeGraphic(EObjectTools.NODE,
-				    this.nodeNormal,
-				    this.nodeAttachPoint,
-				    this.nodeUrgency,
-				    _x, _y, rel_x, rel_y);
-	    // newNode.paintComponent(getGraphics());
-	  // newNode.setGraphics(getGraphics());
-	  nodes.add(newNode);
-	  System.out.println("NODE --- Creating new graphic : " + _x + ":" + _y);
-	  // this.mapChanged = true;
-	}
+	    {
+		newNode = new NodeGraphic(EObjectTools.NODE,
+					  this.nodeNormal,
+					  this.nodeAttachPoint,
+					  this.nodeUrgency,
+					  _x, _y, rel_x, rel_y);
+		// newNode.setGraphics(getGraphics());
+		nodes.add(newNode);
+		System.out.println("NODE --- Creating new graphic : " + _x + ":" + _y);
+		// this.mapChanged = true;
+	    }
 	else // Search existing node
-	{
-//	newNode = nodes.get(nodes_it);
-	  newNode = this._getNode(rel_x, rel_y);
-	  if (nodes_it != -1)
-	    newNode = nodes.get(nodes_it);
-	  else
-	    newNode = nodes.get(nodes.size() - 1);
-	  if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
-	      || newNode.getx() != _x || newNode.gety() != _y)
-	  {
-	    newNode.setx(_x);
-	    newNode.sety(_y);
-	    newNode.setRealX(rel_x);
-	    newNode.setRealY(rel_y);
-	    // nodes.set(nodes_it, newNode);
-	    System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
-	    // return (newNode);
-	  }
-	  newNode.paintComponentCustom(getGraphics());
-	}
-	// if (is_scrolled())
+	    {
+		//	newNode = nodes.get(nodes_it);
+		newNode = this._getNode(rel_x, rel_y);
+		if (nodes_it != -1)
+		    newNode = nodes.get(nodes_it);
+		else
+		    newNode = nodes.get(nodes.size() - 1);
+		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
+		    || newNode.getx() != _x || newNode.gety() != _y)
+		    {
+			newNode.setx(_x);
+			newNode.sety(_y);
+			newNode.setRealX(rel_x);
+			newNode.setRealY(rel_y);
+			// nodes.set(nodes_it, newNode);
+			System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
+			// return (newNode);
+		    }
+	    }
+	newNode.paintComponentCustom(getGraphics());
 	return (newNode);
-	// return (null);
     }
 
     private NodeGraphic		_displayMapAttachPoint(String s, int nodes_it)
@@ -457,6 +454,7 @@ public class MapPanel extends JPanel implements
 	int	_y = unScaleY(rel_y);
 
 	if (this.graphVehicule == null) {
+	    System.out.println("---> CREATE VEHICULE <----");
 	    newVehicule = new VehiculeGraphic(this.vehicule, _x, _y,
 					      rel_x, rel_y);
 	    this.graphVehicule = newVehicule;
@@ -478,6 +476,8 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
+	if (_getNode(rel_x, rel_y).type != EObjectTools.URGENCY)
+	    deleteNode(_getNode(rel_x, rel_y));
 	while (nodes.size() <= nodes_it)
 	    {
 		nodes.add(new NodeGraphic(EObjectTools.URGENCY,
@@ -572,10 +572,10 @@ public class MapPanel extends JPanel implements
 		}
 	}
 	if (nodes_it > 0) // To remove old node
-	{
-	  nodes.clear();
-	  nodes.addAll(new_nodes);
-	}
+	    {
+		nodes.clear();
+		nodes.addAll(new_nodes);
+	    }
 	if (isDragging == false) // To remove old road
 	    {
 		while (roads.size() > roads_it) // Cleaning useless road (to remove the 2Dline on the screen also)
@@ -662,14 +662,14 @@ public class MapPanel extends JPanel implements
 		node.rescaleCoord(getW(), getH(), maxX, maxY);
 	    }
 	for (NodeGraphic node:nodes)
-	{
+	    {
 		node.scaleImage();
-		// node.paintComponentCustom(getGraphics());
-		// node.paintComponent(getGraphics());
-	}
-	if (this.graphVehicule != null)
-	  this.graphVehicule.scaleImage();
-    }
+	    // node.paintComponentCustom(getGraphics());
+	    // node.paintComponent(getGraphics());
+	    }
+    if (this.graphVehicule != null)
+	this.graphVehicule.scaleImage();
+}
 
     public void		selectAll() {
 	for (NodeGraphic n : this.nodes) {
@@ -739,8 +739,8 @@ public class MapPanel extends JPanel implements
 	if (this.selectedObject == EObjectTools.CURSOR
 	    && this.selectedBoxCoord1 != null
 	    && this.movedMap == false) {
-	    this.selectedBoxCoord2[0] = e.getX();
-	    this.selectedBoxCoord2[1] = e.getY();
+	    this.selectedBoxCoord2[0] = unScaleX(e.getX());
+	    this.selectedBoxCoord2[1] = unScaleY(e.getY());
 
 	    // Selection des elements a l'interieur du rectangle
 	    int		x1 = this.selectedBoxCoord1[0];
