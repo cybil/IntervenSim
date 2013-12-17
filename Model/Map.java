@@ -21,7 +21,11 @@ public class Map implements java.io.Serializable {
     //***************
 
     public Vector<String>	getUrgencyList(int[] coord) {
-	ArrayList<Urgency>	list = this.graph.getNode(coord).getUrgency();
+      Node			node = this.graph.getNode(coord);
+
+      if (node != null)
+      {
+	ArrayList<Urgency>	list = node.getUrgency();
 	Vector<String>		ret = new Vector<String>();
 
 	for (Urgency u : list) {
@@ -30,6 +34,10 @@ public class Map implements java.io.Serializable {
 	    ret.add(str);
 	}
 	return ret;
+      }
+      else
+	System.out.println("Map.getUrgencyList: Error Unable to find Node");
+      return (new Vector<String>());
     }
 
     public boolean		addNode(int x, int y) {

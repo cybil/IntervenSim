@@ -201,12 +201,12 @@ public class MapPanel extends JPanel implements
     public void		drawMagneticGrid(Graphics2D g)
     {
 	int		pas = 0;
-	float		motif[] = {1.0f, 1.0f};
+	float		motif[] = {10.0f, 10.0f};
 
 	if (unScaleX(100) < 20 || unScaleY(100) < 20)
 	{
-	  motif[0] = 10.0f;
-	  motif[1] = 10.0f;
+	  motif[0] = 1.0f;
+	  motif[1] = 1.0f;
 	}
 	BasicStroke	dotline = new BasicStroke(1.0f, 0, 0, 5.0f, motif, 0.0f);
 	g.setStroke(dotline);
@@ -516,6 +516,15 @@ public class MapPanel extends JPanel implements
 		    newNode = nodes.get(nodes_it);
 		else
 		    newNode = nodes.get(nodes.size() - 1);
+
+		if (newNode.type == MapPanel.EObjectTools.NODE)
+		{
+		  newNode.setImgNormal(this.nodeUrgency);
+		  newNode.setImgSelected(this.nodeUrgency);
+		  newNode.setImgPassedOver(this.nodeUrgency);
+		  newNode.type = MapPanel.EObjectTools.URGENCY;
+		}
+
 		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
 		    || newNode.getx() != _x || newNode.gety() != _y)
 		    {
@@ -523,9 +532,6 @@ public class MapPanel extends JPanel implements
 			newNode.sety(_y);
 			newNode.setRealX(rel_x);
 			newNode.setRealY(rel_y);
-			newNode.setImgNormal(this.nodeUrgency);
-			newNode.setImgSelected(this.nodeUrgency);
-			newNode.setImgPassedOver(this.nodeUrgency);
 			// nodes.set(nodes_it, newNode);
 			System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
 			// return (newNode);
@@ -593,9 +599,11 @@ public class MapPanel extends JPanel implements
 		    }
 		    else if (s.charAt(0) == 'A') {
 		    	newNode = this._displayMapAttachPoint(s, nodes_it++);
+			new_nodes.add(newNode);
 		    }
 		    else if (s.charAt(0) == 'U') {
 		    	newNode = this._displayMapUrgency(s, nodes_it++);
+			new_nodes.add(newNode);
 		    }
 		    if (newNode != null) {
 			newNode.setLayout(null);
@@ -951,8 +959,8 @@ public class MapPanel extends JPanel implements
     }
 
     static void		moveNode(NodeGraphic n, int x, int y) {
-	int[]		coord1 = {scaleX(n.getx()), scaleY(n.gety())};
-	int[]		coord2 = {scaleX(x), scaleY(y)};
+	int[]		coord1 = {n.getRealX(), n.getRealY()};
+	int[]		coord2 = {x, y};
 
 	System.out.println("MapPanel.moveNode");
 	if (controller.eventEditNodeCoord(coord1, coord2) == false)
@@ -960,24 +968,30 @@ public class MapPanel extends JPanel implements
     }
 
     static void		addUrgencyToNode(NodeGraphic n, float trigg, float treat, int id) {
-	controller.eventAddNodeUrgency(scaleX(n.getRealX()), scaleY(n.getRealY()),
+	controller.eventAddNodeUrgency(n.getRealX(), n.getRealY(),
 				       Urgency.EUrgencyState.SLEEPING, trigg, treat, id);
     }
 
     static void		clearUrgency(NodeGraphic n) {
-	controller.eventClearUrgency(scaleX(n.getRealX()), scaleY(n.getRealY()));
+	controller.eventClearUrgency(n.getRealX(), n.getRealY());
     }
 
     static Vector<String>	getUrgencyList(NodeGraphic n) {
-	return controller.eventGetUrgencyList(scaleX(n.getRealX()), scaleY(n.getRealY()));
+      if (n != null)
+	return controller.eventGetUrgencyList(n.getRealX(), n.getRealY());
+      System.out.println("MapPanel.getUrgencyList: n is null");
+      return (new Vector<String>());
     }
 
     static void			setAttachPoint(NodeGraphic n) {
-	controller.eventEditAttachPoint(scaleX(n.getRealX()), scaleY(n.getRealY()));
+      if (n != null)
+	controller.eventEditAttachPoint(n.getRealX(), n.getRealY());
     }
 
     static boolean		getAttachPoint(NodeGraphic n) {
-	return controller.eventGetAttachPoint(scaleX(n.getRealX()), scaleY(n.getRealY()));
+      if (n != null)
+	return controller.eventGetAttachPoint(n.getRealX(), n.getRealY());
+      return (false);
     }
 
     static void			deleteVehicule() {
