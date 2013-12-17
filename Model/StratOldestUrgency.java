@@ -43,7 +43,7 @@ public class StratOldestUrgency extends Strategy implements java.io.Serializable
   }
   
   @Override
-  String getSrategyName() {
+  String getStrategyName() {
 	  return _name;
   }
 }

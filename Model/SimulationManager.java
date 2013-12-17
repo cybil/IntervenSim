@@ -12,10 +12,10 @@ public class SimulationManager implements Serializable, ActionListener {
     private Map			map;
     private	ArrayList<Strategy>	strategyList = new ArrayList<Strategy>();
     private Strategy		strategy;
-    // private Statistic		statistic = new Statistic();
+    private Statistic		statistic = new Statistic();
     private int			speed = 1;
     private ESimulationState	state = ESimulationState.BEGIN;
-  private Timer		timer = new Timer(1000 / speed, this);
+    private Timer		timer = new Timer(1000 / speed, this);
 
     //***************
     // * Constructor
@@ -30,6 +30,10 @@ public class SimulationManager implements Serializable, ActionListener {
     //***************
     // * Getters
     //***************
+
+    public Statistic	getStat() {
+	return this.statistic;
+    }
 
     public int		getSpeed() {
 	return this.speed;
@@ -47,7 +51,7 @@ public class SimulationManager implements Serializable, ActionListener {
     	ArrayList<String>	list = new ArrayList<String>();
 
     	for (int i = 0; i < strategyList.size(); i++)
-    		list.add(i, strategyList.get(i).getSrategyName());
+    		list.add(i, strategyList.get(i).getStrategyName());
     	return list;
     }
 
@@ -86,7 +90,6 @@ public class SimulationManager implements Serializable, ActionListener {
     		    u.setState(Urgency.EUrgencyState.WAITING);
     	    }
     	}
-
 	Vehicule v = this.map.getVehicule();
 	// System.out.println("SimulationManager: " + v);
 	// System.out.println("SimulationManager: " + this.strategyList.size());
@@ -106,6 +109,12 @@ public class SimulationManager implements Serializable, ActionListener {
 	    path = this.strategyList.get(0).getWaitingPath();
 	  v.setPath(path);
 	}
+	if (v.getState() == Vehicule.EVehiculeState.ON_THE_ROAD)
+	    this.statistic.setMidWaiting();
+	
+	this.statistic.setKm((int)v.getKm());
+	this.statistic.setSpeed(v.getSpeed());
+	this.statistic.setStrategy(this.strategyList.get(0).getStrategyName());
     	this.map.actualizeVehicule();
     }
 
