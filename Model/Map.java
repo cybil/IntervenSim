@@ -5,7 +5,7 @@ public class Map implements java.io.Serializable {
 
     private Graph		graph = new Graph();
     private float		scale = 1;
-    private Vehicule		vehicule;
+    private Vehicule		vehicule = new Vehicule();
     private Image		image = null;
     private int			zoom = 100;
 
@@ -14,6 +14,24 @@ public class Map implements java.io.Serializable {
     //******************
 
     public Map() {
+    }
+    
+    public Map(Map map) {
+    	this.scale = map.getScale();
+    	
+    	this.graph = new Graph(map.getGraph());
+    	/*if (this.vehicule != null)
+    		this.vehicule = new Vehicule(map.getVehicule());*/
+    	vehicule = map.vehicule;
+    	this.image = map.getImage();
+    	this.zoom = map.getZoom();
+    	
+//    	graph = new Graph(map.graph);
+//    	scale = map.scale;
+//    	//vehicule = new Vehicule(map.vehicule);
+//    	vehicule = map.vehicule;
+//    	image = map.image;
+//    	zoom = map.zoom;
     }
 
     //***************
@@ -183,11 +201,10 @@ public class Map implements java.io.Serializable {
 	// Road:	R:x1,y1:x2,y2
 
 	// Ajout du vehicule
-	if (this.vehicule != null) {
-	    String			formatVehicule = "V:";
-	    formatVehicule += this.vehicule.getCoord()[0] + "," + this.vehicule.getCoord()[1];
-	    format.add(formatVehicule);
-	}
+	//if (this.vehicule != null) {
+	//    String			formatVehicule = "V:";
+	//    formatVehicule += this.vehicule.getCoord()[0] + "," + this.vehicule.getCoord()[1];
+	//    format.add(formatVehicule);
 
 	// Ajout des noeuds
 	ArrayList<GraphNode>	nodes = this.graph.getGraphNode();
@@ -296,5 +313,41 @@ public class Map implements java.io.Serializable {
     		System.out.println("");
     	    }
     }
+
+	public Graph getGraph() {
+		return graph;
+	}
+
+	public void setGraph(Graph graph) {
+		this.graph = graph;
+	}
+
+	public float getScale() {
+		return scale;
+	}
+
+	public void setScale(float scale) {
+		this.scale = scale;
+	}
+
+	public Vehicule getVehicule() {
+		return vehicule;
+	}
+
+	public void setVehicule(Vehicule vehicule) {
+		this.vehicule = vehicule;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public int getZoom() {
+		return zoom;
+	}
 
 }

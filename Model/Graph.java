@@ -17,7 +17,7 @@ public class Graph implements java.io.Serializable{
     }
 
     public Graph(Graph graph) {
-	this.graphNode = graph.graphNode;
+	this.graphNode = (ArrayList<GraphNode>) graph.graphNode.clone();
     }
 
     //*****************
@@ -100,26 +100,21 @@ public class Graph implements java.io.Serializable{
 	int			status;
 	int			roadLength;
 
-	if (node1 != null && node2 != null)
-	{
-	  System.out.println("=========== NEW ROAD ===========");
-	  status = 0;
-	  roadLength = (int)Vehicule.pythagore(node1.getCoord(), node2.getCoord());
-	  for (GraphNode n : this.graphNode) {
+	System.out.println("=========== NEW ROAD ===========");
+	status = 0;
+	roadLength = (int)Vehicule.pythagore(node1.getCoord(), node2.getCoord());
+	for (GraphNode n : this.graphNode) {
 	    if (n.getData() == node1) {
-	      n.addNeighbor(new GraphNode(node2), roadLength);
-	      status++;
+		n.addNeighbor(new GraphNode(node2), roadLength);
+		status++;
 	    }
 	    if (n.getData() == node2) {
-	      n.addNeighbor(new GraphNode(node1), roadLength);
-	      status++;
+		n.addNeighbor(new GraphNode(node1), roadLength);
+		status++;
 	    }
 	    if (status == 2)
-	      return true;
-	  }
+		return true;
 	}
-	else
-	  System.out.println("Graph.creatRoad: node1 or node2 is null");
 	return false;
     }
 
