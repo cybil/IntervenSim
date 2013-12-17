@@ -104,8 +104,8 @@ public class Statistic implements java.io.Serializable {
 	public int getEfficiency() {
 		int res = 0;
 
-		if (_urgencyInfo.size() != 0)
-			return (res);
+		if (_urgencyInfo.size() == 0)
+		    return (res);
 
 		for (int i = 0; i < _urgencyInfo.size(); i++)
 			res += (_urgencyInfo.get(i)._endDate - _urgencyInfo.get(i)._triggerDate);

@@ -127,6 +127,10 @@ public class Graph implements java.io.Serializable{
     //	Delete
     //************
 
+    public void			clearGraph() {
+	this.graphNode.clear();
+    }
+
     public boolean		deleteNode(int[] coord) {
 	for (GraphNode n : this.graphNode) {
 	    n.deleteNeighbor(this.getNode(coord));

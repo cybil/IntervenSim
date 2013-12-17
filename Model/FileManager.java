@@ -1,3 +1,5 @@
+import java.awt.Image;
+import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -167,108 +169,40 @@ public class FileManager {
 	return true;
     }
 	
-    public boolean importImage(File p_file) {
-	FileChannel in = null;
-	FileChannel out = null;
-		 
+    public boolean importImage(File p_file) {		 
 	try {
-	    in = new FileInputStream(p_file).getChannel();
-	    out = new FileOutputStream("Background-"+ p_file.getName()).getChannel();
-		 
-	    in.transferTo(0, in.size(), out);
+	    if (p_file.exists() == false)
+		return false;
+	    Image	newImage = ImageIO.read(p_file);
+	    _map.setBackground(newImage);
 	} catch (Exception e) {
 	    e.printStackTrace();
-	} finally {
-	    if(in != null) {
-		try {
-		    in.close();
-		} catch (IOException e) {
-		    return false;
-		}
-	    }
-	    if(out != null) {
-		try {
-		    out.close();
-		} catch (IOException e) {
-		    return false;
-		}
-	    }
 	}
-	return true;
-    }
-	
-    public boolean saveSim(File p_file) {
-	System.out.println("---> Save sim File: " + p_file.getAbsolutePath() + " <----");
-	try {
-	    FileOutputStream file = new FileOutputStream(p_file);
-	    ObjectOutputStream oos = new ObjectOutputStream(file);
-	    oos.writeObject(_sim);
-	    oos.flush();
-	    oos.close();
-	}
-	catch (java.io.IOException e) {
-	    e.printStackTrace();
-	    return false;
-	}
-	this._fileSim = p_file;
-	return true;
-    }
-	
-    public boolean loadSim(File p_file) {
-	System.out.println("---> Load sim File: " + p_file.getAbsolutePath() + " <----");
-	if (p_file.exists() == false)
-	    return false;
-	try {
-	    FileInputStream fichier = new FileInputStream(p_file);
-	    ObjectInputStream ois = new ObjectInputStream(fichier);
-	    _sim = (SimulationManager)ois.readObject();
-	    ois.close();
-	}
-	catch (java.io.IOException e) {
-	    e.printStackTrace();
-	    return false;
-	}
-	catch (ClassNotFoundException e) {
-	    e.printStackTrace();
-	    return false;
-	}
-	this._fileSim = p_file;
 	return true;
     }
 	
     public boolean saveStat(File p_file) {
 	System.out.println("---> Save stat File: " + p_file.getAbsolutePath() + " <----");
+	System.out.println("---> Save map File: " + p_file.getAbsolutePath() + " <----");
 	try {
-	    FileOutputStream file = new FileOutputStream(p_file);
-	    ObjectOutputStream oos = new ObjectOutputStream(file);
-	    oos.writeObject(_stat);
-	    oos.flush();
-	    oos.close();
+	    FileOutputStream fos = new FileOutputStream(p_file);
+	    String	s = "";
+
+	    s += "----- Donnees -----\n"
+		+ "  Kilometres parcourus: " + _stat.getKm()
+		+ "\n  Vitesse: " + _stat.getSpeed()
+		+ "\n  Strategie: " + _stat.getStrategy()
+		+ "\n----- Statistiques -----\n  Temps d'attente moyen: " + _stat.getMidWaiting()
+		+ "\n  Efficacite: " + _stat.getEfficiency()
+		+ "\n  Nombre d'urgence traitees :" + _stat.getNbTreatedUrgency()
+		+ "\n  Temps total: " + _stat.getTimeFinal();
+
+	    System.out.println(s);
+	    fos.write(s.getBytes());
+	} catch (Exception e) {
+	    System.out.println(e.toString());
 	}
-	catch (java.io.IOException e) {
-	    e.printStackTrace();
-	    return false;
-	}
-	this._fileStat = p_file;
-	return true;
-    }
-	
-    public boolean loadStat(File p_file) throws IOException, ClassNotFoundException {
-	System.out.println("---> Load stat File: " + p_file.getAbsolutePath() + " <----");
-	try {
-	    FileInputStream fichier = new FileInputStream(p_file);
-	    ObjectInputStream ois = new ObjectInputStream(fichier);
-	    _stat = (Statistic) ois.readObject();
-	    ois.close();
-	}
-	catch (java.io.IOException e) {
-	    e.printStackTrace();
-	    return false;
-	}
-	catch (ClassNotFoundException e) {
-	    e.printStackTrace();
-	    return false;
-	}
+
 	this._fileStat = p_file;
 	return true;
     }

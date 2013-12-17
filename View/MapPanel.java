@@ -231,17 +231,19 @@ public class MapPanel extends JPanel implements
 	int		view_x;
 	int		view_y;
 	Graphics2D	g2 = (Graphics2D)g;
-	// Image		bck;
+	Image		bck;
 
 	super.paintComponent(g);
+
+	// Draw background image
+	if ((bck = this.controller._model.getMap().getBackground()) != null)
+	    g.drawImage(bck, 0, 0, this);
+
 	this.drawMagneticGrid(g2);
 	AffineTransform at = g2.getTransform();
 
 	g2.setColor(Color.BLACK);
 
-	// Draw background image
-	// if ((bck = this.controller._model.getMap().getBackground()) != null)
-	//     g.drawImage(bck, 0, 0, this);
 
 	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
@@ -728,11 +730,14 @@ public class MapPanel extends JPanel implements
 	}
     }
 
+    static boolean	vehiculeSelected = false;
+
     public void		selectAll() {
 	for (NodeGraphic n : this.nodes) {
 	    this.selectedItemsList.add(n);
 	    n.setIsSelected(true);
 	}
+	vehiculeSelected = true;
 
     }
 
@@ -749,6 +754,10 @@ public class MapPanel extends JPanel implements
     static void		deleteSelection() {
 	for (NodeGraphic n : selectedItemsList) {
 	    deleteNode(n);
+	}
+	if (vehiculeSelected == true) {
+	    deleteVehicule();
+	    vehiculeSelected = false;
 	}
     }
 

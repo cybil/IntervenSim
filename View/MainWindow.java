@@ -180,7 +180,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	this.buttonBar.openFileButton.addActionListener(new OpenFileButtonListener());
 	this.buttonBar.saveFileButton.addActionListener(new SaveFileButtonListener());
 	this.buttonBar.loadMapButton.addActionListener(new LoadMapButtonListener());
-	// this.buttonBar.exportStatButton.addActionListener(new ExportStatButtonListener());
+	this.buttonBar.exportStatButton.addActionListener(new ExportStatButtonListener());
 	this.buttonBar.undoButton.addActionListener(new UndoButtonListener());
 	this.buttonBar.redoButton.addActionListener(new RedoButtonListener());
     	this.buttonBar.selectAllButton.addActionListener(new SelectAllButtonListener());
@@ -247,9 +247,28 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
     // ActionListener class for ButtonBar
+    class ExportStatButtonListener implements ActionListener{
+	public void actionPerformed(ActionEvent arg0) {
+	    JFileChooser chooser = new JFileChooser();
+
+	    // FileFilter filter = new FileFilter();
+	    // filter.addExtension("jpg");
+	    // filter.addExtension("gif");
+	    // filter.setDescription("JPG & GIF Images");
+	    // chooser.setFileFilter(filter);
+	    int returnVal = chooser.showOpenDialog(null);
+	    if (returnVal == JFileChooser.APPROVE_OPTION) {
+	    	System.out.println("You chose to open this file: " +
+	    			   chooser.getSelectedFile().getAbsolutePath());
+		controller.eventSaveStat(new File(chooser.getSelectedFile().getAbsolutePath()));
+	    }
+	}
+    }
+
+
     class NewButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-	    
+	    controller.eventNewFile();
         }
     }
 
@@ -266,8 +285,10 @@ public class MainWindow extends JFrame implements ActionListener {
 	    int returnVal = chooser.showOpenDialog(null);
 	    if (returnVal == JFileChooser.APPROVE_OPTION) {
 	    	System.out.println("You chose to open this file: " +
-	    			   chooser.getSelectedFile().getName());
-		controller.eventLoadMap(new File(chooser.getSelectedFile().getName()));
+	    			   chooser.getSelectedFile().getAbsolutePath());
+		if (controller.eventLoadMap(new File(chooser.getSelectedFile().getAbsolutePath())) == false)
+		    JOptionPane.showMessageDialog(null, "File not found: " +
+						  chooser.getSelectedFile().getName(), "Error", 0);
 	    }	    
         }
     }
@@ -284,8 +305,8 @@ public class MainWindow extends JFrame implements ActionListener {
 	    int returnVal = chooser.showOpenDialog(null);
 	    if (returnVal == JFileChooser.APPROVE_OPTION) {
 	    	System.out.println("You chose to open this file: " +
-	    			   chooser.getSelectedFile().getName());
-		controller.eventSaveMap(new File(chooser.getSelectedFile().getName()));
+	    			   chooser.getSelectedFile().getAbsolutePath());
+		controller.eventSaveMap(new File(chooser.getSelectedFile().getAbsolutePath()));
 	    }
         }
     }
@@ -303,9 +324,10 @@ public class MainWindow extends JFrame implements ActionListener {
 	    int returnVal = chooser.showOpenDialog(null);
 	    if (returnVal == JFileChooser.APPROVE_OPTION) {
 	    	System.out.println("You chose to open this file: " +
-	    			   chooser.getSelectedFile().getName());
-		if (controller.eventLoadMap(new File(chooser.getSelectedFile().getName())) == false)
-		    JOptionPane.showMessageDialog(null, "File not found !", "Error", 0);
+	    			   chooser.getSelectedFile().getAbsolutePath());
+		if (controller.eventImportImage(new File(chooser.getSelectedFile().getAbsolutePath())) == false)
+		    JOptionPane.showMessageDialog(null, "File not found: " +
+						  chooser.getSelectedFile().getAbsolutePath(), "Error", 0);
 	    }
 	    // controller.eventLoadMap();
         }

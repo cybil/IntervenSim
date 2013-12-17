@@ -108,6 +108,10 @@ public class Map implements java.io.Serializable {
     //	Delete
     //***************
 
+    public void			clearMap() {
+	this.graph.clearGraph();
+    }
+
     public boolean		deleteVehicule() {
 	if (this.vehicule != null)
 	    {

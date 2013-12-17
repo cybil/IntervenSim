@@ -163,6 +163,11 @@ public class Controller {
 		
     //Fonction for FileManager
 		
+    public boolean	eventNewFile() {
+	_model.getMap().clearMap();
+	return true;
+    }
+
     public boolean eventSaveMap(File p_file) {
 	return _model.getFileManager().saveMap(p_file);
     }
@@ -174,23 +179,11 @@ public class Controller {
     public boolean eventImportImage(File p_file) {
 	return _model.getFileManager().importImage(p_file);
     }
-		
-    public boolean eventSaveSim(File p_file) {
-	return _model.getFileManager().saveSim(p_file);
-    }
-		
-    public boolean eventLoadSim(File p_file) {
-	return _model.getFileManager().loadSim(p_file);
-    }
-		
+
     public boolean eventSaveStat(File p_file) {
 	return _model.getFileManager().saveStat(p_file);
     }
-		
-    public boolean eventLoadStat(File p_file) throws ClassNotFoundException, IOException {
-	return _model.getFileManager().loadStat(p_file);
-    }
-       
+		       
     public void eventSetStrategy(int strat) {
 	_model.getSimulationManager().setStrategy(strat);
     }
