@@ -443,10 +443,11 @@ public class MapPanel extends JPanel implements
 					      rel_x, rel_y);
 	    this.graphVehicule = newVehicule;
 	}
-	newVehicule.setx(_x);
-	newVehicule.sety(_y);
-	newVehicule.setRealX(rel_x);
-	newVehicule.setRealY(rel_y);
+	this.graphVehicule.setx(_x);
+	this.graphVehicule.sety(_y);
+	this.graphVehicule.setRealX(rel_x);
+	this.graphVehicule.setRealY(rel_y);
+	this.graphVehicule.paintComponent(getGraphics());
 	return (newVehicule);
     }
 
@@ -653,6 +654,8 @@ public class MapPanel extends JPanel implements
 		node.paintComponentCustom(getGraphics());
 		node.paintComponent(getGraphics());
 	}
+	if (this.graphVehicule != null)
+	  this.graphVehicule.scaleImage();
     }
 
     public void		selectAll() {
@@ -679,36 +682,36 @@ public class MapPanel extends JPanel implements
 	}
     }
 
-    public void mousePressed(MouseEvent e) {
-	if (e.getButton() == MouseEvent.BUTTON3) {
-	    for (RoadGraphic r : this.roads) {
-		if (r.containsPoint(this.mouseX, this.mouseY) <= 6) {
-		    this.toDel.setRoad(r);
-		    this.toDel.setNodes(null);
-		    this.jpm.show(this, e.getX(), e.getY());
-		}
-	    }
-	    if (this.selectedItemsList.size() != 0) {
-		this.toDel.setRoad(null);
-		this.toDel.setNodes(this.selectedItemsList);
-		this.jpm.show(this, e.getX(), e.getY());
-	    }
+  public void mousePressed(MouseEvent e) {
+    if (e.getButton() == MouseEvent.BUTTON3) {
+      for (RoadGraphic r : this.roads) {
+	if (r.containsPoint(this.mouseX, this.mouseY) <= 6) {
+	  this.toDel.setRoad(r);
+	  this.toDel.setNodes(null);
+	  this.jpm.show(this, e.getX(), e.getY());
 	}
-	if (this.selectedObject == EObjectTools.CURSOR
-	    && e.getButton() == MouseEvent.BUTTON1) {
-	    // if (this.selectedItemsList.size() == 0) {
-	    this.selectedBoxCoord1 = new int[2];
-	    this.selectedBoxCoord1[0] = e.getX();
-	    this.selectedBoxCoord1[1] = e.getY();
-	    // }
-	}
-	if (this.selectedObject == EObjectTools.CURSOR
-	    && e.getButton() == MouseEvent.BUTTON3) {
-	    this.coordMouseOld[0] = e.getX();
-	    this.coordMouseOld[1] = e.getY();
-	    this.movedMap = true;
-	}
+      }
+      if (this.selectedItemsList.size() != 0) {
+	this.toDel.setRoad(null);
+	this.toDel.setNodes(this.selectedItemsList);
+	this.jpm.show(this, e.getX(), e.getY());
+      }
     }
+    if (this.selectedObject == EObjectTools.CURSOR
+	&& e.getButton() == MouseEvent.BUTTON1) {
+      // if (this.selectedItemsList.size() == 0) {
+      this.selectedBoxCoord1 = new int[2];
+      this.selectedBoxCoord1[0] = e.getX();
+      this.selectedBoxCoord1[1] = e.getY();
+      // }
+    }
+    if (this.selectedObject == EObjectTools.CURSOR
+	&& e.getButton() == MouseEvent.BUTTON3) {
+      this.coordMouseOld[0] = e.getX();
+      this.coordMouseOld[1] = e.getY();
+      this.movedMap = true;
+    }
+  }
 
     public void	mouseMoved(MouseEvent e) {
 	this.mouseX = e.getX();
