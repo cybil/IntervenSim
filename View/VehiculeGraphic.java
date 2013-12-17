@@ -103,11 +103,11 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
 
     public void		setx(int new_x) {
 
-	this._node_x = new_x;
+      this._node_x = new_x;// - this._imgNormal.getWidth(null) / 2;
     }
 
     public void		sety(int new_y) {
-	this._node_y = new_y;
+      this._node_y = new_y;// -  - this._imgNormal.getHeight(null) / 2;;
     }
 
     public int		getRealX() {
@@ -155,10 +155,17 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
     }
 
     public void		paintComponent(Graphics g) {
-	super.paintComponent(g);
-	this.setBounds(this.getx(), this.gety(),
-		       this.currentImg.getWidth(null), this.currentImg.getHeight(null));
-	g.drawImage(this.currentImg, 0, 0, this);
+      int		w;
+      int		h;
+
+      super.paintComponent(g);
+      w = this.currentImg.getWidth(null);
+      h = this.currentImg.getHeight(null);
+
+      this.setBounds(this.getx() - w/2,
+		     this.gety() - h/2,
+		     this.currentImg.getWidth(null), this.currentImg.getHeight(null));
+      g.drawImage(this.currentImg, 0, 0, this);
     }
 
     public void mouseClicked(MouseEvent e) {

@@ -442,12 +442,13 @@ public class MapPanel extends JPanel implements
 	    newVehicule = new VehiculeGraphic(this.vehicule, _x, _y,
 					      rel_x, rel_y);
 	    this.graphVehicule = newVehicule;
+	    this.graphVehicule.paintComponent(getGraphics());
 	}
 	this.graphVehicule.setx(_x);
 	this.graphVehicule.sety(_y);
 	this.graphVehicule.setRealX(rel_x);
 	this.graphVehicule.setRealY(rel_y);
-	this.graphVehicule.paintComponent(getGraphics());
+	// this.graphVehicule.paintComponent(getGraphics());
 	return (newVehicule);
     }
 

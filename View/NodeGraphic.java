@@ -111,8 +111,6 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
 	tmp = this.imgNormal.getWidth(null);
 	new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null)) + 1;
-
-	new_img_heigth = this.imgNormal.getHeight(null);
 	new_img_heigth = MapPanel.unScaleY(this._imgNormal.getHeight(null)) + 1;
 	this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
 							   new_img_heigth,
@@ -130,12 +128,10 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     public void		setx(int new_x) {
 
 	this._node_x = new_x;
-	// this._node_x += -25;
     }
 
     public void		sety(int new_y) {
 	this._node_y = new_y;
-	// this._node_y += -25;
     }
 
     public void		setIsSelected(boolean b) {
