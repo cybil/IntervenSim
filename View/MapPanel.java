@@ -364,7 +364,7 @@ public class MapPanel extends JPanel implements
 					  _x, _y, rel_x, rel_y);
 		// newNode.setGraphics(getGraphics());
 		nodes.add(newNode);
-		System.out.println("NODE --- Creating new graphic");
+		System.out.println("NODE --- Creating new graphic : " + _x + ":" + _y);
 		// this.mapChanged = true;
 	    }
 	else // Search existing node
@@ -506,12 +506,12 @@ public class MapPanel extends JPanel implements
 	if (road.getx1() != x1 || road.getx2() != x2
 	    || road.gety1() != y1 || road.gety2() != y2)
 	    {
-		System.out.println("Changing road coord");
-		System.out.print("From(old) "+road.getx1()+":"+road.gety1());
-		System.out.println(" to(old)"+road.getx2()+":"+road.gety2());
+		// System.out.println("Changing road coord");
+		// System.out.print("From(old) "+road.getx1()+":"+road.gety1());
+		// System.out.println(" to(old)"+road.getx2()+":"+road.gety2());
 
-		System.out.print("From(new) "+x1+":"+y1);
-		System.out.println(" to(new)"+x2+":"+y2);
+		// System.out.print("From(new) "+x1+":"+y1);
+		// System.out.println(" to(new)"+x2+":"+y2);
 		road.setCoord(x1, y1, x2, y2);
 		road.setRealCoord(x1_real, y1_real, x2_real, y2_real);
 		this.roads.set(road_it, road);
@@ -560,8 +560,8 @@ public class MapPanel extends JPanel implements
 	    {
 		while (roads.size() > roads_it) // Cleaning useless road (to remove the 2Dline on the screen also)
 		    roads.remove(roads.size() - 1);
-		while (nodes.size() > nodes_it) // Cleaning useless node
-		    nodes.remove(nodes.size() - 1);
+		// while (nodes.size() > nodes_it) // Cleaning useless node
+		//     nodes.remove(nodes.size() - 1);
 	    }
 	if (this.mapChanged == true || this.wasOut == 2) // Only revalidate if something move
 	    {
@@ -688,8 +688,8 @@ public class MapPanel extends JPanel implements
 	    && e.getButton() == MouseEvent.BUTTON1) {
 	    // if (this.selectedItemsList.size() == 0) {
 	    this.selectedBoxCoord1 = new int[2];
-	    this.selectedBoxCoord1[0] = e.getX();
-	    this.selectedBoxCoord1[1] = e.getY();
+	    this.selectedBoxCoord1[0] = unScaleX(e.getX());
+	    this.selectedBoxCoord1[1] = unScaleY(e.getY());
 	    // }
 	}
 	if (this.selectedObject == EObjectTools.CURSOR
@@ -711,8 +711,8 @@ public class MapPanel extends JPanel implements
 	if (this.selectedObject == EObjectTools.CURSOR
 	    && this.selectedBoxCoord1 != null
 	    && this.movedMap == false) {
-	    this.selectedBoxCoord2[0] = e.getX();
-	    this.selectedBoxCoord2[1] = e.getY();
+	    this.selectedBoxCoord2[0] = unScaleX(e.getX());
+	    this.selectedBoxCoord2[1] = unScaleY(e.getY());
 
 	    // Selection des elements a l'interieur du rectangle
 	    int		x1 = this.selectedBoxCoord1[0];

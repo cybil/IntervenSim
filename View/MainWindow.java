@@ -28,7 +28,7 @@ import java.awt.event.MouseListener;
 
 public class MainWindow extends JFrame implements ActionListener {
     private boolean				inst = false;
-    private Controller				controller;
+    static Controller				controller;
     private JPanel				content = new JPanel();
     private MenuBar				menuBar = new MenuBar();
     private ButtonBar			buttonBar = new ButtonBar();
@@ -41,6 +41,10 @@ public class MainWindow extends JFrame implements ActionListener {
     private JToolBar			tabToolBar = new JToolBar();
     private SeeTabButton		seeTabButton = new SeeTabButton();
 
+
+    static void		setAnimationSpeed(int speed) {
+	controller.eventSetSpeed(speed);
+    }
 
     public MainWindow(Controller controller) throws NombreInstanceGUIException{
 	if (inst == true)
