@@ -254,7 +254,7 @@ public class MapPanel extends JPanel implements
 	// + scrolBarRef.getViewport().getViewRect().width;
 	// view_y = scrolBarRef.getViewport().getViewPosition().y;
 	// System.out.println("x:" + view_x + " / y:" + view_y);
-	g2.drawString("Echelle:" + 100,
+	g2.drawString("Echelle: 1px:1km",
 		      view_x + scrolBarRef.getWidth() - 120,
 		      view_y + scrolBarRef.getHeight() - 30);
 	g2.drawString("X_real: " + scaleX(this.mouseX) + " Y_real: " + scaleY(this.mouseY),
