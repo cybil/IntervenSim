@@ -739,8 +739,8 @@ public class MapPanel extends JPanel implements
 	if (this.selectedObject == EObjectTools.CURSOR
 	    && this.selectedBoxCoord1 != null
 	    && this.movedMap == false) {
-	    this.selectedBoxCoord2[0] = unScaleX(e.getX());
-	    this.selectedBoxCoord2[1] = unScaleY(e.getY());
+	    this.selectedBoxCoord2[0] = e.getX();
+	    this.selectedBoxCoord2[1] = e.getY();
 
 	    // Selection des elements a l'interieur du rectangle
 	    int		x1 = this.selectedBoxCoord1[0];
