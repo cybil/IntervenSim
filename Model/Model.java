@@ -77,7 +77,7 @@ public class Model {
     //Fonction for Map
 	
     public boolean putNode(int x, int y) {
-    	// addToUndo();
+    	_redo.push(_map);
     	return _map.addNode(x, y);
     }
 	
@@ -104,38 +104,38 @@ public class Model {
     }
 	
     public boolean		addRoad(int[] coordNode1, int[] coordNode2) {	
-    	// addToUndo();
+    	addToRedo();
     	return _map.addRoad(coordNode1, coordNode2);
     }
 	
     public boolean		creatVehicule(int[] coord) {
-    	// addToUndo();
+    	addToRedo();
     	return _map.creatVehicule(coord);
     }
 	
     public boolean		deleteNode(int[] coord) {
-    	// addToUndo();
+    	addToRedo();
     	return _map.deleteNode(coord);
     }
 	
     public boolean		deleteRoad(int[] coord1, int[] coord2) {
-    	// addToUndo();
+    	addToRedo();
     	return _map.deleteRoad(coord1, coord2);
     }
 	
     public boolean		editNodeCoord(int[] oldCoord, int[] newCoord) {
-    	// addToUndo(oldCoord, newCoord);
+    	addToRedo(oldCoord, newCoord);
     	return _map.editNodeCoord(oldCoord, newCoord);
     }
 	
     boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state,
 				       float triggDate, float treatmentTime, int id) {
-    	// addToUndo();
+    	addToRedo();
     	return _map.addNodeUrgency(coord, state, triggDate, triggDate, id);
     }
     
     public boolean		deleteVehicule() {
-    	// addToUndo();
+    	addToRedo();
     	return _map.deleteVehicule();
     }
 	
@@ -170,32 +170,15 @@ public class Model {
     
     public void redo() {
     	if (_redo.size() != 0) {
-    		// addToUndo();
+    		addToUndo();
     		_map = _redo.pop();
     	}
     }
     
     public void undo() {
-    	System.out.println("undo - start function");
     	if (_undo.size() != 0) {
-    		System.out.println("undo - dans if");
     		addToRedo();
     		_map = _undo.pop();
-    		_map.display();
-    	}
-    }
-    
-    public void addToUndo(int[] coordOld, int[] coordNew) {
-    	if (_xPos == coordOld[0] && _yPos == coordOld[1]) {
-    		_xPos = coordNew[0];
-    		_yPos = coordNew[1];
-    		_undo.pop();
-    		_redo.push(_map);
-    	}
-    	else {
-    		if (_undo.size() > 7)
-    			_undo.remove(_redo.size() - 1);
-    		_undo.push(_map);
     	}
     }
 	
@@ -216,17 +199,13 @@ public class Model {
     public void addToRedo() {
     	if (_redo.size() > 7)
     		_redo.remove(_redo.size() - 1);
-    	_map.display();
-    	Map _newMap = new Map(_map);
-    	_redo.push(_newMap);
+    	_redo.push(_map);
     }
     
     public void addToUndo() {
     	if (_undo.size() > 7)
 		_undo.remove(_undo.size() - 1);
-    	_map.display();
-    	Map _newMap = new Map(_map);
-    	_undo.push(_newMap);
+	_undo.push(_map);
     }
     
     //Fonction for FileManager
