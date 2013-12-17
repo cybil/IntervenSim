@@ -840,7 +840,7 @@ public class MapPanel extends JPanel implements
 
 	System.out.println("MapPanel.setMovedNode2");
 	if (controller.eventEditNodeCoord(coordMovedNode, coordMovedNode2) == false)
-	    System.out.println("setMovedNode2: Error: Node does not exist !!!");
+	    System.out.println("MapPanel.setMovedNode2(): Error: Node does not exist !!!");
 	coordMovedNode[0] = coordMovedNode2[0];
 	coordMovedNode[1] = coordMovedNode2[1];
     }
@@ -952,11 +952,16 @@ public class MapPanel extends JPanel implements
     static void		setVehiculeAt(int x, int y) {
 	boolean		ret;
 
-	ret = controller.eventCreatVehicule(x, y);
-	if (ret == false) {
+	if (graphVehicule != null)
+	{
+	  ret = controller.eventCreatVehicule(x, y);
+	  if (ret == false) {
 	    graphVehicule.setx(x);
 	    graphVehicule.sety(y);
+	  }
 	}
+	else
+	  System.out.println("MapPanel.setVehiculeAt(): Error: Trying to set a vehicule which does not exist");
     }
 
     static void		moveNode(NodeGraphic n, int x, int y) {
@@ -965,7 +970,7 @@ public class MapPanel extends JPanel implements
 
 	System.out.println("MapPanel.moveNode");
 	if (controller.eventEditNodeCoord(coord1, coord2) == false)
-	    System.out.println("setMovedNode2: Error: Node does not exist !!!");
+	    System.out.println("MapPanel.moveNode(): Error: Node does not exist !!!");
     }
 
     static void		addUrgencyToNode(NodeGraphic n, float trigg, float treat, int id) {

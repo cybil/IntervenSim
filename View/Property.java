@@ -43,6 +43,7 @@ class Property extends JFrame implements ActionListener {
     private NodeGraphic			node = null;
 
     public Property(NodeGraphic n) {
+      super.setSize(300, 400);
 	this.node = n;
 	configureJDial();
 	fillJDial();
