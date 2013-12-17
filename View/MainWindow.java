@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import javax.swing.filechooser.*;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -27,7 +29,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MainWindow extends JFrame implements ActionListener {
-  public JScrollPane			scrollPane = null;
+    public JScrollPane			scrollPane = null;
     private boolean				inst = false;
     static Controller				controller;
     private JPanel				content = new JPanel();
@@ -259,8 +261,21 @@ public class MainWindow extends JFrame implements ActionListener {
 
     class SaveFileButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-	    // Recuperer fichier !
-	    // controller.eventSaveMap();
+	    // // Recuperer fichier !
+	    // // controller.eventSaveMap();
+	    // JFileChooser chooser = new JFileChooser();
+	    // // Note: source for ExampleFileFilter can be found in FileChooserDemo,
+	    // // under the demo/jfc directory in the JDK.
+	    // FileFilter filter = new FileFilter();
+	    // filter.addExtension("jpg");
+	    // filter.addExtension("gif");
+	    // filter.setDescription("JPG & GIF Images");
+	    // chooser.setFileFilter(filter);
+	    // int returnVal = chooser.showOpenDialog(this);
+	    // if (returnVal == JFileChooser.APPROVE_OPTION) {
+	    // 	System.out.println("You chose to open this file: " +
+	    // 			   chooser.getSelectedFile().getName());
+	    // }
         }
     }
 
@@ -297,6 +312,8 @@ public class MainWindow extends JFrame implements ActionListener {
 	    System.out.println("------> PLAY <------");
 	    if (controller.eventGetVehicule() == false)
 		JOptionPane.showMessageDialog(null, "There is no vehicule on the map.");
+	    // if (controller.eventGetPathOK() == false)
+	    // 	JOptionPane.showMessageDialog(null, "There is no way to go to an urgency.");
 	    else
 		controller.eventPlay();
         }

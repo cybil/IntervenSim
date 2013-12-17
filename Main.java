@@ -5,20 +5,24 @@ public class Main
     public static void	main(String[] args)
     {
 	Controller		controller = new Controller();
-	// controller.eventPutNode(300, 100);
-	// controller.eventPutNode(451, 84);
-	// controller.eventPutNode(63, 10);
+	controller.eventPutNode(800, 600);
+	controller.eventPutNode(500, 500);
+	controller.eventPutNode(200, 200);
 	// controller.eventPutNode(236, 152);
 	// controller.eventPutNode(84, 212);
 	// controller.eventPutNode(413, 85);
+ 
+	int[]		c1 = {800, 600};
+	int[]		c2 = {500, 500};
+	int[]		c3 = {200, 200};
+	controller.eventAddNodeUrgency(800, 600, Urgency.EUrgencyState.SLEEPING, 0f, 5f, 0);
 
-	int[]		c1 = {300, 100};
-	int[]		c2 = {413, 85};
-	// controller.eventAddNodeUrgency(c1, Urgency.EUrgencyState.SLEEPING, 10);
+	controller.eventAddRoad(c1, c2);
+	controller.eventAddRoad(c2, c3);
+	controller.eventEditAttachPoint(200, 200);
+	controller.eventCreatVehicule(200, 200);
 
-	// controller.eventAddRoad(c1, c2);
-
-	controller.displayMap();
+	// controller.displayMap();
 
 	// controller.eventPlay();
 	// while (true)
