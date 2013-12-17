@@ -368,6 +368,7 @@ public class MapPanel extends JPanel implements
 				    this.nodeAttachPoint,
 				    this.nodeUrgency,
 				    _x, _y, rel_x, rel_y);
+	    newNode.paintComponent(getGraphics());
 	  // newNode.setGraphics(getGraphics());
 	  nodes.add(newNode);
 	  System.out.println("NODE --- Creating new graphic : " + _x + ":" + _y);
@@ -448,7 +449,7 @@ public class MapPanel extends JPanel implements
 	this.graphVehicule.sety(_y);
 	this.graphVehicule.setRealX(rel_x);
 	this.graphVehicule.setRealY(rel_y);
-	// this.graphVehicule.paintComponent(getGraphics());
+	this.graphVehicule.paintComponentCustom(getGraphics());
 	return (newVehicule);
     }
 
@@ -652,8 +653,8 @@ public class MapPanel extends JPanel implements
 	for (NodeGraphic node:nodes)
 	{
 		node.scaleImage();
-		node.paintComponentCustom(getGraphics());
-		node.paintComponent(getGraphics());
+		// node.paintComponentCustom(getGraphics());
+		// node.paintComponent(getGraphics());
 	}
 	if (this.graphVehicule != null)
 	  this.graphVehicule.scaleImage();

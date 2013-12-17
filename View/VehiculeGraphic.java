@@ -154,17 +154,24 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
 	// this.property.addActionListener(this.editProperty);
     }
 
-    public void		paintComponent(Graphics g) {
+    public void		paintComponentCustom(Graphics g) {
       int		w;
       int		h;
 
-      super.paintComponent(g);
       w = this.currentImg.getWidth(null);
       h = this.currentImg.getHeight(null);
 
       this.setBounds(this.getx() - w/2,
 		     this.gety() - h/2,
-		     this.currentImg.getWidth(null), this.currentImg.getHeight(null));
+		     w, h);
+    }
+
+    public void		paintComponent(Graphics g) {
+      int		w;
+      int		h;
+
+      super.paintComponent(g);
+      paintComponentCustom(g);
       g.drawImage(this.currentImg, 0, 0, this);
     }
 
