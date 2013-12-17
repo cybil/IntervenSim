@@ -482,8 +482,6 @@ public class MapPanel extends JPanel implements
 	    this.graphVehicule = newVehicule;
 	    this.graphVehicule.paintComponent(getGraphics());
 	}
-	else
-	    System.out.println("---> VEHICULE ALREADY CREATED <----");
 	this.graphVehicule.setx(_x);
 	this.graphVehicule.sety(_y);
 	this.graphVehicule.setRealX(rel_x);
@@ -686,11 +684,11 @@ public class MapPanel extends JPanel implements
 		    // nodes.add(newNode);
 		}
 	}
-	else if (e.getButton() == MouseEvent.BUTTON1
-		 && this.selectedObject == EObjectTools.VEHICULE) {
-	  System.out.println("this.controller.eventCreatVehicule()");
-	    this.controller.eventCreatVehicule(scaleX(e.getX()), scaleY(e.getY()));
-	}
+	// else if (e.getButton() == MouseEvent.BUTTON1
+	// 	 && this.selectedObject == EObjectTools.VEHICULE) {
+	//   System.out.println("this.controller.eventCreatVehicule()");
+	//     this.controller.eventCreatVehicule(scaleX(e.getX()), scaleY(e.getY()));
+	// }
 	if (this.selectedObject == EObjectTools.CURSOR
 	    && e.getButton() == MouseEvent.BUTTON1) {
 	    this.selectedBoxCoord1 = null;
