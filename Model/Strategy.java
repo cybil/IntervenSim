@@ -110,8 +110,9 @@ abstract class Strategy
 
     for (Node node: this._map.getNodeUrgency())
     {
-      if (OldestNode == null
-	  || node.getNextUrgency().getTriggerDate() > OldestNode.getNextUrgency().getTriggerDate())
+      if ((OldestNode == null
+	   || node.getNextUrgency().getTriggerDate() < OldestNode.getNextUrgency().getTriggerDate())
+	  && node.getNextUrgency().getTriggerDate() <= 0)
 	OldestNode = node;
     }
     return (OldestNode);
