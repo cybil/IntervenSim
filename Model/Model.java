@@ -77,7 +77,7 @@ public class Model {
     //Fonction for Map
 	
     public boolean putNode(int x, int y) {
-    	addToUndo();
+    	// addToUndo();
     	return _map.addNode(x, y);
     }
 	
@@ -104,38 +104,38 @@ public class Model {
     }
 	
     public boolean		addRoad(int[] coordNode1, int[] coordNode2) {	
-    	addToUndo();
+    	// addToUndo();
     	return _map.addRoad(coordNode1, coordNode2);
     }
 	
     public boolean		creatVehicule(int[] coord) {
-    	addToUndo();
+    	// addToUndo();
     	return _map.creatVehicule(coord);
     }
 	
     public boolean		deleteNode(int[] coord) {
-    	addToUndo();
+    	// addToUndo();
     	return _map.deleteNode(coord);
     }
 	
     public boolean		deleteRoad(int[] coord1, int[] coord2) {
-    	addToUndo();
+    	// addToUndo();
     	return _map.deleteRoad(coord1, coord2);
     }
 	
     public boolean		editNodeCoord(int[] oldCoord, int[] newCoord) {
-    	addToUndo(oldCoord, newCoord);
+    	// addToUndo(oldCoord, newCoord);
     	return _map.editNodeCoord(oldCoord, newCoord);
     }
 	
     boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state,
 				       float triggDate, float treatmentTime, int id) {
-    	addToUndo();
+    	// addToUndo();
     	return _map.addNodeUrgency(coord, state, triggDate, triggDate, id);
     }
     
     public boolean		deleteVehicule() {
-    	addToUndo();
+    	// addToUndo();
     	return _map.deleteVehicule();
     }
 	
@@ -170,7 +170,7 @@ public class Model {
     
     public void redo() {
     	if (_redo.size() != 0) {
-    		addToUndo();
+    		// addToUndo();
     		_map = _redo.pop();
     	}
     }

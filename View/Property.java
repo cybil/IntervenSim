@@ -63,13 +63,13 @@ class Property extends JFrame implements ActionListener {
     }
 
     void	fillJDial() {
-	this.jtfX.setText(Integer.toString(this.node.getx()));
+	this.jtfX.setText(Integer.toString(this.node.getRealX()));
 	this.jtfX.setPreferredSize(new Dimension(100, 30));
 	this.panelX.setLayout(new FlowLayout());
 	this.panelX.add(labelX);
 	this.panelX.add(jtfX);
 
-	this.jtfY.setText(Integer.toString(this.node.gety()));
+	this.jtfY.setText(Integer.toString(this.node.getRealY()));
 	this.jtfY.setPreferredSize(new Dimension(100, 30));
 	this.panelY.setLayout(new FlowLayout());
 	this.panelY.add(labelY);

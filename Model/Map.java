@@ -54,7 +54,7 @@ public class Map implements java.io.Serializable {
 	return ret;
       }
       else
-	System.out.println("Map.getUrgencyList: Error Unable to find Node");
+	System.out.println("Map.getUrgencyList(): Error Unable to find Node");
       return (new Vector<String>());
     }
 

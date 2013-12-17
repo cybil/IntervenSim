@@ -111,6 +111,7 @@ public class MapPanel extends JPanel implements
 	    }
 	    else
 		MapPanel.deleteRoad(road);
+	    revalidate();
 	}
     }
 
@@ -977,9 +978,10 @@ public class MapPanel extends JPanel implements
     }
 
     static Vector<String>	getUrgencyList(NodeGraphic n) {
+      System.out.println("MapPanel.getUrgencyList for node at " + n.getRealX() + ":" + n.getRealY());
       if (n != null)
 	return controller.eventGetUrgencyList(n.getRealX(), n.getRealY());
-      System.out.println("MapPanel.getUrgencyList: n is null");
+      System.out.println("MapPanel.getUrgencyList(): Error: 'n' is null");
       return (new Vector<String>());
     }
 
