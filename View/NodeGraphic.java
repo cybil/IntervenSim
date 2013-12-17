@@ -118,8 +118,10 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     	int		new_img_heigth;
 
 	tmp = this.imgNormal.getWidth(null);
-	new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null)) + 1;
-	new_img_heigth = MapPanel.unScaleY(this._imgNormal.getHeight(null)) + 1;
+	new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null));
+	new_img_heigth = MapPanel.unScaleY(this._imgNormal.getHeight(null));
+	new_img_width = (new_img_width <= 0 ? 1 : new_img_width);
+	new_img_heigth = (new_img_heigth <= 0 ? 1 : new_img_heigth);
 	this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
 							   new_img_heigth,
 							   Image.SCALE_SMOOTH);
@@ -265,6 +267,8 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 		System.out.println("Node --- definitive change of node coord !");
 		this.setx(oldx_win + (e.getXOnScreen() - oldx_screen));
 		this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
+		this.setRealX(MapPanel.scaleX(this.getx()));
+		this.setRealY(MapPanel.scaleY(this.gety()));
 		MapPanel.setMovedNode2(this.getx(), this.gety());
 	    }
 	else if (e.getButton() == MouseEvent.BUTTON1
@@ -292,7 +296,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 		}
 	    else if (MapPanel.selectedObject == MapPanel.EObjectTools.VEHICULE) {
 		System.out.println("COUCOU LES AMIS");
-		MapPanel.setVehiculeAt(this.getx(), this.gety());
+		MapPanel.setVehiculeAt(this.getRealX(), this.getRealY());
 	    }
 	if (e.getButton() == MouseEvent.BUTTON3) {
 	    jpm.show(this, e.getX(), e.getY());

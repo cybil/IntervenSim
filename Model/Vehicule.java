@@ -7,7 +7,7 @@ public class Vehicule implements java.io.Serializable {
     }
 
     private boolean	debug = false;
-    private float		km; // number of km done
+    private float		km = 0; // number of km done
     private int[]		coord; // Coord of the vehicule
     private int[]		incomingCoord = {0, 0}; // The point from where the vehicule is comming
     private Node		attachPoint; // Attach point of the vehicule
@@ -60,13 +60,15 @@ public class Vehicule implements java.io.Serializable {
     }
 
     public Vehicule(Vehicule vehicule) {
-	this.km = vehicule.km;
-	this.coord = vehicule.coord.clone();
-	this.incomingCoord = this.coord.clone();
-	this.attachPoint = vehicule.attachPoint;
-	this.path = vehicule.path;
+	this.km = vehicule.getKm();
 	this.speed = vehicule.speed;
-	this.state = vehicule.state;
+	if (vehicule.attachPoint != null) {
+		this.coord = vehicule.coord.clone();
+		this.incomingCoord = this.coord.clone();
+		this.attachPoint = vehicule.attachPoint;
+		this.path = vehicule.path;
+		this.state = vehicule.state;
+	}
     }
 
 

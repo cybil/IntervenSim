@@ -78,11 +78,16 @@ public class GraphNode implements java.io.Serializable {
     }
 
     public void			deleteNeighbor(Node node) {
+      if (node != null)
+      {
 	for (GraphNode n : this.getNeighbors()) {
 	    if (n.getData().getCoord()[0] == node.getCoord()[0]
 		&& n.getData().getCoord()[1] == node.getCoord()[1])
 		this.neighbors.remove(n);
 	}
+      }
+      else
+	System.out.println("GraphNode.deleteNeighbor: node is null");
     }
 
     public boolean	equals(GraphNode other) {

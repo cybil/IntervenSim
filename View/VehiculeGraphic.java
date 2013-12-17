@@ -93,8 +93,10 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
 	int		new_img_width;
 	int		new_img_heigth;
 
-	new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null)) + 1;
-	new_img_heigth = MapPanel.unScaleX(this._imgNormal.getHeight(null)) + 1;
+	new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null));
+	new_img_heigth = MapPanel.unScaleX(this._imgNormal.getHeight(null));
+	new_img_width = (new_img_width <= 0 ? 1 : new_img_width);
+	new_img_heigth = (new_img_heigth <= 0 ? 1 : new_img_heigth);
 	this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
 							   new_img_heigth,
 							   Image.SCALE_SMOOTH);
