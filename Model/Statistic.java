@@ -97,7 +97,7 @@ public class Statistic implements java.io.Serializable {
 		return _vehicule._midTimeOnTheRoad;
 	}
 
-	public int getStrategy() {
+	public String getStrategy() {
 		return _vehicule._useStrat;
 	}
 
@@ -126,11 +126,11 @@ public class Statistic implements java.io.Serializable {
 		_vehicule._speed = speed;
 	}
 
-	public void setMidWaiting(int midTimeOnTheRoad) {
-		_vehicule._midTimeOnTheRoad = midTimeOnTheRoad;
+	public void setMidWaiting() {
+		_vehicule._midTimeOnTheRoad++;
 	}
 
-	public void setStrategy(int strat) {
+	public void setStrategy(String strat) {
 		_vehicule._useStrat = strat;
 	}
 

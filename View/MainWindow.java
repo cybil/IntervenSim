@@ -323,7 +323,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	    // chooser.setFileFilter(filter);
 	    int returnVal = chooser.showOpenDialog(null);
 	    if (returnVal == JFileChooser.APPROVE_OPTION) {
-	    	System.out.println("You chose to open this file: " +
+	    	System.out.println("You chose to import this file: " +
 	    			   chooser.getSelectedFile().getAbsolutePath());
 		if (controller.eventImportImage(new File(chooser.getSelectedFile().getAbsolutePath())) == false)
 		    JOptionPane.showMessageDialog(null, "File not found: " +

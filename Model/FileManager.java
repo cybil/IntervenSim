@@ -57,14 +57,14 @@ public class FileManager {
     {
 	_map = map;
 	_sim = sim;
-	_stat = new Statistic();
+	_stat = _sim.getStat();
 	//_date = new Dates();
     }
 	
     public FileManager(Map map, SimulationManager sim, Statistic stat) {
 	_map = map;
 	_sim = sim;
-	_stat = stat;
+	_stat = _sim.getStat();
 	//_date = new Dates();
     }
 	

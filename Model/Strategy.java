@@ -85,7 +85,7 @@ abstract class Strategy implements java.io.Serializable
   /*!
   ** Return the name of strategy
   */
-  abstract String		getSrategyName();
+  abstract String		getStrategyName();
   
   /*!
   ** Return the oldest urgency on the map
