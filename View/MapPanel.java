@@ -227,19 +227,35 @@ public class MapPanel extends JPanel implements
 	}
     }
 
+  private  void		drawBackgroundImg(Graphics g)
+  {
+    Image		bck;
+
+    if ((bck = this.controller._model.getMap().getBackground()) != null)
+    {
+      int		new_img_width;
+      int		new_img_heigth;
+
+      new_img_width = MapPanel.unScaleX(bck.getWidth(null));
+      new_img_heigth = MapPanel.unScaleY(bck.getHeight(null));
+      new_img_width = (new_img_width <= 0 ? 1 : new_img_width);
+      new_img_heigth = (new_img_heigth <= 0 ? 1 : new_img_heigth);
+      bck = bck.getScaledInstance(new_img_width, new_img_heigth, Image.SCALE_SMOOTH);
+      g.drawImage(bck, 0, 0, this);
+    }
+  }
+
     @Override
 	public void		paintComponent(Graphics g) {
 	int		view_x;
 	int		view_y;
 	Graphics2D	g2 = (Graphics2D)g;
-	Image		bck;
 
 	super.paintComponent(g);
 
 	// Draw background image
-	if ((bck = this.controller._model.getMap().getBackground()) != null)
-	    g.drawImage(bck, 0, 0, this);
 
+	this.drawBackgroundImg(g2);
 	this.drawMagneticGrid(g2);
 	AffineTransform at = g2.getTransform();
 
@@ -602,7 +618,7 @@ public class MapPanel extends JPanel implements
 	nodes_it = 0;
 	roads_it = 0;
 	for (String s : formatMap) {
-	  System.out.println(s);
+	  // System.out.println(s);
 	    if (s.charAt(0) == 'R') {
 		this._displayMapRoad(s, roads_it++);
 	    }
