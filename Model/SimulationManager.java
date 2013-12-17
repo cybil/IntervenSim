@@ -114,7 +114,7 @@ public class SimulationManager implements Serializable, ActionListener {
 	
 	this.statistic.setKm((int)v.getKm());
 	this.statistic.setSpeed(v.getSpeed());
-	this.statistic.setStrategy(this.strategy.getStrategyName());
+	this.statistic.setStrategy(this.strategyList.get(0).getStrategyName());
     	this.map.actualizeVehicule();
     }
 
