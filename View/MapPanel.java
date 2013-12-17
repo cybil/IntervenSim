@@ -602,6 +602,7 @@ public class MapPanel extends JPanel implements
 	nodes_it = 0;
 	roads_it = 0;
 	for (String s : formatMap) {
+	  System.out.println(s);
 	    if (s.charAt(0) == 'R') {
 		this._displayMapRoad(s, roads_it++);
 	    }
@@ -629,17 +630,15 @@ public class MapPanel extends JPanel implements
 		    }
 		}
 	}
-	if (nodes_it > 0) // To remove old node
-	    {
-		nodes.clear();
-		nodes.addAll(new_nodes);
-	    }
 	if (isDragging == false) // To remove old road
 	    {
+		while (nodes.size() > 0) // Cleaning useless node
+		    nodes.remove(nodes.size() - 1);
+		nodes.addAll(new_nodes);
 		while (roads.size() > roads_it) // Cleaning useless road (to remove the 2Dline on the screen also)
 		    roads.remove(roads.size() - 1);
-		while (nodes.size() > nodes_it) // Cleaning useless node
-		    nodes.remove(nodes.size() - 1);
+		// while (nodes.size() > nodes_it) // Cleaning useless node
+		//     nodes.remove(nodes.size() - 1);
 	    }
 	// Only revalidate if something move outside of the windows
 	if (this.mapChanged == true || this.wasOut == 2)
