@@ -46,7 +46,7 @@ public class MapPanel extends JPanel implements
 
     static private boolean	mapChanged;
     private int			wasOut = 0; // 0:OK - 1:Out - 2:Enter
-  private boolean		wasZoomed = false;
+    private boolean		wasZoomed = false;
     private Image		background;
     private Image		nodeUrgency;
     private Image		nodeAttachPoint;
@@ -354,20 +354,20 @@ public class MapPanel extends JPanel implements
 	return (null);
     }
 
-  private boolean			is_scrolled()
-  {
-    int					x;
-    int					y;
-
-    // x = ((MainWindow)SwingUtilities.getRoot(this)).scrollPane.getViewportBorderBounds().x;
-    x = ((MainWindow)SwingUtilities.getRoot(this)).scrollPane.getViewport().getViewPosition().x;
-    y = ((MainWindow)SwingUtilities.getRoot(this)).scrollPane.getViewport().getViewPosition().y;
-    if (x > 1 || y > 1)
+    private boolean			is_scrolled()
     {
-      return (true);
+	int					x;
+	int					y;
+
+	// x = ((MainWindow)SwingUtilities.getRoot(this)).scrollPane.getViewportBorderBounds().x;
+	x = ((MainWindow)SwingUtilities.getRoot(this)).scrollPane.getViewport().getViewPosition().x;
+	y = ((MainWindow)SwingUtilities.getRoot(this)).scrollPane.getViewport().getViewPosition().y;
+	if (x > 1 || y > 1)
+	    {
+		return (true);
+	    }
+	return (false);
     }
-    return (false);
-  }
 
     private NodeGraphic		_displayMapNode(String s, int nodes_it)
     {
@@ -421,27 +421,39 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	while (nodes.size() <= nodes_it)
+	if (this._getNode(rel_x, rel_y) == null) // Create new node
 	    {
-		nodes.add(new NodeGraphic(EObjectTools.ATTACH_POINT,
+		newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
 					  this.nodeAttachPoint,
 					  this.nodeAttachPoint,
 					  this.nodeAttachPoint,
-					  30, 30, 30, 30));
-		System.out.println("NODE --- Creating new graphic");
-		this.mapChanged = true;
-	    }
-	newNode = nodes.get(nodes_it);
-	if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y)
-	    {
-		newNode.setx(_x);
-		newNode.sety(_y);
-		newNode.setRealX(rel_x);
-		newNode.setRealY(rel_y);
-		nodes.set(nodes_it, newNode);
-		System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
+					  _x, _y, rel_x, rel_y);
+		// newNode.setGraphics(getGraphics());
+		nodes.add(newNode);
+		System.out.println("NODE --- Creating new graphic : " + _x + ":" + _y);
 		// this.mapChanged = true;
 	    }
+	else // Search existing node
+	    {
+		//	newNode = nodes.get(nodes_it);
+		newNode = this._getNode(rel_x, rel_y);
+		if (nodes_it != -1)
+		    newNode = nodes.get(nodes_it);
+		else
+		    newNode = nodes.get(nodes.size() - 1);
+		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
+		    || newNode.getx() != _x || newNode.gety() != _y)
+		    {
+			newNode.setx(_x);
+			newNode.sety(_y);
+			newNode.setRealX(rel_x);
+			newNode.setRealY(rel_y);
+			// nodes.set(nodes_it, newNode);
+			System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
+			// return (newNode);
+		    }
+	    }
+	newNode.paintComponentCustom(getGraphics());
 	return (newNode);
     }
 
@@ -470,35 +482,47 @@ public class MapPanel extends JPanel implements
 
     private NodeGraphic		_displayMapUrgency(String s, int nodes_it)
     {
-	NodeGraphic			newNode = null;
+	NodeGraphic	newNode = null;
 	int	rel_x = Integer.parseInt(s.substring(s.indexOf(":") + 1, s.indexOf(",")));
 	int	rel_y = Integer.parseInt(s.substring(s.indexOf(",") + 1, s.lastIndexOf(":")));
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	if (_getNode(rel_x, rel_y).type != EObjectTools.URGENCY)
-	    deleteNode(_getNode(rel_x, rel_y));
-	while (nodes.size() <= nodes_it)
+	if (this._getNode(rel_x, rel_y) == null) // Create new node
 	    {
-		nodes.add(new NodeGraphic(EObjectTools.URGENCY,
-					  this.nodeUrgency,
-					  this.nodeUrgency,
-					  this.nodeUrgency,
-					  30, 30, 30, 30));
-		System.out.println("NODE --- Creating new graphic");
-		this.mapChanged = true;
-	    }
-	newNode = nodes.get(nodes_it);
-	if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y)
-	    {
-		newNode.setx(_x);
-		newNode.sety(_y);
-		newNode.setRealX(rel_x);
-		newNode.setRealY(rel_y);
-		nodes.set(nodes_it, newNode);
-		System.out.println("NODE --- Changing graphic coord to real " + rel_x + " : " + rel_y);
+		newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
+					  this.nodeAttachPoint,
+					  this.nodeAttachPoint,
+					  this.nodeAttachPoint,
+					  _x, _y, rel_x, rel_y);
+		// newNode.setGraphics(getGraphics());
+		nodes.add(newNode);
+		System.out.println("NODE --- Creating new graphic : " + _x + ":" + _y);
 		// this.mapChanged = true;
 	    }
+	else
+	    {
+		newNode = this._getNode(rel_x, rel_y);
+		if (nodes_it != -1)
+		    newNode = nodes.get(nodes_it);
+		else
+		    newNode = nodes.get(nodes.size() - 1);
+		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
+		    || newNode.getx() != _x || newNode.gety() != _y)
+		    {
+			newNode.setx(_x);
+			newNode.sety(_y);
+			newNode.setRealX(rel_x);
+			newNode.setRealY(rel_y);
+			newNode.setImgNormal(this.nodeUrgency);
+			newNode.setImgSelected(this.nodeUrgency);
+			newNode.setImgPassedOver(this.nodeUrgency);
+			// nodes.set(nodes_it, newNode);
+			System.out.println("NODE --- Changing graphic coord to real " + rel_x+":"+rel_y);
+			// return (newNode);
+		    }
+	    }
+	newNode.paintComponentCustom(getGraphics());
 	return (newNode);
     }
 
@@ -583,15 +607,15 @@ public class MapPanel extends JPanel implements
 		// while (nodes.size() > nodes_it) // Cleaning useless node
 		//     nodes.remove(nodes.size() - 1);
 	    }
-// Only revalidate if something move outside of the windows
+	// Only revalidate if something move outside of the windows
 	if (this.mapChanged == true || this.wasOut == 2)
 	    {
-	      //this.validate();
-	      for (NodeGraphic node:nodes)
-		node.paintComponentCustom(getGraphics());
-	      this.wasOut = 0;
-	      this.mapChanged = false;
-	      // this.repaint();
+		//this.validate();
+		for (NodeGraphic node:nodes)
+		    node.paintComponentCustom(getGraphics());
+		this.wasOut = 0;
+		this.mapChanged = false;
+		// this.repaint();
 	    }
 	//       System.out.println("Repaint");
 	this.repaint();
@@ -664,12 +688,12 @@ public class MapPanel extends JPanel implements
 	for (NodeGraphic node:nodes)
 	    {
 		node.scaleImage();
-	    // node.paintComponentCustom(getGraphics());
-	    // node.paintComponent(getGraphics());
+		// node.paintComponentCustom(getGraphics());
+		// node.paintComponent(getGraphics());
 	    }
-    if (this.graphVehicule != null)
-	this.graphVehicule.scaleImage();
-}
+	if (this.graphVehicule != null)
+	    this.graphVehicule.scaleImage();
+    }
 
     public void		selectAll() {
 	for (NodeGraphic n : this.nodes) {
@@ -695,38 +719,38 @@ public class MapPanel extends JPanel implements
 	}
     }
 
-  public void mousePressed(MouseEvent e) {
-    System.out.println("MapPanel.mousePressed");
-    MapPanel.setIsDragging(false);
-    if (e.getButton() == MouseEvent.BUTTON3) {
-      for (RoadGraphic r : this.roads) {
-	if (r.containsPoint(this.mouseX, this.mouseY) <= 6) {
-	  this.toDel.setRoad(r);
-	  this.toDel.setNodes(null);
-	  this.jpm.show(this, e.getX(), e.getY());
+    public void mousePressed(MouseEvent e) {
+	System.out.println("MapPanel.mousePressed");
+	MapPanel.setIsDragging(false);
+	if (e.getButton() == MouseEvent.BUTTON3) {
+	    for (RoadGraphic r : this.roads) {
+		if (r.containsPoint(this.mouseX, this.mouseY) <= 6) {
+		    this.toDel.setRoad(r);
+		    this.toDel.setNodes(null);
+		    this.jpm.show(this, e.getX(), e.getY());
+		}
+	    }
+	    if (this.selectedItemsList.size() != 0) {
+		this.toDel.setRoad(null);
+		this.toDel.setNodes(this.selectedItemsList);
+		this.jpm.show(this, e.getX(), e.getY());
+	    }
 	}
-      }
-      if (this.selectedItemsList.size() != 0) {
-	this.toDel.setRoad(null);
-	this.toDel.setNodes(this.selectedItemsList);
-	this.jpm.show(this, e.getX(), e.getY());
-      }
+	if (this.selectedObject == EObjectTools.CURSOR
+	    && e.getButton() == MouseEvent.BUTTON1) {
+	    // if (this.selectedItemsList.size() == 0) {
+	    this.selectedBoxCoord1 = new int[2];
+	    this.selectedBoxCoord1[0] = e.getX();
+	    this.selectedBoxCoord1[1] = e.getY();
+	    // }
+	}
+	if (this.selectedObject == EObjectTools.CURSOR
+	    && e.getButton() == MouseEvent.BUTTON3) {
+	    this.coordMouseOld[0] = e.getX();
+	    this.coordMouseOld[1] = e.getY();
+	    this.movedMap = true;
+	}
     }
-    if (this.selectedObject == EObjectTools.CURSOR
-	&& e.getButton() == MouseEvent.BUTTON1) {
-      // if (this.selectedItemsList.size() == 0) {
-      this.selectedBoxCoord1 = new int[2];
-      this.selectedBoxCoord1[0] = e.getX();
-      this.selectedBoxCoord1[1] = e.getY();
-      // }
-    }
-    if (this.selectedObject == EObjectTools.CURSOR
-	&& e.getButton() == MouseEvent.BUTTON3) {
-      this.coordMouseOld[0] = e.getX();
-      this.coordMouseOld[1] = e.getY();
-      this.movedMap = true;
-    }
-  }
 
     public void	mouseMoved(MouseEvent e) {
 	this.mouseX = e.getX();
@@ -734,8 +758,8 @@ public class MapPanel extends JPanel implements
     }
 
     public void	mouseDragged(MouseEvent e) {
-      System.out.println("MapPanel.mouseDragged");
-      MapPanel.setIsDragging(true);
+	System.out.println("MapPanel.mouseDragged");
+	MapPanel.setIsDragging(true);
 	if (this.selectedObject == EObjectTools.CURSOR
 	    && this.selectedBoxCoord1 != null
 	    && this.movedMap == false) {
@@ -836,11 +860,11 @@ public class MapPanel extends JPanel implements
 
     static void		setIsDragging(boolean b) {
 	if (isDragging == true && b == false)
-	  mapChanged = true;
+	    mapChanged = true;
 	isDragging = b;
     }
     static boolean		isDragging() {
-      return (isDragging);
+	return (isDragging);
     }
 
     @Override
@@ -855,7 +879,7 @@ public class MapPanel extends JPanel implements
 	     && (this.W - (10 * notches) > 10))
 	    || (notches < 0))
 	    {
-	      // Zoom exponentiel (zoomer plus si l'on est plus loin)
+		// Zoom exponentiel (zoomer plus si l'on est plus loin)
 		this.H -= 10 * notches + (this.H / 10) * (notches > 0 ? 1 : -1);
 		this.W -= 10 * notches + (this.W / 10) * (notches > 0 ? 1 : -1);
 
@@ -927,24 +951,24 @@ public class MapPanel extends JPanel implements
     }
 
     static void		addUrgencyToNode(NodeGraphic n, float trigg, float treat, int id) {
-	controller.eventAddNodeUrgency(scaleX(n.getx()), scaleY(n.gety()),
+	controller.eventAddNodeUrgency(scaleX(n.getRealX()), scaleY(n.getRealY()),
 				       Urgency.EUrgencyState.SLEEPING, trigg, treat, id);
     }
 
     static void		clearUrgency(NodeGraphic n) {
-	controller.eventClearUrgency(scaleX(n.getx()), scaleY(n.gety()));
+	controller.eventClearUrgency(scaleX(n.getRealX()), scaleY(n.getRealY()));
     }
 
     static Vector<String>	getUrgencyList(NodeGraphic n) {
-	return controller.eventGetUrgencyList(scaleX(n.getx()), scaleY(n.gety()));
+	return controller.eventGetUrgencyList(scaleX(n.getRealX()), scaleY(n.getRealY()));
     }
 
     static void			setAttachPoint(NodeGraphic n) {
-	controller.eventEditAttachPoint(scaleX(n.getx()), scaleY(n.gety()));
+	controller.eventEditAttachPoint(scaleX(n.getRealX()), scaleY(n.getRealY()));
     }
 
     static boolean		getAttachPoint(NodeGraphic n) {
-	return controller.eventGetAttachPoint(scaleX(n.getx()), scaleY(n.gety()));
+	return controller.eventGetAttachPoint(scaleX(n.getRealX()), scaleY(n.getRealY()));
     }
 
     static void			deleteVehicule() {

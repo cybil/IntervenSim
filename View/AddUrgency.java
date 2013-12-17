@@ -16,11 +16,11 @@ class AddUrgency extends JFrame implements ActionListener {
     private Property		parent;
 
     private JPanel		panelTrigg = new JPanel();
-    private JTextField		jtfTrigg = new JTextField();
+    private JTextField		jtfTrigg = new JTextField("0");
     private JLabel		labelTrigg = new JLabel("Trigger date:");
 
     private JPanel		panelTreat = new JPanel();
-    private JTextField		jtfTreat = new JTextField();
+    private JTextField		jtfTreat = new JTextField("5");
     private JLabel		labelTreat = new JLabel("Treatment time: ");
 
     private JPanel		panelButton = new JPanel();

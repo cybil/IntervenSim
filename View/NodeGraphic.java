@@ -93,6 +93,16 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	return (this.imgPassedOver);
     }
 
+    public void		setImgNormal(Image img)  {
+	this._imgNormal = img;
+    }
+    public void		setImgSelected(Image img)  {
+	this._imgSelected = img;
+    }
+    public void		setImgPassedOver(Image img)  {
+	this._imgPassedOver = img;
+    }
+
     public int		getx() {
 	return this._node_x;
     }
