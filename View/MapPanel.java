@@ -482,6 +482,8 @@ public class MapPanel extends JPanel implements
 	    this.graphVehicule = newVehicule;
 	    this.graphVehicule.paintComponent(getGraphics());
 	}
+	else
+	    System.out.println("---> VEHICULE ALREADY CREATED <----");
 	this.graphVehicule.setx(_x);
 	this.graphVehicule.sety(_y);
 	this.graphVehicule.setRealX(rel_x);
@@ -670,6 +672,7 @@ public class MapPanel extends JPanel implements
     public void mouseReleased(MouseEvent e) {
 	NodeGraphic	newNode;
 
+	  System.out.println("MapPanel.mouseReleased()");
 	if (e.getButton() == MouseEvent.BUTTON1
 	    && this.selectedObject == EObjectTools.NODE) {
 	    if (this.controller.eventPutNode(scaleX(e.getX()), scaleY(e.getY())) == true)
@@ -685,6 +688,7 @@ public class MapPanel extends JPanel implements
 	}
 	else if (e.getButton() == MouseEvent.BUTTON1
 		 && this.selectedObject == EObjectTools.VEHICULE) {
+	  System.out.println("this.controller.eventCreatVehicule()");
 	    this.controller.eventCreatVehicule(scaleX(e.getX()), scaleY(e.getY()));
 	}
 	if (this.selectedObject == EObjectTools.CURSOR
@@ -949,20 +953,21 @@ public class MapPanel extends JPanel implements
 	return (int)(((double) coord / (double)real_max) * (double)curr_max);
     }
 
-    static void		setVehiculeAt(int x, int y) {
-	boolean		ret;
+  static void		setVehiculeAt(int x, int y) {
+    boolean		ret;
 
-	if (graphVehicule != null)
-	{
-	  ret = controller.eventCreatVehicule(x, y);
-	  if (ret == false) {
-	    graphVehicule.setx(x);
-	    graphVehicule.sety(y);
-	  }
-	}
-	else
-	  System.out.println("MapPanel.setVehiculeAt(): Error: Trying to set a vehicule which does not exist");
+    System.out.println("MapPanel.setVehiculeAt(" + x + ":" + y + ")");
+    ret = controller.eventCreatVehicule(x, y);
+    if (graphVehicule != null)
+    {
+      if (ret == false) {
+	graphVehicule.setx(x);
+	graphVehicule.sety(y);
+      }
     }
+    else
+      System.out.println("MapPanel.setVehiculeAt(): Error: Trying to set a vehicule which does not exist");
+  }
 
     static void		moveNode(NodeGraphic n, int x, int y) {
 	int[]		coord1 = {n.getRealX(), n.getRealY()};

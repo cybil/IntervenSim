@@ -15,17 +15,17 @@ public class Map implements java.io.Serializable {
 
     public Map() {
     }
-    
+
     public Map(Map map) {
     	this.scale = map.getScale();
-    	
+
     	this.graph = new Graph(map.getGraph());
     	/*if (this.vehicule != null)
     		this.vehicule = new Vehicule(map.getVehicule());*/
     	vehicule = map.vehicule;
     	this.image = map.getImage();
     	this.zoom = map.getZoom();
-    	
+
 //    	graph = new Graph(map.graph);
 //    	scale = map.scale;
 //    	//vehicule = new Vehicule(map.vehicule);
@@ -67,6 +67,7 @@ public class Map implements java.io.Serializable {
 	if (this.graph.getNode(coord) != null) {
 	    Urgency			urg = new Urgency(state, triggDate, 0, treatmentTime, id);
 	    this.graph.getNode(coord).addUrgency(urg);
+	    return (true);
 	}
 	return false;
     }
@@ -74,7 +75,7 @@ public class Map implements java.io.Serializable {
     public void			clearUrgency(int[] coord) {
 	if (this.graph.getNode(coord) != null) {
 	    this.graph.getNode(coord).clearUrgency();
-	}	
+	}
     }
 
 
@@ -98,6 +99,7 @@ public class Map implements java.io.Serializable {
     }
 
     public boolean		creatVehicule(int[] coord) {
+      System.out.println("Map.creatVehicule(" + coord[0] + ":" + coord[1] + ")");
 	if (this.vehicule != null)
 	    return false;
 	this.vehicule = new Vehicule();
@@ -163,7 +165,7 @@ public class Map implements java.io.Serializable {
     //**
     // * Getters
     //**
-    
+
     public int[]		getAttachPointCoord() {
 	return this.graph.getAttachPointCoord();
     }
@@ -201,10 +203,11 @@ public class Map implements java.io.Serializable {
 	// Road:	R:x1,y1:x2,y2
 
 	// Ajout du vehicule
-	//if (this.vehicule != null) {
-	//    String			formatVehicule = "V:";
-	//    formatVehicule += this.vehicule.getCoord()[0] + "," + this.vehicule.getCoord()[1];
-	//    format.add(formatVehicule);
+	if (this.vehicule != null) {
+	   String			formatVehicule = "V:";
+	   formatVehicule += this.vehicule.getCoord()[0] + "," + this.vehicule.getCoord()[1];
+	   format.add(formatVehicule);
+	}
 
 	// Ajout des noeuds
 	ArrayList<GraphNode>	nodes = this.graph.getGraphNode();
@@ -220,7 +223,7 @@ public class Map implements java.io.Serializable {
 	    else
 		str = "N:";
 	    str += n.getData().getCoord()[0] + "," + n.getData().getCoord()[1];
-		
+
 	    if (str.charAt(0) == 'U' || str.charAt(0) == 'B') {
 		if (n.getData().getNextUrgency().getState()
 		    == Urgency.EUrgencyState.SLEEPING)

@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import java.util.*;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
+import javax.swing.*;
 
 class Property extends JFrame implements ActionListener {
 
@@ -113,6 +115,8 @@ class Property extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent arg0) {
 	if (arg0.getSource() == addUrgency) {
 	    AddUrgency	frame = new AddUrgency(this);
+	    Graphics g = ((MainWindow)SwingUtilities.getRoot(this)).scrollPane.getGraphics();
+	node.paintComponent(g);
 	}
 	if (arg0.getSource() == deleteUrgency) {
 	    if (this.list.getSelectedIndex() != -1)
