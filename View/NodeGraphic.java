@@ -109,8 +109,6 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
 	tmp = this.imgNormal.getWidth(null);
 	new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null)) + 1;
-
-	new_img_heigth = this.imgNormal.getHeight(null);
 	new_img_heigth = MapPanel.unScaleY(this._imgNormal.getHeight(null)) + 1;
 	this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
 							   new_img_heigth,
@@ -128,12 +126,10 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     public void		setx(int new_x) {
 
 	this._node_x = new_x;
-	// this._node_x += -25;
     }
 
     public void		sety(int new_y) {
 	this._node_y = new_y;
-	// this._node_y += -25;
     }
 
     public void		setIsSelected(boolean b) {
@@ -199,24 +195,29 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
     public void		paintComponentCustom(Graphics g) {
-	// Graphics2D	g = (Graphics2D)_g;
+      int		w;
+      int		h;
+    	// Graphics2D	g = (Graphics2D)_g;
 
-	// super.paintComponent(g);
-	this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
-	// g.drawImage(this.currentImg, 0, 0, null);
-	// g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
-	// g.drawImage(this.currentImg, 0, 0, this);
+    	// super.paintComponent(g);
+      w = this.currentImg.getWidth(null);
+      h = this.currentImg.getHeight(null);
+    	this.setBounds(this.getx() - w/2,
+    		       this.gety() - h/2, w, h);
+    	// g.drawImage(this.currentImg, 0, 0, null);
+    	// g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
+    	// g.drawImage(this.currentImg, 0, 0, this);
     }
 
-    public void		paintComponent(Graphics g) {
-	// Graphics2D	g = (Graphics2D)_g;
+  public void		paintComponent(Graphics g) {
+      int		w;
+      int		h;
+    // Graphics2D	g = (Graphics2D)_g;
 
-	// super.paintComponent(g);
-	// System.out.println("X/Y: " + this.getx() + ":" + this.gety());
-	// this.setBounds(this.getx(), this.gety(), this.currentImg.getWidth(null), this.currentImg.getHeight(null));
-	// g.drawImage(this.currentImg, 0, 0, null);
-	g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
-    }
+    super.paintComponent(g);
+    paintComponentCustom(g);
+    g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
+  }
 
     public void mouseClicked(MouseEvent e) {
 	System.out.println("NODE --- Clicked ! X: " + e.getX() + " // Y: " + e.getY());
@@ -312,7 +313,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	    this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
 	    MapPanel.setMovedNode2(this.getx(), this.gety());
 	    MapPanel.setIsDragging(true);
-	    paintComponentCustom(getGraphics());
+	    // paintComponentCustom(getGraphics());
 	    // MapPanel.setMovedNode2(e.getX(), e.getY());
 	}
 	this.updateMouseCoordInfo(this.getx(), this.gety());

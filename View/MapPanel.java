@@ -44,7 +44,7 @@ public class MapPanel extends JPanel implements
     private int		y2;
     private boolean	isPressed = false;
 
-    private boolean		mapChanged;
+    static private boolean	mapChanged;
     private int			wasOut = 0; // 0:OK - 1:Out - 2:Enter
     private Image		background;
     private Image		nodeUrgency;
@@ -197,6 +197,24 @@ public class MapPanel extends JPanel implements
 	this.selectedObject = obj;
     }
 
+    public void		drawMagneticGrid(Graphics2D g)
+    {
+	int		pas = 0;
+	float		motif[] = {10.0f, 5.0f};
+	BasicStroke	dotline = new BasicStroke(1.0f, 0, 0, 5.0f, motif, 0.0f);
+
+	g.setStroke(dotline);
+	while (pas < this.getWidth()) {
+	    g.drawLine(pas, 0, pas, this.getHeight());
+	    pas += unScaleX(100);
+	}
+	pas = 0;
+	while (pas < this.getHeight()) {
+	    g.drawLine(0, pas, this.getWidth(), pas);
+	    pas += unScaleY(100);
+	}
+    }
+
     @Override
 	public void		paintComponent(Graphics g) {
 	int		view_x;
@@ -205,22 +223,10 @@ public class MapPanel extends JPanel implements
 	// Image		bck;
 
 	super.paintComponent(g);
+	this.drawMagneticGrid(g2);
+	AffineTransform at = g2.getTransform();
 
-	// Grille magnetique ----> ne bouge pas avec le zoom :: voir avec JB
-	float		motif[] = {10.0f, 5.0f};
-	BasicStroke	dotline = new BasicStroke(1.0f, 0, 0, 5.0f, motif, 0.0f);
-	g2.setStroke(dotline);
 	g2.setColor(Color.BLACK);
-	int		pas = 0;
-	while (pas < this.getWidth()) {
-	    g2.drawLine(pas, 0, pas, this.getHeight());
-	    pas += 100;
-	}
-	pas = 0;
-	while (pas < this.getHeight()) {
-	    g2.drawLine(0, pas, this.getWidth(), pas);
-	    pas += 100;
-	}
 
 	// Draw background image
 	// if ((bck = this.controller._model.getMap().getBackground()) != null)
@@ -228,7 +234,6 @@ public class MapPanel extends JPanel implements
 
 	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
-	AffineTransform at = g2.getTransform();
 
 	view_x = scrolBarRef.getViewport().getViewPosition().x;
 	view_y = scrolBarRef.getViewport().getViewRect().y;
@@ -295,6 +300,7 @@ public class MapPanel extends JPanel implements
 	    g2.drawLine(this.selectedBoxCoord1[0], this.selectedBoxCoord2[1],
 			this.selectedBoxCoord2[0], this.selectedBoxCoord2[1]);
 	}
+	g2.setTransform(at);
     }
 
     // public static boolean	containsNode(int p_x, int p_y) {
@@ -436,12 +442,13 @@ public class MapPanel extends JPanel implements
 	    newVehicule = new VehiculeGraphic(this.vehicule, _x, _y,
 					      rel_x, rel_y);
 	    this.graphVehicule = newVehicule;
-	    this.mapChanged = true;
+	    this.graphVehicule.paintComponent(getGraphics());
 	}
-	// newVehicule.setx(_x);
-	// newVehicule.sety(_y);
-	// newVehicule.setRealX(rel_x);
-	// newVehicule.setRealY(rel_y);
+	this.graphVehicule.setx(_x);
+	this.graphVehicule.sety(_y);
+	this.graphVehicule.setRealX(rel_x);
+	this.graphVehicule.setRealY(rel_y);
+	this.graphVehicule.paintComponentCustom(getGraphics());
 	return (newVehicule);
     }
 
@@ -524,6 +531,7 @@ public class MapPanel extends JPanel implements
 	int		nodes_it;
 	int		roads_it;
 	NodeGraphic	newNode = null;
+	ArrayList<NodeGraphic>	new_nodes = new ArrayList<NodeGraphic>();
 
 	this.mapChanged = false;
 	nodes_it = 0;
@@ -542,6 +550,7 @@ public class MapPanel extends JPanel implements
 		    }
 		    else if (s.charAt(0) == 'N') {
 			newNode = this._displayMapNode(s, nodes_it++);
+			new_nodes.add(newNode);
 		    }
 		    else if (s.charAt(0) == 'A') {
 		    	newNode = this._displayMapAttachPoint(s, nodes_it++);
@@ -556,7 +565,12 @@ public class MapPanel extends JPanel implements
 		    }
 		}
 	}
-	if (isDragging == false)
+	if (nodes_it > 0) // To remove old node
+	    {
+		nodes.clear();
+		nodes.addAll(new_nodes);
+	    }
+	if (isDragging == false) // To remove old road
 	    {
 		while (roads.size() > roads_it) // Cleaning useless road (to remove the 2Dline on the screen also)
 		    roads.remove(roads.size() - 1);
@@ -640,10 +654,12 @@ public class MapPanel extends JPanel implements
 	for (NodeGraphic node:nodes)
 	    {
 		node.scaleImage();
-		node.paintComponentCustom(getGraphics());
-		node.paintComponent(getGraphics());
+	    // node.paintComponentCustom(getGraphics());
+	    // node.paintComponent(getGraphics());
 	    }
-    }
+    if (this.graphVehicule != null)
+	this.graphVehicule.scaleImage();
+}
 
     public void		selectAll() {
 	for (NodeGraphic n : this.nodes) {
@@ -669,36 +685,36 @@ public class MapPanel extends JPanel implements
 	}
     }
 
-    public void mousePressed(MouseEvent e) {
-	if (e.getButton() == MouseEvent.BUTTON3) {
-	    for (RoadGraphic r : this.roads) {
-		if (r.containsPoint(this.mouseX, this.mouseY) <= 6) {
-		    this.toDel.setRoad(r);
-		    this.toDel.setNodes(null);
-		    this.jpm.show(this, e.getX(), e.getY());
-		}
-	    }
-	    if (this.selectedItemsList.size() != 0) {
-		this.toDel.setRoad(null);
-		this.toDel.setNodes(this.selectedItemsList);
-		this.jpm.show(this, e.getX(), e.getY());
-	    }
+  public void mousePressed(MouseEvent e) {
+    if (e.getButton() == MouseEvent.BUTTON3) {
+      for (RoadGraphic r : this.roads) {
+	if (r.containsPoint(this.mouseX, this.mouseY) <= 6) {
+	  this.toDel.setRoad(r);
+	  this.toDel.setNodes(null);
+	  this.jpm.show(this, e.getX(), e.getY());
 	}
-	if (this.selectedObject == EObjectTools.CURSOR
-	    && e.getButton() == MouseEvent.BUTTON1) {
-	    // if (this.selectedItemsList.size() == 0) {
-	    this.selectedBoxCoord1 = new int[2];
-	    this.selectedBoxCoord1[0] = unScaleX(e.getX());
-	    this.selectedBoxCoord1[1] = unScaleY(e.getY());
-	    // }
-	}
-	if (this.selectedObject == EObjectTools.CURSOR
-	    && e.getButton() == MouseEvent.BUTTON3) {
-	    this.coordMouseOld[0] = e.getX();
-	    this.coordMouseOld[1] = e.getY();
-	    this.movedMap = true;
-	}
+      }
+      if (this.selectedItemsList.size() != 0) {
+	this.toDel.setRoad(null);
+	this.toDel.setNodes(this.selectedItemsList);
+	this.jpm.show(this, e.getX(), e.getY());
+      }
     }
+    if (this.selectedObject == EObjectTools.CURSOR
+	&& e.getButton() == MouseEvent.BUTTON1) {
+      // if (this.selectedItemsList.size() == 0) {
+      this.selectedBoxCoord1 = new int[2];
+      this.selectedBoxCoord1[0] = e.getX();
+      this.selectedBoxCoord1[1] = e.getY();
+      // }
+    }
+    if (this.selectedObject == EObjectTools.CURSOR
+	&& e.getButton() == MouseEvent.BUTTON3) {
+      this.coordMouseOld[0] = e.getX();
+      this.coordMouseOld[1] = e.getY();
+      this.movedMap = true;
+    }
+  }
 
     public void	mouseMoved(MouseEvent e) {
 	this.mouseX = e.getX();
@@ -805,6 +821,8 @@ public class MapPanel extends JPanel implements
     }
 
     static void		setIsDragging(boolean b) {
+	if (isDragging == true && b == false)
+	  mapChanged = true;
 	isDragging = b;
     }
 

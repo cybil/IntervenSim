@@ -70,11 +70,11 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
 	}
     }
 
-    public void	rescaleCoord(int curr_x_max, int curr_y_max, int real_x_max, int real_y_max)
-    {
-	this._node_x = MapPanel.unScale(this.real_x, curr_x_max, real_x_max);
-	this._node_y = MapPanel.unScale(this.real_y, curr_y_max, real_y_max);
-    }
+    // public void	rescaleCoord(int curr_x_max, int curr_y_max, int real_x_max, int real_y_max)
+    // {
+    // 	this._node_x = MapPanel.unScale(this.real_x, curr_x_max, real_x_max);
+    // 	this._node_y = MapPanel.unScale(this.real_y, curr_y_max, real_y_max);
+    // }
 
     public Image	getImgNormal()  {
 	return (this.imgNormal);
@@ -90,29 +90,24 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
 
     public void		scaleImage()
     {
-	int		tmp;
 	int		new_img_width;
 	int		new_img_heigth;
 
-	// tmp = this.imgNormal.getWidth(null);
-	new_img_width = MapPanel.unScaleX(25);
-
-	// new_img_heigth = this.imgNormal.getHeight(null);
-	new_img_heigth = MapPanel.unScaleY(25);
+	new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null)) + 1;
+	new_img_heigth = MapPanel.unScaleX(this._imgNormal.getHeight(null)) + 1;
 	this.imgNormal = this._imgNormal.getScaledInstance(new_img_width,
 							   new_img_heigth,
 							   Image.SCALE_SMOOTH);
+	this.currentImg = this.imgNormal;
     }
 
     public void		setx(int new_x) {
 
-	this._node_x = new_x;
-	// this._node_x += -25;
+      this._node_x = new_x;// - this._imgNormal.getWidth(null) / 2;
     }
 
     public void		sety(int new_y) {
-	this._node_y = new_y;
-	// this._node_y += -25;
+      this._node_y = new_y;// -  - this._imgNormal.getHeight(null) / 2;;
     }
 
     public int		getRealX() {
@@ -134,12 +129,12 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
     }
 
     public VehiculeGraphic() {
-	System.out.println("NODE --- CONSTRUCTION DEFAULT");
+	System.out.println("Vehicule --- CONSTRUCTION DEFAULT");
     }
 
     public VehiculeGraphic( Image imgNormal, int p_x, int p_y,
 			int real_x, int real_y) {
-	System.out.println("NODE --- CONSTRUCTION");
+	System.out.println("Vehicule --- CONSTRUCTION");
 	this.imgNormal = imgNormal;
 	this._imgNormal = imgNormal;
 	this.currentImg = this.imgNormal;
@@ -159,11 +154,25 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
 	// this.property.addActionListener(this.editProperty);
     }
 
+    public void		paintComponentCustom(Graphics g) {
+      int		w;
+      int		h;
+
+      w = this.currentImg.getWidth(null);
+      h = this.currentImg.getHeight(null);
+
+      this.setBounds(this.getx() - w/2,
+		     this.gety() - h/2,
+		     w, h);
+    }
+
     public void		paintComponent(Graphics g) {
-	// super.paintComponent(g);
-	this.setBounds(this.getx(), this.gety(),
-		       this.currentImg.getWidth(null), this.currentImg.getHeight(null));
-	g.drawImage(this.currentImg, 0, 0, this);
+      int		w;
+      int		h;
+
+      super.paintComponent(g);
+      paintComponentCustom(g);
+      g.drawImage(this.currentImg, 0, 0, this);
     }
 
     public void mouseClicked(MouseEvent e) {
