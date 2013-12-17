@@ -267,6 +267,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 		System.out.println("Node --- definitive change of node coord !");
 		this.setx(oldx_win + (e.getXOnScreen() - oldx_screen));
 		this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
+		// Pour etre synchro et eviter la perte de prevision avec MapPanel
 		this.setRealX(MapPanel.scaleX(this.getx()));
 		this.setRealY(MapPanel.scaleY(this.gety()));
 		MapPanel.setMovedNode2(this.getx(), this.gety());

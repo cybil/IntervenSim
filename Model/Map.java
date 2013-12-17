@@ -5,7 +5,7 @@ public class Map implements java.io.Serializable {
 
     private Graph		graph = new Graph();
     private float		scale = 1;
-    private Vehicule		vehicule = new Vehicule();
+    private Vehicule		vehicule;
     private Image		image = null;
     private int			zoom = 100;
 
@@ -15,7 +15,6 @@ public class Map implements java.io.Serializable {
 
     public Map() {
     }
-    
     public Map(Map map) {
     	this.scale = map.getScale();
     	
@@ -349,5 +348,4 @@ public class Map implements java.io.Serializable {
     public int getZoom() {
 	return zoom;
     }
-
 }

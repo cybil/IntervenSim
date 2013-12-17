@@ -85,12 +85,13 @@ public class Controller {
     //pas encore redo
     public boolean		eventCreatVehicule(int x, int y) {
 	int[]		coord = {x, y};
+
+	System.out.println("Controller.eventCreatVehicule(" + x + ":" + y + ")");
 	if (_model.getMap().hasVehicule() == true) {
 	    _model.getMap().setVehiculeCoord(x, y);
 	    return false;
 	}
-	_model.getMap().creatVehicule(coord);
-	return true;
+	return (_model.getMap().creatVehicule(coord));
     }
 	
     public boolean		eventDeleteNode(int[] coord) {

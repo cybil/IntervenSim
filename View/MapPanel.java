@@ -670,6 +670,7 @@ public class MapPanel extends JPanel implements
     public void mouseReleased(MouseEvent e) {
 	NodeGraphic	newNode;
 
+	System.out.println("MapPanel.mouseReleased()");
 	if (e.getButton() == MouseEvent.BUTTON1
 	    && this.selectedObject == EObjectTools.NODE) {
 	    if (this.controller.eventPutNode(scaleX(e.getX()), scaleY(e.getY())) == true)
@@ -683,11 +684,11 @@ public class MapPanel extends JPanel implements
 		    // nodes.add(newNode);
 		}
 	}
-	else if (e.getButton() == MouseEvent.BUTTON1
-		 && this.selectedObject == EObjectTools.VEHICULE) {
-	    System.out.println("COUCOU LES GENS !!!");
-	    this.controller.eventCreatVehicule(scaleX(e.getX()), scaleY(e.getY()));
-	}
+	// else if (e.getButton() == MouseEvent.BUTTON1
+	// 	 && this.selectedObject == EObjectTools.VEHICULE) {
+	//   System.out.println("this.controller.eventCreatVehicule()");
+	//     this.controller.eventCreatVehicule(scaleX(e.getX()), scaleY(e.getY()));
+	// }
 	if (this.selectedObject == EObjectTools.CURSOR
 	    && e.getButton() == MouseEvent.BUTTON1) {
 	    this.selectedBoxCoord1 = null;
@@ -953,9 +954,10 @@ public class MapPanel extends JPanel implements
     static void		setVehiculeAt(int x, int y) {
 	boolean		ret;
 
+	
+	ret = controller.eventCreatVehicule(x, y);
 	if (graphVehicule != null)
 	    {
-		ret = controller.eventCreatVehicule(x, y);
 		if (ret == false) {
 		    graphVehicule.setx(x);
 		    graphVehicule.sety(y);
