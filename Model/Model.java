@@ -270,4 +270,24 @@ public class Model {
     		_undo.remove(0);
 	_undo.push((ArrayList<String>) _map.getFormatMap().clone());
     }
+    
+  //******************
+  //	Stat
+  //******************
+    
+    public int getKm() {
+		return _sim.getStat().getKm();
+	}
+
+	public int getMidWaiting() {
+		return _sim.getStat().getMidWaiting();
+	}
+
+	public String getStrategy() {
+		return _sim.getStat().getStrategy();
+	}
+
+	public int getEfficiency() {
+		return _sim.getStat().getEfficiency();
+	}
 }

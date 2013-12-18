@@ -701,14 +701,12 @@ public class MapPanel extends JPanel implements
   static public void		moveVehiculeAt(int x, int y)
     {
 		for (int i = 0; i < nodes.size() ;i++) {
-			if (x == nodes.get(i).getRealX() && y == nodes.get(i).getRealY())
+			if (x == nodes.get(i).getRealX() && y == nodes.get(i).getRealY()) {
 				MapPanel.controller.eventEditVehiculeCoord(x, y);
-			else
-			{
-				JOptionPane.showMessageDialog(null, "The vehicule must be placed on a node.");
 				return;
 			}
-		}
+		}	
+		JOptionPane.showMessageDialog(null, "The vehicule must be placed on a node.");
     }
 
   static public void		moveAttachPointAt(int x, int y)
@@ -716,13 +714,10 @@ public class MapPanel extends JPanel implements
 		for (int i = 0; i < nodes.size() ;i++) {
 			if (x == nodes.get(i).getRealX() && y == nodes.get(i).getRealY()) {
 				MapPanel.controller.eventEditAttachPoint(x, y);
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(null, "Unable to find a node at " + x + ":" + y);
 				return;
 			}
 		}
+		JOptionPane.showMessageDialog(null, "Unable to find a node at " + x + ":" + y);
     }
 
 
