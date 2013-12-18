@@ -185,7 +185,20 @@ public class Model {
   public void stop() {
     if (_stop.isEmpty() == false)
     {
+      _map.clearMap();
       _map.setFormatMap(_stop);
+    int[]	vec_coord;
+    int[]	att_coord;
+
+    // Cheat, a regler
+    vec_coord = MapPanel.controller.eventGetVehiculeCoord();
+    att_coord = MapPanel.controller.eventGetAttachCoord();
+    if (vec_coord != null && att_coord != null)
+    {
+//	MapPanel.controller.eventEditVehiculeCoord(MapPanel.controller.eventGetAttachCoord());
+      MapPanel.setVehiculeAt(att_coord[0], att_coord[1]);
+    }
+
       _stop.clear();
     }
     _sim.stop();

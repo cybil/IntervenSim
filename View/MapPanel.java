@@ -147,12 +147,12 @@ public class MapPanel extends JPanel implements
 	System.out.println("MapPanel.deleteNode: Unable to delete the node");
     }
     else {
-      graphVehicule = null;
-      if (debug == true) System.out.println("deleteNode: delete vehicule  ============");
-      if (controller.eventDeleteVehicule() == false)
-      {
-	//if (debug == true) System.out.println("MapPanel.deleteNode: Unable to delete vehicule");
-      }
+      // graphVehicule = null;
+      // if (debug == true) System.out.println("deleteNode: delete vehicule  ============");
+      // if (controller.eventDeleteVehicule() == false)
+      // {
+      // 	//if (debug == true) System.out.println("MapPanel.deleteNode: Unable to delete vehicule");
+      // }
     }
   }
 
@@ -807,6 +807,7 @@ public class MapPanel extends JPanel implements
       deleteNode(n);
     }
     if (graphVehicule != null && graphVehicule.isSelected == true) {
+      graphVehicule.setIsSelected(false);
       deleteVehicule();
       vehiculeSelected = false;
     }
