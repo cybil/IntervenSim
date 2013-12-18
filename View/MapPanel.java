@@ -384,7 +384,7 @@ public class MapPanel extends JPanel implements
 	return null;
     }
 
-    static private NodeGraphic		_getNode(int rel_x, int rel_y)
+    static public NodeGraphic		_getNode(int rel_x, int rel_y)
     {
 	for (NodeGraphic node:nodes)
 	    {
