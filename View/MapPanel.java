@@ -698,34 +698,34 @@ public class MapPanel extends JPanel implements
     public int		coordMouseOld[] = new int[2];
     public boolean	movedMap = false;
 
-    public void		moveVehiculeAt(MouseEvent e)
+  static public void		moveVehiculeAt(int x, int y)
     {
-    	int x = scaleX(e.getX());
-		int y = scaleY(e.getY());
-		
 		for (int i = 0; i < nodes.size() ;i++) {
-			if (x == nodes.get(i).getx() && y == nodes.get(i).gety())
-				this.controller.eventEditVehiculeCoord(x, y);
+			if (x == nodes.get(i).getRealX() && y == nodes.get(i).getRealY())
+				MapPanel.controller.eventEditVehiculeCoord(x, y);
 			else
-				JOptionPane.showMessageDialog(this,"Node doesn't exist ");
-		}
-    }
-    
-    public void		moveAttachPointAt(MouseEvent e)
-    {
-    	int x = scaleX(e.getX());
-		int y = scaleY(e.getY());
-		
-		for (int i = 0; i < nodes.size() ;i++) {
-			if (x == nodes.get(i).getx() && y == nodes.get(i).gety()) {
-				this.controller.eventEditAttachPoint(x, y);
+			{
+				JOptionPane.showMessageDialog(null, "The vehicule must be placed on a node.");
+				return;
 			}
-			else
-				JOptionPane.showMessageDialog(this,"Node doesn't exist ");
 		}
     }
 
-    
+  static public void		moveAttachPointAt(int x, int y)
+    {
+		for (int i = 0; i < nodes.size() ;i++) {
+			if (x == nodes.get(i).getRealX() && y == nodes.get(i).getRealY()) {
+				MapPanel.controller.eventEditAttachPoint(x, y);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Unable to find a node at " + x + ":" + y);
+				return;
+			}
+		}
+    }
+
+
     public void mouseReleased(MouseEvent e) {
 	NodeGraphic	newNode;
 
@@ -734,7 +734,7 @@ public class MapPanel extends JPanel implements
 	    && this.selectedObject == EObjectTools.NODE) {
 		int x = scaleX(e.getX());
 		int y = scaleY(e.getY());
-		
+
 		if (getQuickEdition() == false) {
 			if (this.controller.eventPutNode(x, y) == true)
 			{
@@ -1101,7 +1101,7 @@ public class MapPanel extends JPanel implements
 	public void setQuickEdition(boolean quickEdition) {
 		this.quickEdition = quickEdition;
 	}
-	
+
 	public void changeQuickEdition() {
 		this.quickEdition = !(this.quickEdition);
 	}

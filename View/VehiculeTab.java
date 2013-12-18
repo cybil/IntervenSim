@@ -154,13 +154,13 @@ public class VehiculeTab extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void vehiculeCoordChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehiculeCoordChangeButtonActionPerformed
-      MapPanel.setVehiculeAt(Integer.parseInt(vehiculeTextFieldCoord_x.getText()),
+      MapPanel.moveVehiculeAt(Integer.parseInt(vehiculeTextFieldCoord_x.getText()),
 			     Integer.parseInt(vehiculeTextFieldCoord_y.getText()));
     }//GEN-LAST:event_vehiculeCoordChangeButtonActionPerformed
 
     private void attachPointChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachPointChangeButtonActionPerformed
-      MapPanel.controller.eventEditAttachPoint(Integer.parseInt(attachPointTextFieldCoord_x.getText()),
-					       Integer.parseInt(attachPointTextFieldCoord_y.getText()));
+      MapPanel.moveAttachPointAt(Integer.parseInt(attachPointTextFieldCoord_x.getText()),
+				 Integer.parseInt(attachPointTextFieldCoord_y.getText()));
         // TODO add your handling code here:
     }//GEN-LAST:event_attachPointChangeButtonActionPerformed
 
