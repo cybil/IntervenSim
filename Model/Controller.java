@@ -53,6 +53,10 @@ public class Controller {
 	_model.getMap().display();
     }
 
+    public void eventEditVehiculeSpeed(int speed) {
+    	_model.editVehiculeSpeed(speed);
+    }
+    
     public boolean	eventEditTreatmentTime(int[] coord, float time, int id) {
 	return _model.getMap().editTreatmentTime(coord, time, id);
     }
