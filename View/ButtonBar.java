@@ -33,8 +33,10 @@ public class ButtonBar extends JToolBar {
 
     protected JPanel panel4 = new JPanel();
     protected GroupLayout layout4 = new GroupLayout(panel4);
-    protected JLabel		speedLabel = new JLabel("Animation speed: x1:    ");
+    protected JLabel		speedLabel = new JLabel("");
+    protected JLabel		backImgLabel = new JLabel("");
     protected SpeedSlider	speedSlider = new SpeedSlider(speedLabel);
+    protected BackgroundScaleSlider	backgroundScaleSlider = new BackgroundScaleSlider(backImgLabel);
 
     ButtonBar() {
 	// Set ButtonBar
@@ -54,6 +56,8 @@ public class ButtonBar extends JToolBar {
 
 	panel4.add(speedLabel, BorderLayout.EAST);
 	panel4.add(speedSlider, BorderLayout.EAST);
+	panel4.add(backImgLabel, BorderLayout.EAST);
+	panel4.add(backgroundScaleSlider, BorderLayout.EAST);
 	
 	// Set the 3 visual groups
 	setFirstVisualGroup();

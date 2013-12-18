@@ -48,6 +48,9 @@ public class MainWindow extends JFrame implements ActionListener {
     static void		setAnimationSpeed(int speed) {
 	controller.eventSetSpeed(speed);
     }
+    static void		setBackgroundScale(int scale) {
+      controller.eventSetBackgroundScale(scale);
+    }
 
     public MainWindow(Controller controller) throws NombreInstanceGUIException{
 	if (inst == true)

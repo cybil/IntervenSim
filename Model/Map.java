@@ -7,6 +7,7 @@ public class Map implements java.io.Serializable {
     private float		scale = 1;
     private Vehicule		vehicule;
     private Image		image = null;
+  private int			backgroundScale = 100;
     private int			zoom = 100;
 
     //******************
@@ -353,6 +354,12 @@ public class Map implements java.io.Serializable {
 
     public void		setBackground(Image bck) {
 	this.image = bck;
+    }
+    public void		setBackgroundScale(int bck) {
+      backgroundScale = bck;
+    }
+    public int		getBackgroundScale() {
+      return (backgroundScale);
     }
 
     //**

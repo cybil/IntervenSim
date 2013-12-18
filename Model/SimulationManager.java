@@ -83,6 +83,7 @@ public class SimulationManager implements Serializable, ActionListener {
     // Methode surchargee de ActionListener (action a chaque tick du timer)
     public void actionPerformed(ActionEvent event) {
     	System.out.println("*TICK*");
+	this.strategyList.add(0, new StratNearestUrgency(this.map));
     	for (Node n : this.map.getNodeUrgency()) {
     	    for (Urgency u : n.getUrgency()) {
     		u.setTriggerDate(u.getTriggerDate() - 1); // 1 selon gestion du temps

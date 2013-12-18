@@ -179,6 +179,9 @@ public class Model {
     public void setSpeed(int speed) {
 	_sim.setSpeed(speed);
     }
+  //    public void setBckScale(int scale)
+  // {
+  // }
 	
     public int getSpeed() {
 	return _sim.getSpeed();

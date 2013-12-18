@@ -43,10 +43,11 @@ public class MapPanel extends JPanel implements
     private int		y1;
     private int		x2;
     private int		y2;
-    private boolean	isPressed = false;    
+    private boolean	isPressed = false;
 	private boolean quickEdition = false;
+
     static public boolean	mapChanged = false;
-    static public boolean	forceReload = false;    
+    static public boolean	forceReload = false;
     private int			wasOut = 0; // 0:OK - 1:Out - 2:Enter
     private boolean		wasZoomed = false;
     private Image		background;
@@ -231,14 +232,16 @@ public class MapPanel extends JPanel implements
   private  void		drawBackgroundImg(Graphics g)
   {
     Image		bck;
+    int			scale;
 
     if ((bck = this.controller._model.getMap().getBackground()) != null)
     {
       int		new_img_width;
       int		new_img_heigth;
 
-      new_img_width = MapPanel.unScaleX(bck.getWidth(null));
-      new_img_heigth = MapPanel.unScaleY(bck.getHeight(null));
+      scale = this.controller._model.getMap().getBackgroundScale();
+      new_img_width = MapPanel.unScaleX(bck.getWidth(null)) * scale/100;
+      new_img_heigth = MapPanel.unScaleY(bck.getHeight(null)) * scale/100;
       new_img_width = (new_img_width <= 0 ? 1 : new_img_width);
       new_img_heigth = (new_img_heigth <= 0 ? 1 : new_img_heigth);
       bck = bck.getScaledInstance(new_img_width, new_img_heigth, Image.SCALE_SMOOTH);
@@ -601,7 +604,7 @@ public class MapPanel extends JPanel implements
 	this.mapChanged = false;
 	nodes_it = 0;
 	roads_it = 0;
-	System.out.println("");
+	// System.out.println("");
 	for (String s : formatMap) {
 	  // System.out.println(s);
 	    if (s.charAt(0) == 'R') {
@@ -1054,5 +1057,4 @@ public class MapPanel extends JPanel implements
 	public void setQuickEdition(boolean quickEdition) {
 		this.quickEdition = quickEdition;
 	}
-    
 }
