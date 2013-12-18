@@ -100,6 +100,7 @@ public class SimulationManager implements Serializable, ActionListener {
     this.strategyList.add(1, new StratNearestUrgency(this.map));
     if (this.strategy == null)
       this.strategy = this.strategyList.get(0);
+    this.strategy = this.strategyList.get(this.getStrategy());
     for (Node n : this.map.getNodeUrgency()) {
       for (Urgency u : n.getUrgency()) {
 	u.setTriggerDate(u.getTriggerDate() - 1); // 1 selon gestion du temps

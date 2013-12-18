@@ -189,7 +189,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
   class QuickEditionpButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent arg0) {
-      System.out.print("Vous avez clique sur le bouton de Edition rapide\n");
+      // System.out.print("Vous avez clique sur le bouton de Edition rapide\n");
       if (mapPanel.getQuickEdition() == false)
 	mapPanel.setQuickEdition(true);
       else
@@ -200,7 +200,7 @@ public class MainWindow extends JFrame implements ActionListener {
   // ActionListener class for ToolsBar Buttons
   class SelectButtonListener implements ActionListener{
     public void actionPerformed(ActionEvent arg0) {
-      System.out.print("Vous avez clique sur le bouton de Selection\n");
+      // System.out.print("Vous avez clique sur le bouton de Selection\n");
       mapPanel.setSelectedObject(MapPanel.EObjectTools.CURSOR);
       toolsBar.deselectButton(MapPanel.EObjectTools.CURSOR);
     }
@@ -209,7 +209,7 @@ public class MainWindow extends JFrame implements ActionListener {
   class VehiculeButtonListener implements ActionListener{
     //Redefinition de la methode actionPerformed()
     public void actionPerformed(ActionEvent arg0) {
-      System.out.print("Vous avez clique sur le bouton Vehicule\n");
+      // System.out.print("Vous avez clique sur le bouton Vehicule\n");
       mapPanel.setSelectedObject(MapPanel.EObjectTools.VEHICULE);
       tabsPanel.editTab.showPanel(0);
       toolsBar.deselectButton(MapPanel.EObjectTools.VEHICULE);
@@ -219,7 +219,7 @@ public class MainWindow extends JFrame implements ActionListener {
   class RoadButtonListener implements ActionListener{
     //Redefinition de la methode actionPerformed()
     public void actionPerformed(ActionEvent arg0) {
-      System.out.print("Vous avez clique sur le bouton Road\n");
+      // System.out.print("Vous avez clique sur le bouton Road\n");
       mapPanel.setSelectedObject(MapPanel.EObjectTools.ROAD);
       tabsPanel.editTab.showPanel(2);
       toolsBar.deselectButton(MapPanel.EObjectTools.ROAD);
@@ -229,7 +229,7 @@ public class MainWindow extends JFrame implements ActionListener {
   class NodeButtonListener implements ActionListener{
     //Redefinition de la methode actionPerformed()
     public void actionPerformed(ActionEvent arg0) {
-      System.out.print("Vous avez clique sur le bouton Node\n");
+      // System.out.print("Vous avez clique sur le bouton Node\n");
       mapPanel.setSelectedObject(MapPanel.EObjectTools.NODE);
       tabsPanel.editTab.showPanel(1);
       toolsBar.deselectButton(MapPanel.EObjectTools.NODE);
@@ -239,7 +239,7 @@ public class MainWindow extends JFrame implements ActionListener {
   // ActionListener class for TabsPanel
   class HideButtonListener implements ActionListener{
     public void actionPerformed(ActionEvent arg0) {
-      System.out.print("clic hideButton\n");
+      // System.out.print("clic hideButton\n");
       tabsPanel.setVisible(false);
       tabToolBar.setVisible(true);
     }
@@ -247,7 +247,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
   class SeeTabButtonListener implements ActionListener{
     public void actionPerformed(ActionEvent arg0) {
-      System.out.print("clic seeTabButton\n");
+      // System.out.print("clic seeTabButton\n");
       tabToolBar.setVisible(false);
       tabsPanel.setVisible(true);
     }
