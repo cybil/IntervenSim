@@ -173,6 +173,24 @@ public class NodeTab extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nodeCoordChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nodeCoordChangeButtonActionPerformed
+      int[]		from = {0, 0};
+      int[]		to = {0, 0};
+
+      try
+      {
+	from[0] = Integer.parseInt(fromNodeTextFieldCoord_x.getText());
+	from[1] = Integer.parseInt(fromNodeTextFieldCoord_y.getText());
+	to[0] = Integer.parseInt(toNodeTextFieldCoord_x.getText());
+	to[1] = Integer.parseInt(toNodeTextFieldCoord_y.getText());
+	if (MapPanel.controller.eventEditNodeCoord(from, to) == false)
+	  JOptionPane.showMessageDialog(null, "Unable to move node from "
+					+ from[0] + ":" + from[1]
+					+ " to " + to[0] + ":" + to[1]);
+      }
+      catch (Exception e)
+      {
+	JOptionPane.showMessageDialog(null, "Invalide coord value.");
+      }
     }//GEN-LAST:event_nodeCoordChangeButtonActionPerformed
 
     private void nodeSetAttachPointButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nodeSetAttachPointButtonActionPerformed

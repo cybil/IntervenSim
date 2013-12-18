@@ -154,23 +154,39 @@ public class VehiculeTab extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void vehiculeCoordChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehiculeCoordChangeButtonActionPerformed
-      MapPanel.moveVehiculeAt(Integer.parseInt(vehiculeTextFieldCoord_x.getText()),
-			     Integer.parseInt(vehiculeTextFieldCoord_y.getText()));
+      try
+      {
+	MapPanel.moveVehiculeAt(Integer.parseInt(vehiculeTextFieldCoord_x.getText()),
+				Integer.parseInt(vehiculeTextFieldCoord_y.getText()));
+      }
+      catch (Exception e)
+      {
+	JOptionPane.showMessageDialog(null, "Invalide Coord value.");
+      }
     }//GEN-LAST:event_vehiculeCoordChangeButtonActionPerformed
 
     private void attachPointChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachPointChangeButtonActionPerformed
-      MapPanel.moveAttachPointAt(Integer.parseInt(attachPointTextFieldCoord_x.getText()),
-				 Integer.parseInt(attachPointTextFieldCoord_y.getText()));
+      try
+      {
+	MapPanel.moveAttachPointAt(Integer.parseInt(attachPointTextFieldCoord_x.getText()),
+				   Integer.parseInt(attachPointTextFieldCoord_y.getText()));
+      }
+      catch (Exception e)
+      {
+	JOptionPane.showMessageDialog(null, "Invalide Coord value.");
+      }
         // TODO add your handling code here:
     }//GEN-LAST:event_attachPointChangeButtonActionPerformed
 
     private void waitingStrategyComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waitingStrategyComboBoxActionPerformed
       JComboBox		cb = ((JComboBox)evt.getSource());
+
       MapPanel.controller.eventSetWaitingStrategy(cb.getSelectedIndex());
     }//GEN-LAST:event_waitingStrategyComboBoxActionPerformed
 
     private void strategyComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_strategyComboBoxActionPerformed
       JComboBox		cb = ((JComboBox)evt.getSource());
+
       MapPanel.controller.eventSetStrategy(cb.getSelectedIndex());
     }//GEN-LAST:event_strategyComboBoxActionPerformed
 
