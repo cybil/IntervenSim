@@ -19,8 +19,8 @@ public class Map implements java.io.Serializable {
     	this.scale = map.getScale();
     	
     	this.graph = new Graph(map.getGraph());
-    	/*if (this.vehicule != null)
-	  this.vehicule = new Vehicule(map.getVehicule());*/
+    	/*if (this.vehicule != null)*/
+	  //this.vehicule = new Vehicule(map.getVehicule());
     	vehicule = map.vehicule;
     	this.image = map.getImage();
     	this.zoom = map.getZoom();
@@ -253,7 +253,7 @@ public class Map implements java.io.Serializable {
     }
 
     public ArrayList<String>	getFormatMap() {
-
+   
 	ArrayList<String>	format = new ArrayList<String>();
 	// Urgence:	U:x,y:S(sleeping) or W(waiting) or P(in progress) or D(done)
 	// AttachPoint: A:x,y
