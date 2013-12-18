@@ -195,6 +195,9 @@ public class Controller {
     public void eventSetStrategy(int strat) {
 	_model.getSimulationManager().setStrategy(strat);
     }
+    public void eventSetWaitingStrategy(int strat) {
+    	_model.getSimulationManager().setWaitingStrategy(strat);
+    }
 
     public int eventGetStrategy(int strat) {
 	return _model.getSimulationManager().getStrategy();

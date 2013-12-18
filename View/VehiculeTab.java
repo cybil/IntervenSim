@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+import javax.swing.*;
+
 /**
  *
  * @author Administrateur
@@ -163,11 +165,13 @@ public class VehiculeTab extends javax.swing.JPanel {
     }//GEN-LAST:event_attachPointChangeButtonActionPerformed
 
     private void waitingStrategyComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waitingStrategyComboBoxActionPerformed
-        // TODO add your handling code here:
+      JComboBox		cb = ((JComboBox)evt.getSource());
+      MapPanel.controller.eventSetWaitingStrategy(cb.getSelectedIndex());
     }//GEN-LAST:event_waitingStrategyComboBoxActionPerformed
 
     private void strategyComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_strategyComboBoxActionPerformed
-        // TODO add your handling code here:
+      JComboBox		cb = ((JComboBox)evt.getSource());
+      MapPanel.controller.eventSetStrategy(cb.getSelectedIndex());
     }//GEN-LAST:event_strategyComboBoxActionPerformed
 
 

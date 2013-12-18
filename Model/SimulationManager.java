@@ -9,9 +9,14 @@ public class SimulationManager implements Serializable, ActionListener {
 	BEGIN, RUNNING, PAUSED, END;
     }
 
+  public enum WaitingStrategy {
+    WAITING, BACK_TO_ATTACH_POINT;
+  }
+
     private Map			map;
     private	ArrayList<Strategy>	strategyList = new ArrayList<Strategy>();
     private Strategy		strategy;
+  private WaitingStrategy		waitingStrategy = WaitingStrategy.WAITING;
     private Statistic		statistic = new Statistic();
     private int			speed = 1;
     private ESimulationState	state = ESimulationState.BEGIN;
@@ -75,6 +80,10 @@ public class SimulationManager implements Serializable, ActionListener {
     	if (strat <= strategyList.size())
     		strategy = strategyList.get(strat);
     }
+    public void			setWaitingStrategy(int strat) {
+      this.waitingStrategy = (strat == 0 ? WaitingStrategy.WAITING
+			      : WaitingStrategy.BACK_TO_ATTACH_POINT);
+    }
 
     //***************
     // * Others
@@ -83,7 +92,10 @@ public class SimulationManager implements Serializable, ActionListener {
     // Methode surchargee de ActionListener (action a chaque tick du timer)
     public void actionPerformed(ActionEvent event) {
     	System.out.println("*TICK*");
-	this.strategyList.add(0, new StratNearestUrgency(this.map));
+	this.strategyList.add(0, new StratOldestUrgency(this.map));
+	this.strategyList.add(1, new StratNearestUrgency(this.map));
+	if (this.strategy == null)
+	  this.strategy = this.strategyList.get(0);
     	for (Node n : this.map.getNodeUrgency()) {
     	    for (Urgency u : n.getUrgency()) {
     		u.setTriggerDate(u.getTriggerDate() - 1); // 1 selon gestion du temps
@@ -101,15 +113,21 @@ public class SimulationManager implements Serializable, ActionListener {
 	  ArrayList<Node>	path = null;
 
 	  System.out.println("SimulationManager: Setting path to vehicule");
-	  path = this.strategyList.get(0).getPath();
+	  // path = this.strategyList.get(0).getPath();
+	  path = this.strategy.getPath();
 	  // this.strategyList.get(0)._map =  this.map;
 	  // Pour pouvoir ajouter un node et des roads en cours de route
 	  // this.strategyList.add(0, new StratOldestUrgency(this.map));
-	  this.strategyList.add(0, new StratNearestUrgency(this.map));
-	  this.strategyList.get(0).setAttachPoint(this.map.getAttachPointCoord()[0],
-						  this.map.getAttachPointCoord()[1]);
-	  if (path == null || path.size() == 0)
-	    path = this.strategyList.get(0).getWaitingPath();
+
+	  // this.strategyList.add(0, new StratNearestUrgency(this.map));
+	  // this.strategyList.get(0).setAttachPoint(this.map.getAttachPointCoord()[0],
+	  // 					  this.map.getAttachPointCoord()[1]);
+
+	  this.strategy.setAttachPoint(this.map.getAttachPointCoord()[0],
+				       this.map.getAttachPointCoord()[1]);
+	  if ((path == null || path.size() == 0)
+	      && waitingStrategy == WaitingStrategy.BACK_TO_ATTACH_POINT)
+	    path = this.strategy.getWaitingPath();
 	  v.setPath(path);
 	}
 	if (v.getState() == Vehicule.EVehiculeState.ON_THE_ROAD)
@@ -117,7 +135,7 @@ public class SimulationManager implements Serializable, ActionListener {
 	
 	this.statistic.setKm((int)v.getKm());
 	this.statistic.setSpeed(v.getSpeed());
-	this.statistic.setStrategy(this.strategyList.get(0).getStrategyName());
+	this.statistic.setStrategy(this.strategy.getStrategyName());
     	this.map.actualizeVehicule();
     }
 
