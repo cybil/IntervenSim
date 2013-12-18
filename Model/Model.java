@@ -217,7 +217,6 @@ public class Model {
     		_map.clearMap();
     		_map.setFormatMap(_undo.pop());
     	}
-    	getUndoState();
     }
 	
     public void addToRedo(int[] coordOld, int[] coordNew) {
@@ -228,7 +227,7 @@ public class Model {
     		_redo.push((ArrayList<String>) _map.getFormatMap().clone());
     	}
     	else {
-    		if (_redo.size() > 7)
+    		if (_redo.size() > 30)
     			_redo.remove(0);
     		_redo.push((ArrayList<String>) _map.getFormatMap().clone());
     	}
@@ -242,14 +241,14 @@ public class Model {
     		_undo.push((ArrayList<String>) _map.getFormatMap().clone());
     	}
     	else {
-    		if (_undo.size() > 7)
+    		if (_undo.size() > 30)
     			_undo.remove(0);
     		_undo.push((ArrayList<String>) _map.getFormatMap().clone());
     	}
     }
     
     public void addToRedo() {
-    	if (_redo.size() > 7) {
+    	if (_redo.size() > 30) {
     		_redo.remove(0);
     	}
     	_redo.push((ArrayList<String>) _map.getFormatMap().clone());
@@ -263,9 +262,8 @@ public class Model {
     }
     
     public void addToUndo() {
-    	if (_undo.size() > 7)
+    	if (_undo.size() > 30)
     		_undo.remove(0);
 	_undo.push((ArrayList<String>) _map.getFormatMap().clone());
-	getUndoState();
     }
 }
