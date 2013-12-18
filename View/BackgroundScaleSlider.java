@@ -13,7 +13,7 @@ class BackgroundScaleSlider extends JSlider {
     public BackgroundScaleSlider(JLabel p_label) {
 	this.label = p_label;
 	this.setPreferredSize(new Dimension(200, 50));
-	this.setMaximum(1000);
+	this.setMaximum(3000);
 	this.setMinimum(10);
 	this.setValue(100);
 	this.setPaintTicks(true);

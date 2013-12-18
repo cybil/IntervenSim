@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import javax.swing.JTabbedPane;
 
 public class TabsPanel extends JPanel {
+  static public final Dimension dim = new Dimension(200, 600);
     JTabbedPane tabs = new JTabbedPane(SwingConstants.TOP);
     EditTab editTab = new EditTab();
     StatTab statTab = new StatTab();
@@ -21,10 +22,11 @@ public class TabsPanel extends JPanel {
     
     TabsPanel() {
 	//		this.setBackground(new Color(255, 0, 0));
-	this.setSize(new Dimension(225, 600));
-	this.setPreferredSize(new Dimension(225, 600));
-	this.setMaximumSize(new Dimension(225, 600));
-	this.setMinimumSize(new Dimension(225, 600));
+      // Dimension dim = new Dimension(300, 600);
+	this.setSize(dim);
+	this.setPreferredSize(dim);
+	this.setMaximumSize(dim);
+	this.setMinimumSize(dim);
 	this.setLayout(new GridBagLayout());
 	//		pan.setBackground(new Color(255, 0, 0));
 	//		pan.setPreferredSize(new Dimension(380, 600));

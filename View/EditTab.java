@@ -21,11 +21,12 @@ public class EditTab extends JPanel {
 	JPanel content = new JPanel();
 	
 	EditTab() {
-		this.setPreferredSize(new Dimension(200, 450));
-		this.setSize(new Dimension(200, 450));
-		this.setMaximumSize(new Dimension(200, 450));
-		this.setMinimumSize(new Dimension(200, 450));
-	    this.add(new JLabel("Edit map"));
+	  Dimension dim = TabsPanel.dim;
+		this.setPreferredSize(dim);
+		this.setSize(dim);
+		this.setMaximumSize(dim);
+		this.setMinimumSize(dim);
+	    // this.add(new JLabel("Edit map"));
 	    
 	content.setLayout(cl);
     //On definit le layout
@@ -35,7 +36,7 @@ public class EditTab extends JPanel {
     content.add(nodeTab, listContent[1]);
     content.add(roadTab, listContent[2]);
 
-    add(content, BorderLayout.CENTER);
+    add(content, BorderLayout.EAST);
     this.setVisible(true);
 	}
 	
