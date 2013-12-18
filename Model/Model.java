@@ -9,6 +9,7 @@ public class Model {
     private FileManager	_file = new FileManager(_map, _sim);
     private Stack<ArrayList<String>> _undo = new Stack<ArrayList<String>>();
     private Stack<ArrayList<String>> _redo = new Stack<ArrayList<String>>();
+    private ArrayList<String> _stop = new ArrayList<String>();
 	private int _xPos = 0;
 	private int _yPos = 0;
     
@@ -154,6 +155,7 @@ public class Model {
 	
     //Fonction for SimulationManager
     public void play() {
+    _stop = (ArrayList<String>) _map.getFormatMap().clone();
 	_sim.play(true);
     }
 	
@@ -161,7 +163,13 @@ public class Model {
 	_sim.pause();
     }
     public void stop() {
-	_sim.stop();
+    if (_stop.isEmpty() == false)
+    {
+    	System.out.println("test stop");
+    	_map.setFormatMap(_stop);
+    	_stop.clear();
+    }
+    _sim.stop();
     }
 	
     public void goToStat() {
