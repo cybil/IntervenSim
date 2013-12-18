@@ -59,6 +59,9 @@ public class MapPanel extends JPanel implements
     static ArrayList<RoadGraphic>	roads = new ArrayList<RoadGraphic>();
     static NodeGraphic			movedNode;
 
+  static private Image		_scaledBck = null;
+  static private int		oldBackgroundScale = -1;
+
     static Controller		controller;
     static int[]		coordMovedNode = new int[2];
     static boolean		isDragging = false;
@@ -240,12 +243,16 @@ public class MapPanel extends JPanel implements
       int		new_img_heigth;
 
       scale = this.controller._model.getMap().getBackgroundScale();
-      new_img_width = MapPanel.unScaleX(bck.getWidth(null)) * scale/100;
-      new_img_heigth = MapPanel.unScaleY(bck.getHeight(null)) * scale/100;
-      new_img_width = (new_img_width <= 0 ? 1 : new_img_width);
-      new_img_heigth = (new_img_heigth <= 0 ? 1 : new_img_heigth);
-      bck = bck.getScaledInstance(new_img_width, new_img_heigth, Image.SCALE_SMOOTH);
-      g.drawImage(bck, 0, 0, this);
+      if (scale != oldBackgroundScale || wasZoomed == true)
+      {
+	new_img_width = MapPanel.unScaleX(bck.getWidth(null)) * scale/100;
+	new_img_heigth = MapPanel.unScaleY(bck.getHeight(null)) * scale/100;
+	new_img_width = (new_img_width <= 0 ? 1 : new_img_width);
+	new_img_heigth = (new_img_heigth <= 0 ? 1 : new_img_heigth);
+	_scaledBck = bck.getScaledInstance(new_img_width, new_img_heigth, Image.SCALE_SMOOTH);
+	oldBackgroundScale = scale;
+      }
+      g.drawImage(_scaledBck, 0, 0, this);
     }
   }
 
