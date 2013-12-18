@@ -102,7 +102,10 @@ public class Controller {
 	return _model.deleteNode(coord);
     }
 
-    public boolean		eventGetVehicule() {
+    public int[]		eventGetVehiculeCoord() {
+	return _model.getMap().getVehiculeCoord();
+    }
+    public boolean		eventHasVehicule() {
 	return _model.getMap().hasVehicule();
     }
 

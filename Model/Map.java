@@ -183,7 +183,7 @@ public class Map implements java.io.Serializable {
 
     public int[]		getVehiculeCoord() {
 	if (this.vehicule != null)
-	    return this.vehicule.getCoord();
+	  return this.vehicule.getCoord().clone();
 	return null;
     }
 
