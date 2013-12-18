@@ -29,6 +29,7 @@ public class StratNearestUrgency extends Strategy implements java.io.Serializabl
 	{
 	  tmp_coord_src = _path.get(0).getCoord();
 	  if (_path.get(_path.size() - 1).getNextUrgency() != null
+	      && _path.get(_path.size() - 1).getNextUrgency().getTriggerDate() <= 0
 	      && coord_src[0] == tmp_coord_src[0] && coord_src[1] == tmp_coord_src[1])
 	  {
 	    new_cost = AdjMatriceGen.pathCost(_path);
