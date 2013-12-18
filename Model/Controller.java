@@ -217,4 +217,22 @@ public class Controller {
     public int eventTreatmentTimeAvg() {
 	return _model.getFileManager().getStat().getMidWaiting();
     }
+    
+    //stat
+    
+    public int eventGetKm() {
+ 		return _model.getKm();
+ 	}
+
+ 	public int eventGetMidWaiting() {
+ 		return _model.getMidWaiting();
+ 	}
+
+ 	public String eventGetStrategy() {
+ 		return _model.getStrategy();
+ 	}
+
+ 	public int eventGetEfficiency() {
+ 		return _model.getEfficiency();
+ 	}
 }
