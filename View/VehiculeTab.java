@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 
+import java.awt.*;
 import javax.swing.*;
+import java.io.*;
+import javax.imageio.*;
 
 /**
  *
@@ -17,6 +20,18 @@ public class VehiculeTab extends javax.swing.JPanel {
      */
     public VehiculeTab() {
         initComponents();
+      try
+      {
+	Image img = ImageIO.read(new File("img/vehicule.png"));
+	img = img.getScaledInstance((int)img.getWidth(null) * 3,
+				    (int)img.getHeight(null) * 3,
+				    Image.SCALE_SMOOTH);
+
+	vehiculeLogoLabel.setIcon(new ImageIcon(img));
+      }
+      catch (Exception e)
+      {
+      }
     }
 
     /**
@@ -33,16 +48,14 @@ public class VehiculeTab extends javax.swing.JPanel {
         strategyComboBox = new javax.swing.JComboBox();
         waitingStrategyComboBox = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        vehiculeTextFieldCoord_x = new javax.swing.JTextField();
-        vehiculeTextFieldCoord_y = new javax.swing.JTextField();
+        TextFieldCoord_x = new javax.swing.JTextField();
+        TextFieldCoord_y = new javax.swing.JTextField();
         vehiculeCoordChangeButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         attachPointChangeButton = new javax.swing.JButton();
-        attachPointTextFieldCoord_x = new javax.swing.JTextField();
-        attachPointTextFieldCoord_y = new javax.swing.JTextField();
+        vehiculeLogoLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         jLabel1.setText("Strategy");
 
@@ -77,10 +90,6 @@ public class VehiculeTab extends javax.swing.JPanel {
 
         jLabel5.setText("y");
 
-        jLabel6.setText("y");
-
-        jLabel7.setText("x");
-
         attachPointChangeButton.setText("Change attach point");
         attachPointChangeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,31 +103,28 @@ public class VehiculeTab extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(attachPointTextFieldCoord_x, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(attachPointTextFieldCoord_y))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator1)
+                    .addComponent(vehiculeLogoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vehiculeTextFieldCoord_x, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TextFieldCoord_x, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vehiculeTextFieldCoord_y))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(TextFieldCoord_y))
                     .addComponent(waitingStrategyComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(attachPointChangeButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                    .addComponent(vehiculeCoordChangeButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(strategyComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(attachPointChangeButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(vehiculeCoordChangeButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,8 +132,10 @@ public class VehiculeTab extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(strategyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
@@ -135,29 +143,25 @@ public class VehiculeTab extends javax.swing.JPanel {
                 .addComponent(waitingStrategyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(vehiculeTextFieldCoord_x, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(vehiculeTextFieldCoord_y, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextFieldCoord_x, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextFieldCoord_y, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(vehiculeCoordChangeButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(attachPointTextFieldCoord_x, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(attachPointTextFieldCoord_y, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(attachPointChangeButton)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(vehiculeLogoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void vehiculeCoordChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehiculeCoordChangeButtonActionPerformed
       try
       {
-	MapPanel.moveVehiculeAt(Integer.parseInt(vehiculeTextFieldCoord_x.getText()),
-				Integer.parseInt(vehiculeTextFieldCoord_y.getText()));
+	MapPanel.moveVehiculeAt(Integer.parseInt(TextFieldCoord_x.getText()),
+				Integer.parseInt(TextFieldCoord_y.getText()));
       }
       catch (Exception e)
       {
@@ -168,8 +172,8 @@ public class VehiculeTab extends javax.swing.JPanel {
     private void attachPointChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachPointChangeButtonActionPerformed
       try
       {
-	MapPanel.moveAttachPointAt(Integer.parseInt(attachPointTextFieldCoord_x.getText()),
-				   Integer.parseInt(attachPointTextFieldCoord_y.getText()));
+	MapPanel.moveAttachPointAt(Integer.parseInt(TextFieldCoord_x.getText()),
+				   Integer.parseInt(TextFieldCoord_y.getText()));
       }
       catch (Exception e)
       {
@@ -192,20 +196,18 @@ public class VehiculeTab extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TextFieldCoord_x;
+    private javax.swing.JTextField TextFieldCoord_y;
     private javax.swing.JButton attachPointChangeButton;
-    private javax.swing.JTextField attachPointTextFieldCoord_x;
-    private javax.swing.JTextField attachPointTextFieldCoord_y;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox strategyComboBox;
     private javax.swing.JButton vehiculeCoordChangeButton;
-    private javax.swing.JTextField vehiculeTextFieldCoord_x;
-    private javax.swing.JTextField vehiculeTextFieldCoord_y;
+    private javax.swing.JLabel vehiculeLogoLabel;
     private javax.swing.JComboBox waitingStrategyComboBox;
     // End of variables declaration//GEN-END:variables
 }

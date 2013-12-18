@@ -77,7 +77,7 @@ public class SimulationManager implements Serializable, ActionListener {
     }
 
     public void			setStrategy(int strat) {
-    	if (strat <= strategyList.size())
+      if (strat <= strategyList.size() && strategyList.size() > 0)
     		strategy = strategyList.get(strat);
     }
     public void			setWaitingStrategy(int strat) {
