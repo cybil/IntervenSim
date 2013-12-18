@@ -12,11 +12,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import java.awt.Dimension;
 
-public class NewButton extends JButton implements MouseListener{
+public class QuickEditionButton extends JButton implements MouseListener{
     private String name;
     private Image img;
 		
-    NewButton() {
+    QuickEditionButton() {
 	//				super(title);
 	//			    this.name = title;
 	this.setSize(48, 48);
@@ -24,7 +24,7 @@ public class NewButton extends JButton implements MouseListener{
 	this.setMaximumSize(new Dimension(48, 48));
 	this.setMinimumSize(new Dimension(48, 48));
 	try {
-	    img = ImageIO.read(new File("img/newbutton.png"));
+	    img = ImageIO.read(new File("img/petitgraph.png"));
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
@@ -32,7 +32,7 @@ public class NewButton extends JButton implements MouseListener{
 	//Des qu'un evenement de la souris sera intercepte, il en sera averti
 	this.setOpaque(false);
 	this.addMouseListener(this);
-	this.setToolTipText("New file");
+	this.setToolTipText("Quick edition mode");
     }
 		
     public void paintComponent(Graphics g){

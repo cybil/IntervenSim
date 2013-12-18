@@ -43,8 +43,8 @@ public class MapPanel extends JPanel implements
     private int		y1;
     private int		x2;
     private int		y2;
-    private boolean	isPressed = false;
-
+    private boolean	isPressed = false;    
+	private boolean quickEdition = false;
     static public boolean	mapChanged;
     private int			wasOut = 0; // 0:OK - 1:Out - 2:Enter
     private boolean		wasZoomed = false;
@@ -270,7 +270,7 @@ public class MapPanel extends JPanel implements
 	// + scrolBarRef.getViewport().getViewRect().width;
 	// view_y = scrolBarRef.getViewport().getViewPosition().y;
 	// System.out.println("x:" + view_x + " / y:" + view_y);
-	g2.drawString("Echelle:" + 100,
+	g2.drawString("Echelle: 1px:1km",
 		      view_x + scrolBarRef.getWidth() - 120,
 		      view_y + scrolBarRef.getHeight() - 30);
 	g2.drawString("X_real: " + scaleX(this.mouseX) + " Y_real: " + scaleY(this.mouseY),
@@ -609,6 +609,7 @@ public class MapPanel extends JPanel implements
 
     public void		displayMap(ArrayList<String> formatMap)
     {
+    System.out.println("DisplayMap called");
 	int		nodes_it;
 	int		roads_it;
 	NodeGraphic	newNode = null;
@@ -1054,4 +1055,12 @@ public class MapPanel extends JPanel implements
 	controller.eventDeleteVehicule();
     }
 
+    public boolean getQuickEdition() {
+		return quickEdition;
+	}
+
+	public void setQuickEdition(boolean quickEdition) {
+		this.quickEdition = quickEdition;
+	}
+    
 }
