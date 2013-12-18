@@ -53,37 +53,37 @@ public class SimMenu extends JMenu {
 
   public class PlayItemAction implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
-      System.out.print("playItem\n");
+      // System.out.print("playItem\n");
     }
   }
 
   public class StopItemAction implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
-      System.out.print("stopItem\n");
+      // System.out.print("stopItem\n");
     }
   }
 
   public class PauseItemAction implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
-      System.out.print("pauseItem\n");
+      // System.out.print("pauseItem\n");
     }
   }
 
   public class SkipAnimationItemAction implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
-      System.out.print("skipAnimationItem\n");
+      // System.out.print("skipAnimationItem\n");
     }
   }
 
   public class ChooseSpeedItemAction implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
-      System.out.print("chooseSpeedItem\n");
+      // System.out.print("chooseSpeedItem\n");
     }
   }
 
   public class ExitItemAction implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
-      System.out.print("exitItem\n");
+      // System.out.print("exitItem\n");
     }
   }
 }

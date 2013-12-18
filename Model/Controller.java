@@ -182,6 +182,7 @@ public class Controller {
 
   public boolean	eventNewFile() {
     _model.getMap().clearMap();
+    eventDeleteVehicule();
     return true;
   }
 

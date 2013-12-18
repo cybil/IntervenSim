@@ -15,6 +15,7 @@ public class EditMenu extends JMenu {
   JMenuItem	selectAllItem = new JMenuItem("Select all");
   JMenuItem	reverseSelectionItem = new JMenuItem("Reverse selection");
   JMenuItem	preferencesItem = new JMenuItem("Preferences");
+  JMenuItem	remove = new JMenuItem("Remove");
   private boolean	debug = false;
 
 
@@ -56,17 +57,32 @@ public class EditMenu extends JMenu {
 
     preferencesItem.addActionListener(new PreferencesItemAction());
     this.add(preferencesItem);
+
+    this.addSeparator();
+    remove.addActionListener(new RemoveAction());
+    remove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0, true));
+    this.add(remove);
+  }
+
+  public class RemoveAction implements ActionListener {
+    public void actionPerformed(ActionEvent evt) {
+      if (debug == true) System.out.print("Remove Item\n");
+      MapPanel.deleteSelection();
+      // MapPanel.controller.eventUndo();
+    }
   }
 
   public class UndoItemAction implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
       if (debug == true) System.out.print("UndoItem\n");
+      MapPanel.controller.eventUndo();
     }
   }
 
   public class RedoItemAction implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
       if (debug == true) System.out.print("redoItem\n");
+      MapPanel.controller.eventRedo();
     }
   }
 
@@ -91,12 +107,14 @@ public class EditMenu extends JMenu {
   public class ReverseSelectionItemAction implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
       if (debug == true) System.out.print("ReverseSelectionItem\n");
+      // MapPanel.reverseSelect();
     }
   }
 
   public class SelectAllItemAction implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
       if (debug == true) System.out.print("SelectAllItem\n");
+      MapPanel.selectAll();
     }
   }
 

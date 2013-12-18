@@ -592,12 +592,14 @@ public class MapPanel extends JPanel implements
     // if (debug == true) System.out.println("DisplayMap called");
     int		nodes_it;
     int		roads_it;
+    int		vehicule_it;
     NodeGraphic	newNode = null;
     ArrayList<NodeGraphic>	new_nodes = new ArrayList<NodeGraphic>();
 
     this.mapChanged = false;
     nodes_it = 0;
     roads_it = 0;
+    vehicule_it = 0;
     // if (debug == true) System.out.println("");
     for (String s : formatMap) {
       // if (debug == true) System.out.println(s);
@@ -608,6 +610,7 @@ public class MapPanel extends JPanel implements
       {
 	if (s.charAt(0) == 'V') {
 	  this._displayMapVehicule(s);
+	  vehicule_it++;
 	}
 	else if (s.charAt(0) == 'N') {
 	  newNode = this._displayMapNode(s, nodes_it++);
@@ -628,6 +631,8 @@ public class MapPanel extends JPanel implements
 	}
       }
     }
+    if (vehicule_it == 0)
+      graphVehicule = null;
     if (isDragging == false) // To remove old road
     {
       while (nodes.size() > 0) // Cleaning useless node
@@ -771,11 +776,16 @@ public class MapPanel extends JPanel implements
 
   static boolean	vehiculeSelected = false;
 
-  public void		selectAll() {
-    for (NodeGraphic n : this.nodes) {
-      this.selectedItemsList.add(n);
+  static public void		selectAll() {
+    selectedItemsList.clear();
+    for (NodeGraphic n : nodes) {
+      selectedItemsList.add(n);
       n.setIsSelected(true);
     }
+    if (graphVehicule != null)
+      graphVehicule.setIsSelected(true);
+    // else
+    //   System.out.println("graphVehicule is null");
     vehiculeSelected = true;
 
   }
@@ -794,7 +804,7 @@ public class MapPanel extends JPanel implements
     for (NodeGraphic n : selectedItemsList) {
       deleteNode(n);
     }
-    if (vehiculeSelected == true) {
+    if (graphVehicule != null && graphVehicule.isSelected == true) {
       deleteVehicule();
       vehiculeSelected = false;
     }
@@ -1072,7 +1082,8 @@ public class MapPanel extends JPanel implements
   static void			deleteVehicule() {
     if (debug == true) System.out.println("DELETE VEHICULE !");
     graphVehicule = null;
-    controller.eventDeleteVehicule();
+    if (controller.eventDeleteVehicule() == false)
+      System.out.println("MapPanel.deleteVehicule: Error, unable to delete vehicule");
   }
 
   public boolean getQuickEdition() {
@@ -1086,4 +1097,5 @@ public class MapPanel extends JPanel implements
   public void changeQuickEdition() {
     this.quickEdition = !(this.quickEdition);
   }
+
 }
