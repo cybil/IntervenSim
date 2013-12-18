@@ -76,7 +76,8 @@ public class AdjMatriceGen {
       {
 	known_path = pathList.get(i);
 	if (known_path.size() > 0
-	    && known_path.get(known_path.size() - 1) == path.get(path.size() - 1)
+	    && known_path.get(known_path.size() - 1).getCoord()[0] == path.get(path.size() - 1).getCoord()[0]
+	    && known_path.get(known_path.size() - 1).getCoord()[1] == path.get(path.size() - 1).getCoord()[1]
 	    && this.pathCost(known_path) > this.pathCost(path))
 	{
 	  if (debug >= 5) System.out.println("     _addOrReplacePath(): Replacing existing path");
