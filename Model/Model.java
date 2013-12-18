@@ -131,7 +131,7 @@ public class Model {
     }
 	
     public boolean		editNodeCoord(int[] oldCoord, int[] newCoord) {
-    	//addToUndo(oldCoord, newCoord);
+    	addToUndo(oldCoord, newCoord);
     	return _map.editNodeCoord(oldCoord, newCoord);
     }
 	
