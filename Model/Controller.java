@@ -45,6 +45,10 @@ public class Controller {
 	return _model.putNode(x, y);
     }
 
+    public boolean		eventQuickEdition(int[] coord) {
+    	return _model.quickEdition(coord);
+    }
+    
     public void eventGetDisplay() {
 	_model.getMap().display();
     }

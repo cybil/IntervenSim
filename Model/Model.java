@@ -12,6 +12,7 @@ public class Model {
     private ArrayList<String> _stop = new ArrayList<String>();
 	private int _xPos = 0;
 	private int _yPos = 0;
+	private int _coord[] = null;
     
     
     //******************
@@ -80,10 +81,24 @@ public class Model {
 	
     public boolean putNode(int x, int y) {
     	_redo.clear();
+    	_coord = null;
     	addToUndo();
     	return _map.addNode(x, y);
     }
 	
+    public boolean quickEdition(int[] coord) {
+    	boolean ret = true;
+    	
+    	_redo.clear();
+    	addToUndo();
+    	if (_map.addNode(coord[0], coord[1]) == false)
+    		return false;
+    	if (_coord != null)
+    		ret = _map.addRoad(coord, _coord);
+    	_coord = coord.clone();
+    	return ret;
+    }
+    
     public void getDisplay() {
 	// _map.display();
 	for (String s : _map.getFormatMap())
