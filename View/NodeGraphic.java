@@ -10,6 +10,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 import java.awt.Graphics2D;
 import javax.swing.*;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 public class NodeGraphic extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -21,19 +24,25 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     private EditProperty	editProperty = new EditProperty(this);
 
 
-    // A utiliser pour resize l'image en zoom
-    // public Image getScaledInstance(int width,
-    // 				 int height,
-    // 				 int hints)
-    // Original
-    protected Image	_imgNormal;
-    private Image	_imgSelected;
-    private Image	_imgPassedOver;
+  // A utiliser pour resize l'image en zoom
+  // public Image getScaledInstance(int width,
+  // 				 int height,
+  // 				 int hints)
+  // Original
+  private Image	imgSelected;
+  private Image	imgPassedOver;
+  private Image	imgNormal;
+  private Image	imgAttachPoint;
+  private Image	imgUrgency;
 
-    protected Image	imgNormal;
-    private Image	imgSelected;
-    private Image	imgPassedOver;
+    static private Image	_imgSelected = null;
+    static private Image	_imgPassedOver = null;
+    static private Image	_imgNormal = null;
+    static private Image	_imgAttachPoint = null;
+    static private Image	_imgUrgency = null;
+
     public Image	currentImg;
+
     private int		_node_x;
     private int		_node_y;
     // absolute Coord copy
@@ -94,14 +103,20 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	return (this.imgPassedOver);
     }
 
-    public void		setImgNormal(Image img)  {
-	this._imgNormal = img;
+    static public void		setImgNormal(Image img)  {
+	_imgNormal = img;
     }
-    public void		setImgSelected(Image img)  {
-	this._imgSelected = img;
+    static public void		setImgSelected(Image img)  {
+	_imgSelected = img;
     }
-    public void		setImgPassedOver(Image img)  {
-	this._imgPassedOver = img;
+    static public void		setImgPassedOver(Image img)  {
+	_imgPassedOver = img;
+    }
+    static public void		setImgUrgency(Image img)  {
+	_imgUrgency = img;
+    }
+    static public void		setImgAttachPoint(Image img)  {
+	_imgAttachPoint = img;
     }
 
     public int		getx() {
@@ -114,11 +129,9 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
     public void		scaleImage()
     {
-    	int		tmp;
     	int		new_img_width;
     	int		new_img_heigth;
 
-	tmp = this.imgNormal.getWidth(null);
 	new_img_width = MapPanel.unScaleX(this._imgNormal.getWidth(null));
 	new_img_heigth = MapPanel.unScaleY(this._imgNormal.getHeight(null));
 	new_img_width = (new_img_width <= 0 ? 1 : new_img_width);
@@ -132,6 +145,12 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.imgPassedOver = this._imgPassedOver.getScaledInstance(new_img_width,
 							   new_img_heigth,
 							   Image.SCALE_SMOOTH);
+	this.imgUrgency = this._imgUrgency.getScaledInstance(new_img_width,
+							   new_img_heigth,
+							   Image.SCALE_SMOOTH);
+	this.imgAttachPoint = this._imgAttachPoint.getScaledInstance(new_img_width,
+								     new_img_heigth,
+								     Image.SCALE_SMOOTH);
 	this.currentImg = this.imgNormal;
 	// super.getGraphics().drawImage(this.imgNormal, 0, 0, this);
     }
@@ -146,10 +165,10 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     }
 
     public void		setIsSelected(boolean b) {
-	if (b == true)
-	    this.currentImg = this.imgSelected;
-	else
-	    this.currentImg = this.imgNormal;
+	// if (b == true)
+	//     this.currentImg = this.imgSelected;
+	// else
+	//     this.currentImg = this.imgNormal;
 	this.isSelected = b;
     }
 
@@ -175,27 +194,38 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	System.out.println("NODE --- CONSTRUCTION DEFAULT");
     }
 
-    public NodeGraphic(MapPanel.EObjectTools type, Image imgNormal,
-		       Image imgSelected, Image imgPassedOver,
+  public NodeGraphic(MapPanel.EObjectTools type,
 		       int p_x, int p_y,
 		       int real_x, int real_y) {
 	System.out.println("NODE --- CONSTRUCTION");
 	this.type = type;
 	if (type == MapPanel.EObjectTools.URGENCY)
 	    System.out.println("-------> URGENCY TYPE");
-	this.imgNormal = imgNormal;
-	this.imgSelected = imgSelected;
-	this.imgPassedOver = imgPassedOver;
-	this._imgNormal = imgNormal;
-	this._imgSelected = imgSelected;
-	this._imgPassedOver = imgPassedOver;
-	this.currentImg = this.imgNormal;
+
+	if (_imgUrgency == null)
+	{
+	  try {
+	    _imgUrgency = ImageIO.read(new File("img/nodeUrgency.png"));
+	    _imgAttachPoint = ImageIO.read(new File("img/nodeAttachPoint.png"));
+	    _imgNormal = ImageIO.read(new File("img/nodeNormal.png"));
+
+	    _imgSelected = ImageIO.read(new File("img/nodeAttachPoint.png"));
+	    _imgPassedOver = ImageIO.read(new File("img/nodeUrgency.png"));
+	  }
+	  catch (IOException e)
+	  {
+	    e.printStackTrace();
+	  }
+	}
+
 	this.setx(p_x);
 	this.sety(p_y);
 	this.real_x = real_x;
 	this.real_y = real_y;
 	this.image_x = p_x - 10;
 	this.image_y = p_y - 10;
+	this.scaleImage();
+
 	this.addMouseListener(this);
 	this.addMouseMotionListener(this);
 	this.setOpaque(false);
@@ -204,7 +234,6 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	this.jpm.add(this.delete);
 	this.delete.addActionListener(this.toDel);
 	this.property.addActionListener(this.editProperty);
-	this.scaleImage();
     }
 
     public void		paintComponentCustom(Graphics g) {
@@ -225,6 +254,14 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
   public void		paintComponent(Graphics g) {
     super.paintComponent(g);
     paintComponentCustom(g);
+    if (this.isSelected == true)
+      this.currentImg = this.imgSelected;
+    else if (this.type == MapPanel.EObjectTools.ATTACH_POINT)
+      this.currentImg = this.imgAttachPoint;
+    else if (this.type == MapPanel.EObjectTools.URGENCY)
+      this.currentImg = this.imgUrgency;
+    else
+      this.currentImg = this.imgNormal;
     g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
   }
 

@@ -45,7 +45,8 @@ public class MapPanel extends JPanel implements
     private int		y2;
     private boolean	isPressed = false;    
 	private boolean quickEdition = false;
-    static public boolean	mapChanged;
+    static public boolean	mapChanged = false;
+    static public boolean	forceReload = false;    
     private int			wasOut = 0; // 0:OK - 1:Out - 2:Enter
     private boolean		wasZoomed = false;
     private Image		background;
@@ -409,9 +410,9 @@ public class MapPanel extends JPanel implements
 	if (this._getNode(rel_x, rel_y) == null) // Create new node
 	    {
 		newNode = new NodeGraphic(EObjectTools.NODE,
-					  this.nodeNormal,
-					  this.nodeAttachPoint,
-					  this.nodeUrgency,
+					  // this.nodeNormal,
+					  // this.nodeAttachPoint,
+					  // this.nodeUrgency,
 					  _x, _y, rel_x, rel_y);
 		// newNode.setGraphics(getGraphics());
 		nodes.add(newNode);
@@ -427,16 +428,7 @@ public class MapPanel extends JPanel implements
 		else
 		    newNode = nodes.get(nodes.size() - 1);
 
-		if (newNode.type == MapPanel.EObjectTools.URGENCY)
-		    {
-			newNode.setImgNormal(this.nodeNormal);
-			newNode.setImgSelected(this.nodeAttachPoint);
-			newNode.setImgPassedOver(this.nodeUrgency);
-			newNode.type = MapPanel.EObjectTools.NODE;
-			((MainWindow)SwingUtilities.getRoot(this)).scrollPane.revalidate();
-			rescaleAllNode();
-		    }
-
+		newNode.type = EObjectTools.NODE;
 		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
 		    || newNode.getx() != _x || newNode.gety() != _y)
 		    {
@@ -464,9 +456,9 @@ public class MapPanel extends JPanel implements
 	if (this._getNode(rel_x, rel_y) == null) // Create new node
 	    {
 		newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
-					  this.nodeAttachPoint,
-					  this.nodeAttachPoint,
-					  this.nodeAttachPoint,
+					  // this.nodeAttachPoint,
+					  // this.nodeAttachPoint,
+					  // this.nodeAttachPoint,
 					  _x, _y, rel_x, rel_y);
 		// newNode.setGraphics(getGraphics());
 		nodes.add(newNode);
@@ -481,6 +473,18 @@ public class MapPanel extends JPanel implements
 		    newNode = nodes.get(nodes_it);
 		else
 		    newNode = nodes.get(nodes.size() - 1);
+
+		newNode.type = EObjectTools.ATTACH_POINT;
+		// if (newNode.type == MapPanel.EObjectTools.NODE
+		//     || newNode.type == MapPanel.EObjectTools.URGENCY)
+		//     {
+		// 	newNode.setImgNormal(this.nodeAttachPoint);
+		// 	newNode.setImgSelected(this.nodeAttachPoint);
+		// 	newNode.setImgPassedOver(this.nodeAttachPoint);
+		// 	newNode.type = MapPanel.EObjectTools.ATTACH_POINT;
+		// 	forceReload = true;
+		//     }
+
 		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
 		    || newNode.getx() != _x || newNode.gety() != _y)
 		    {
@@ -531,9 +535,9 @@ public class MapPanel extends JPanel implements
 	if (this._getNode(rel_x, rel_y) == null) // Create new node
 	    {
 		newNode = new NodeGraphic(EObjectTools.URGENCY,
-					  this.nodeUrgency,
-					  this.nodeUrgency,
-					  this.nodeUrgency,
+					  // this.nodeUrgency,
+					  // this.nodeUrgency,
+					  // this.nodeUrgency,
 					  _x, _y, rel_x, rel_y);
 		// newNode.setGraphics(getGraphics());
 		nodes.add(newNode);
@@ -548,15 +552,16 @@ public class MapPanel extends JPanel implements
 		else
 		    newNode = nodes.get(nodes.size() - 1);
 
-		if (newNode.type == MapPanel.EObjectTools.NODE)
-		    {
-			newNode.setImgNormal(this.nodeUrgency);
-			newNode.setImgSelected(this.nodeUrgency);
-			newNode.setImgPassedOver(this.nodeUrgency);
-			newNode.type = MapPanel.EObjectTools.URGENCY;
-			((MainWindow)SwingUtilities.getRoot(this)).scrollPane.revalidate();
-			rescaleAllNode();
-		    }
+		newNode.type = EObjectTools.URGENCY;
+		// if (newNode.type == MapPanel.EObjectTools.NODE)
+		//     {
+		// 	newNode.setImgNormal(this.nodeUrgency);
+		// 	newNode.setImgSelected(this.nodeUrgency);
+		// 	newNode.setImgPassedOver(this.nodeUrgency);
+		// 	newNode.type = MapPanel.EObjectTools.URGENCY;
+		// 	((MainWindow)SwingUtilities.getRoot(this)).scrollPane.revalidate();
+		// 	rescaleAllNode();
+		//     }
 
 		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
 		    || newNode.getx() != _x || newNode.gety() != _y)
@@ -609,7 +614,7 @@ public class MapPanel extends JPanel implements
 
     public void		displayMap(ArrayList<String> formatMap)
     {
-    System.out.println("DisplayMap called");
+    // System.out.println("DisplayMap called");
 	int		nodes_it;
 	int		roads_it;
 	NodeGraphic	newNode = null;
@@ -667,6 +672,11 @@ public class MapPanel extends JPanel implements
 		this.mapChanged = false;
 		// this.repaint();
 	    }
+	if (forceReload == true)
+	{
+	    ((MainWindow)SwingUtilities.getRoot(this)).scrollPane.revalidate();
+	    rescaleAllNode();
+	}
 	//       System.out.println("Repaint");
 	this.repaint();
 	this.wasZoomed = false;
@@ -1040,7 +1050,10 @@ public class MapPanel extends JPanel implements
 
     static void			setAttachPoint(NodeGraphic n) {
 	if (n != null)
+	{
+	  // forceReload = true;
 	    controller.eventEditAttachPoint(n.getRealX(), n.getRealY());
+	}
     }
 
     static boolean		getAttachPoint(NodeGraphic n) {
