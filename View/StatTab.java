@@ -4,6 +4,12 @@
  * and open the template in the editor.
  */
 
+
+import java.awt.*;
+import javax.swing.*;
+import java.io.*;
+import javax.imageio.*;
+
 /**
  *
  * @author Administrateur
@@ -15,6 +21,18 @@ public class StatTab extends javax.swing.JPanel {
      */
     public StatTab() {
         initComponents();
+      try
+      {
+	Image img = ImageIO.read(new File("img/panebutton.png"));
+	img = img.getScaledInstance((int)img.getWidth(null) * 3,
+				    (int)img.getHeight(null) * 3,
+				    Image.SCALE_SMOOTH);
+
+	vehiculeLogoLabel.setIcon(new ImageIcon(img));
+      }
+      catch (Exception e)
+      {
+      }
     }
 
     /**
