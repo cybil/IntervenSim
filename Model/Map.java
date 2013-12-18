@@ -66,6 +66,7 @@ public class Map implements java.io.Serializable {
 	if (this.graph.getNode(coord) != null) {
 	    Urgency			urg = new Urgency(state, triggDate, 0, treatmentTime, id);
 	    this.graph.getNode(coord).addUrgency(urg);
+	    return (true);
 	}
 	return false;
     }

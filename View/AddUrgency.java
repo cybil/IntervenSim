@@ -28,6 +28,7 @@ class AddUrgency extends JFrame implements ActionListener {
     private JButton		cancel = new JButton("Cancel");
 
     public AddUrgency(Property parentFrame) {
+      super.setSize(300, 400);
 	this.parent = parentFrame;
 	configure();
 	fill();

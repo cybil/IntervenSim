@@ -407,7 +407,8 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	if (this._getNode(rel_x, rel_y) == null) // Create new node
+	newNode = this._getNode(rel_x, rel_y);
+	if (newNode == null) // Create new node
 	    {
 		newNode = new NodeGraphic(EObjectTools.NODE,
 					  // this.nodeNormal,
@@ -422,11 +423,11 @@ public class MapPanel extends JPanel implements
 	else // Search existing node
 	    {
 		//	newNode = nodes.get(nodes_it);
-		newNode = this._getNode(rel_x, rel_y);
-		if (nodes_it != -1)
-		    newNode = nodes.get(nodes_it);
-		else
-		    newNode = nodes.get(nodes.size() - 1);
+		// newNode = this._getNode(rel_x, rel_y);
+		// if (nodes_it != -1)
+		//     newNode = nodes.get(nodes_it);
+		// else
+		//     newNode = nodes.get(nodes.size() - 1);
 
 		newNode.type = EObjectTools.NODE;
 		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
@@ -453,7 +454,8 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	if (this._getNode(rel_x, rel_y) == null) // Create new node
+	newNode = this._getNode(rel_x, rel_y);
+	if (newNode == null) // Create new road
 	    {
 		newNode = new NodeGraphic(EObjectTools.ATTACH_POINT,
 					  // this.nodeAttachPoint,
@@ -468,22 +470,13 @@ public class MapPanel extends JPanel implements
 	else // Search existing node
 	    {
 		//	newNode = nodes.get(nodes_it);
-		newNode = this._getNode(rel_x, rel_y);
-		if (nodes_it != -1)
-		    newNode = nodes.get(nodes_it);
-		else
-		    newNode = nodes.get(nodes.size() - 1);
+		// newNode = this._getNode(rel_x, rel_y);
+		// if (nodes_it != -1)
+		//     newNode = nodes.get(nodes_it);
+		// else
+		//     newNode = nodes.get(nodes.size() - 1);
 
 		newNode.type = EObjectTools.ATTACH_POINT;
-		// if (newNode.type == MapPanel.EObjectTools.NODE
-		//     || newNode.type == MapPanel.EObjectTools.URGENCY)
-		//     {
-		// 	newNode.setImgNormal(this.nodeAttachPoint);
-		// 	newNode.setImgSelected(this.nodeAttachPoint);
-		// 	newNode.setImgPassedOver(this.nodeAttachPoint);
-		// 	newNode.type = MapPanel.EObjectTools.ATTACH_POINT;
-		// 	forceReload = true;
-		//     }
 
 		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
 		    || newNode.getx() != _x || newNode.gety() != _y)
@@ -532,7 +525,8 @@ public class MapPanel extends JPanel implements
 	int	_x = unScaleX(rel_x);
 	int	_y = unScaleY(rel_y);
 
-	if (this._getNode(rel_x, rel_y) == null) // Create new node
+	newNode = this._getNode(rel_x, rel_y);
+	if (newNode == null) // Create new node
 	    {
 		newNode = new NodeGraphic(EObjectTools.URGENCY,
 					  // this.nodeUrgency,
@@ -546,23 +540,7 @@ public class MapPanel extends JPanel implements
 	    }
 	else
 	    {
-		newNode = this._getNode(rel_x, rel_y);
-		if (nodes_it != -1)
-		    newNode = nodes.get(nodes_it);
-		else
-		    newNode = nodes.get(nodes.size() - 1);
-
 		newNode.type = EObjectTools.URGENCY;
-		// if (newNode.type == MapPanel.EObjectTools.NODE)
-		//     {
-		// 	newNode.setImgNormal(this.nodeUrgency);
-		// 	newNode.setImgSelected(this.nodeUrgency);
-		// 	newNode.setImgPassedOver(this.nodeUrgency);
-		// 	newNode.type = MapPanel.EObjectTools.URGENCY;
-		// 	((MainWindow)SwingUtilities.getRoot(this)).scrollPane.revalidate();
-		// 	rescaleAllNode();
-		//     }
-
 		if (newNode.getRealX() != rel_x || newNode.getRealY() != rel_y
 		    || newNode.getx() != _x || newNode.gety() != _y)
 		    {
@@ -623,6 +601,7 @@ public class MapPanel extends JPanel implements
 	this.mapChanged = false;
 	nodes_it = 0;
 	roads_it = 0;
+	System.out.println("");
 	for (String s : formatMap) {
 	  // System.out.println(s);
 	    if (s.charAt(0) == 'R') {
@@ -641,7 +620,7 @@ public class MapPanel extends JPanel implements
 		    	newNode = this._displayMapAttachPoint(s, nodes_it++);
 			new_nodes.add(newNode);
 		    }
-		    else if (s.charAt(0) == 'U') {
+		    else if (s.charAt(0) == 'U' || s.charAt(0) == 'B') {
 		    	newNode = this._displayMapUrgency(s, nodes_it++);
 			new_nodes.add(newNode);
 		    }

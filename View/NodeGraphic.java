@@ -253,7 +253,6 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 
   public void		paintComponent(Graphics g) {
     super.paintComponent(g);
-    paintComponentCustom(g);
     if (this.isSelected == true)
       this.currentImg = this.imgSelected;
     else if (this.type == MapPanel.EObjectTools.ATTACH_POINT)
@@ -262,6 +261,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
       this.currentImg = this.imgUrgency;
     else
       this.currentImg = this.imgNormal;
+    paintComponentCustom(g);
     g.drawImage(this.currentImg, 0, 0, null); // (0, 0) from the relative Bounds
   }
 
