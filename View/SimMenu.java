@@ -25,65 +25,65 @@ import javax.swing.ButtonGroup;
 import javax.swing.KeyStroke;
 
 public class SimMenu extends JMenu {
-	JMenuItem	playItem = new JMenuItem("Play");
-	JMenuItem	stopItem = new JMenuItem("Stop");
-	JMenuItem	pauseItem = new JMenuItem("Pause");
-	JMenuItem	skipAnimationItem = new JMenuItem("Skip animation");
-	JMenuItem	chooseSpeedItem = new JMenuItem("Choose speed");
-	
-	SimMenu(String str) {
-		setText(str);
-		this.setMnemonic(KeyEvent.VK_I);
-		
-		playItem.addActionListener(new PlayItemAction());
-		this.add(playItem);
+  JMenuItem	playItem = new JMenuItem("Play");
+  JMenuItem	stopItem = new JMenuItem("Stop");
+  JMenuItem	pauseItem = new JMenuItem("Pause");
+  JMenuItem	skipAnimationItem = new JMenuItem("Skip animation");
+  JMenuItem	chooseSpeedItem = new JMenuItem("Choose speed");
 
-		stopItem.addActionListener(new StopItemAction());
-		this.add(stopItem);
+  SimMenu(String str) {
+    setText(str);
+    this.setMnemonic(KeyEvent.VK_I);
 
-		pauseItem.addActionListener(new PauseItemAction());
-		this.add(pauseItem);
+    playItem.addActionListener(new PlayItemAction());
+    this.add(playItem);
 
-		skipAnimationItem.addActionListener(new SkipAnimationItemAction());
-		add(skipAnimationItem);
+    stopItem.addActionListener(new StopItemAction());
+    this.add(stopItem);
 
-		chooseSpeedItem.addActionListener(new ChooseSpeedItemAction());
-		add(chooseSpeedItem);
-	}
+    pauseItem.addActionListener(new PauseItemAction());
+    this.add(pauseItem);
 
-	public class PlayItemAction implements ActionListener {
-		public void actionPerformed(ActionEvent evt) {
-			System.out.print("playItem\n");
-		}
-	}
+    skipAnimationItem.addActionListener(new SkipAnimationItemAction());
+    add(skipAnimationItem);
 
-	public class StopItemAction implements ActionListener {
-		public void actionPerformed(ActionEvent evt) {
-			System.out.print("stopItem\n");
-		}
-	}
+    chooseSpeedItem.addActionListener(new ChooseSpeedItemAction());
+    add(chooseSpeedItem);
+  }
 
-	public class PauseItemAction implements ActionListener {
-		public void actionPerformed(ActionEvent evt) {
-			System.out.print("pauseItem\n");
-		}
-	}
+  public class PlayItemAction implements ActionListener {
+    public void actionPerformed(ActionEvent evt) {
+      System.out.print("playItem\n");
+    }
+  }
 
-	public class SkipAnimationItemAction implements ActionListener {
-		public void actionPerformed(ActionEvent evt) {
-			System.out.print("skipAnimationItem\n");
-		}
-	}
+  public class StopItemAction implements ActionListener {
+    public void actionPerformed(ActionEvent evt) {
+      System.out.print("stopItem\n");
+    }
+  }
 
-	public class ChooseSpeedItemAction implements ActionListener {
-		public void actionPerformed(ActionEvent evt) {
-			System.out.print("chooseSpeedItem\n");
-		}
-	}
-	
-	public class ExitItemAction implements ActionListener {
-		public void actionPerformed(ActionEvent evt) {
-			System.out.print("exitItem\n");
-		}
-	}
+  public class PauseItemAction implements ActionListener {
+    public void actionPerformed(ActionEvent evt) {
+      System.out.print("pauseItem\n");
+    }
+  }
+
+  public class SkipAnimationItemAction implements ActionListener {
+    public void actionPerformed(ActionEvent evt) {
+      System.out.print("skipAnimationItem\n");
+    }
+  }
+
+  public class ChooseSpeedItemAction implements ActionListener {
+    public void actionPerformed(ActionEvent evt) {
+      System.out.print("chooseSpeedItem\n");
+    }
+  }
+
+  public class ExitItemAction implements ActionListener {
+    public void actionPerformed(ActionEvent evt) {
+      System.out.print("exitItem\n");
+    }
+  }
 }

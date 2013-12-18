@@ -12,5 +12,5 @@ public class GUI {
 	}
 	catch (NombreInstanceGUIException e) {}
     }
-	
+
 }

@@ -28,10 +28,9 @@ public class ToolsMenu extends JMenu {
 	JMenuItem	nodeItem = new JMenuItem("Node");
 	JMenuItem	roadItem = new JMenuItem("Road");
 	JMenuItem	vehiculeItem = new JMenuItem("Vehicule");
-	JMenuItem	mapItem = new JMenuItem("Map");	
-	JMenuItem	scaleItem = new JMenuItem("Zoom");	
-	JMenuItem	simulationItem = new JMenuItem("Simulation");	
-	
+	JMenuItem	mapItem = new JMenuItem("Map");
+	JMenuItem	scaleItem = new JMenuItem("Zoom");
+	JMenuItem	simulationItem = new JMenuItem("Simulation");
 
 	ToolsMenu(String str) {
 		setText(str);
@@ -54,11 +53,6 @@ public class ToolsMenu extends JMenu {
 
 		simulationItem.addActionListener(new SimulationItemAction());
 		this.add(simulationItem);
-// .setMnemonic(KeyEvent.VK_R);
-// .addActionListener(this);
-// .setAccelerator(KeyStroke.getKeyStroke
-// 					(KeyEvent.VK_J, InputEvent.CTRL_DOWN_MASK));
-// addSeparator();
 	}
 
 	public class NodeItemAction implements ActionListener {
@@ -90,11 +84,10 @@ public class ToolsMenu extends JMenu {
 			System.out.print("scaleItem\n");
 		}
 	}
-	
+
 	public class SimulationItemAction implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 			System.out.print("simulationItem\n");
 		}
 	}
 }
-

@@ -7,7 +7,7 @@ public class ViewMenu extends JMenu {
 	JMenuItem	ViewMenu1 = new JMenuItem("ViewMenu1");
 	JMenuItem	ViewMenu2 = new JMenuItem("ViewMenu2");
 	JMenuItem	ViewMenu3 = new JMenuItem("ViewMenu3");
-	JMenuItem	ViewMenu4 = new JMenuItem("ViewMenu4");	
+	JMenuItem	ViewMenu4 = new JMenuItem("ViewMenu4");
 	ViewMenu(String str) {
 		setText(str);
 
@@ -48,4 +48,3 @@ public class ViewMenu extends JMenu {
 		}
 	}
 }
-

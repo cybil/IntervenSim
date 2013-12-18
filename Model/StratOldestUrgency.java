@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class StratOldestUrgency extends Strategy implements java.io.Serializable
 {
-	static String _name = "Plus vieille urgence";
-	
-	
+  static String _name = "Plus vieille urgence";
+
+
   public StratOldestUrgency(Map map)
   {
     super(map);
@@ -41,9 +41,9 @@ public class StratOldestUrgency extends Strategy implements java.io.Serializable
     }
     return (null);
   }
-  
+
   @Override
   String getStrategyName() {
-	  return _name;
+    return _name;
   }
 }

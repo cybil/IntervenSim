@@ -14,7 +14,7 @@ abstract class Strategy implements java.io.Serializable
     this._map = map;
     this._matrice = genMatrice.GetAdjMatrice();
   }
-  
+
   /*!
   ** Get the current strategy used
   */
@@ -86,7 +86,7 @@ abstract class Strategy implements java.io.Serializable
   ** Return the name of strategy
   */
   abstract String		getStrategyName();
-  
+
   /*!
   ** Return the oldest urgency on the map
   */
