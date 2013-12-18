@@ -154,6 +154,10 @@ public class Model {
     	_map.setVehiculeCoord(x, y);
     }
     
+    public void		editVehiculeSpeed(int speed) {
+    	_map.getVehicule().setSpeed(speed);
+    }
+    
     boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state,
 				       float triggDate, float treatmentTime, int id) {
     	_redo.clear();
