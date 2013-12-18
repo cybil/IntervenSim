@@ -130,10 +130,13 @@ public class Vehicule implements java.io.Serializable {
   }
 
   void		setCoord(int[] newCoord) {
-    this.coord = newCoord.clone();
-    this.incomingCoord = this.coord.clone();
-    this.path.clear(); // The path is no longer valid
-    this.initMoveOn = false;
+    if (newCoord != null)
+    {
+      this.coord = newCoord.clone();
+      this.incomingCoord = this.coord.clone();
+      this.path.clear(); // The path is no longer valid
+      this.initMoveOn = false;
+    }
   }
 
   //***************

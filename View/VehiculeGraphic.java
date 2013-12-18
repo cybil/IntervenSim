@@ -188,7 +188,7 @@ public class VehiculeGraphic extends JPanel implements MouseListener, MouseMotio
     this.buttonPressed = e.getButton();
     if (e.getButton() == MouseEvent.BUTTON1)
       if (MapPanel.selectedObject == MapPanel.EObjectTools.VEHICULE) {
-	MapPanel.setVehiculeAt(this.getx(), this.gety());
+	MapPanel.setVehiculeAt(MapPanel.scaleX(this.getx()), MapPanel.scaleY(this.gety()));
       }
     if (e.getButton() == MouseEvent.BUTTON3) {
       jpm.show(this, e.getX(), e.getY());

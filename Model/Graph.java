@@ -65,7 +65,7 @@ public class Graph implements java.io.Serializable{
   public int[]		getAttachPointCoord() {
     for (GraphNode n : this.graphNode) {
       if (n.getData().getAttachPoint() == true)
-	return n.getData().getCoord();
+	return n.getData().getCoord().clone();
     }
     return null;
   }

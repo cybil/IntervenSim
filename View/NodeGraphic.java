@@ -281,6 +281,7 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
 	&& MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR
 	&& MapPanel.isDragging() == true)
     {
+      move_vehicule_if_on();
       if (debug == true) System.out.println("Node --- definitive change of node coord !");
       this.setx(oldx_win + (e.getXOnScreen() - oldx_screen));
       this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
@@ -329,13 +330,52 @@ public class NodeGraphic extends JPanel implements MouseListener, MouseMotionLis
     this.updateMouseCoordInfo(e);
   }
 
+  public void	move_vehicule_if_on()
+  {
+    int[]	vec_coord;
+    int[]	att_coord;
+
+    vec_coord = MapPanel.controller.eventGetVehiculeCoord();
+    att_coord = MapPanel.controller.eventGetAttachCoord();
+    if (vec_coord != null && att_coord != null
+	&& ((vec_coord[0] == getRealX() && vec_coord[1] == getRealY()))
+	    || this.type == MapPanel.EObjectTools.ATTACH_POINT)
+    {
+//	MapPanel.controller.eventEditVehiculeCoord(MapPanel.controller.eventGetAttachCoord());
+      MapPanel.setVehiculeAt(att_coord[0], att_coord[1]);
+    }
+  }
+
   public void	mouseDragged(MouseEvent e) {
+
     if (this.buttonPressed == MouseEvent.BUTTON1
 	&& MapPanel.selectedObject == MapPanel.EObjectTools.CURSOR) {
+      move_vehicule_if_on();
+      // if (vec_coord != null
+      // 	  && vec_coord[0] == getRealX() && vec_coord[1] == getRealY())
+      // {
+	// if (MapPanel.controller.eventGetAttachCoord() != null)
+	//     // && this.type != MapPanel.EObjectTools.ATTACH_POINT)
+	// {
+	//   if (this.type != MapPanel.EObjectTools.ATTACH_POINT)
+	//   {
+	//     JOptionPane.showMessageDialog(null, "Reseting vehicule to attach point.");
+	//   }
+	//   else
+	//     MapPanel.controller.eventEditAttachPoint(getRealX(), getRealY());
+	//   MapPanel.controller.eventEditVehiculeCoord(MapPanel.controller.eventGetAttachCoord());
+	// }
+	// else
+	// {
+	//   JOptionPane.showMessageDialog(null, "Trying to move a node with a vehicule, vehicule removed");
+	//   MapPanel.controller.eventDeleteVehicule();
+	// }
+      // }
       this.setx(oldx_win + (e.getXOnScreen() - oldx_screen));
       this.sety(oldy_win + (e.getYOnScreen() - oldy_screen));
       MapPanel.setMovedNode2(this.getx(), this.gety());
       MapPanel.setIsDragging(true);
+      move_vehicule_if_on();
     }
     this.updateMouseCoordInfo(this.getx(), this.gety());
   }

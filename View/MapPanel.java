@@ -631,10 +631,12 @@ public class MapPanel extends JPanel implements
 	}
       }
     }
-    if (vehicule_it == 0)
-      graphVehicule = null;
+    // if (graphVehicule != null)
+    //   graphVehicule.paintComponentC(getGraphics());
     if (isDragging == false) // To remove old road
     {
+      if (vehicule_it == 0)
+	graphVehicule = null;
       while (nodes.size() > 0) // Cleaning useless node
 	nodes.remove(nodes.size() - 1);
       nodes.addAll(new_nodes);
@@ -1029,8 +1031,10 @@ public class MapPanel extends JPanel implements
     if (graphVehicule != null)
     {
       if (ret == false) {
-	graphVehicule.setx(x);
-	graphVehicule.sety(y);
+	graphVehicule.setRealX(x);
+	graphVehicule.setRealY(y);
+	graphVehicule.setx(unScaleX(x));
+	graphVehicule.sety(unScaleY(y));
 	// graphVehicule.setNodeOn(_getNode1(x, y));
       }
     }

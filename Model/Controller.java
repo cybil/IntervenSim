@@ -68,6 +68,10 @@ public class Controller {
   public void			eventEditVehiculeCoord(int x, int y) {
     _model.editVehiculeCoord(x, y);
   }
+  public void			eventEditVehiculeCoord(int coord[]) {
+    if (coord != null)
+    _model.editVehiculeCoord(coord[0], coord[1]);
+  }
 
   public boolean		eventGetAttachPoint(int x, int y) {
     if (_model.getMap().getAttachPointCoord() != null
@@ -75,6 +79,9 @@ public class Controller {
 	&& _model.getMap().getAttachPointCoord()[1] == y)
       return true;
     return false;
+  }
+  public int[]		eventGetAttachCoord() {
+    return _model.getMap().getAttachPointCoord();
   }
 
   public boolean		eventAddRoad(int[] coordNode1, int[] coordNode2) {
