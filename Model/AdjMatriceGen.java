@@ -46,7 +46,7 @@ public class AdjMatriceGen {
   // Calculate the cost of a path
   // It take one parameter, the path
   // It return the total cost.
-  private float			_pathCost(ArrayList<Node> path)
+  static public float			pathCost(ArrayList<Node> path)
   {
     int				i;
     Node			src;
@@ -77,7 +77,7 @@ public class AdjMatriceGen {
 	known_path = pathList.get(i);
 	if (known_path.size() > 0
 	    && known_path.get(known_path.size() - 1) == path.get(path.size() - 1)
-	    && this._pathCost(known_path) > this._pathCost(path))
+	    && this.pathCost(known_path) > this.pathCost(path))
 	{
 	  if (debug >= 5) System.out.println("     _addOrReplacePath(): Replacing existing path");
 	  if (debug >= 5) System.out.print("     ==> List before: ");
