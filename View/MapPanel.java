@@ -249,7 +249,7 @@ public class MapPanel extends JPanel implements
 	new_img_heigth = MapPanel.unScaleY(bck.getHeight(null)) * scale/100;
 	new_img_width = (new_img_width <= 0 ? 1 : new_img_width);
 	new_img_heigth = (new_img_heigth <= 0 ? 1 : new_img_heigth);
-	_scaledBck = bck.getScaledInstance(new_img_width, new_img_heigth, Image.SCALE_SMOOTH);
+	_scaledBck = bck.getScaledInstance(new_img_width, new_img_heigth, Image.SCALE_FAST);
 	oldBackgroundScale = scale;
       }
       g.drawImage(_scaledBck, 0, 0, this);
