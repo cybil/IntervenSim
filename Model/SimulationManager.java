@@ -53,7 +53,8 @@ public class SimulationManager implements Serializable, ActionListener {
   }
 
   public int	getStrategy() {
-    return strategyList.indexOf(strategy);
+    // return strategyList.indexOf(strategy);
+    return (strat);
   }
 
   public ArrayList<String> getStrategyList() {
@@ -80,9 +81,11 @@ public class SimulationManager implements Serializable, ActionListener {
     }
   }
 
+  private int			strat = 0;
   public void			setStrategy(int strat) {
     if (strat <= strategyList.size() && strategyList.size() > 0)
       strategy = strategyList.get(strat);
+    this.strat = strat;
   }
   public void			setWaitingStrategy(int strat) {
     this.waitingStrategy = (strat == 0 ? WaitingStrategy.WAITING
@@ -96,11 +99,10 @@ public class SimulationManager implements Serializable, ActionListener {
   // Methode surchargee de ActionListener (action a chaque tick du timer)
   public void actionPerformed(ActionEvent event) {
     if (debug == true) System.out.println("*TICK*");
-    this.strategyList.add(0, new StratOldestUrgency(this.map));
-    this.strategyList.add(1, new StratNearestUrgency(this.map));
     if (this.strategy == null)
       this.strategy = this.strategyList.get(0);
-    this.strategy = this.strategyList.get(this.getStrategy());
+    else
+      this.strategy = this.strategyList.get(this.getStrategy());
     for (Node n : this.map.getNodeUrgency()) {
       for (Urgency u : n.getUrgency()) {
 	u.setTriggerDate(u.getTriggerDate() - 1); // 1 selon gestion du temps
@@ -149,6 +151,10 @@ public class SimulationManager implements Serializable, ActionListener {
   public void			play(boolean display) {
     this.state = ESimulationState.RUNNING;
     this.timer.start();
+    this.strategyList.clear();
+    this.strategyList.add(new StratOldestUrgency(this.map));
+    this.strategyList.add(new StratNearestUrgency(this.map));
+    
   }
 
   public void			pause() {

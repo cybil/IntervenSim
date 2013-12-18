@@ -198,6 +198,8 @@ public class Controller {
   }
 
   public boolean eventLoadMap(File p_file) {
+    _model.getMap().clearMap();
+    eventDeleteVehicule();
     return _model.getFileManager().loadMap(p_file);
   }
 

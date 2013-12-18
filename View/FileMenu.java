@@ -89,7 +89,7 @@ public class FileMenu extends JMenu {
 
       int returnVal = chooser.showOpenDialog(null);
       if (returnVal == JFileChooser.APPROVE_OPTION) {
-	MapPanel.controller.eventSaveMap(new File(chooser.getSelectedFile().getAbsolutePath()));
+	MapPanel.controller.eventLoadMap(new File(chooser.getSelectedFile().getAbsolutePath()));
       }
     }
   }
