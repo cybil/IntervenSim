@@ -4,12 +4,6 @@
  * and open the template in the editor.
  */
 
-
-import java.awt.*;
-import javax.swing.*;
-import java.io.*;
-import javax.imageio.*;
-
 /**
  *
  * @author Administrateur
@@ -20,19 +14,7 @@ public class StatTab extends javax.swing.JPanel {
      * Creates new form StatTab
      */
     public StatTab() {
-      initComponents();
-      try
-      {
-	Image img = ImageIO.read(new File("img/vehicule.png"));
-	img = img.getScaledInstance((int)img.getWidth(null) * 3,
-				    (int)img.getHeight(null) * 3,
-				    Image.SCALE_SMOOTH);
-
-	vehiculeLogoLabel.setIcon(new ImageIcon(img));
-      }
-      catch (Exception e)
-      {
-      }
+        initComponents();
     }
 
     /**
@@ -69,6 +51,7 @@ public class StatTab extends javax.swing.JPanel {
         totalKmTextField = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         vehiculeLogoLabel = new javax.swing.JLabel();
+        refreshButton = new javax.swing.JButton();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(146, 338));
 
@@ -201,6 +184,13 @@ public class StatTab extends javax.swing.JPanel {
             }
         });
 
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -215,7 +205,10 @@ public class StatTab extends javax.swing.JPanel {
                     .addComponent(strategyInUseTextField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -248,7 +241,9 @@ public class StatTab extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(refreshButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -274,38 +269,46 @@ public class StatTab extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(strategyInUseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(vehiculeLogoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                .addComponent(vehiculeLogoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void efficiencyTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_efficiencyTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_efficiencyTextFieldActionPerformed
+    private void efficiencyTextFieldActionPerformed(java.awt.event.ActionEvent evt) {
+      efficiencyTextField.setText(Integer.toString(MapPanel.controller.eventGetEfficiency()));
+    }
 
-    private void speedTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_speedTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_speedTextFieldActionPerformed
+    private void speedTextFieldActionPerformed(java.awt.event.ActionEvent evt) {
+      speedTextField.setText(Integer.toString(MapPanel.controller.eventGetSpeed()));
+    }
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {
+    }
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {
+    }
 
-    private void strategyInUseTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_strategyInUseTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_strategyInUseTextFieldActionPerformed
+    private void strategyInUseTextFieldActionPerformed(java.awt.event.ActionEvent evt) {
+      strategyInUseTextField.setText(MapPanel.controller.eventGetStrategy());
+    }
 
-    private void totalKmTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalKmTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_totalKmTextFieldActionPerformed
+    private void totalKmTextFieldActionPerformed(java.awt.event.ActionEvent evt) {
+      totalKmTextField.setText(Integer.toString(MapPanel.controller.eventKmDone()));
+    }
 
-    private void kmTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kmTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kmTextFieldActionPerformed
+    private void kmTextFieldActionPerformed(java.awt.event.ActionEvent evt) {
+      kmTextField.setText(Integer.toString(MapPanel.controller.eventGetKm()));
+    }
+
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {
+      kmTextFieldActionPerformed(evt);
+      totalKmTextFieldActionPerformed(evt);
+      strategyInUseTextFieldActionPerformed(evt);
+      jTextField6ActionPerformed(evt);
+      jTextField5ActionPerformed(evt);
+      speedTextFieldActionPerformed(evt);
+      efficiencyTextFieldActionPerformed(evt);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -330,6 +333,7 @@ public class StatTab extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField kmTextField;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JTextField speedTextField;
     private javax.swing.JTextField strategyInUseTextField;
     private javax.swing.JTextField totalKmTextField;
