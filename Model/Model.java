@@ -12,6 +12,7 @@ public class Model {
     private ArrayList<String> _stop = new ArrayList<String>();
 	private int _xPos = 0;
 	private int _yPos = 0;
+	private int _coord[] = null;
     
     
     //******************
@@ -80,10 +81,24 @@ public class Model {
 	
     public boolean putNode(int x, int y) {
     	_redo.clear();
+    	_coord = null;
     	addToUndo();
     	return _map.addNode(x, y);
     }
 	
+    public boolean quickEdition(int[] coord) {
+    	boolean ret = true;
+    	
+    	_redo.clear();
+    	addToUndo();
+    	if (_map.addNode(coord[0], coord[1]) == false)
+    		return false;
+    	if (_coord != null)
+    		ret = _map.addRoad(coord, _coord);
+    	_coord = coord.clone();
+    	return ret;
+    }
+    
     public void getDisplay() {
 	// _map.display();
 	for (String s : _map.getFormatMap())
@@ -202,7 +217,6 @@ public class Model {
     		_map.clearMap();
     		_map.setFormatMap(_undo.pop());
     	}
-    	getUndoState();
     }
 	
     public void addToRedo(int[] coordOld, int[] coordNew) {
@@ -213,7 +227,7 @@ public class Model {
     		_redo.push((ArrayList<String>) _map.getFormatMap().clone());
     	}
     	else {
-    		if (_redo.size() > 7)
+    		if (_redo.size() > 30)
     			_redo.remove(0);
     		_redo.push((ArrayList<String>) _map.getFormatMap().clone());
     	}
@@ -227,14 +241,14 @@ public class Model {
     		_undo.push((ArrayList<String>) _map.getFormatMap().clone());
     	}
     	else {
-    		if (_undo.size() > 7)
+    		if (_undo.size() > 30)
     			_undo.remove(0);
     		_undo.push((ArrayList<String>) _map.getFormatMap().clone());
     	}
     }
     
     public void addToRedo() {
-    	if (_redo.size() > 7) {
+    	if (_redo.size() > 30) {
     		_redo.remove(0);
     	}
     	_redo.push((ArrayList<String>) _map.getFormatMap().clone());
@@ -248,9 +262,8 @@ public class Model {
     }
     
     public void addToUndo() {
-    	if (_undo.size() > 7)
+    	if (_undo.size() > 30)
     		_undo.remove(0);
 	_undo.push((ArrayList<String>) _map.getFormatMap().clone());
-	getUndoState();
     }
 }

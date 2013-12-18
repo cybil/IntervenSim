@@ -704,15 +704,24 @@ public class MapPanel extends JPanel implements
 	System.out.println("MapPanel.mouseReleased()");
 	if (e.getButton() == MouseEvent.BUTTON1
 	    && this.selectedObject == EObjectTools.NODE) {
-	    if (this.controller.eventPutNode(scaleX(e.getX()), scaleY(e.getY())) == true)
-		{
-		    // System.out.println("CREATE NODE GRAPHIC : " + e.getX() + " - " + e.getY());
-		    // newNode = new NodeGraphic(EObjectTools.NODE, this.nodeNormal,
-		    // 			  this.nodeAttachPoint,
-		    // 			  this.nodeUrgency,
-		    // 			  e.getX(), e.getY(),
-		    // 			  scaleX(e.getX()), scaleY(e.getY()));
-		    // nodes.add(newNode);
+		int x = scaleX(e.getX());
+		int y = scaleY(e.getY());
+		
+		if (getQuickEdition() == false) {
+			if (this.controller.eventPutNode(x, y) == true)
+			{
+				// System.out.println("CREATE NODE GRAPHIC : " + e.getX() + " - " + e.getY());
+				// newNode = new NodeGraphic(EObjectTools.NODE, this.nodeNormal,
+				// 			  this.nodeAttachPoint,
+				// 			  this.nodeUrgency,
+				// 			  e.getX(), e.getY(),
+				// 			  scaleX(e.getX()), scaleY(e.getY()));
+				// nodes.add(newNode);
+			}
+		}
+		else {
+			int[] coord = {x, y};
+			this.controller.eventQuickEdition(coord);
 		}
 	}
 	// else if (e.getButton() == MouseEvent.BUTTON1
@@ -1063,5 +1072,9 @@ public class MapPanel extends JPanel implements
 
 	public void setQuickEdition(boolean quickEdition) {
 		this.quickEdition = quickEdition;
+	}
+	
+	public void changeQuickEdition() {
+		this.quickEdition = !(this.quickEdition);
 	}
 }
