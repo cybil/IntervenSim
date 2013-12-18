@@ -150,6 +150,10 @@ public class Model {
     	return _map.editNodeCoord(oldCoord, newCoord);
     }
 	
+    public void		editVehiculeCoord(int x, int y) {
+    	_map.setVehiculeCoord(x, y);
+    }
+    
     boolean		addNodeUrgency(int[] coord, Urgency.EUrgencyState state,
 				       float triggDate, float treatmentTime, int id) {
     	_redo.clear();
@@ -162,7 +166,7 @@ public class Model {
     	addToUndo();
     	return _map.deleteVehicule();
     }
-	
+    
     //quequesse?
     public void operation() {
 	;

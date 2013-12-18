@@ -698,6 +698,34 @@ public class MapPanel extends JPanel implements
     public int		coordMouseOld[] = new int[2];
     public boolean	movedMap = false;
 
+    public void		moveVehiculeAt(MouseEvent e)
+    {
+    	int x = scaleX(e.getX());
+		int y = scaleY(e.getY());
+		
+		for (int i = 0; i < nodes.size() ;i++) {
+			if (x == nodes.get(i).getx() && y == nodes.get(i).gety())
+				this.controller.eventEditVehiculeCoord(x, y);
+			else
+				JOptionPane.showMessageDialog(this,"Node doesn't exist ");
+		}
+    }
+    
+    public void		moveAttachPointAt(MouseEvent e)
+    {
+    	int x = scaleX(e.getX());
+		int y = scaleY(e.getY());
+		
+		for (int i = 0; i < nodes.size() ;i++) {
+			if (x == nodes.get(i).getx() && y == nodes.get(i).gety()) {
+				this.controller.eventEditAttachPoint(x, y);
+			}
+			else
+				JOptionPane.showMessageDialog(this,"Node doesn't exist ");
+		}
+    }
+
+    
     public void mouseReleased(MouseEvent e) {
 	NodeGraphic	newNode;
 
