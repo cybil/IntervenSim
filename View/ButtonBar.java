@@ -21,6 +21,8 @@ public class ButtonBar extends JToolBar {
     protected PauseButton pauseButton = new PauseButton();
     protected StopButton stopButton = new StopButton();
     protected SkipButton skipButton = new SkipButton();	
+    protected SkipButton skipButton2 = new SkipButton();	
+    protected QuickEditionButton quickEditionButton = new QuickEditionButton();	
     protected JPanel panel1 = new JPanel();
     protected GroupLayout layout = new GroupLayout(panel1);
     protected JPanel panel2 = new JPanel();
@@ -48,6 +50,7 @@ public class ButtonBar extends JToolBar {
 	layout3Group.add(pauseButton);
 	layout3Group.add(stopButton);
 	layout3Group.add(skipButton);
+	layout3Group.add(quickEditionButton);
 
 	panel4.add(speedLabel, BorderLayout.EAST);
 	panel4.add(speedSlider, BorderLayout.EAST);
@@ -125,6 +128,7 @@ public class ButtonBar extends JToolBar {
 				   .addComponent(pauseButton)
 				   .addComponent(stopButton)
 				   .addComponent(skipButton)
+				   .addComponent(quickEditionButton)
 				   );
 			
 	layout3.setVerticalGroup(
@@ -133,6 +137,7 @@ public class ButtonBar extends JToolBar {
 				 .addComponent(pauseButton)
 				 .addComponent(stopButton)
 				 .addComponent(skipButton)
+				 .addComponent(quickEditionButton)
 				 );
     }
 

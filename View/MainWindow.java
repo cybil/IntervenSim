@@ -188,6 +188,17 @@ public class MainWindow extends JFrame implements ActionListener {
 	this.buttonBar.pauseButton.addActionListener(new PauseButtonListener());
 	this.buttonBar.stopButton.addActionListener(new StopButtonListener());
 	this.buttonBar.skipButton.addActionListener(new SkipButtonListener());
+	this.buttonBar.quickEditionButton.addActionListener(new QuickEditionpButtonListener());
+    }
+
+    class QuickEditionpButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent arg0) {
+	    System.out.print("Vous avez clique sur le bouton de Edition rapide\n");
+	    if (mapPanel.getQuickEdition() == false)
+	    	mapPanel.setQuickEdition(true);
+	    else
+	    	mapPanel.setQuickEdition(false);
+        }
     }
 
     // ActionListener class for ToolsBar Buttons
